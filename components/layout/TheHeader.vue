@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-info fixed-top py-3">
+  <header class="bg-info py-3">
     <b-container class="d-flex justify-content-between">
       <h1>Header</h1>
 

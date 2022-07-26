@@ -1,19 +1,28 @@
 <template>
-  <b-container>
-    <h1>main</h1>
-  </b-container>
-</template>
+  <div>
+    <h1>Home</h1>
 
+    <ul>
+      <li v-for="(router, index) in nestedRoutes" :key="index">
+        <nuxt-link :to="router.path" :title="router.name">
+          {{ router.name }}
+        </nuxt-link>
+      </li>
+    </ul>
+  </div>
+</template>
 <script>
 export default {
-  name: 'Home',
+  layout: 'navigation',
+
+  data() {
+    return {
+      nestedRoutes: [],
+    };
+  },
 
   head() {
     return {
-      bodyAttrs: {
-        class: 'home',
-      },
-
       title: `${process.env.title}`,
 
       meta: [
@@ -24,6 +33,17 @@ export default {
         },
       ],
     };
+  },
+
+  created() {
+    this.$router.options.routes.forEach((routeOption) => {
+      if (routeOption.path.startsWith(this.$route.path)) {
+        this.nestedRoutes.push({
+          name: routeOption.name,
+          path: routeOption.path,
+        });
+      }
+    });
   },
 };
 </script>
