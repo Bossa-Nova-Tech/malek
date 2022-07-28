@@ -1,9 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 // Custon theme bootstrap
-$font-family-sans-serif: 'Montserrat', sans-serif;
+$font-family-sans-serif: 'Poppins', sans-serif;
 
 // Importa Bootstrap completo
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';
 @import '~bootstrap-vue/src/icons.scss';
+
+:root {
+  --malek-primary: #6282fd;
+  --malek-secondary: #2e328c;
+  --malek-terciary: #0047bb;
+  --malek-x: #002554;
+  --malek-dark: #1f1f1f;
+  --malek-gray: #5b5b5b;
+  --malek-gray1: #f8f9fd;
+  --malek-gray2: #a9b1ce;
+  --malek-gray3: #6b6e84;
+  --malek-blue1: #f6f8ff;
+  --malek-blue2: #cfdeff;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  vertical-align: baseline;
+  list-style: none;
+  border: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: var(--malek-blue1);
+}
+.malek-gray {
+  color: var(--malek-gray);
+}
+.malek-x {
+  color: var(--malek-x);
+}
