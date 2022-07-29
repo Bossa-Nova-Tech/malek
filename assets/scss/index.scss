@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+$blue: #6282fd !default;
+
+$theme-colors: (
+  primary: $blue,
+) !default;
+
 // Custon theme bootstrap
 $font-family-sans-serif: 'Poppins', sans-serif;
 
@@ -22,7 +28,10 @@ $font-family-sans-serif: 'Poppins', sans-serif;
   --malek-blue2: #cfdeff;
 }
 
-* {
+*,
+h1,
+h2,
+p {
   padding: 0;
   margin: 0;
   vertical-align: baseline;
@@ -30,13 +39,17 @@ $font-family-sans-serif: 'Poppins', sans-serif;
   border: 0;
 }
 
-html {
-  height: 100%;
-}
-
 body {
   background-color: var(--malek-blue1);
 }
+
+.altura {
+  height: 100vh;
+}
+.push {
+  margin-top: auto;
+}
+
 .malek-gray {
   color: var(--malek-gray);
 }
