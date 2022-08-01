@@ -41,11 +41,11 @@ p {
 .cont-img {
   position: relative;
   max-width: 700px;
+  max-height: 350px;
   padding-bottom: 2.5rem;
 }
 
-.left {
-  position: absolute;
-  right: 0px;
+.cont-img img {
+  width: 100%;
 }
 </style>
