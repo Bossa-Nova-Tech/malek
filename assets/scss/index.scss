@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('node_modules/@egjs/vue-flicking/dist/flicking.css');
+@import '@egjs/flicking-plugins/dist/flicking-plugins.css';
 
 $blue: #6282fd !default;
 
@@ -43,9 +45,14 @@ body {
   background-color: var(--malek-blue1);
 }
 
+.caixa {
+  width: min(48.125rem, 100%);
+}
+
 .altura {
   height: 100vh;
 }
+
 .push {
   margin-top: auto;
 }
@@ -53,6 +60,11 @@ body {
 .malek-gray {
   color: var(--malek-gray);
 }
+
 .malek-x {
   color: var(--malek-x);
+}
+
+.flicking-pagination-bullet-active {
+  background-color: #0047bb;
 }
