@@ -111,18 +111,17 @@ span {
 .width-page {
   width: 100%;
 }
-</style>
-
-<style>
-.flicking-pagination-bullet-active {
-  background-color: #0047bb;
-}
-
 #gerenciamento {
   padding-bottom: 2.1rem;
 }
 
 #caneta {
   object-fit: contain;
+}
+</style>
+
+<style>
+.flicking-pagination-bullet-active {
+  background-color: #0047bb;
 }
 </style>

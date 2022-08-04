@@ -1,12 +1,15 @@
 <template>
   <b-container>
-    <div class="row justify-content-center align-items-center min-vh-100">
+    <main class="row justify-content-center align-items-center min-vh-100">
       <b-form class="col col-lg-4">
-        <p class="display-4 text-center">
-          <b-icon-person-bounding-box />
-        </p>
+        <img
+          class="row mx-auto"
+          src="~/assets/img/ilustracao/logo.png"
+          alt=""
+        />
 
-        <b-form-group>
+        <b-form-group class="mb-3">
+          <label for="email">E-mail ou CPF / CNPJ</label>
           <b-form-input
             v-model="formData.email"
             name="email"
@@ -25,7 +28,8 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="mb-0">
+        <b-form-group class="mb-3">
+          <label for="password">Senha</label>
           <b-form-input
             v-model="formData.password"
             name="password"
@@ -40,30 +44,37 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-button
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <b-form-checkbox name="remember" class="text-sm"
+            >Lembrar senha</b-form-checkbox
+          >
+
+          <NuxtLink to="/EsqueciMinhaSenha" class="text-sm"
+            ><u>Esqueci minha senha</u></NuxtLink
+          >
+        </div>
+
+        <button
           block
           variant="primary"
-          class="p-2 mt-3"
+          class="mt-3"
           :disabled="formSend"
           @click="login"
         >
           <b-spinner v-if="formSend" small type="grow" />
           Entrar
-        </b-button>
+        </button>
       </b-form>
-    </div>
+    </main>
   </b-container>
 </template>
 
 <script>
 import { required, email } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
-import { BIconPersonBoundingBox } from 'bootstrap-vue';
 
 export default {
   name: 'Login',
-
-  components: { BIconPersonBoundingBox },
 
   mixins: [validationMixin],
 
@@ -136,4 +147,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+img {
+  margin-bottom: 70px;
+}
+
+label {
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--malek-gray3);
+}
+
+.text-sm {
+  font-weight: 400;
+  color: var(--malek-gray3);
+}
+</style>

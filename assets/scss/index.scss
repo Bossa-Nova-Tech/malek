@@ -45,6 +45,16 @@ body {
   background-color: var(--malek-blue1);
 }
 
+button {
+  color: #ffffff;
+  width: 100%;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  background: #0047bb;
+  border-radius: 12px;
+}
+
 .caixa {
   width: min(48.125rem, 100%);
 }

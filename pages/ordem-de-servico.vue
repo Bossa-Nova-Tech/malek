@@ -31,7 +31,7 @@
     </main>
 
     <TheFooter>
-      Criar Ordem de Serviço
+      avançar
       <!-- passar nome do botão aqui -->
     </TheFooter>
   </div>
