@@ -13,7 +13,7 @@
       <section>
         <b-container class="card-servico mb-4">
           <div class="d-flex align-items-center justify-content-between pb-2">
-            <h2 class="manutencao malek-x">Manutenção</h2>
+            <h2 class="manutencao primary-80">Manutenção</h2>
             <p class="local gray-40">HAVAN Unidade 01</p>
           </div>
           <div class="d-flex align-items-center justify-content-between">
@@ -22,7 +22,7 @@
               <span class="pl-3">José S. Silveira</span>
             </div>
             <div>
-              <span class="porcentagem malek-x">75%</span>
+              <span class="porcentagem primary-80">75%</span>
               <span class="tempo gray-40">02h30</span>
             </div>
           </div>

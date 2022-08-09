@@ -61,15 +61,32 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group>
-          <label for="phone">Telefone *</label>
-          <b-form-input
-            v-model="formData.phone"
-            name="phone"
-            type="number"
-            placeholder="(00) 00000-0000"
-          />
-        </b-form-group>
+        <b-row>
+          <b-col cols="4">
+            <b-form-group>
+              <label for="ddd">Telefone *</label>
+              <b-form-input
+                v-model="formData.ddd"
+                name="ddd"
+                type="number"
+                placeholder="(00)"
+              />
+            </b-form-group>
+          </b-col>
+
+          <b-col cols="8">
+            <b-form-group>
+              <label for="phone"></label>
+              <b-form-input
+                id="phone"
+                v-model="formData.phone"
+                name="phone"
+                type="number"
+                placeholder="0 0000-0000"
+              />
+            </b-form-group>
+          </b-col>
+        </b-row>
 
         <b-row>
           <b-col cols="6">
@@ -106,7 +123,7 @@
         <b-row>
           <b-col cols="6">
             <b-form-group>
-              <label for="cep">CEP</label>
+              <label for="cep">CEP *</label>
               <b-form-input
                 v-model="formData.cep"
                 name="cep"
@@ -158,7 +175,7 @@
         <b-row>
           <b-col cols="6">
             <b-form-group>
-              <label for="addressNumber">Numero</label>
+              <label for="addressNumber">Numero *</label>
               <b-form-input
                 v-model="formData.addressNumber"
                 name="addressNumber"
@@ -181,16 +198,7 @@
           </b-col>
         </b-row>
 
-        <button
-          block
-          variant="primary"
-          class="mb-3 mt-3"
-          :disabled="formSend"
-          @click="login"
-        >
-          <b-spinner v-if="formSend" small type="grow" />
-          Avançar
-        </button>
+        <button class="mb-3 mt-3">Avançar</button>
       </b-form>
     </main>
   </b-container>
@@ -215,6 +223,7 @@ export default {
         name: null,
         lastname: null,
         cnpj: null,
+        ddd: null,
         phone: null,
         cep: null,
         uf: null,
@@ -272,18 +281,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-img {
-  margin-bottom: 70px;
+h2 {
+  color: var(--gray-40);
 }
 
 label {
-  font-weight: 500;
   font-size: 12px;
-  color: var(--malek-gray3);
+  font-weight: 500;
+  color: var(--gray-40);
 }
 
 .text-sm {
   font-weight: 400;
-  color: var(--malek-gray3);
+  color: var(--gray-40);
+}
+
+#phone {
+  margin-top: 6px;
 }
 </style>
