@@ -32,7 +32,7 @@
         </b-row>
 
         <b-form-group>
-          <label for="email">CPF / CNPJ *</label>
+          <label for="cnpj">CPF / CNPJ *</label>
           <b-form-input
             v-model="formData.cnpj"
             name="cnpj"
@@ -62,7 +62,7 @@
         </b-form-group>
 
         <b-form-group>
-          <label for="email">Telefone *</label>
+          <label for="phone">Telefone *</label>
           <b-form-input
             v-model="formData.phone"
             name="phone"
@@ -92,19 +92,13 @@
 
           <b-col cols="6">
             <b-form-group>
-              <label for="password">Confirmar Senha</label>
+              <label for="confirmpassword">Confirmar Senha</label>
               <b-form-input
-                v-model="formData.password"
-                name="password"
+                v-model="formData.confirmpassword"
+                name="confirmpassword"
                 type="password"
                 placeholder="******"
-                :class="{
-                  'is-invalid': $v.formData.password.$error,
-                }"
               />
-              <b-form-invalid-feedback>
-                Preencha o campo acima
-              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
         </b-row>
@@ -112,9 +106,9 @@
         <b-row>
           <b-col cols="6">
             <b-form-group>
-              <label for="password">CEP</label>
+              <label for="cep">CEP</label>
               <b-form-input
-                v-model="formData.password"
+                v-model="formData.cep"
                 name="cep"
                 type="number"
                 placeholder="000-00000"
@@ -124,10 +118,10 @@
 
           <b-col cols="6">
             <b-form-group>
-              <label for="password">Bairro</label>
+              <label for="district">Bairro</label>
               <b-form-input
-                v-model="formData.password"
-                name="bairro"
+                v-model="formData.district"
+                name="district"
                 type="text"
                 placeholder="-"
               />
@@ -138,10 +132,10 @@
         <b-row>
           <b-col cols="6">
             <b-form-group>
-              <label for="password">Cidade</label>
+              <label for="city">Cidade</label>
               <b-form-input
-                v-model="formData.password"
-                name="Cidade"
+                v-model="formData.city"
+                name="city"
                 type="text"
                 placeholder="-"
               />
@@ -150,10 +144,10 @@
 
           <b-col cols="6">
             <b-form-group>
-              <label for="password">Estado</label>
+              <label for="uf">Estado</label>
               <b-form-input
-                v-model="formData.password"
-                name="Estado"
+                v-model="formData.uf"
+                name="uf"
                 type="text"
                 placeholder="-"
               />
@@ -164,10 +158,10 @@
         <b-row>
           <b-col cols="6">
             <b-form-group>
-              <label for="password">Numero</label>
+              <label for="addressNumber">Numero</label>
               <b-form-input
-                v-model="formData.password"
-                name="numero"
+                v-model="formData.addressNumber"
+                name="addressNumber"
                 type="number"
                 placeholder="000"
               />
@@ -176,10 +170,10 @@
 
           <b-col cols="6">
             <b-form-group>
-              <label for="password">Complemento</label>
+              <label for="complement">Complemento</label>
               <b-form-input
-                v-model="formData.password"
-                name="Complemento"
+                v-model="formData.complement"
+                name="Complement"
                 type="text"
                 placeholder="-"
               />
@@ -217,21 +211,18 @@ export default {
       formData: {
         email: null,
         password: null,
+        confirmpassword: null,
+        name: null,
+        lastname: null,
+        cnpj: null,
+        phone: null,
+        cep: null,
+        uf: null,
+        city: null,
+        district: null,
+        addressNumber: null,
+        Complement: null,
       },
-    };
-  },
-
-  head() {
-    return {
-      title: `NOME DA PÁGINA |  ${process.env.title}`,
-
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: '',
-        },
-      ],
     };
   },
 

@@ -5,6 +5,11 @@
         <h1 class="mt-5 pb-3">Cadastrar empresa</h1>
         <h2 class="pb-5">Minha marca</h2>
 
+        <div>
+          <p>Clique para enviar sua logo</p>
+          <span>PNG, JPG (tamanho máximo X)</span>
+        </div>
+
         <button
           block
           variant="primary"
