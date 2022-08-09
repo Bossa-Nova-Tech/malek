@@ -149,17 +149,17 @@ export default {
 
 <style lang="scss" scoped>
 img {
-  margin-bottom: 70px;
+  margin-bottom: 4.375rem;
 }
 
 label {
+  font-size: 0.75rem;
   font-weight: 500;
-  font-size: 12px;
-  color: var(--malek-gray3);
+  color: var(--gray-40);
 }
 
 .text-sm {
   font-weight: 400;
-  color: var(--malek-gray3);
+  color: var(--gray-40);
 }
 </style>

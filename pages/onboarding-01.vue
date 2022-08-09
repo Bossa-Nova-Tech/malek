@@ -81,7 +81,7 @@ section {
     justify-content: space-between;
     margin-left: auto;
     margin-right: auto;
-    max-height: 350px;
+    max-height: 21.875rem;
     padding-bottom: 2.5rem;
   }
 
@@ -99,7 +99,7 @@ section {
     font-size: 0.938rem;
     line-height: 150%;
     text-align: center;
-    max-width: 300px;
+    max-width: 18.75rem;
     margin-left: auto;
     margin-right: auto;
     padding-top: 3.75rem;

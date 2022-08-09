@@ -286,7 +286,7 @@ h2 {
 }
 
 label {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
   color: var(--gray-40);
 }
@@ -297,6 +297,6 @@ label {
 }
 
 #phone {
-  margin-top: 6px;
+  margin-top: 0.375rem;
 }
 </style>

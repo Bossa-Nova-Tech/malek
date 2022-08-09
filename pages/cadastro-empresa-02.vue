@@ -1,26 +1,18 @@
 <template>
   <b-container>
-    <main class="row justify-content-center align-items-center min-vh-100">
-      <b-form class="col col-lg-4">
-        <h1 class="mt-5 pb-3">Cadastrar empresa</h1>
-        <h2 class="pb-5">Minha marca</h2>
+    <main class="min-vh-100">
+      <h1>Cadastrar empresa</h1>
+      <h2>Minha marca</h2>
 
-        <div>
-          <p>Clique para enviar sua logo</p>
-          <span>PNG, JPG (tamanho máximo X)</span>
-        </div>
+      <div>
+        <img src="~/assets/img/icones/upload.svg" alt="" />
+        <p>Clique para enviar sua logo</p>
+        <span>PNG, JPG (tamanho máximo X)</span>
+      </div>
 
-        <button
-          block
-          variant="primary"
-          class="mb-3 mt-3"
-          :disabled="formSend"
-          @click="login"
-        >
-          <b-spinner v-if="formSend" small type="grow" />
-          Avançar
-        </button>
-      </b-form>
+      <button id="salvar">Salvar</button>
+
+      <button class="mb-3 mt-3">Avançar</button>
     </main>
   </b-container>
 </template>
@@ -28,18 +20,51 @@
 <script></script>
 
 <style lang="scss" scoped>
-img {
-  margin-bottom: 70px;
-}
+main {
+  h1 {
+    padding-top: 4rem;
+    padding-bottom: 1rem;
+  }
+  h2 {
+    padding-bottom: 3.75rem;
+    color: var(--gray-40);
+  }
 
-label {
-  font-weight: 500;
-  font-size: 12px;
-  color: var(--malek-gray3);
-}
+  div {
+    display: grid;
+    justify-items: center;
+    padding: 3.125rem;
+    background-color: var(--gray-10);
+    border-radius: 1.5625rem;
+    margin-bottom: 2rem;
 
-.text-sm {
-  font-weight: 400;
-  color: var(--malek-gray3);
+    img {
+      padding-bottom: 2.5rem;
+    }
+
+    p {
+      font-weight: 500;
+      font-size: 0.875rem;
+      line-height: 150%;
+      text-decoration-line: underline;
+      color: var(--gray-40);
+      padding-bottom: 0.3125rem;
+    }
+
+    span {
+      font-weight: 400;
+      font-size: 0.75rem;
+      line-height: 150%;
+      color: var(--gray-40);
+    }
+  }
+  #salvar {
+    color: var(--primary-80);
+    background-color: var(--gray-10);
+    border: 0.0625rem solid #a9b1ce;
+    box-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.06);
+    border-radius: 0.5rem;
+    margin-bottom: 7.5rem;
+  }
 }
 </style>

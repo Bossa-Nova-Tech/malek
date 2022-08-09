@@ -45,9 +45,9 @@ export default { components: { TheHeader, TheFooter } };
 
 <style lang="scss" scoped>
 .card-servico {
-  padding: 20px 25px;
+  padding: 1.25rem 1.5625rem;
   background-color: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 71, 187, 0.06);
+  box-shadow: 0rem 0.25rem 0.25rem rgba(0, 71, 187, 0.06);
 }
 .manutencao {
   font-weight: 600;
@@ -64,6 +64,6 @@ export default { components: { TheHeader, TheFooter } };
 }
 .tempo {
   font-weight: 500;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 </style>
