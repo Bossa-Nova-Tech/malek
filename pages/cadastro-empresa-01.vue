@@ -133,7 +133,7 @@
         <b-row>
           <b-col cols="6">
             <b-form-group>
-              <label for="password">Senha</label>
+              <label for="password">Senha *</label>
               <b-form-input
                 v-model="formData.password"
                 name="password"
@@ -155,7 +155,7 @@
 
           <b-col cols="6">
             <b-form-group>
-              <label for="confirmPassword">Confirmar Senha</label>
+              <label for="confirmPassword">Confirmar Senha *</label>
               <b-form-input
                 v-model="formData.confirmPassword"
                 name="confirmPassword"
@@ -284,8 +284,14 @@
           </b-col>
         </b-row>
       </b-form>
-      <button class="mb-3 mt-3" @click="login">Avançar</button>
     </main>
+
+    <div class="row justify-content-center mb-4 mx-1">
+      <button class="col col-lg-4" :disabled="formSend" @click="login">
+        <b-spinner v-if="formSend" small type="grow" />
+        Avançar
+      </button>
+    </div>
     <pre>{{ formData }}</pre>
   </b-container>
 </template>
