@@ -276,7 +276,7 @@
               <label for="complement">Complemento</label>
               <b-form-input
                 v-model="formData.complement"
-                name="Complement"
+                name="complement"
                 type="text"
                 placeholder="-"
               />
@@ -292,7 +292,6 @@
         Avançar
       </button>
     </div>
-    <pre>{{ formData }}</pre>
   </b-container>
 </template>
 
@@ -322,7 +321,7 @@ export default {
         city: null,
         uf: null,
         addressNumber: null,
-        Complement: null,
+        complement: null,
       },
     };
   },
@@ -393,9 +392,23 @@ export default {
             this.$v.$reset();
 
             this.formData = {
-              email: null,
               required: null,
+              name: null,
+              lastName: null,
+              cnpj: null,
+              ddd: null,
+              phone: null,
+              email: null,
+              password: null,
+              confirmPassword: null,
+              cep: null,
+              district: null,
+              city: null,
+              uf: null,
+              addressNumber: null,
+              complement: null,
             };
+            this.$router.push('/cadastro-empresa-02');
           })
           .catch((error) => {
             this.formSend = false;

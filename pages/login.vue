@@ -133,8 +133,6 @@ export default {
               email: null,
               required: null,
             };
-
-            this.$router.push('/cadastro-empresa-02');
           })
           .catch((error) => {
             this.formSend = false;
