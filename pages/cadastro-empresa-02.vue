@@ -4,11 +4,15 @@
       <h1>Cadastrar empresa</h1>
       <h2>Minha marca</h2>
 
-      <div>
+      <div class="bloco">
         <img src="~/assets/img/icones/upload.svg" alt="" />
         <p>Clique para enviar sua logo</p>
         <span>PNG, JPG (tamanho máximo X)</span>
-        <b-form-file v-model="file2" class="mt-3">asdasda</b-form-file>
+        <b-form-file
+          v-model="file"
+          placeholder="Arquivo ..."
+          accept=".jpeg,.jpg,.png,image/jpeg,image/png"
+        ></b-form-file>
       </div>
 
       <button id="salvar">Salvar</button>
@@ -18,7 +22,15 @@
   </b-container>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      file: null,
+    };
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 main {
@@ -31,7 +43,7 @@ main {
     color: var(--gray-40);
   }
 
-  div {
+  .bloco {
     display: grid;
     justify-items: center;
     padding: 3.125rem;
@@ -57,6 +69,7 @@ main {
       font-size: 0.75rem;
       line-height: 150%;
       color: var(--gray-40);
+      padding-bottom: 2.5rem;
     }
   }
   #salvar {
