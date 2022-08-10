@@ -14,19 +14,31 @@
                 name="name"
                 type="text"
                 placeholder="João"
+                :class="{
+                  'is-invalid': $v.formData.name.$error,
+                }"
               />
+              <b-form-invalid-feedback>
+                Preencha o campo acima
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
 
           <b-col cols="6">
             <b-form-group>
-              <label for="lastname">Sobrenome *</label>
+              <label for="lastName">Sobrenome *</label>
               <b-form-input
-                v-model="formData.lastname"
-                name="lastname"
+                v-model="formData.lastName"
+                name="lastName"
                 type="text"
                 placeholder="Souza"
+                :class="{
+                  'is-invalid': $v.formData.lastName.$error,
+                }"
               />
+              <b-form-invalid-feedback>
+                Preencha o campo acima
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
         </b-row>
@@ -38,7 +50,17 @@
             name="cnpj"
             type="text"
             placeholder="00.000.000/000-00"
+            :class="{
+              'is-invalid': $v.formData.cnpj.$error,
+            }"
           />
+          <b-form-invalid-feedback>
+            {{
+              !$v.formData.cnpj.minLength
+                ? 'Insira um CNPJ válido'
+                : 'Preencha o campo acima'
+            }}
+          </b-form-invalid-feedback>
         </b-form-group>
 
         <b-form-group>
@@ -70,7 +92,17 @@
                 name="ddd"
                 type="number"
                 placeholder="(00)"
+                :class="{
+                  'is-invalid': $v.formData.ddd.$error,
+                }"
               />
+              <b-form-invalid-feedback>
+                {{
+                  !$v.formData.ddd.minLength
+                    ? 'Insira um ddd válido'
+                    : 'Preencha o campo acima'
+                }}
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
 
@@ -83,7 +115,17 @@
                 name="phone"
                 type="number"
                 placeholder="0 0000-0000"
+                :class="{
+                  'is-invalid': $v.formData.phone.$error,
+                }"
               />
+              <b-form-invalid-feedback>
+                {{
+                  !$v.formData.phone.minLength
+                    ? 'Insira um telefone válido'
+                    : 'Preencha o campo acima'
+                }}
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
         </b-row>
@@ -102,20 +144,34 @@
                 }"
               />
               <b-form-invalid-feedback>
-                Preencha o campo acima
+                {{
+                  !$v.formData.password.minLength
+                    ? 'No mínimo 8 caracteres'
+                    : 'Insira uma senha'
+                }}
               </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
 
           <b-col cols="6">
             <b-form-group>
-              <label for="confirmpassword">Confirmar Senha</label>
+              <label for="confirmPassword">Confirmar Senha</label>
               <b-form-input
-                v-model="formData.confirmpassword"
-                name="confirmpassword"
+                v-model="formData.confirmPassword"
+                name="confirmPassword"
                 type="password"
                 placeholder="******"
+                :class="{
+                  'is-invalid': $v.formData.confirmPassword.$error,
+                }"
               />
+              <b-form-invalid-feedback>
+                {{
+                  !$v.formData.confirmPassword.sameAsPassword
+                    ? 'Senhas diferentes'
+                    : 'Insira uma senha'
+                }}
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
         </b-row>
@@ -129,7 +185,13 @@
                 name="cep"
                 type="number"
                 placeholder="000-00000"
+                :class="{
+                  'is-invalid': $v.formData.cep.$error,
+                }"
               />
+              <b-form-invalid-feedback>
+                Preencha o campo acima
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
 
@@ -141,7 +203,13 @@
                 name="district"
                 type="text"
                 placeholder="-"
+                :class="{
+                  'is-invalid': $v.formData.district.$error,
+                }"
               />
+              <b-form-invalid-feedback>
+                Preencha o campo acima
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
         </b-row>
@@ -155,7 +223,13 @@
                 name="city"
                 type="text"
                 placeholder="-"
+                :class="{
+                  'is-invalid': $v.formData.city.$error,
+                }"
               />
+              <b-form-invalid-feedback>
+                Preencha o campo acima
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
 
@@ -167,7 +241,13 @@
                 name="uf"
                 type="text"
                 placeholder="-"
+                :class="{
+                  'is-invalid': $v.formData.uf.$error,
+                }"
               />
+              <b-form-invalid-feedback>
+                Preencha o campo acima
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
         </b-row>
@@ -181,7 +261,13 @@
                 name="addressNumber"
                 type="number"
                 placeholder="000"
+                :class="{
+                  'is-invalid': $v.formData.addressNumber.$error,
+                }"
               />
+              <b-form-invalid-feedback>
+                Preencha o campo acima
+              </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
 
@@ -197,15 +283,15 @@
             </b-form-group>
           </b-col>
         </b-row>
-
-        <button class="mb-3 mt-3">Avançar</button>
       </b-form>
+      <button class="mb-3 mt-3" @click="login">Avançar</button>
     </main>
+    <pre>{{ formData }}</pre>
   </b-container>
 </template>
 
 <script>
-import { required, email } from 'vuelidate/lib/validators';
+import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 
 export default {
@@ -217,18 +303,18 @@ export default {
     return {
       formSend: false,
       formData: {
-        email: null,
-        password: null,
-        confirmpassword: null,
         name: null,
-        lastname: null,
+        lastName: null,
         cnpj: null,
         ddd: null,
         phone: null,
+        email: null,
+        password: null,
+        confirmPassword: null,
         cep: null,
-        uf: null,
-        city: null,
         district: null,
+        city: null,
+        uf: null,
         addressNumber: null,
         Complement: null,
       },
@@ -237,11 +323,49 @@ export default {
 
   validations: {
     formData: {
+      name: {
+        required,
+      },
+      lastName: {
+        required,
+      },
+      cnpj: {
+        required,
+        minLength: minLength(13),
+      },
+      ddd: {
+        required,
+        minLength: minLength(2),
+      },
+      phone: {
+        required,
+        minLength: minLength(9),
+      },
       email: {
         required,
         email,
       },
       password: {
+        required,
+        minLength: minLength(8),
+      },
+      confirmPassword: {
+        required,
+        sameAsPassword: sameAs('password'),
+      },
+      cep: {
+        required,
+      },
+      district: {
+        required,
+      },
+      city: {
+        required,
+      },
+      uf: {
+        required,
+      },
+      addressNumber: {
         required,
       },
     },

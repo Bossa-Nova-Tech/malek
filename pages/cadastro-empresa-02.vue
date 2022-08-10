@@ -8,6 +8,7 @@
         <img src="~/assets/img/icones/upload.svg" alt="" />
         <p>Clique para enviar sua logo</p>
         <span>PNG, JPG (tamanho máximo X)</span>
+        <b-form-file v-model="file2" class="mt-3">asdasda</b-form-file>
       </div>
 
       <button id="salvar">Salvar</button>
