@@ -47,12 +47,10 @@
           <label for="cnpj">CPF / CNPJ *</label>
           <b-form-input
             v-model="formData.cnpj"
+            v-mask="['###.###.###-##', '##.###.###/####-##']"
             name="cnpj"
-            type="text"
             placeholder="00.000.000/000-00"
-            :class="{
-              'is-invalid': $v.formData.cnpj.$error,
-            }"
+            :class="{ 'is-invalid': $v.formData.cnpj.$error }"
           />
           <b-form-invalid-feedback>
             {{
@@ -89,8 +87,8 @@
               <label for="ddd">Telefone *</label>
               <b-form-input
                 v-model="formData.ddd"
+                v-mask="['(##)']"
                 name="ddd"
-                type="number"
                 placeholder="(00)"
                 :class="{
                   'is-invalid': $v.formData.ddd.$error,
@@ -112,8 +110,8 @@
               <b-form-input
                 id="phone"
                 v-model="formData.phone"
+                v-mask="['#####-####']"
                 name="phone"
-                type="number"
                 placeholder="0 0000-0000"
                 :class="{
                   'is-invalid': $v.formData.phone.$error,
@@ -298,10 +296,12 @@
 <script>
 import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
+import { mask } from 'vue-the-mask';
 
 export default {
   name: 'Login',
 
+  directives: { mask },
   mixins: [validationMixin],
 
   data: () => {
