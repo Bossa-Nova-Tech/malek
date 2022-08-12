@@ -1,6 +1,14 @@
 <template>
   <main class="caixa mx-auto">
     <Flicking :options="{ align: 'prev' }" :plugins="plugins">
+      <div :class="{ loader: true, fadeout: !isLoading }">
+        <img
+          id="splash"
+          src="~/assets/img/android-chrome-512x512.png"
+          alt=""
+          width="400"
+        />
+      </div>
       <section>
         <h1 class="primary-80">Seja bem vindo</h1>
         <div>
@@ -64,6 +72,8 @@ import { Pagination } from '@egjs/flicking-plugins';
 import '@egjs/flicking-plugins/dist/pagination.css';
 
 export default {
+  name: 'LoadingScreen',
+  props: ['isLoading'],
   components: {
     Flicking,
   },
@@ -126,6 +136,31 @@ section {
 }
 
 #caneta {
+  object-fit: contain;
+}
+.loader {
+  background-color: #ffffff;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: block;
+  overflow: hidden;
+  padding-top: 23vh;
+  position: fixed;
+}
+
+.fadeout {
+  animation: fadeout 3s forwards;
+}
+
+@keyframes fadeout {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+#splash {
   object-fit: contain;
 }
 </style>
