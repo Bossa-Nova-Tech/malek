@@ -90,7 +90,7 @@ export default {
 
   head() {
     return {
-      title: `NOME DA PÁGINA |  ${process.env.title}`,
+      title: `Login |  ${process.env.title}`,
 
       meta: [
         {

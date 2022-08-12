@@ -1,7 +1,7 @@
 <template>
   <main class="caixa mx-auto">
     <Flicking :options="{ align: 'prev' }" :plugins="plugins">
-      <section class="pb-5">
+      <section>
         <h1 class="primary-80">Seja bem vindo</h1>
         <div>
           <img src="~/assets/img/ilustracao/clipboard.png" alt="" />
@@ -48,7 +48,10 @@
             alt=""
           />
         </div>
-        <p>Organize contas a pagar e a receber em um só lugar</p>
+        <p class="pb-4">Organize contas a pagar e a receber em um só lugar</p>
+        <NuxtLink to="/cadastro-empresa-01">
+          <button class="d-flex mx-auto">Começar</button>
+        </NuxtLink>
       </section>
       <div slot="viewport" class="flicking-pagination"></div>
     </Flicking>
@@ -69,12 +72,19 @@ export default {
       plugins: [new Pagination({ type: 'bullet' })],
     };
   },
+
+  head() {
+    return {
+      title: `Onboarding |  ${process.env.title}`,
+    };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 section {
   width: 100%;
+  padding-bottom: 5rem;
 
   div {
     display: flex;
@@ -104,6 +114,10 @@ section {
     margin-right: auto;
     padding-top: 3.75rem;
     color: var(--gray-40);
+  }
+  button {
+    max-width: 300px;
+    justify-content: center;
   }
 }
 

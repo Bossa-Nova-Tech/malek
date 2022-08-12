@@ -12,7 +12,7 @@
         <p>Propostas</p>
       </NuxtLink>
 
-      <NuxtLink to="/">
+      <NuxtLink to="/ordem-de-servico">
         <img src="~/assets/img/icones/ordem.svg" alt="" />
         <p>Ordem de Serviço</p>
       </NuxtLink>
@@ -41,7 +41,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  head() {
+    return {
+      title: `Painel |  ${process.env.title}`,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

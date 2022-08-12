@@ -375,6 +375,11 @@ export default {
       },
     },
   },
+  head() {
+    return {
+      title: `Cadastro |  ${process.env.title}`,
+    };
+  },
 
   methods: {
     login() {

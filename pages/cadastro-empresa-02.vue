@@ -15,9 +15,26 @@
         ></b-form-file>
       </div>
 
-      <button id="salvar">Salvar</button>
+      <button v-b-modal.modal-center class="mb-3 mt-3">Concluir</button>
 
-      <button class="mb-3 mt-3">Avançar</button>
+      <div>
+        <b-modal
+          id="modal-center"
+          centered
+          hide-header
+          hide-footer
+          title="BootstrapVue"
+        >
+          <div class="d-flex flex-column align-items-center">
+            <img src="~/assets/img/icones/email-icon.svg" alt="" class="py-4" />
+            <h3 class="text-center">Verifique seu e-mail</h3>
+            <p class="text-center pb-5">
+              Foi encaminhado um email para email@gmail.com
+            </p>
+            <NuxtLink to="/login">Clique aqui para realizar o login</NuxtLink>
+          </div>
+        </b-modal>
+      </div>
     </main>
   </b-container>
 </template>
@@ -27,6 +44,11 @@ export default {
   data() {
     return {
       file: null,
+    };
+  },
+  head() {
+    return {
+      title: `Cadastro |  ${process.env.title}`,
     };
   },
 };
@@ -71,14 +93,6 @@ main {
       color: var(--gray-40);
       padding-bottom: 2.5rem;
     }
-  }
-  #salvar {
-    color: var(--primary-80);
-    background-color: var(--gray-10);
-    border: 0.0625rem solid #a9b1ce;
-    box-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.06);
-    border-radius: 0.5rem;
-    margin-bottom: 7.5rem;
   }
 }
 </style>
