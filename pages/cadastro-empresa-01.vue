@@ -62,6 +62,19 @@
         </b-form-group>
 
         <b-form-group>
+          <label for="fantasy_name">Nome da Empresa</label>
+          <b-form-input
+            v-model="formData.fantasy_name"
+            name="fantasy_name"
+            placeholder="-"
+            :class="{ 'is-invalid': $v.formData.fantasy_name.$error }"
+          />
+          <b-form-invalid-feedback>
+            Preencha o campo acima
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group>
           <label for="email">E-mail *</label>
           <b-form-input
             v-model="formData.email"
@@ -322,6 +335,7 @@ export default {
         uf: null,
         addressNumber: null,
         complement: null,
+        fantasy_name: null,
       },
     };
   },
@@ -373,6 +387,9 @@ export default {
       addressNumber: {
         required,
       },
+      fantasy_name: {
+        required,
+      },
     },
   },
   head() {
@@ -412,6 +429,7 @@ export default {
               uf: null,
               addressNumber: null,
               complement: null,
+              fantasy_name: null,
             };
             this.$router.push('/cadastro-empresa-02');
           })
