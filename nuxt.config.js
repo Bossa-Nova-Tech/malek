@@ -26,6 +26,7 @@ export default {
   env: {
     title: 'bossa',
     description: 'bossa',
+    api_url: 'http://localhost:8000/api/v1/',
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -154,6 +155,8 @@ export default {
     '~plugins/helpers.js',
     '~plugins/vue-the-mask.js',
     { src: '~/plugins/vue-screen.client.js', mode: 'client' },
+    '~plugins/teste.js',
+    '~plugins/axios.js',
   ],
 
   render: {
@@ -181,7 +184,25 @@ export default {
     '@nuxtjs/robots',
     '@nuxtjs/sitemap',
     'vue-screen/nuxt',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
   ],
+
+  auth: {
+    strategies: {
+      laravelJWT: {
+        provider: 'laravel/jwt',
+        url: 'http://localhost:8000/api/v1',
+        token: {
+          property: 'access_token',
+          maxAge: 60 * 60,
+        },
+        refreshToken: {
+          maxAge: 20160 * 60,
+        },
+      },
+    },
+  },
 
   bootstrapVue: {
     bootstrapCSS: false, // Or `css: false`
@@ -189,7 +210,9 @@ export default {
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: process.env.api_url,
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

@@ -115,32 +115,27 @@ export default {
   },
 
   methods: {
-    login() {
+    async login() {
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
-        // SIMULATION OF A DATA FETCHING REQUEST
-
         this.formSend = true;
-        console.log(this.formData);
+        try {
+          const { email, password } = this.formData;
 
-        this.promise()
-          .then(() => {
-            this.formSend = false;
-            this.$v.$reset();
-
-            this.formData = {
-              email: null,
-              required: null,
-            };
-          })
-          .catch((error) => {
-            this.formSend = false;
-
-            console.log(error);
-
-            this.toast('danger', 'Erro', error);
+          await this.$auth.loginWith('laravelJWT', {
+            data: { email, password },
           });
+
+          this.formSend = false;
+
+          if (this.$auth.$state.loggedIn) {
+            window.$nuxt.$router.push('/painel-adm-atual');
+          }
+        } catch (error) {
+          console.log(error);
+          this.toast('danger', 'Erro', error);
+        }
       }
     },
   },
