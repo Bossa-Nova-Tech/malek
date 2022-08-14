@@ -26,14 +26,14 @@
 
           <b-col cols="6">
             <b-form-group>
-              <label for="lastName">Sobrenome *</label>
+              <label for="last_name">Sobrenome *</label>
               <b-form-input
-                v-model="formData.lastName"
-                name="lastName"
+                v-model="formData.last_name"
+                name="last_name"
                 type="text"
                 placeholder="Souza"
                 :class="{
-                  'is-invalid': $v.formData.lastName.$error,
+                  'is-invalid': $v.formData.last_name.$error,
                 }"
               />
               <b-form-invalid-feedback>
@@ -166,19 +166,19 @@
 
           <b-col cols="6">
             <b-form-group>
-              <label for="confirmPassword">Confirmar Senha *</label>
+              <label for="confirm_password">Confirmar Senha *</label>
               <b-form-input
-                v-model="formData.confirmPassword"
-                name="confirmPassword"
+                v-model="formData.confirm_password"
+                name="confirm_password"
                 type="password"
                 placeholder="******"
                 :class="{
-                  'is-invalid': $v.formData.confirmPassword.$error,
+                  'is-invalid': $v.formData.confirm_password.$error,
                 }"
               />
               <b-form-invalid-feedback>
                 {{
-                  !$v.formData.confirmPassword.sameAsPassword
+                  !$v.formData.confirm_password.sameAsPassword
                     ? 'Senhas diferentes'
                     : 'Insira uma senha'
                 }}
@@ -262,14 +262,14 @@
 
           <b-col cols="6">
             <b-form-group>
-              <label for="uf">Estado</label>
+              <label for="state">Estado</label>
               <b-form-input
-                v-model="formData.uf"
-                name="uf"
+                v-model="formData.state"
+                name="state"
                 type="text"
                 placeholder="-"
                 :class="{
-                  'is-invalid': $v.formData.uf.$error,
+                  'is-invalid': $v.formData.state.$error,
                 }"
               />
               <b-form-invalid-feedback>
@@ -282,14 +282,14 @@
         <b-row>
           <b-col cols="6">
             <b-form-group>
-              <label for="addressNumber">Numero *</label>
+              <label for="number">Numero *</label>
               <b-form-input
-                v-model="formData.addressNumber"
-                name="addressNumber"
+                v-model="formData.number"
+                name="number"
                 type="number"
                 placeholder="000"
                 :class="{
-                  'is-invalid': $v.formData.addressNumber.$error,
+                  'is-invalid': $v.formData.number.$error,
                 }"
               />
               <b-form-invalid-feedback>
@@ -314,10 +314,27 @@
     </main>
 
     <div class="row justify-content-center mb-4 mx-1">
-      <button class="col col-lg-4" :disabled="formSend" @click="login">
+      <button class="col col-lg-4" :disabled="formSend" @click="register">
         <b-spinner v-if="formSend" small type="grow" />
         Avançar
       </button>
+    </div>
+    <b-button v-b-modal="'modal-center'">Show Modal</b-button>
+    <div>
+      <b-modal
+        id="modal-center"
+        ref="modal-center"
+        centered
+        hide-header
+        hide-footer
+        title="BootstrapVue"
+      >
+        <div class="d-flex flex-column align-items-center">
+          <img src="~/assets/img/icones/email-icon.svg" alt="" class="py-4" />
+          <h3 class="text-center">Cadastro realizado com sucesso!</h3>
+          <NuxtLink to="/login">Clique aqui para realizar o login</NuxtLink>
+        </div>
+      </b-modal>
     </div>
   </b-container>
 </template>
@@ -328,7 +345,7 @@ import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 
 export default {
-  name: 'Login',
+  name: 'RegisterCompany',
 
   directives: { mask },
   mixins: [validationMixin],
@@ -338,20 +355,20 @@ export default {
       formSend: false,
       formData: {
         name: null,
-        lastName: null,
+        last_name: null,
         cnpj: null,
+        fantasy_name: null,
         ddd: null,
         phone: null,
         email: null,
         password: null,
-        confirmPassword: null,
+        confirm_password: null,
         cep: null,
         district: null,
         city: null,
-        uf: null,
-        addressNumber: null,
+        state: null,
+        number: null,
         complement: null,
-        fantasy_name: null,
         address: null,
       },
     };
@@ -362,7 +379,7 @@ export default {
       name: {
         required,
       },
-      lastName: {
+      last_name: {
         required,
       },
       cnpj: {
@@ -385,7 +402,7 @@ export default {
         required,
         minLength: minLength(8),
       },
-      confirmPassword: {
+      confirm_password: {
         required,
         sameAsPassword: sameAs('password'),
       },
@@ -398,10 +415,10 @@ export default {
       city: {
         required,
       },
-      uf: {
+      state: {
         required,
       },
-      addressNumber: {
+      number: {
         required,
       },
       fantasy_name: {
@@ -418,8 +435,13 @@ export default {
     };
   },
 
+  mounted() {
+    console.log('teste no cadastro::', this.$nameTeste);
+    console.log('teste no função::', this.$showName('Pedro Santos'));
+  },
+
   methods: {
-    login() {
+    async register(_response) {
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
@@ -428,39 +450,84 @@ export default {
         this.formSend = true;
         console.log(this.formData);
 
-        this.promise()
-          .then(() => {
-            this.formSend = false;
-            this.$v.$reset();
+        try {
+          this.formSend = false;
+          this.$v.$reset();
 
-            this.formData = {
-              required: null,
-              name: null,
-              lastName: null,
-              cnpj: null,
-              ddd: null,
-              phone: null,
-              email: null,
-              password: null,
-              confirmPassword: null,
-              cep: null,
-              district: null,
-              city: null,
-              uf: null,
-              addressNumber: null,
-              complement: null,
-              fantasy_name: null,
-              address: null,
-            };
-            this.$router.push('/cadastro-empresa-02');
-          })
-          .catch((error) => {
-            this.formSend = false;
+          console.log('executou o clic');
+          // const returnData = await this.$axios.$post(
+          //   process.env.api_url + 'companies',
+          //   this.formData,
+          // );
+          // console.log('response :: ', response);
+          // this.$axios.onError((error) => {
+          //   if (error.response.status === 422) {
+          //     console.log('erro aqui ::', error.response.status);
+          //   }
+          // });
 
-            console.log(error);
+          await this.$axios
+            .post('companies', this.$data.formData)
+            .then((_res) => {
+              // this.$router.push('/cadastro-empresa-02');
+              this.$refs['modal-center'].show();
+            })
+            .catch((_err) => {
+              // this.toast('danger', 'Erro', _err);
+            });
 
-            this.toast('danger', 'Erro', error);
-          });
+          // console.log('returnDAta ', returnData);
+
+          // const returnData = await this.$fetch('/companies', {
+          //   method: 'POST',
+          //   body: this.formData,
+          // });
+
+          // if (returnData) {
+          //   this.$router.push('/cadastro-empresa-02');
+          // }
+        } catch (error) {
+          console.log(error);
+          // this.toast('danger', 'Erro', error);
+        }
+
+        // this.promise()
+        //   .then(() => {
+        //     this.formSend = false;
+        //     this.$v.$reset();
+
+        //     this.$fetch('/companies', {
+        //       method: 'POST',
+        //       body: this.formData,
+        //     });
+        //     // this.formData = {
+        //     //   required: null,
+        //     //   name: null,
+        //     //   last_name: null,
+        //     //   cnpj: null,
+        //     //   ddd: null,
+        //     //   phone: null,
+        //     //   email: null,
+        //     //   password: null,
+        //     //   confirm_password: null,
+        //     //   cep: null,
+        //     //   district: null,
+        //     //   city: null,
+        //     //   state: null,
+        //     //   number: null,
+        //     //   complement: null,
+        //     //   fantasy_name: null,
+        //     //   address: null,
+        //     // };
+        //     // this.$router.push('/cadastro-empresa-02');
+        //   })
+        //   .catch((error) => {
+        //     this.formSend = false;
+
+        //     console.log(error);
+
+        //     this.toast('danger', 'Erro', error);
+        //   });
       }
     },
   },
