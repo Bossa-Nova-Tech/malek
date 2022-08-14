@@ -316,10 +316,9 @@
     <div class="row justify-content-center mb-4 mx-1">
       <button class="col col-lg-4" :disabled="formSend" @click="register">
         <b-spinner v-if="formSend" small type="grow" />
-        Avançar
+        Cadastrar
       </button>
     </div>
-    <b-button v-b-modal="'modal-center'">Show Modal</b-button>
     <div>
       <b-modal
         id="modal-center"
