@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <main class="min-vh-100">
+    <main class="caixa min-vh-100 mx-auto">
       <h1>Cadastrar empresa</h1>
       <h2>Minha marca</h2>
 

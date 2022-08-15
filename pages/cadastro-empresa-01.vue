@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <main class="row justify-content-center align-items-center min-vh-100">
-      <b-form class="col col-lg-4">
+      <b-form class="col col-lg-6">
         <h1 class="mt-5 pb-3">Cadastrar empresa</h1>
         <h2 class="pb-5">Minhas informações</h2>
 
@@ -319,7 +319,7 @@
         Avançar
       </button>
     </div>
-    <b-button v-b-modal="'modal-center'">Show Modal</b-button>
+    <!-- <b-button v-b-modal="'modal-center'">Show Modal</b-button> -->
     <div>
       <b-modal
         id="modal-center"

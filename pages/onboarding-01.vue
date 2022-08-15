@@ -1,14 +1,14 @@
 <template>
   <main class="caixa mx-auto">
+    <div :class="{ loader: true, fadeout: !isLoading }">
+      <img
+        id="splash"
+        src="~/assets/img/android-chrome-512x512.png"
+        alt=""
+        width="400"
+      />
+    </div>
     <Flicking :options="{ align: 'prev' }" :plugins="plugins">
-      <div :class="{ loader: true, fadeout: !isLoading }">
-        <img
-          id="splash"
-          src="~/assets/img/android-chrome-512x512.png"
-          alt=""
-          width="400"
-        />
-      </div>
       <section>
         <h1 class="primary-80">Seja bem vindo</h1>
         <div>
@@ -138,6 +138,11 @@ section {
 #caneta {
   object-fit: contain;
 }
+
+#splash {
+  object-fit: contain;
+}
+
 .loader {
   background-color: #ffffff;
   bottom: 0;
@@ -159,9 +164,6 @@ section {
     opacity: 0;
     visibility: hidden;
   }
-}
-#splash {
-  object-fit: contain;
 }
 </style>
 

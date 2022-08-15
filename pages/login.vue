@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <main class="row justify-content-center align-items-center min-vh-100">
-      <b-form class="col col-lg-4">
+      <b-form class="col col-lg-6">
         <img
           class="row mx-auto"
           src="~/assets/img/ilustracao/logo.png"
