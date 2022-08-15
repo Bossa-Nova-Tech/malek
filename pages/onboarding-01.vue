@@ -73,10 +73,10 @@ import '@egjs/flicking-plugins/dist/pagination.css';
 
 export default {
   name: 'LoadingScreen',
-  props: ['isLoading'],
   components: {
     Flicking,
   },
+  props: ['isLoading'],
   data() {
     return {
       plugins: [new Pagination({ type: 'bullet' })],
