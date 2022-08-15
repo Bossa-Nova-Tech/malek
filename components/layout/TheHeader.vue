@@ -25,10 +25,7 @@ header {
 
   h1 {
     padding: 3.313rem 0rem 2.188rem 2.813rem;
-    font-weight: 600;
-    font-size: 1.5rem;
-    line-height: 150%;
-    margin-bottom: 0px;
+    color: #ffffff;
   }
 
   img {

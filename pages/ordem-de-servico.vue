@@ -5,10 +5,10 @@
       <!-- passar titulo aqui -->
     </TheHeader>
     <main class="mb-5">
-      <b-container class="d-flex px-4 mb-4">
-        <b-form-input placeholder="Procurar" class="mr-3"></b-form-input>
-        <img src="~/assets/img/icones/sliders.svg" alt="" />
-      </b-container>
+      <div class="hoje mx-auto">
+        <NuxtLink to="/"> Hoje </NuxtLink>
+        <NuxtLink to="/"> Relatório </NuxtLink>
+      </div>
 
       <section>
         <b-container class="card-servico mb-4">
@@ -44,6 +44,14 @@ export default { components: { TheHeader, TheFooter } };
 </script>
 
 <style lang="scss" scoped>
+main {
+  .hoje {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 20.8125rem;
+    justify-items: center;
+  }
+}
 .card-servico {
   padding: 1.25rem 1.5625rem;
   background-color: #ffffff;
