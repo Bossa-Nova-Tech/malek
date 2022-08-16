@@ -45,14 +45,14 @@
         </b-form-group>
 
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <b-form-checkbox name="remember" class="text-sm"
+          <b-form-checkbox v-model="checked" class="text-sm"
             >Lembrar senha</b-form-checkbox
           >
-
           <NuxtLink to="/EsqueciMinhaSenha" class="text-sm"
             ><u>Esqueci minha senha</u></NuxtLink
           >
         </div>
+        <b> {{ checked }} </b>
 
         <button
           block
@@ -84,6 +84,7 @@ export default {
       formData: {
         email: null,
         password: null,
+        checked: false,
       },
     };
   },

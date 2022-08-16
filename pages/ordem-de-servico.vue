@@ -1,55 +1,79 @@
 <template>
   <div class="d-flex flex-column altura">
-    <TheHeader>
-      Ordem de serviço
-      <!-- passar titulo aqui -->
-    </TheHeader>
+    <TheHeader> Ordem de serviço </TheHeader>
     <main class="mb-5">
-      <div class="hoje mx-auto">
-        <NuxtLink to="/"> Hoje </NuxtLink>
-        <NuxtLink to="/"> Relatório </NuxtLink>
+      <div class="tabs mx-auto">
+        <span @click="setActive('tab-1')"> Hoje </span>
+        <span @click="setActive('tab-2')"> Relatório </span>
       </div>
 
-      <section>
+      <section v-show="isActive('tab-1')">
         <b-container class="card-servico mb-4">
           <div class="d-flex align-items-center justify-content-between pb-2">
-            <h2 class="manutencao primary-80">Manutenção</h2>
-            <p class="local gray-40">HAVAN Unidade 01</p>
+            <h2 class="manutencao primary-80">
+              {{ formData.type_of_service }}
+            </h2>
+            <p class="local gray-40">{{ formData.place }}</p>
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div>
               <img src="~/assets/img/icones/foto-perfil.svg" alt="" />
-              <span class="pl-3">José S. Silveira</span>
+              <span class="pl-3">{{ formData.name }}</span>
             </div>
             <div>
-              <span class="porcentagem primary-80">75%</span>
-              <span class="tempo gray-40">02h30</span>
+              <span class="porcentagem primary-80">
+                {{ formData.performance }}</span
+              >
+              <span class="tempo gray-40"
+                >{{ formData.time_of_execution }}
+              </span>
             </div>
           </div>
         </b-container>
       </section>
+
+      <section v-show="isActive('tab-2')">
+        <b-container class="card-servico mb-4">
+          <h1>Parte Vanessa</h1>
+        </b-container>
+      </section>
     </main>
 
-    <TheFooter>
-      avançar
-      <!-- passar nome do botão aqui -->
-    </TheFooter>
+    <TheFooter> Criar Ordem de Serviço </TheFooter>
   </div>
 </template>
 
 <script>
 import TheHeader from '~/components/layout/TheHeader.vue';
 import TheFooter from '~/components/layout/TheFooter.vue';
-export default { components: { TheHeader, TheFooter } };
+export default {
+  components: { TheHeader, TheFooter },
+
+  data: () => ({
+    activeTab: 'tab-1',
+  }),
+  methods: {
+    setActive(tab) {
+      this.activeTab = tab;
+    },
+    isActive(tab) {
+      return this.activeTab === tab;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 main {
-  .hoje {
+  .tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
     max-width: 20.8125rem;
     justify-items: center;
+  }
+  section {
+    height: 62vh;
+    overflow: auto;
   }
 }
 .card-servico {
