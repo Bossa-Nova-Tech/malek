@@ -51,6 +51,13 @@ export default {
 
   data: () => ({
     activeTab: 'tab-1',
+    formData: {
+      name: null,
+      type_of_service: null,
+      place: null,
+      time_of_execution: null,
+      performance: null,
+    },
   }),
   methods: {
     setActive(tab) {
