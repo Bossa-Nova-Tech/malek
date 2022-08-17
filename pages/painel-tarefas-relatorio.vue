@@ -2,9 +2,35 @@
   <div class="d-flex flex-column">
     <TheHeader> Ordem de Serviço </TheHeader>
     <main class="d-flex caixa mx-auto mb-5">
-      <b-tabs pills class="mx-auto caixa" align="center"
-        ><b-tab title="Hoje" active>
-          <div class="content">conteúdo Borges</div>
+      <b-tabs pills class="mx-auto caixa" align="center">
+        <b-tab title="Hoje" active>
+          <section class="content mt-3">
+            <div class="card-servico mb-4">
+              <div
+                class="d-flex align-items-center justify-content-between pb-2"
+              >
+                <h2 class="manutencao primary-80">
+                  {{ formData.services }}
+                </h2>
+                <p class="local gray-40">{{ formData.name_customer }}</p>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <img src="~/assets/img/icones/foto-perfil.svg" alt="" />
+                  <span class="pl-3">{{ formData.name }}</span>
+                </div>
+                <div>
+                  <span class="porcentagem primary-80">
+                    {{ formData.performance }}</span
+                  >
+                  <span class="tempo gray-40"
+                    >{{ formData.time_of_execution }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <div
             class="footer caixa d-flex justify-content-center align-items-center"
           >
@@ -308,6 +334,28 @@ main {
     height: 8.222rem;
     background: var(--gray-10);
     padding: 1.5rem;
+  }
+  .card-servico {
+    padding: 1.25rem 1.5625rem;
+    background-color: #ffffff;
+    box-shadow: 0rem 0.25rem 0.25rem rgba(0, 71, 187, 0.06);
+  }
+  .manutencao {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .local {
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+  .porcentagem {
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+  .tempo {
+    font-weight: 500;
+    font-size: 0.625rem;
   }
 }
 </style>
