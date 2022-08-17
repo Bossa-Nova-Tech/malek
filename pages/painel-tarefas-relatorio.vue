@@ -4,28 +4,26 @@
     <main class="d-flex caixa mx-auto mb-5">
       <b-tabs pills class="mx-auto caixa" align="center">
         <b-tab title="Hoje" active>
-          <section class="content mt-3">
+          <section v-for="(ordem, index) in ordens" :key="index" class="mt-3">
             <div class="card-servico mb-4">
               <div
                 class="d-flex align-items-center justify-content-between pb-2"
               >
                 <h2 class="manutencao primary-80">
-                  {{ formData.services }}
+                  {{ ordem.services }}
                 </h2>
-                <p class="local gray-40">{{ formData.name_customer }}</p>
+                <p class="local gray-40">{{ ordem.name_customer }}</p>
               </div>
               <div class="d-flex align-items-center justify-content-between">
                 <div>
                   <img src="~/assets/img/icones/foto-perfil.svg" alt="" />
-                  <span class="pl-3">{{ formData.name }}</span>
+                  <span class="pl-3">{{ ordem.name }}</span>
                 </div>
                 <div>
                   <span class="porcentagem primary-80">
-                    {{ formData.performance }}</span
+                    {{ ordem.performance }}</span
                   >
-                  <span class="tempo gray-40"
-                    >{{ formData.time_of_execution }}
-                  </span>
+                  <span class="tempo gray-40">{{ ordem.estimated_time }} </span>
                 </div>
               </div>
             </div>
@@ -41,10 +39,11 @@
             >
             <!-- tela modal-criar-ordemservico -->
             <b-modal
+              id="modal"
               ref="modal"
               v-model="showModal"
               header-class="border-0 d-flex flex-column"
-              footer-class="border-0"
+              footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
             >
               <template #modal-header>
                 <b-img
@@ -58,15 +57,21 @@
                   <b-form-select
                     v-model="formData.template"
                     :options="optionsTemplate"
-                  >
-                  </b-form-select>
+                    :class="{ 'is-invalid': $v.formData.template.$error }"
+                  />
+                  <b-form-invalid-feedback>
+                    Selecione uma opção.
+                  </b-form-invalid-feedback>
                 </b-form-group>
                 <b-form-group label="Categoria" label-for="formData.services">
                   <b-form-select
                     v-model="formData.services"
                     :options="optionsServices"
-                  >
-                  </b-form-select>
+                    :class="{ 'is-invalid': $v.formData.services.$error }"
+                  />
+                  <b-form-invalid-feedback>
+                    Selecione uma opção.
+                  </b-form-invalid-feedback>
                 </b-form-group>
                 <b-form-group
                   label="Cliente"
@@ -75,17 +80,33 @@
                   <b-form-select
                     v-model="formData.name_customer"
                     :options="optionsNameCustomer"
-                  >
-                  </b-form-select>
+                    :class="{ 'is-invalid': $v.formData.name_customer.$error }"
+                  />
+                  <b-form-invalid-feedback>
+                    Selecione uma opção.
+                  </b-form-invalid-feedback>
                 </b-form-group>
                 <b-form-group label="Colaborador" label-for="formData.name">
                   <b-form-select
                     v-model="formData.name"
                     :options="optionsNames"
-                  >
-                  </b-form-select>
+                    :class="{ 'is-invalid': $v.formData.name.$error }"
+                  />
+                  <b-form-invalid-feedback>
+                    Selecione uma opção.
+                  </b-form-invalid-feedback>
                 </b-form-group>
-                <BorderButton>Enviar Fotos</BorderButton>
+                <BorderButton class="mb-3">
+                  <b-form-file
+                    id="file"
+                    v-model="formData.photo"
+                    plain
+                    multiple
+                  ></b-form-file>
+                  <label for="file" class="label text-center"
+                    >Enviar Fotos</label
+                  >
+                </BorderButton>
                 <b-form-group
                   label="Duração média da tarefa"
                   label-for="formData.estimated_time"
@@ -98,13 +119,23 @@
                 </b-form-group>
                 <b-form-group
                   label="Data prevista de conclusão"
-                  label-for="formData.name"
+                  label-for="formData.end_date"
                 >
                   <b-form-datepicker
                     v-model="formData.end_date"
-                    :options="optionsNames"
-                  >
-                  </b-form-datepicker>
+                    :date-format-options="{
+                      year: 'numeric',
+                      month: 'numeric',
+                      day: 'numeric',
+                    }"
+                    direction="rtl"
+                    locale="pt"
+                    placeholder="00/00/2022"
+                    :class="{ 'is-invalid': $v.formData.end_date.$error }"
+                  />
+                  <b-form-invalid-feedback>
+                    Selecione uma opção.
+                  </b-form-invalid-feedback>
                 </b-form-group>
                 <b-form-group
                   label="Observação"
@@ -119,15 +150,15 @@
               </template>
 
               <template #modal-footer>
-                <div class="w-100">
-                  <b-button
-                    variant="primary"
-                    size="sm"
-                    class="float-right"
-                    @click="showModal = false"
-                  >
+                <b-form-checkbox v-model="formData.signature"
+                  >É necessário coletar assinatura durante
+                  visita.</b-form-checkbox
+                >
+                <div class="w-100 row justify-content-center mb-4 mx-1">
+                  <button class="w-100" :disabled="formSend" @click="register">
+                    <b-spinner v-if="formSend" small type="grow" />
                     Salvar
-                  </b-button>
+                  </button>
                 </div>
               </template>
             </b-modal>
@@ -139,31 +170,15 @@
           <b-card class="box-shadow border-0 mt-2 mb-1">
             <h2 class="mb-4">Em andamento</h2>
             <Flicking :options="{ align: 'prev', bound: true }">
-              <div class="mr-4">
-                <p>{{ formData.name }}</p>
-                <p class="lugar">{{ formData.name_customer }}</p>
-                <span class="font-weight-bolder">{{
-                  formData.performance
-                }}</span>
-                <span class="horas">{{ formData.time_of_execution }}</span>
-              </div>
-              <div class="mr-4">
-                <p>{{ formData.name }}</p>
-                <p class="lugar">{{ formData.name_customer }}</p>
-                <span class="font-weight-bolder">{{
-                  formData.performance
-                }}</span>
-                <span class="horas">{{ formData.time_of_execution }}</span>
-              </div>
-              <div class="mr-4">
-                <p>{{ formData.name }}</p>
-                <p class="lugar">{{ formData.name_customer }}</p>
-                <span class="font-weight-bolder">{{
-                  formData.performance
-                }}</span>
-                <span class="horas gray-40">{{
-                  formData.time_of_execution
-                }}</span>
+              <div class="d-flex">
+                <div v-for="(ordem, index) in ordens" :key="index" class="mr-4">
+                  <p>{{ ordem.name }}</p>
+                  <p class="lugar">{{ ordem.name_customer }}</p>
+                  <span class="font-weight-bolder">{{
+                    ordem.performance
+                  }}</span>
+                  <span class="horas">{{ ordem.estimated_time }}</span>
+                </div>
               </div>
             </Flicking>
           </b-card>
@@ -174,10 +189,7 @@
 
           <b-card class="box-shadow border-0">
             <h2 class="mb-3">Desempenho por colaborador</h2>
-            <b-form-select
-              v-model="formData.employeePerformance"
-              :options="optionsEmployeePerformance"
-            >
+            <b-form-select v-model="formData.name" :options="optionsNames">
             </b-form-select>
           </b-card>
         </b-tab>
@@ -187,52 +199,47 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators';
+import { validationMixin } from 'vuelidate';
+import { mask } from 'vue-the-mask';
 import { Flicking } from '@egjs/vue-flicking';
 import TheHeader from '~/components/layout/TheHeader.vue';
 import Graphic from '~/components/Graphic.vue';
 import BorderButton from '~/components/BorderButton.vue';
 export default {
   components: { Flicking, TheHeader, Graphic, BorderButton },
+  directives: { mask },
+  mixins: [validationMixin],
+
   data: () => {
     return {
+      ordens: [],
+      formSend: false,
       showModal: false,
       formData: {
+        signature: false,
+        photo: [],
         estimated_time: null,
         end_date: null,
         observation: null,
         name_customer: 'HAVAN Unidade 01',
         template: null,
         services: null,
-        name: 'name_01',
+        name: '',
         performance: '75%',
         time_of_execution: '02h30',
-        employeePerformance: null,
       },
-      optionsEmployeePerformance: [
-        {
-          value: null,
-          text: 'Selecione',
-        },
-        {
-          value: 'a',
-          text: 'Joana',
-        },
-        {
-          value: 'b',
-          text: 'Fred',
-        },
-      ],
       optionsTemplate: [
         {
           value: null,
           text: 'Selecione',
         },
         {
-          value: 'manutention',
+          value: 'Manutenção',
           text: 'Manutenção',
         },
         {
-          value: 'instalation',
+          value: 'Instalação',
           text: 'Instalação',
         },
       ],
@@ -242,11 +249,11 @@ export default {
           text: 'Selecione',
         },
         {
-          value: 'manutention',
+          value: 'Manutenção',
           text: 'Manutenção',
         },
         {
-          value: 'instalation',
+          value: 'Instalação',
           text: 'Instalação',
         },
       ],
@@ -256,12 +263,12 @@ export default {
           text: 'Selecione',
         },
         {
-          value: 'havan_02',
+          value: 'HAVAN Unidade 02',
           text: 'HAVAN Unidade 02',
         },
         {
-          value: 'instalation',
-          text: 'Instalação',
+          value: 'HAVAN Unidade 03',
+          text: 'HAVAN Unidade 03',
         },
       ],
       optionsNames: [
@@ -270,11 +277,11 @@ export default {
           text: 'Selecione',
         },
         {
-          value: 'name_01',
+          value: 'José da Silveira',
           text: 'José da Silveira',
         },
         {
-          value: 'name_02',
+          value: 'Pedro Santos',
           text: 'Pedro Santos',
         },
       ],
@@ -284,15 +291,77 @@ export default {
           text: 'Selecione',
         },
         {
-          value: 'time_01',
+          value: '02horas e 30min',
           text: '02horas e 30min',
         },
         {
-          value: 'time_02',
+          value: '03horas e 30min',
           text: '03horas e 30min',
         },
       ],
     };
+  },
+  head() {
+    return {
+      title: `Ordem de Serviços |  ${process.env.title}`,
+    };
+  },
+
+  validations: {
+    formData: {
+      services: {
+        required,
+      },
+      end_date: {
+        required,
+      },
+      name_customer: {
+        required,
+      },
+      name: {
+        required,
+      },
+      template: {
+        required,
+      },
+    },
+  },
+
+  methods: {
+    async register(_response) {
+      this.$v.formData.$touch();
+
+      if (!this.$v.formData.$invalid) {
+        this.formSend = true;
+        console.log(this.formData);
+        this.ordens.push(this.formData);
+        console.log(this.formData);
+        this.$v.$reset();
+        this.formData = {
+          services: null,
+          name: null,
+          name_customer: null,
+          template: null,
+          end_date: null,
+          time_of_execution: null,
+          estimated_time: null,
+        };
+        try {
+          this.formSend = false;
+          this.$v.$reset();
+
+          console.log('executou o clic');
+          await this.$axios
+            .post('tasks', this.$data.formData)
+            .then((_res) => {
+              this.$refs.modal.hide();
+            })
+            .catch((_err) => {});
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
   },
 };
 </script>
@@ -326,15 +395,14 @@ main {
     background: var(--primary-50);
     height: 2.82rem;
   }
-  .content {
-    min-height: calc(100vh - 8.222rem - 10.5rem);
-  }
+
   .footer {
     box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
     height: 8.222rem;
     background: var(--gray-10);
     padding: 1.5rem;
   }
+
   .card-servico {
     padding: 1.25rem 1.5625rem;
     background-color: #ffffff;

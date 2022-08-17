@@ -68,7 +68,21 @@ body {
 .nav-pills .show > .nav-link {
   background-color: var(--primary-50);
 }
-
+.form-control-file {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+label.label {
+  border-radius: 6px;
+  width: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  margin: 0;
+  color: var(--primary-60);
+}
 .modal-header,
 .modal-body,
 .modal-footer {
