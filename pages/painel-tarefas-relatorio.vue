@@ -24,6 +24,7 @@
                   <span class="tempo gray-40">{{ ordem.estimated_time }} </span>
                 </div>
               </div>
+
               <b-modal
                 id="modal-1"
                 title="BootstrapVue"
@@ -35,36 +36,50 @@
                   class="my-4 ml-3"
                 />
                 <h1 class="ml-3">Editar Ordem de Serviço</h1>
+
                 <b-form-group>
-                  <label for="template">template</label>
-                  <b-form-input
-                    name="template"
-                    type="text"
-                    placeholder="manutenção"
-                  />
+                  <div class="mb-2">
+                    <label for="template">Template</label>
+                    <b-form-input
+                      v-model="formData.template"
+                      name="template"
+                      type="text"
+                      placeholder="-"
+                    />
+                  </div>
 
-                  <label for="categoria">categoria</label>
-                  <b-form-input
-                    name="categoria"
-                    type="text"
-                    placeholder="manutenção"
-                  />
+                  <div class="mb-2">
+                    <label for="services">Categoria</label>
+                    <b-form-input
+                      v-model="formData.services"
+                      name="services"
+                      type="text"
+                      placeholder="-"
+                    />
+                  </div>
 
-                  <label for="cliente">cliente</label>
-                  <b-form-input
-                    name="cliente"
-                    type="text"
-                    placeholder="havan"
-                  />
+                  <div class="mb-2">
+                    <label for="name_customer">Cliente</label>
+                    <b-form-input
+                      v-model="formData.name_customer"
+                      name="name_customer"
+                      type="text"
+                      placeholder="-"
+                    />
+                  </div>
 
-                  <label for="colaborador">colaborador</label>
-                  <b-form-input
-                    name="colaborador"
-                    type="text"
-                    placeholder="João"
-                  />
+                  <div class="mb-2">
+                    <label for="estimated_time">Duração media da tarefa</label>
+                    <b-form-input
+                      v-model="formData.estimated_time"
+                      name="estimated_time"
+                      type="text"
+                      placeholder="-"
+                    />
+                  </div>
+
+                  <button>salvar</button>
                 </b-form-group>
-                <button>salvar</button>
               </b-modal>
 
               <b-button
@@ -75,6 +90,20 @@
               >
                 Editar</b-button
               >
+
+              <div>
+                <b-modal id="modal-2" title="BootstrapVue" hide-header>
+                  <p class="my-4">tem certeza que deseja excluir?</p>
+                </b-modal>
+                <b-button
+                  v-b-modal.modal-2
+                  size="sm"
+                  variant="danger"
+                  class="mt-3"
+                >
+                  Excluir</b-button
+                >
+              </div>
             </div>
           </section>
 
