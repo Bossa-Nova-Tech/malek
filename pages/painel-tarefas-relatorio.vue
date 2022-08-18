@@ -159,9 +159,8 @@
 
               <div>
                 <b-modal
-                  id="modal2"
+                  id="modal-2"
                   ref="modal2"
-                  v-model="showModal2"
                   title="BootstrapVue"
                   hide-header
                   footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
@@ -173,14 +172,14 @@
                     <b-button variant="danger" @click="remove(index)"
                       >Sim</b-button
                     >
-                    <b-button @click="showModal2 = false">Não</b-button>
+                    <b-button @click="hideModal2(index)">Não</b-button>
                   </template>
                 </b-modal>
                 <b-button
                   size="sm"
                   variant="danger"
                   class="mt-3"
-                  @click="showModal2 = true"
+                  @click="showModal2(index)"
                 >
                   Excluir</b-button
                 >
@@ -361,7 +360,6 @@ export default {
       ordens: [],
       formSend: false,
       showModal: false,
-      showModal2: false,
       formData: {
         signature: false,
         photo: [],
@@ -476,6 +474,12 @@ export default {
   },
 
   methods: {
+    showModal2(index) {
+      this.$root.$emit('bv::show::modal', 'modal-2', index);
+    },
+    hideModal2(index) {
+      this.$root.$emit('bv::hide::modal', 'modal-2', index);
+    },
     async register(_response) {
       this.$v.formData.$touch();
 
