@@ -34,118 +34,53 @@
               >
                 <img
                   src="~/assets/img/icones/seta-voltar-azul.svg"
-                  class="my-4"
+                  class="my-4 ml-3"
                 />
-                <h1 class="mb-4">Editar Ordem de Serviço</h1>
+                <h1 class="ml-3">Editar Ordem de Serviço</h1>
 
-                <div>
-                  <b-form-group
-                    label="Tamplate"
-                    label-for="formData.template"
-                    class="mb-4"
-                  >
-                    <b-form-select
-                      v-model="formData.template"
-                      :options="optionsTemplate"
-                      :class="{ 'is-invalid': $v.formData.template.$error }"
-                    />
-                    <b-form-invalid-feedback>
-                      Selecione uma opção.
-                    </b-form-invalid-feedback>
-                  </b-form-group>
-
-                  <b-form-group
-                    label="Categoria"
-                    label-for="formData.services"
-                    class="mb-4"
-                  >
-                    <b-form-select
-                      v-model="formData.services"
-                      :options="optionsServices"
-                      :class="{ 'is-invalid': $v.formData.services.$error }"
-                    />
-                    <b-form-invalid-feedback>
-                      Selecione uma opção.
-                    </b-form-invalid-feedback>
-                  </b-form-group>
-
-                  <b-form-group
-                    label="Cliente"
-                    label-for="formData.name_customer"
-                    class="mb-4"
-                  >
-                    <b-form-select
-                      v-model="formData.name_customer"
-                      :options="optionsNameCustomer"
-                      :class="{
-                        'is-invalid': $v.formData.name_customer.$error,
-                      }"
-                    />
-                    <b-form-invalid-feedback>
-                      Selecione uma opção.
-                    </b-form-invalid-feedback>
-                  </b-form-group>
-
-                  <BorderButton class="my-4">
-                    <b-form-file
-                      id="file"
-                      v-model="formData.photo"
-                      plain
-                      multiple
-                    ></b-form-file>
-                    <label for="file" class="label text-center"
-                      >Enviar Fotos</label
-                    >
-                  </BorderButton>
-
-                  <b-form-group
-                    label="Duração média da tarefa"
-                    label-for="formData.estimated_time"
-                    class="mb-4"
-                  >
-                    <b-form-select
-                      v-model="formData.estimated_time"
-                      :options="optionsEstimatedTime"
-                    >
-                    </b-form-select>
-                  </b-form-group>
-
-                  <b-form-group
-                    label="Data prevista de conclusão"
-                    label-for="formData.end_date"
-                    class="mb-4"
-                  >
-                    <b-form-datepicker
-                      v-model="formData.end_date"
-                      :date-format-options="{
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: 'numeric',
-                      }"
-                      direction="rtl"
-                      locale="pt"
-                      placeholder="00/00/2022"
-                      :class="{ 'is-invalid': $v.formData.end_date.$error }"
-                    />
-                    <b-form-invalid-feedback>
-                      Selecione uma opção.
-                    </b-form-invalid-feedback>
-                  </b-form-group>
-
-                  <b-form-group
-                    label="Observação"
-                    label-for="formData.observation"
-                    class="mb-4"
-                  >
+                <b-form-group>
+                  <div class="mb-2">
+                    <label for="template">Template</label>
                     <b-form-input
-                      v-model="formData.observation"
-                      placeholder="Esta tarefa consiste em..."
-                    >
-                    </b-form-input>
-                  </b-form-group>
+                      v-model="formData.template"
+                      name="template"
+                      type="text"
+                      placeholder="-"
+                    />
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="services">Categoria</label>
+                    <b-form-input
+                      v-model="formData.services"
+                      name="services"
+                      type="text"
+                      placeholder="-"
+                    />
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="name_customer">Cliente</label>
+                    <b-form-input
+                      v-model="formData.name_customer"
+                      name="name_customer"
+                      type="text"
+                      placeholder="-"
+                    />
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="estimated_time">Duração media da tarefa</label>
+                    <b-form-input
+                      v-model="formData.estimated_time"
+                      name="estimated_time"
+                      type="text"
+                      placeholder="-"
+                    />
+                  </div>
 
                   <button>salvar</button>
-                </div>
+                </b-form-group>
               </b-modal>
 
               <b-button
@@ -158,29 +93,14 @@
               >
 
               <div>
-                <b-modal
-                  id="modal2"
-                  ref="modal2"
-                  v-model="showModal2"
-                  title="BootstrapVue"
-                  hide-header
-                  footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
-                >
-                  <p class="my-4">
-                    Tem certeza de que deseja excluir este campo?
-                  </p>
-                  <template #modal-footer>
-                    <b-button variant="danger" @click="remove(index)"
-                      >Sim</b-button
-                    >
-                    <b-button @click="showModal2 = false">Não</b-button>
-                  </template>
+                <b-modal id="modal-2" title="BootstrapVue" hide-header>
+                  <p class="my-4">tem certeza que deseja excluir?</p>
                 </b-modal>
                 <b-button
+                  v-b-modal.modal-2
                   size="sm"
                   variant="danger"
                   class="mt-3"
-                  @click="showModal2 = true"
                 >
                   Excluir</b-button
                 >
@@ -216,7 +136,6 @@
                   <b-form-select
                     v-model="formData.template"
                     :options="optionsTemplate"
-                    class="mb-4"
                     :class="{ 'is-invalid': $v.formData.template.$error }"
                   />
                   <b-form-invalid-feedback>
@@ -227,7 +146,6 @@
                   <b-form-select
                     v-model="formData.services"
                     :options="optionsServices"
-                    class="mb-4"
                     :class="{ 'is-invalid': $v.formData.services.$error }"
                   />
                   <b-form-invalid-feedback>
@@ -241,13 +159,25 @@
                   <b-form-select
                     v-model="formData.name_customer"
                     :options="optionsNameCustomer"
-                    class="mb-4"
                     :class="{ 'is-invalid': $v.formData.name_customer.$error }"
                   />
                   <b-form-invalid-feedback>
                     Selecione uma opção.
                   </b-form-invalid-feedback>
                 </b-form-group>
+
+                <BorderButton v-if="formData.editing === true" class="mb-3">
+                  <b-form-file
+                    id="file"
+                    v-model="formData.photo"
+                    plain
+                    multiple
+                    accept="image/jpg, image/png"
+                  ></b-form-file>
+                  <label for="file" class="label text-center"
+                    >Enviar Fotos</label
+                  >
+                </BorderButton>
                 <b-form-group
                   label="Duração média da tarefa"
                   label-for="formData.estimated_time"
@@ -255,14 +185,12 @@
                   <b-form-select
                     v-model="formData.estimated_time"
                     :options="optionsEstimatedTime"
-                    class="mb-4"
                   >
                   </b-form-select>
                 </b-form-group>
                 <b-form-group
                   label="Data prevista de conclusão"
                   label-for="formData.end_date"
-                  class="mb-4"
                 >
                   <b-form-datepicker
                     v-model="formData.end_date"
@@ -274,7 +202,6 @@
                     direction="rtl"
                     locale="pt"
                     placeholder="00/00/2022"
-                    class="mb-4"
                     :class="{ 'is-invalid': $v.formData.end_date.$error }"
                   />
                   <b-form-invalid-feedback>
@@ -361,7 +288,6 @@ export default {
       ordens: [],
       formSend: false,
       showModal: false,
-      showModal2: false,
       formData: {
         signature: false,
         photo: [],
@@ -507,9 +433,6 @@ export default {
           console.log(error);
         }
       }
-    },
-    remove(index) {
-      this.ordens.splice(index, 1);
     },
   },
 };
