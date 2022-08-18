@@ -6,9 +6,7 @@
         <b-tab title="Hoje" active>
           <section v-for="(ordem, index) in ordens" :key="index" class="mt-3">
             <div class="card-servico mb-4">
-              <div
-                class="d-flex align-items-center justify-content-between pb-2"
-              >
+              <div class="d-flex justify-content-between pb-2">
                 <h2 class="manutencao primary-80">
                   {{ ordem.services }}
                 </h2>
@@ -26,6 +24,57 @@
                   <span class="tempo gray-40">{{ ordem.estimated_time }} </span>
                 </div>
               </div>
+              <b-modal
+                id="modal-1"
+                title="BootstrapVue"
+                hide-footer
+                hide-header
+              >
+                <img
+                  src="~/assets/img/icones/seta-voltar-azul.svg"
+                  class="my-4 ml-3"
+                />
+                <h1 class="ml-3">Editar Ordem de Serviço</h1>
+                <b-form-group>
+                  <label for="template">template</label>
+                  <b-form-input
+                    name="template"
+                    type="text"
+                    placeholder="manutenção"
+                  />
+
+                  <label for="categoria">categoria</label>
+                  <b-form-input
+                    name="categoria"
+                    type="text"
+                    placeholder="manutenção"
+                  />
+
+                  <label for="cliente">cliente</label>
+                  <b-form-input
+                    name="cliente"
+                    type="text"
+                    placeholder="havan"
+                  />
+
+                  <label for="colaborador">colaborador</label>
+                  <b-form-input
+                    name="colaborador"
+                    type="text"
+                    placeholder="João"
+                  />
+                </b-form-group>
+                <button>salvar</button>
+              </b-modal>
+
+              <b-button
+                v-b-modal.modal-1
+                size="sm"
+                variant="primary"
+                class="mt-3"
+              >
+                Editar</b-button
+              >
             </div>
           </section>
 

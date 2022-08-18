@@ -4,16 +4,18 @@
       <h1>Cadastrar empresa</h1>
       <h2>Minha marca</h2>
 
-      <div class="bloco">
+      <b-form-file
+        id="file"
+        v-model="formData.photo"
+        accept=".jpeg,.jpg,.png,image/jpeg,image/png"
+        plain
+        multiple
+      ></b-form-file>
+      <label for="file" class="label bloco text-center">
         <img src="~/assets/img/icones/upload.svg" alt="" />
         <p>Clique para enviar sua logo</p>
         <span>PNG, JPG (tamanho máximo X)</span>
-        <b-form-file
-          v-model="file"
-          placeholder="Arquivo ..."
-          accept=".jpeg,.jpg,.png,image/jpeg,image/png"
-        ></b-form-file>
-      </div>
+      </label>
 
       <button v-b-modal.modal-center class="mb-3 mt-3">Concluir</button>
 
@@ -43,7 +45,9 @@
 export default {
   data() {
     return {
-      file: null,
+      formData: {
+        photo: [],
+      },
     };
   },
   head() {
