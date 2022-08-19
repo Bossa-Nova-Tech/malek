@@ -554,6 +554,14 @@ export default {
       console.log(this.formData);
       this.formEditing = !index;
       this.$root.$emit('bv::hide::modal', 'modal-1', index);
+      this.formData = {
+        services: null,
+        name_customer: null,
+        template: null,
+        end_date: null,
+        time_of_execution: null,
+        estimated_time: null,
+      };
     },
   },
 };
