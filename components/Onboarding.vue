@@ -1,13 +1,6 @@
+
 <template>
-  <main class="caixa mx-auto">
-    <div :class="{ loader: true, fadeout: !isLoading }">
-      <img
-        id="splash"
-        src="~/assets/img/android-chrome-512x512.png"
-        alt=""
-        width="400"
-      />
-    </div>
+  <div class="animate">
     <Flicking :options="{ align: 'prev' }" :plugins="plugins">
       <section>
         <h1 class="primary-80">Seja bem vindo</h1>
@@ -20,7 +13,6 @@
           sua agenda e distribuir e acompanhar tarefas para a sua equipe
         </p>
       </section>
-
       <section>
         <h1 class="primary-80">Gestão de vendas</h1>
         <div>
@@ -63,35 +55,37 @@
       </section>
       <div slot="viewport" class="flicking-pagination"></div>
     </Flicking>
-  </main>
+  </div>
 </template>
-
 <script>
 import { Flicking } from '@egjs/vue-flicking';
-import { Pagination } from '@egjs/flicking-plugins';
 import '@egjs/flicking-plugins/dist/pagination.css';
-
+import { Pagination } from '@egjs/flicking-plugins';
 export default {
-  name: 'LoadingScreen',
+  name: 'Onboarding',
   components: {
     Flicking,
   },
-  props: ['isLoading'],
-  data() {
+  data: () => {
     return {
       plugins: [new Pagination({ type: 'bullet' })],
-    };
-  },
-
-  head() {
-    return {
-      title: `Onboarding |  ${process.env.title}`,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.animate {
+  animation: animate 6s;
+}
+@keyframes animate {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 section {
   width: 100%;
   padding-bottom: 5rem;
@@ -137,36 +131,6 @@ section {
 
 #caneta {
   object-fit: contain;
-}
-
-#splash {
-  display: flex;
-  object-position: center;
-  object-fit: contain;
-  margin-inline: auto;
-}
-
-.loader {
-  background-color: #ffffff;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  display: block;
-  overflow: hidden;
-  padding-top: 23vh;
-  position: fixed;
-}
-
-.fadeout {
-  animation: fadeout 3s forwards;
-}
-
-@keyframes fadeout {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
 }
 </style>
 

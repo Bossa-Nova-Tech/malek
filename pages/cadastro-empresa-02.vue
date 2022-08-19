@@ -7,10 +7,14 @@
       <b-form-file
         id="file"
         v-model="formData.photo"
-        accept=".jpeg,.jpg,.png,image/jpeg,image/png"
+        accept="image/jpeg, image/png, image/jpg"
         plain
         multiple
+        :class="{ 'is-invalid': $v.formData.photo.$error }"
       ></b-form-file>
+      <b-form-feedback class="text-center h5">
+        Envio necessário. Clique abaixo para fazer o upload da sua logo.
+      </b-form-feedback>
       <label for="file" class="text-center">
         <img src="~/assets/img/icones/upload.svg" alt="" />
         <p>Clique para enviar sua logo</p>
@@ -25,6 +29,7 @@
       <div>
         <b-modal
           id="modal-center"
+          ref="modal"
           centered
           hide-header
           hide-footer
@@ -38,7 +43,7 @@
             <img src="~/assets/img/icones/email-icon.svg" alt="" class="py-4" />
             <h3 class="text-center">Verifique seu e-mail</h3>
             <p class="text-center pb-5">
-              Foi encaminhado um email para email@gmail.com
+              Foi encaminhado um email para email@email.com
             </p>
             <NuxtLink to="/login">Clique aqui para realizar o login</NuxtLink>
           </div>
@@ -50,9 +55,12 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators';
+import { validationMixin } from 'vuelidate';
 
 export default {
-  data() {
+  mixins: [validationMixin],
+
+  data: () => {
     return {
       formSend: false,
       formData: {
@@ -90,7 +98,7 @@ export default {
           await this.$axios
             .post('companies', this.$data.formData)
             .then((_res) => {
-              this.$refs['modal-center'].show();
+              this.$refs.modal.show();
             })
             .catch((_err) => {});
         } catch (error) {
