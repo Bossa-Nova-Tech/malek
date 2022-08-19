@@ -1,5 +1,5 @@
 <template>
-  <main class="d-flex flex-column align-items-center min-vh-100">
+  <main class="d-flex flex-column align-items-center">
     <header class="d-flex flex-column align-items-center">
       <img src="~/assets/img/logo-bg-white.png" alt="" />
       <h3>Olá Moisés,</h3>

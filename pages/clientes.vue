@@ -1,5 +1,7 @@
 <template>
-  <TheHeader> Em construção </TheHeader>
+  <main>
+    <TheHeader> Em construção </TheHeader>
+  </main>
 </template>
 
 <script>
@@ -7,4 +9,4 @@ import TheHeader from '~/components/layout/TheHeader.vue';
 export default { components: { TheHeader } };
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

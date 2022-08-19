@@ -604,6 +604,8 @@ main {
     height: 8.222rem;
     background: var(--gray-10);
     padding: 1.5rem;
+    position: fixed;
+    bottom: 0;
   }
 
   .card-servico {
