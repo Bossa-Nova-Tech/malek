@@ -8,32 +8,32 @@
 
     <section class="d-flex">
       <div class="m-auto">
-        <NuxtLink to="/">
+        <NuxtLink to="/propostas">
           <img src="~/assets/img/icones/proposta.svg" alt="" />
           <p>Propostas</p>
         </NuxtLink>
 
-        <NuxtLink to="/ordem-de-servico">
+        <NuxtLink to="/painel-tarefas-relatorio">
           <img src="~/assets/img/icones/ordem.svg" alt="" />
           <p>Ordem de Serviço</p>
         </NuxtLink>
 
-        <NuxtLink to="/">
+        <NuxtLink to="/clientes">
           <img src="~/assets/img/icones/clientes.svg" alt="" />
           <p>Clientes</p>
         </NuxtLink>
 
-        <NuxtLink to="/">
+        <NuxtLink to="/cobranca">
           <img src="~/assets/img/icones/cobranca.svg" alt="" />
           <p>Cobrança</p>
         </NuxtLink>
 
-        <NuxtLink to="/">
+        <NuxtLink to="/orcamento">
           <img src="~/assets/img/icones/orcamento.svg" alt="" />
           <p>Orçamento</p>
         </NuxtLink>
 
-        <NuxtLink to="/">
+        <NuxtLink to="/colaboradores">
           <img src="~/assets/img/icones/colaboradores.svg" alt="" />
           <p>Colaboradores</p>
         </NuxtLink>

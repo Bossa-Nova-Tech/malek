@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column">
     <TheHeader> Ordem de Serviço </TheHeader>
-    <main class="d-flex caixa mx-auto mb-5">
+    <main class="d-flex caixa mx-auto">
       <b-tabs pills class="mx-auto caixa" align="center">
         <!-- início da tab HOJE -->
         <b-tab title="Hoje" active>
@@ -11,7 +11,7 @@
                 <h2 class="manutencao primary-80">
                   {{ ordem.services }}
                 </h2>
-                <p class="local gray-40">{{ ordem.name_customer }}</p>
+                <p class="lugar gray-40">{{ ordem.name_customer }}</p>
               </div>
               <div class="d-flex align-items-center justify-content-between">
                 <div>
@@ -22,7 +22,7 @@
                   <!-- <span class="porcentagem primary-80">
                     {{ ordem.performance }}</span
                   > -->
-                  <span class="tempo gray-40">{{ ordem.estimated_time }} </span>
+                  <span class="horas gray-40">{{ ordem.estimated_time }} </span>
                 </div>
               </div>
               <!-- modal-editar -->
@@ -249,7 +249,9 @@
                     v-model="formData.name_customer"
                     :options="optionsNameCustomer"
                     class="mb-4"
-                    :class="{ 'is-invalid': $v.formData.name_customer.$error }"
+                    :class="{
+                      'is-invalid': $v.formData.name_customer.$error,
+                    }"
                   />
                   <b-form-invalid-feedback>
                     Selecione uma opção.
@@ -612,19 +614,6 @@ main {
   .manutencao {
     font-weight: 600;
     font-size: 1rem;
-  }
-
-  .local {
-    font-weight: 600;
-    font-size: 0.75rem;
-  }
-  .porcentagem {
-    font-weight: 700;
-    font-size: 1.25rem;
-  }
-  .tempo {
-    font-weight: 500;
-    font-size: 0.625rem;
   }
 }
 </style>

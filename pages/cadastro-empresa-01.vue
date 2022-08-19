@@ -7,7 +7,7 @@
 
         <b-row>
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="name">Nome *</label>
               <b-form-input
                 v-model="formData.name"
@@ -25,7 +25,7 @@
           </b-col>
 
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="last_name">Sobrenome *</label>
               <b-form-input
                 v-model="formData.last_name"
@@ -43,7 +43,7 @@
           </b-col>
         </b-row>
 
-        <b-form-group>
+        <b-form-group class="mb-4">
           <label for="cnpj">CPF / CNPJ *</label>
           <b-form-input
             v-model="formData.cnpj"
@@ -61,7 +61,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group>
+        <b-form-group class="mb-4">
           <label for="fantasy_name">Nome da Empresa</label>
           <b-form-input
             v-model="formData.fantasy_name"
@@ -74,7 +74,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group>
+        <b-form-group class="mb-4">
           <label for="email">E-mail *</label>
           <b-form-input
             v-model="formData.email"
@@ -96,7 +96,7 @@
 
         <b-row>
           <b-col cols="4">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="ddd">Telefone *</label>
               <b-form-input
                 v-model="formData.ddd"
@@ -118,7 +118,7 @@
           </b-col>
 
           <b-col cols="8">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="phone"></label>
               <b-form-input
                 id="phone"
@@ -143,7 +143,7 @@
 
         <b-row>
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="password">Senha *</label>
               <b-form-input
                 v-model="formData.password"
@@ -165,7 +165,7 @@
           </b-col>
 
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="confirm_password">Confirmar Senha *</label>
               <b-form-input
                 v-model="formData.confirm_password"
@@ -187,7 +187,7 @@
           </b-col>
         </b-row>
 
-        <b-form-group>
+        <b-form-group class="mb-4">
           <label for="address">Endereço</label>
           <b-form-input
             v-model="formData.address"
@@ -205,7 +205,7 @@
 
         <b-row>
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="cep">CEP *</label>
               <b-form-input
                 v-model="formData.cep"
@@ -223,7 +223,7 @@
           </b-col>
 
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="district">Bairro</label>
               <b-form-input
                 v-model="formData.district"
@@ -243,7 +243,7 @@
 
         <b-row>
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="city">Cidade</label>
               <b-form-input
                 v-model="formData.city"
@@ -261,7 +261,7 @@
           </b-col>
 
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="state">Estado</label>
               <b-form-input
                 v-model="formData.state"
@@ -281,7 +281,7 @@
 
         <b-row>
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="number">Numero *</label>
               <b-form-input
                 v-model="formData.number"
@@ -299,7 +299,7 @@
           </b-col>
 
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="complement">Complemento</label>
               <b-form-input
                 v-model="formData.complement"

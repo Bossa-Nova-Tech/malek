@@ -11,13 +11,16 @@
         plain
         multiple
       ></b-form-file>
-      <label for="file" class="label bloco text-center">
+      <label for="file" class="text-center">
         <img src="~/assets/img/icones/upload.svg" alt="" />
         <p>Clique para enviar sua logo</p>
         <span>PNG, JPG (tamanho máximo X)</span>
       </label>
 
-      <button v-b-modal.modal-center class="mb-3 mt-3">Concluir</button>
+      <button class="mb-3 mt-3" :disabled="formSend" @click="register">
+        <b-spinner v-if="formSend" v-b-modal.modal-center small type="grow" />
+        Concluir
+      </button>
 
       <div>
         <b-modal
@@ -25,7 +28,11 @@
           centered
           hide-header
           hide-footer
-          title="BootstrapVue"
+          no-close-on-backdrop
+          no-close-on-esc
+          no-enforce-focus
+          body-bg-variant="white"
+          body-class="rounded"
         >
           <div class="d-flex flex-column align-items-center">
             <img src="~/assets/img/icones/email-icon.svg" alt="" class="py-4" />
@@ -42,11 +49,14 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators';
+
 export default {
   data() {
     return {
+      formSend: false,
       formData: {
-        photo: [],
+        photo: null,
       },
     };
   },
@@ -54,6 +64,40 @@ export default {
     return {
       title: `Cadastro |  ${process.env.title}`,
     };
+  },
+
+  validations: {
+    formData: {
+      photo: {
+        required,
+      },
+    },
+  },
+  methods: {
+    async register(_response) {
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.formSend = true;
+        console.log(this.formData);
+
+        try {
+          this.formSend = false;
+          this.$v.$reset();
+
+          console.log('executou o clic');
+
+          await this.$axios
+            .post('companies', this.$data.formData)
+            .then((_res) => {
+              this.$refs['modal-center'].show();
+            })
+            .catch((_err) => {});
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
   },
 };
 </script>
@@ -64,12 +108,13 @@ main {
     padding-top: 4rem;
     padding-bottom: 1rem;
   }
+
   h2 {
     padding-bottom: 3.75rem;
     color: var(--gray-40);
   }
 
-  .bloco {
+  label {
     display: grid;
     justify-items: center;
     padding: 3.125rem;
