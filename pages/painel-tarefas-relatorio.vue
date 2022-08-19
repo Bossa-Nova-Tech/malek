@@ -41,11 +41,12 @@
                 <div>
                   <b-form-group
                     label="Tamplate"
-                    label-for="formData.template"
+                    label-for="formDataEdited.template"
                     class="mb-4"
                   >
                     <b-form-select
-                      v-model="formData.template"
+                      :id="`form-edit-${index}`"
+                      v-model="formDataEdited.template"
                       :options="optionsTemplate"
                       :class="{ 'is-invalid': $v.formData.template.$error }"
                     />
@@ -56,11 +57,12 @@
 
                   <b-form-group
                     label="Categoria"
-                    label-for="formData.services"
+                    label-for="formDataEdited.services"
                     class="mb-4"
                   >
                     <b-form-select
-                      v-model="formData.services"
+                      :id="`form-edit-${index}`"
+                      v-model="formDataEdited.services"
                       :options="optionsServices"
                       :class="{ 'is-invalid': $v.formData.services.$error }"
                     />
@@ -71,11 +73,12 @@
 
                   <b-form-group
                     label="Cliente"
-                    label-for="formData.name_customer"
+                    label-for="formDataEdited.name_customer"
                     class="mb-4"
                   >
                     <b-form-select
-                      v-model="formData.name_customer"
+                      :id="`form-edit-${index}`"
+                      v-model="formDataEdited.name_customer"
                       :options="optionsNameCustomer"
                       :class="{
                         'is-invalid': $v.formData.name_customer.$error,
@@ -89,7 +92,7 @@
                   <BorderButton class="my-4">
                     <b-form-file
                       id="file"
-                      v-model="formData.photo"
+                      v-model="formDataEdited.photo"
                       plain
                       multiple
                     ></b-form-file>
@@ -104,7 +107,8 @@
                     class="mb-4"
                   >
                     <b-form-select
-                      v-model="formData.estimated_time"
+                      :id="`form-edit-${index}`"
+                      v-model="formDataEdited.estimated_time"
                       :options="optionsEstimatedTime"
                     >
                     </b-form-select>
@@ -112,11 +116,12 @@
 
                   <b-form-group
                     label="Data prevista de conclusão"
-                    label-for="formData.end_date"
+                    label-for="formDataEdited.end_date"
                     class="mb-4"
                   >
                     <b-form-datepicker
-                      v-model="formData.end_date"
+                      :id="`form-edit-${index}`"
+                      v-model="formDataEdited.end_date"
                       :date-format-options="{
                         year: 'numeric',
                         month: 'numeric',
@@ -134,17 +139,18 @@
 
                   <b-form-group
                     label="Observação"
-                    label-for="formData.observation"
+                    label-for="formDataEdited.observation"
                     class="mb-4"
                   >
                     <b-form-input
-                      v-model="formData.observation"
+                      :id="`form-edit-${index}`"
+                      v-model="formDataEdited.observation"
                       placeholder="Esta tarefa consiste em..."
                     >
                     </b-form-input>
                   </b-form-group>
 
-                  <button>salvar</button>
+                  <button @click="save(index)">salvar</button>
                 </div>
               </b-modal>
 
@@ -153,6 +159,7 @@
                 size="sm"
                 variant="primary"
                 class="mt-3"
+                @click="setToEditing(index)"
               >
                 Editar</b-button
               >
@@ -360,6 +367,7 @@ export default {
       ordens: [],
       formSend: false,
       showModal: false,
+      editing: false,
       formData: {
         signature: false,
         photo: [],
@@ -372,7 +380,17 @@ export default {
         name: 'José da Silveira',
         /* performance: null, */
         time_of_execution: '02h30',
-        editing: false,
+      },
+      formDataEdited: {
+        signature: false,
+        photo: [],
+        estimated_time: null,
+        end_date: null,
+        observation: null,
+        name_customer: null,
+        template: null,
+        services: null,
+        time_of_execution: null,
       },
       photo_perfil: [require('~/assets/img/icones/icone-perfil.svg')],
       optionsTemplate: [
@@ -514,6 +532,19 @@ export default {
     },
     remove(index) {
       this.ordens.splice(index, 1);
+    },
+    setToEditing(index) {
+      setTimeout(() => {
+        document.getElementById(`form-edit-${index}`).focus();
+      }, 1);
+      if (this.formDataEdited !== this.formData) {
+        this.formDataEdited = this.formData;
+      }
+    },
+    save(index) {
+      this.formDataEdited = {};
+      console.log(this.formData);
+      this.$root.$emit('bv::hide::modal', 'modal-1', index);
     },
   },
 };
