@@ -27,6 +27,7 @@
               </div>
               <!-- modal-editar -->
               <b-modal
+                v-if="formEditing === index"
                 id="modal-1"
                 title="BootstrapVue"
                 hide-footer
@@ -364,6 +365,8 @@ export default {
 
   data: () => {
     return {
+      saved: false,
+      formEditing: null,
       ordens: [],
       formSend: false,
       showModal: false,
@@ -504,6 +507,7 @@ export default {
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
         this.ordens.push(this.formData);
+        this.formDataEdited = this.formData;
         console.log(this.formData);
         this.$v.$reset();
         this.formData = {
@@ -534,16 +538,21 @@ export default {
       this.ordens.splice(index, 1);
     },
     setToEditing(index) {
+      this.formEditing = index;
       setTimeout(() => {
         document.getElementById(`form-edit-${index}`).focus();
       }, 1);
-      if (this.formDataEdited !== this.formData) {
+      if (this.formDataEdited === null) {
         this.formDataEdited = this.formData;
       }
     },
     save(index) {
-      this.formDataEdited = {};
+      this.saved = true;
+      if (this.saved === true) {
+        this.formData = this.formDataEdited;
+      }
       console.log(this.formData);
+      this.formEditing = !index;
       this.$root.$emit('bv::hide::modal', 'modal-1', index);
     },
   },
