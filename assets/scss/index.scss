@@ -41,6 +41,11 @@ p {
   border: 0;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 h1 {
   font-weight: 700;
   font-size: 1.5rem;
@@ -54,6 +59,45 @@ h2 {
 
 body {
   background-color: var(--primary-10);
+}
+
+.nav-link {
+  display: flex;
+  width: min(10.316rem);
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-20);
+  font-weight: 600;
+}
+.nav-link#__BVID__14___BV_tab_button__ {
+  border-radius: 8px 0px 0px 8px;
+}
+.nav-link#__BVID__17___BV_tab_button__ {
+  border-radius: 0px 8px 8px 0px;
+}
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: var(--primary-50);
+}
+.form-control-file {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+label.label {
+  border-radius: 6px;
+  width: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  margin: 0;
+  color: var(--primary-60);
+}
+.modal-header,
+.modal-body,
+.modal-footer {
+  background: var(--primary-10);
 }
 
 button {
@@ -76,7 +120,7 @@ button {
 }
 
 .caixa {
-  width: min(48.125rem, 100%);
+  width: min(40rem, 100%);
 }
 
 .altura-100 {

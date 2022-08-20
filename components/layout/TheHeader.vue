@@ -1,9 +1,11 @@
 <template>
-  <header class="d-flex align-items-center">
-    <NuxtLink to="/">
-      <img src="~/assets/img/icones/seta-voltar.svg" alt="" />
-    </NuxtLink>
-    <h1><slot></slot></h1>
+  <header>
+    <b-container class="d-flex align-items-center">
+      <NuxtLink to="/painel-adm-atual">
+        <img src="~/assets/img/icones/seta-voltar.svg" alt="" />
+      </NuxtLink>
+      <h1><slot></slot></h1>
+    </b-container>
   </header>
 </template>
 
@@ -25,10 +27,7 @@ header {
 
   h1 {
     padding: 3.313rem 0rem 2.188rem 2.813rem;
-    font-weight: 600;
-    font-size: 1.5rem;
-    line-height: 150%;
-    margin-bottom: 0px;
+    color: #ffffff;
   }
 
   img {

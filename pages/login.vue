@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <main class="row justify-content-center align-items-center min-vh-100">
-      <b-form class="col col-lg-4">
+      <b-form class="col col-lg-6">
         <img
           class="row mx-auto"
           src="~/assets/img/ilustracao/logo.png"
@@ -45,10 +45,9 @@
         </b-form-group>
 
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <b-form-checkbox name="remember" class="text-sm"
+          <b-form-checkbox v-model="formData.checked" class="text-sm"
             >Lembrar senha</b-form-checkbox
           >
-
           <NuxtLink to="/EsqueciMinhaSenha" class="text-sm"
             ><u>Esqueci minha senha</u></NuxtLink
           >
@@ -84,6 +83,7 @@ export default {
       formData: {
         email: null,
         password: null,
+        checked: false,
       },
     };
   },

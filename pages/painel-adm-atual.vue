@@ -1,47 +1,50 @@
 <template>
-  <main class="d-flex flex-column align-items-center min-vh-100">
+  <main class="d-flex flex-column align-items-center">
     <header class="d-flex flex-column align-items-center">
       <img src="~/assets/img/logo-bg-white.png" alt="" />
-      <h3>Olá Moisés,</h3>
+      <h3>Olá {{ $auth.user.name }},</h3>
       <p>acompanhe as ordens de serviço hoje</p>
     </header>
 
-    <section>
-      <NuxtLink to="/">
-        <img src="~/assets/img/icones/proposta.svg" alt="" />
-        <p>Propostas</p>
-      </NuxtLink>
+    <section class="d-flex">
+      <div class="m-auto">
+        <NuxtLink to="/propostas">
+          <img src="~/assets/img/icones/proposta.svg" alt="" />
+          <p>Propostas</p>
+        </NuxtLink>
 
-      <NuxtLink to="/ordem-de-servico">
-        <img src="~/assets/img/icones/ordem.svg" alt="" />
-        <p>Ordem de Serviço</p>
-      </NuxtLink>
+        <NuxtLink to="/painel-tarefas-relatorio">
+          <img src="~/assets/img/icones/ordem.svg" alt="" />
+          <p>Ordem de Serviço</p>
+        </NuxtLink>
 
-      <NuxtLink to="/">
-        <img src="~/assets/img/icones/clientes.svg" alt="" />
-        <p>Clientes</p>
-      </NuxtLink>
+        <NuxtLink to="/clientes">
+          <img src="~/assets/img/icones/clientes.svg" alt="" />
+          <p>Clientes</p>
+        </NuxtLink>
 
-      <NuxtLink to="/">
-        <img src="~/assets/img/icones/cobranca.svg" alt="" />
-        <p>Cobrança</p>
-      </NuxtLink>
+        <NuxtLink to="/cobranca">
+          <img src="~/assets/img/icones/cobranca.svg" alt="" />
+          <p>Cobrança</p>
+        </NuxtLink>
 
-      <NuxtLink to="/">
-        <img src="~/assets/img/icones/orcamento.svg" alt="" />
-        <p>Orçamento</p>
-      </NuxtLink>
+        <NuxtLink to="/orcamento">
+          <img src="~/assets/img/icones/orcamento.svg" alt="" />
+          <p>Orçamento</p>
+        </NuxtLink>
 
-      <NuxtLink to="/">
-        <img src="~/assets/img/icones/colaboradores.svg" alt="" />
-        <p>Colaboradores</p>
-      </NuxtLink>
+        <NuxtLink to="/colaboradores">
+          <img src="~/assets/img/icones/colaboradores.svg" alt="" />
+          <p>Colaboradores</p>
+        </NuxtLink>
+      </div>
     </section>
   </main>
 </template>
 
 <script>
 export default {
+  layout: 'auth',
   head() {
     return {
       title: `Painel |  ${process.env.title}`,
@@ -72,12 +75,14 @@ main {
     }
   }
   section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
+    width: 100%;
     background-color: #ffffff;
-    gap: 0.9375rem;
-    padding: 1.5625rem;
+    div {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9375rem;
+      padding: 1.5625rem;
+    }
     a {
       display: grid;
       width: 9.3125rem;

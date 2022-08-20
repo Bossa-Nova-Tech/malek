@@ -1,13 +1,13 @@
 <template>
   <b-container>
     <main class="row justify-content-center align-items-center min-vh-100">
-      <b-form class="col col-lg-4">
+      <b-form class="col col-lg-6">
         <h1 class="mt-5 pb-3">Cadastrar empresa</h1>
         <h2 class="pb-5">Minhas informações</h2>
 
         <b-row>
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="name">Nome *</label>
               <b-form-input
                 v-model="formData.name"
@@ -25,7 +25,7 @@
           </b-col>
 
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="last_name">Sobrenome *</label>
               <b-form-input
                 v-model="formData.last_name"
@@ -43,7 +43,7 @@
           </b-col>
         </b-row>
 
-        <b-form-group>
+        <b-form-group class="mb-4">
           <label for="cnpj">CPF / CNPJ *</label>
           <b-form-input
             v-model="formData.cnpj"
@@ -61,7 +61,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group>
+        <b-form-group class="mb-4">
           <label for="fantasy_name">Nome da Empresa</label>
           <b-form-input
             v-model="formData.fantasy_name"
@@ -74,7 +74,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group>
+        <b-form-group class="mb-4">
           <label for="email">E-mail *</label>
           <b-form-input
             v-model="formData.email"
@@ -96,7 +96,7 @@
 
         <b-row>
           <b-col cols="4">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="ddd">Telefone *</label>
               <b-form-input
                 v-model="formData.ddd"
@@ -118,7 +118,7 @@
           </b-col>
 
           <b-col cols="8">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="phone"></label>
               <b-form-input
                 id="phone"
@@ -143,13 +143,13 @@
 
         <b-row>
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="password">Senha *</label>
               <b-form-input
                 v-model="formData.password"
                 name="password"
                 type="password"
-                placeholder="******"
+                placeholder="**"
                 :class="{
                   'is-invalid': $v.formData.password.$error,
                 }"
@@ -165,13 +165,13 @@
           </b-col>
 
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="confirm_password">Confirmar Senha *</label>
               <b-form-input
                 v-model="formData.confirm_password"
                 name="confirm_password"
                 type="password"
-                placeholder="******"
+                placeholder="**"
                 :class="{
                   'is-invalid': $v.formData.confirm_password.$error,
                 }"
@@ -187,7 +187,7 @@
           </b-col>
         </b-row>
 
-        <b-form-group>
+        <b-form-group class="mb-4">
           <label for="address">Endereço</label>
           <b-form-input
             v-model="formData.address"
@@ -205,7 +205,7 @@
 
         <b-row>
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="cep">CEP *</label>
               <b-form-input
                 v-model="formData.cep"
@@ -223,7 +223,7 @@
           </b-col>
 
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="district">Bairro</label>
               <b-form-input
                 v-model="formData.district"
@@ -243,7 +243,7 @@
 
         <b-row>
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="city">Cidade</label>
               <b-form-input
                 v-model="formData.city"
@@ -261,7 +261,7 @@
           </b-col>
 
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="state">Estado</label>
               <b-form-input
                 v-model="formData.state"
@@ -281,8 +281,8 @@
 
         <b-row>
           <b-col cols="6">
-            <b-form-group>
-              <label for="number">Numero *</label>
+            <b-form-group class="mb-4">
+              <label for="number">Número *</label>
               <b-form-input
                 v-model="formData.number"
                 name="number"
@@ -299,7 +299,7 @@
           </b-col>
 
           <b-col cols="6">
-            <b-form-group>
+            <b-form-group class="mb-4">
               <label for="complement">Complemento</label>
               <b-form-input
                 v-model="formData.complement"
@@ -316,9 +316,10 @@
     <div class="row justify-content-center mb-4 mx-1">
       <button class="col col-lg-4" :disabled="formSend" @click="register">
         <b-spinner v-if="formSend" small type="grow" />
-        Cadastrar
+        Avançar
       </button>
     </div>
+    <!-- <b-button v-b-modal="'modal-center'">Show Modal</b-button> -->
     <div>
       <b-modal
         id="modal-center"
@@ -349,6 +350,7 @@ export default {
   directives: { mask },
   mixins: [validationMixin],
 
+  layout: 'auth',
   data: () => {
     return {
       formSend: false,
@@ -453,80 +455,15 @@ export default {
           this.formSend = false;
           this.$v.$reset();
 
-          console.log('executou o clic');
-          // const returnData = await this.$axios.$post(
-          //   process.env.api_url + 'companies',
-          //   this.formData,
-          // );
-          // console.log('response :: ', response);
-          // this.$axios.onError((error) => {
-          //   if (error.response.status === 422) {
-          //     console.log('erro aqui ::', error.response.status);
-          //   }
-          // });
-
           await this.$axios
             .post('companies', this.$data.formData)
             .then((_res) => {
-              // this.$router.push('/cadastro-empresa-02');
               this.$refs['modal-center'].show();
             })
-            .catch((_err) => {
-              // this.toast('danger', 'Erro', _err);
-            });
-
-          // console.log('returnDAta ', returnData);
-
-          // const returnData = await this.$fetch('/companies', {
-          //   method: 'POST',
-          //   body: this.formData,
-          // });
-
-          // if (returnData) {
-          //   this.$router.push('/cadastro-empresa-02');
-          // }
+            .catch((_err) => {});
         } catch (error) {
           console.log(error);
-          // this.toast('danger', 'Erro', error);
         }
-
-        // this.promise()
-        //   .then(() => {
-        //     this.formSend = false;
-        //     this.$v.$reset();
-
-        //     this.$fetch('/companies', {
-        //       method: 'POST',
-        //       body: this.formData,
-        //     });
-        //     // this.formData = {
-        //     //   required: null,
-        //     //   name: null,
-        //     //   last_name: null,
-        //     //   cnpj: null,
-        //     //   ddd: null,
-        //     //   phone: null,
-        //     //   email: null,
-        //     //   password: null,
-        //     //   confirm_password: null,
-        //     //   cep: null,
-        //     //   district: null,
-        //     //   city: null,
-        //     //   state: null,
-        //     //   number: null,
-        //     //   complement: null,
-        //     //   fantasy_name: null,
-        //     //   address: null,
-        //     // };
-        //     // this.$router.push('/cadastro-empresa-02');
-        //   })
-        //   .catch((error) => {
-        //     this.formSend = false;
-
-        //     console.log(error);
-
-        //     this.toast('danger', 'Erro', error);
-        //   });
       }
     },
   },
