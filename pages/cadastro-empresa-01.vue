@@ -350,6 +350,7 @@ export default {
   directives: { mask },
   mixins: [validationMixin],
 
+  layout: 'auth',
   data: () => {
     return {
       formSend: false,
@@ -454,80 +455,15 @@ export default {
           this.formSend = false;
           this.$v.$reset();
 
-          console.log('executou o clic');
-          // const returnData = await this.$axios.$post(
-          //   process.env.api_url + 'companies',
-          //   this.formData,
-          // );
-          // console.log('response :: ', response);
-          // this.$axios.onError((error) => {
-          //   if (error.response.status === 422) {
-          //     console.log('erro aqui ::', error.response.status);
-          //   }
-          // });
-
           await this.$axios
             .post('companies', this.$data.formData)
             .then((_res) => {
-              // this.$router.push('/cadastro-empresa-02');
               this.$refs['modal-center'].show();
             })
-            .catch((_err) => {
-              // this.toast('danger', 'Erro', _err);
-            });
-
-          // console.log('returnDAta ', returnData);
-
-          // const returnData = await this.$fetch('/companies', {
-          //   method: 'POST',
-          //   body: this.formData,
-          // });
-
-          // if (returnData) {
-          //   this.$router.push('/cadastro-empresa-02');
-          // }
+            .catch((_err) => {});
         } catch (error) {
           console.log(error);
-          // this.toast('danger', 'Erro', error);
         }
-
-        // this.promise()
-        //   .then(() => {
-        //     this.formSend = false;
-        //     this.$v.$reset();
-
-        //     this.$fetch('/companies', {
-        //       method: 'POST',
-        //       body: this.formData,
-        //     });
-        //     // this.formData = {
-        //     //   required: null,
-        //     //   name: null,
-        //     //   last_name: null,
-        //     //   cnpj: null,
-        //     //   ddd: null,
-        //     //   phone: null,
-        //     //   email: null,
-        //     //   password: null,
-        //     //   confirm_password: null,
-        //     //   cep: null,
-        //     //   district: null,
-        //     //   city: null,
-        //     //   state: null,
-        //     //   number: null,
-        //     //   complement: null,
-        //     //   fantasy_name: null,
-        //     //   address: null,
-        //     // };
-        //     // this.$router.push('/cadastro-empresa-02');
-        //   })
-        //   .catch((error) => {
-        //     this.formSend = false;
-
-        //     console.log(error);
-
-        //     this.toast('danger', 'Erro', error);
-        //   });
       }
     },
   },

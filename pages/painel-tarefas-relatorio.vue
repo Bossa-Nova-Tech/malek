@@ -5,10 +5,15 @@
       <b-tabs pills class="mx-auto caixa" align="center">
         <!-- início da tab HOJE -->
         <b-tab title="Hoje" active>
-          <section v-for="(ordem, index) in ordens" :key="index" class="mt-3">
+          <section
+            v-for="(ordem, index) in tasksData"
+            :key="ordem.id"
+            class="mt-3"
+          >
             <div class="card-servico mb-4">
               <div class="d-flex justify-content-between pb-2">
                 <h2 class="manutencao primary-80">
+                  #{{ ordem.id }}
                   {{ ordem.services }}
                 </h2>
                 <p class="lugar gray-40">{{ ordem.name_customer }}</p>
@@ -41,7 +46,7 @@
 
                 <div>
                   <b-form-group
-                    label="Tamplate"
+                    label="Serviço"
                     label-for="formDataEdited.template"
                     class="mb-4"
                   >
@@ -140,12 +145,12 @@
 
                   <b-form-group
                     label="Observação"
-                    label-for="formDataEdited.observation"
+                    label-for="formDataEdited.note"
                     class="mb-4"
                   >
                     <b-form-input
                       :id="`form-edit-${index}`"
-                      v-model="formDataEdited.observation"
+                      v-model="formDataEdited.note"
                       placeholder="Esta tarefa consiste em..."
                     >
                     </b-form-input>
@@ -174,10 +179,10 @@
                   footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
                 >
                   <p class="my-4">
-                    Tem certeza de que deseja excluir este campo?
+                    Tem certeza de que deseja excluir este registro?
                   </p>
                   <template #modal-footer>
-                    <b-button variant="danger" @click="remove(index)"
+                    <b-button variant="danger" @click="remove(ordem.id, ordem)"
                       >Sim</b-button
                     >
                     <b-button @click="hideModal2(index)">Não</b-button>
@@ -219,7 +224,7 @@
                 <h1 class="mt-2 ml-3">Criar Ordem de Serviço</h1>
               </template>
               <template #default>
-                <b-form-group label="Tamplate" label-for="formData.template">
+                <b-form-group label="Serviço" label-for="formData.template">
                   <b-form-select
                     v-model="formData.template"
                     :options="optionsTemplate"
@@ -290,12 +295,9 @@
                     Selecione uma opção.
                   </b-form-invalid-feedback>
                 </b-form-group>
-                <b-form-group
-                  label="Observação"
-                  label-for="formData.observation"
-                >
+                <b-form-group label="Observação" label-for="formData.note">
                   <b-form-input
-                    v-model="formData.observation"
+                    v-model="formData.note"
                     placeholder="Esta tarefa consiste em..."
                   >
                   </b-form-input>
@@ -303,7 +305,7 @@
               </template>
 
               <template #modal-footer>
-                <b-form-checkbox v-model="formData.signature"
+                <b-form-checkbox v-model="formData.need_signature"
                   >É necessário coletar assinatura durante
                   visita.</b-form-checkbox
                 >
@@ -359,11 +361,19 @@ import { mask } from 'vue-the-mask';
 import { Flicking } from '@egjs/vue-flicking';
 import TheHeader from '~/components/layout/TheHeader.vue';
 import Graphic from '~/components/Graphic.vue';
-import BorderButton from '~/components/BorderButton.vue';
+// import BorderButton from '~/components/BorderButton.vue';
 export default {
-  components: { Flicking, TheHeader, Graphic, BorderButton },
+  // components: { Flicking, TheHeader, Graphic, BorderButton },
+  components: { Flicking, TheHeader, Graphic },
   directives: { mask },
   mixins: [validationMixin],
+
+  async asyncData({ $axios }) {
+    const tasks = await $axios.get('tasks');
+    const tasksData = tasks.data;
+    console.log('tasks :: ', tasks.data);
+    return { tasksData };
+  },
 
   data: () => {
     return {
@@ -374,24 +384,24 @@ export default {
       showModal: false,
       editing: false,
       formData: {
-        signature: false,
+        need_signature: false,
         photo: [],
         estimated_time: null,
         end_date: null,
-        observation: null,
+        note: null,
         name_customer: 'HAVAN Unidade 02',
         template: null,
         services: null,
-        name: 'José da Silveira',
+        // name: 'José da Silveira',
         /* performance: null, */
         time_of_execution: '02h30',
       },
       formDataEdited: {
-        signature: false,
+        need_signature: false,
         photo: [],
         estimated_time: null,
         end_date: null,
-        observation: null,
+        note: null,
         name_customer: null,
         template: null,
         services: null,
@@ -512,14 +522,6 @@ export default {
         this.formDataEdited = this.formData;
         console.log(this.formData);
         this.$v.$reset();
-        this.formData = {
-          services: null,
-          name_customer: null,
-          template: null,
-          end_date: null,
-          time_of_execution: null,
-          estimated_time: null,
-        };
         try {
           this.formSend = false;
           this.$v.$reset();
@@ -529,6 +531,8 @@ export default {
             .post('tasks', this.$data.formData)
             .then((_res) => {
               this.$refs.modal.hide();
+              this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+              this.$nuxt.refresh();
             })
             .catch((_err) => {});
         } catch (error) {
@@ -536,8 +540,31 @@ export default {
         }
       }
     },
-    remove(index) {
-      this.ordens.splice(index, 1);
+    async remove(index, ordem) {
+      // this.ordens.splice(index, 1);
+      console.log('index :: ', index);
+      console.log('ordem :: ', ordem);
+
+      try {
+        await this.$axios
+          .delete('tasks/' + index)
+          .then((_res) => {
+            if (_res.data.result === 'success') {
+              this.hideModal2(index);
+              this.toast('success', 'Sucesso', 'Item excluído!');
+              this.$nuxt.refresh();
+            } else {
+              this.toast(
+                'danger',
+                'Erro',
+                'Problemas ao excluir. Entre em contato com o suporte',
+              );
+            }
+          })
+          .catch((_err) => {});
+      } catch (error) {
+        console.log(error);
+      }
     },
     setToEditing(index) {
       this.formEditing = index;

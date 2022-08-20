@@ -192,7 +192,7 @@ export default {
     strategies: {
       laravelJWT: {
         provider: 'laravel/jwt',
-        url: 'http://localhost:8000/api/v1',
+        url: process.env.API_URL,
         token: {
           property: 'access_token',
           maxAge: 60 * 60,
