@@ -69,6 +69,12 @@ body {
   color: var(--gray-20);
   font-weight: 600;
 }
+.nav-link#__BVID__14___BV_tab_button__ {
+  border-radius: 8px 0px 0px 8px;
+}
+.nav-link#__BVID__17___BV_tab_button__ {
+  border-radius: 0px 8px 8px 0px;
+}
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   background-color: var(--primary-50);

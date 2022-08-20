@@ -149,7 +149,7 @@
                 v-model="formData.password"
                 name="password"
                 type="password"
-                placeholder="******"
+                placeholder="**"
                 :class="{
                   'is-invalid': $v.formData.password.$error,
                 }"
@@ -171,7 +171,7 @@
                 v-model="formData.confirm_password"
                 name="confirm_password"
                 type="password"
-                placeholder="******"
+                placeholder="**"
                 :class="{
                   'is-invalid': $v.formData.confirm_password.$error,
                 }"
@@ -282,7 +282,7 @@
         <b-row>
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="number">Numero *</label>
+              <label for="number">Número *</label>
               <b-form-input
                 v-model="formData.number"
                 name="number"
