@@ -55,6 +55,7 @@ export default {
 
 <style lang="scss" scoped>
 main {
+  height: 100vh;
   header {
     background-image: url(~/assets/img/bg-painel.png);
     background-repeat: no-repeat;
@@ -76,6 +77,7 @@ main {
   }
   section {
     width: 100%;
+    height: 100%;
     background-color: #ffffff;
     div {
       display: grid;

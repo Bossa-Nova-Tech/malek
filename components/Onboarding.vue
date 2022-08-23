@@ -1,5 +1,5 @@
 <template>
-  <div class="animat">
+  <div class="animate">
     <Flicking :options="{ align: 'prev' }" :plugins="plugins">
       <section>
         <h1 class="primary-80">Seja bem vindo</h1>
@@ -107,7 +107,7 @@ export default {
 
 <style lang="scss" scoped>
 .animate {
-  animation: animate 6s;
+  animation: animate 1s;
 }
 @keyframes animate {
   from {

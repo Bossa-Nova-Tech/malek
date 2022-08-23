@@ -64,7 +64,9 @@
         </b-form-group>
 
         <b-form-group class="mb-4">
-          <label for="fantasy_name">Nome da Empresa</label>
+          <label for="fantasy_name"
+            >Nome da Empresa <span class="requerido">*</span></label
+          >
           <b-form-input
             v-model="formData.fantasy_name"
             name="fantasy_name"
@@ -340,8 +342,8 @@
       </b-form>
     </main>
 
-    <div class="row justify-content-center mb-4 mx-1">
-      <button class="col col-lg-4" :disabled="formSend" @click="register">
+    <div class="row justify-content-center">
+      <button class="col col-lg-4 mb-4" :disabled="formSend" @click="register">
         <b-spinner v-if="formSend" small type="grow" />
         Avançar
       </button>
