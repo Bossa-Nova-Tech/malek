@@ -543,7 +543,7 @@ export default {
 
       try {
         await this.$axios
-          .delete('tasks/' + index)
+          .delete('tasks/' + (index - 1))
           .then((_res) => {
             if (_res.data.result === 'success') {
               this.hideModal2(index);

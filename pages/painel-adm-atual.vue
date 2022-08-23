@@ -13,7 +13,7 @@
           <p>Propostas</p>
         </NuxtLink>
 
-        <NuxtLink to="/painel-tarefas-relatorio">
+        <NuxtLink to="/ordem-de-servicos">
           <img src="~/assets/img/icones/ordem.svg" alt="" />
           <p>Ordem de Serviço</p>
         </NuxtLink>
