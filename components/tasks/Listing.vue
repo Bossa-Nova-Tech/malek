@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="listing">
     <section v-for="(ordem, index) in tasksData" :key="ordem.id" class="mt-3">
       <div class="card-servico mb-4">
         <div class="d-flex justify-content-between pb-2">
@@ -21,131 +21,6 @@
             <span class="tempo gray-40">{{ ordem.estimated_time }} </span>
           </div>
         </div>
-        <!-- modal-editar -->
-        <b-modal
-          v-if="formEditing === index"
-          id="modal-1"
-          title="BootstrapVue"
-          hide-footer
-          hide-header
-        >
-          <img src="~/assets/img/icones/seta-voltar-azul.svg" class="my-4" />
-          <h1 class="mb-4">Editar Ordem de Serviço</h1>
-
-          <div>
-            <b-form-group
-              label="Serviço"
-              label-for="formDataEdited.template"
-              class="mb-4"
-            >
-              <b-form-select
-                :id="`form-edit-${index}`"
-                v-model="formDataEdited.template"
-                :options="optionsTemplate"
-                :class="{ 'is-invalid': $v.formData.template.$error }"
-              />
-              <b-form-invalid-feedback>
-                Selecione uma opção.
-              </b-form-invalid-feedback>
-            </b-form-group>
-
-            <b-form-group
-              label="Categoria"
-              label-for="formDataEdited.services"
-              class="mb-4"
-            >
-              <b-form-select
-                :id="`form-edit-${index}`"
-                v-model="formDataEdited.services"
-                :options="optionsServices"
-                :class="{ 'is-invalid': $v.formData.services.$error }"
-              />
-              <b-form-invalid-feedback>
-                Selecione uma opção.
-              </b-form-invalid-feedback>
-            </b-form-group>
-
-            <b-form-group
-              label="Cliente"
-              label-for="formDataEdited.name_customer"
-              class="mb-4"
-            >
-              <b-form-select
-                :id="`form-edit-${index}`"
-                v-model="formDataEdited.name_customer"
-                :options="optionsNameCustomer"
-                :class="{
-                  'is-invalid': $v.formData.name_customer.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                Selecione uma opção.
-              </b-form-invalid-feedback>
-            </b-form-group>
-
-            <BorderButton class="my-4">
-              <b-form-file
-                id="file"
-                v-model="formDataEdited.photo"
-                plain
-                multiple
-              ></b-form-file>
-              <label for="file" class="label text-center">Enviar Fotos</label>
-            </BorderButton>
-
-            <b-form-group
-              label="Duração média da tarefa"
-              label-for="formData.estimated_time"
-              class="mb-4"
-            >
-              <b-form-select
-                :id="`form-edit-${index}`"
-                v-model="formDataEdited.estimated_time"
-                :options="optionsEstimatedTime"
-              >
-              </b-form-select>
-            </b-form-group>
-
-            <b-form-group
-              label="Data prevista de conclusão"
-              label-for="formDataEdited.end_date"
-              class="mb-4"
-            >
-              <b-form-datepicker
-                :id="`form-edit-${index}`"
-                v-model="formDataEdited.end_date"
-                :date-format-options="{
-                  year: 'numeric',
-                  month: 'numeric',
-                  day: 'numeric',
-                }"
-                direction="rtl"
-                locale="pt"
-                placeholder="00/00/2022"
-                :class="{ 'is-invalid': $v.formData.end_date.$error }"
-              />
-              <b-form-invalid-feedback>
-                Selecione uma opção.
-              </b-form-invalid-feedback>
-            </b-form-group>
-
-            <b-form-group
-              label="Observação"
-              label-for="formDataEdited.note"
-              class="mb-4"
-            >
-              <b-form-input
-                :id="`form-edit-${index}`"
-                v-model="formDataEdited.note"
-                placeholder="Esta tarefa consiste em..."
-              >
-              </b-form-input>
-            </b-form-group>
-
-            <button @click="save(index)">salvar</button>
-          </div>
-        </b-modal>
-
         <b-button
           v-b-modal.modal-1
           size="sm"
@@ -161,17 +36,102 @@
             size="sm"
             variant="danger"
             class="mt-3"
-            @click="$bvModal.show(excluir)"
+            @click="showModal(ordem)"
           >
             Excluir</b-button
           >
+          <Delete :ordem="ordem" />
         </div>
       </div>
     </section>
   </div>
 </template>
 <script>
+import Delete from '~/components/tasks/Delete.vue';
 export default {
   name: 'Listing',
+  components: { Delete },
+  props: {
+    tasksData: {
+      type: Array,
+      default: null,
+    },
+  },
+  async asyncData({ $axios }) {
+    const tasks = await $axios.get('tasks');
+    const tasksData = tasks.data;
+    console.log('tasks :: ', tasks.data);
+    return { tasksData };
+  },
+  data() {
+    return {
+      id: null,
+      saved: false,
+      formSend: false,
+      formEditing: null,
+      editing: false,
+      formData: {
+        need_signature: false,
+        photo: [],
+        estimated_time: null,
+        end_date: null,
+        note: null,
+        name_customer: 'HAVAN Unidade 02',
+        template: null,
+        services: null,
+        time_of_execution: '02h30',
+      },
+      formDataEdited: {
+        need_signature: false,
+        photo: [],
+        estimated_time: null,
+        end_date: null,
+        note: null,
+        name_customer: null,
+        template: null,
+        services: null,
+        time_of_execution: null,
+      },
+      photo_perfil: [require('~/assets/img/icones/icone-perfil.svg')],
+    };
+  },
+  methods: {
+    setToEditing(index) {
+      this.formEditing = index;
+      setTimeout(() => {
+        document.getElementById(`form-edit-${index}`).focus();
+      }, 1);
+      if (this.formDataEdited === null) {
+        this.formDataEdited = this.formData;
+      }
+    },
+    save(index) {
+      this.saved = true;
+      if (this.saved === true) {
+        this.formData = this.formDataEdited;
+      }
+      console.log(this.formData);
+      this.formEditing = !index;
+      this.$root.$emit('bv::hide::modal', 'modal-1', index);
+      this.formData = {
+        services: null,
+        name_customer: null,
+        template: null,
+        end_date: null,
+        time_of_execution: null,
+        estimated_time: null,
+      };
+    },
+    showModal(ordem) {
+      this.id = ordem.id;
+      this.$root.$emit('bv::show::modal', 'excluir', this.id);
+      console.log(ordem.id);
+    },
+  },
 };
 </script>
+<style lang="scss" scoped>
+.listing {
+  padding-bottom: 5rem !important;
+}
+</style>

@@ -9,6 +9,7 @@
       <b-img
         src="~/assets/img/icones/seta-voltar-azul.svg"
         class="mt-5 ml-3 mb-4"
+        @click="$bvModal.hide('criar')"
       ></b-img>
       <h1 class="mt-2 ml-3">Criar Ordem de Serviço</h1>
     </template>
@@ -18,6 +19,7 @@
           v-model="formData.template"
           :options="optionsTemplate"
           class="mb-4"
+          :class="{ 'is-invalid': $v.formData.template.$error }"
         />
         <b-form-invalid-feedback>
           Selecione uma opção.
@@ -28,6 +30,7 @@
           v-model="formData.services"
           :options="optionsServices"
           class="mb-4"
+          :class="{ 'is-invalid': $v.formData.services.$error }"
         />
         <b-form-invalid-feedback>
           Selecione uma opção.
@@ -38,6 +41,7 @@
           v-model="formData.name_customer"
           :options="optionsNameCustomer"
           class="mb-4"
+          :class="{ 'is-invalid': $v.formData.name_customer.$error }"
         />
         <b-form-invalid-feedback>
           Selecione uma opção.
@@ -70,6 +74,7 @@
           locale="pt"
           placeholder="00/00/2022"
           class="mb-4"
+          :class="{ 'is-invalid': $v.formData.end_date.$error }"
         />
         <b-form-invalid-feedback>
           Selecione uma opção.

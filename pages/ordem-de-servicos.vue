@@ -5,7 +5,7 @@
       <b-tabs pills class="mx-auto caixa" align="center">
         <!-- início da tab HOJE -->
         <b-tab id="hoje" title="Hoje" active>
-          <Delete />
+          <Listing :tasks-data="tasksData" />
           <Add />
           <div
             class="footer caixa d-flex justify-content-center align-items-center mt-2"
@@ -63,25 +63,20 @@ import { Flicking } from '@egjs/vue-flicking';
 import TheHeader from '~/components/layout/TheHeader.vue';
 import Graphic from '~/components/Graphic.vue';
 import Add from '~/components/tasks/Add.vue';
-import Delete from '~/components/tasks/Delete.vue';
+import Listing from '~/components/tasks/Listing.vue';
 // import BorderButton from '~/components/BorderButton.vue';
 export default {
   // components: { Flicking, TheHeader, Graphic, BorderButton },
-  components: { Flicking, TheHeader, Graphic, Add, Delete },
+  components: { Flicking, TheHeader, Graphic, Add, Listing },
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks');
     const tasksData = tasks.data;
     console.log('tasks :: ', tasks.data);
     return { tasksData };
   },
-
   data: () => {
     return {
-      saved: false,
-      formEditing: null,
-      ordens: [],
-      formSend: false,
-      editing: false,
+      tasksData: [],
       formData: {
         need_signature: false,
         photo: [],
@@ -91,22 +86,8 @@ export default {
         name_customer: 'HAVAN Unidade 02',
         template: null,
         services: null,
-        // name: 'José da Silveira',
-        /* performance: null, */
         time_of_execution: '02h30',
       },
-      formDataEdited: {
-        need_signature: false,
-        photo: [],
-        estimated_time: null,
-        end_date: null,
-        note: null,
-        name_customer: null,
-        template: null,
-        services: null,
-        time_of_execution: null,
-      },
-      photo_perfil: [require('~/assets/img/icones/icone-perfil.svg')],
       optionsNames: [
         {
           value: null,
@@ -125,18 +106,11 @@ export default {
   },
   head() {
     return {
-      title: `Ordem de Serviços |  ${process.env.title}`,
+      title: `Ordem de Serviços | ${process.env.title}`,
     };
   },
 
   methods: {
-    showModal2(index) {
-      this.$root.$emit('bv::show::modal', 'modal-2', index);
-    },
-    hideModal2(index) {
-      this.$root.$emit('bv::hide::modal', 'modal-2', index);
-    },
-
     setToEditing(index) {
       this.formEditing = index;
       setTimeout(() => {

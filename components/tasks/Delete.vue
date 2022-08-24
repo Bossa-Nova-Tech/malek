@@ -8,7 +8,7 @@
   >
     <p class="my-4">Tem certeza de que deseja excluir este registro?</p>
     <template #modal-footer>
-      <b-button variant="danger" @click="remove(ordem.id, ordem)">Sim</b-button>
+      <b-button variant="danger" @click="remove(ordem)">Sim</b-button>
       <b-button @click="$bvModal.hide('excluir')">Não</b-button>
     </template>
   </b-modal>
@@ -16,19 +16,26 @@
 <script>
 export default {
   name: 'Delete',
+  props: ['ordem'],
+  /*   async asyncData({ $axios }) {
+    const tasks = await $axios.get('tasks');
+    const tasksData = tasks.data;
+    console.log('tasks :: ', tasks.data);
+    return { tasksData };
+  }, */
   methods: {
-    async remove(index, ordem) {
+    async remove(ordem) {
       // this.ordens.splice(index, 1);
-      console.log('index :: ', index);
-      console.log('ordem :: ', ordem);
-
+      /* console.log('index :: ', index);
+      console.log('ordem :: ', ordem); */
+      console.log(ordem.id);
       try {
         await this.$axios
-          .delete('tasks/' + this.$parent.index)
+          .delete('tasks/' + ordem.id)
           .then((_res) => {
             if (_res.data.result === 'success') {
-              this.hideModal2(index);
               this.toast('success', 'Sucesso', 'Item excluído!');
+              this.$root.$emit('bv::hide::modal', 'excluir');
               this.$nuxt.refresh();
             } else {
               this.toast(
