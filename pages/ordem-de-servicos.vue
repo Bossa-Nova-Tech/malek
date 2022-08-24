@@ -7,17 +7,19 @@
         <b-tab id="hoje" title="Hoje" active>
           <Listing :tasks-data="tasksData" />
           <Add />
-          <div
-            class="footer caixa d-flex justify-content-center align-items-center mt-2"
-          >
+          <div class="footer caixa mx-auto d-flex align-items-center mt-2">
             <b-button
+              v-if="!$screen.md"
               class="d-flex justify-content-center align-items-center create m-0 border-0"
               @click="$bvModal.show('criar')"
               >Criar Ordem de Serviço</b-button
             >
-            <!-- tela modal-criar-ordemservico -->
-
-            <!-- final tela modal-criar-ordemservico -->
+            <b-button
+              v-else
+              class="d-flex justify-content-center align-items-center create m-0 border-0"
+              @click="$bvModal.show('criarGrande')"
+              >Criar Ordem de Serviço</b-button
+            >
           </div>
         </b-tab>
         <b-tab id="relatorio">
@@ -27,11 +29,7 @@
             <h2 class="mb-4">Em andamento</h2>
             <Flicking :options="{ align: 'prev', bound: true }">
               <div class="d-flex">
-                <div
-                  v-for="(ordem, index) in tasksData"
-                  :key="index"
-                  class="mr-4"
-                >
+                <div v-for="ordem in tasksData" :key="ordem.id" class="mr-4">
                   <p>{{ ordem.name }}</p>
                   <p class="lugar">{{ ordem.name_customer }}</p>
                   <!-- <span class="font-weight-bolder">{{

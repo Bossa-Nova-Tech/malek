@@ -37,12 +37,15 @@ export default {
 }
 
 .fadeout {
-  animation: fadeout 001 forwards;
+  animation: fadeout 2s forwards;
 }
 
 @keyframes fadeout {
+  from {
+    opacity: 100%;
+  }
   to {
-    opacity: 0;
+    opacity: 0%;
     visibility: hidden;
   }
 }

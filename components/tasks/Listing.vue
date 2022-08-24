@@ -1,6 +1,6 @@
 <template>
   <div class="listing">
-    <section v-for="(ordem, index) in tasksData" :key="ordem.id" class="mt-3">
+    <section v-for="ordem in tasksData" :key="ordem.id" class="mt-3">
       <div class="card-servico mb-4">
         <div class="d-flex justify-content-between pb-2">
           <h2 class="manutencao primary-80">
@@ -21,13 +21,7 @@
             <span class="tempo gray-40">{{ ordem.estimated_time }} </span>
           </div>
         </div>
-        <b-button
-          v-b-modal.modal-1
-          size="sm"
-          variant="primary"
-          class="mt-3"
-          @click="setToEditing(index)"
-        >
+        <b-button v-b-modal.modal-1 size="sm" variant="primary" class="mt-3">
           Editar</b-button
         >
 
@@ -96,36 +90,10 @@ export default {
     };
   },
   methods: {
-    setToEditing(index) {
-      this.formEditing = index;
-      setTimeout(() => {
-        document.getElementById(`form-edit-${index}`).focus();
-      }, 1);
-      if (this.formDataEdited === null) {
-        this.formDataEdited = this.formData;
-      }
-    },
-    save(index) {
-      this.saved = true;
-      if (this.saved === true) {
-        this.formData = this.formDataEdited;
-      }
-      console.log(this.formData);
-      this.formEditing = !index;
-      this.$root.$emit('bv::hide::modal', 'modal-1', index);
-      this.formData = {
-        services: null,
-        name_customer: null,
-        template: null,
-        end_date: null,
-        time_of_execution: null,
-        estimated_time: null,
-      };
-    },
     showModal(ordem) {
       this.id = ordem.id;
       this.$root.$emit('bv::show::modal', 'excluir', this.id);
-      console.log(ordem.id);
+      console.log(ordem.id + ' chamado');
     },
   },
 };

@@ -107,14 +107,14 @@ export default {
 
 <style lang="scss" scoped>
 .animate {
-  animation: animate 1s;
+  animation: animate 3s ease-in;
 }
 @keyframes animate {
   from {
     opacity: 0;
   }
   to {
-    opacity: 1;
+    opacity: 100%;
   }
 }
 section {

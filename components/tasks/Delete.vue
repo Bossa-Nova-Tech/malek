@@ -28,12 +28,12 @@ export default {
       // this.ordens.splice(index, 1);
       /* console.log('index :: ', index);
       console.log('ordem :: ', ordem); */
-      console.log(ordem.id);
       try {
         await this.$axios
           .delete('tasks/' + ordem.id)
           .then((_res) => {
             if (_res.data.result === 'success') {
+              console.log(ordem.id + ' excluido');
               this.toast('success', 'Sucesso', 'Item excluído!');
               this.$root.$emit('bv::hide::modal', 'excluir');
               this.$nuxt.refresh();
