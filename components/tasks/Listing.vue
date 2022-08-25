@@ -92,7 +92,8 @@ export default {
   methods: {
     showModal(ordem) {
       this.id = ordem.id;
-      this.$root.$emit('bv::show::modal', 'excluir', this.id);
+      // this.$root.$emit('bv::show::modal', 'excluir', this.id);
+      this.$bvModal.show(this.id);
       console.log(ordem.id + ' chamado');
     },
   },

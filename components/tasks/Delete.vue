@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    id="excluir"
-    ref="excluir"
+    :id="ordem.id"
+    :ref="ordem.id"
     title="BootstrapVue"
     hide-header
     footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
@@ -9,7 +9,7 @@
     <p class="my-4">Tem certeza de que deseja excluir este registro?</p>
     <template #modal-footer>
       <b-button variant="danger" @click="remove(ordem)">Sim</b-button>
-      <b-button @click="$bvModal.hide('excluir')">Não</b-button>
+      <b-button @click="$bvModal.hide(ordem.id)">Não</b-button>
     </template>
   </b-modal>
 </template>
@@ -17,12 +17,13 @@
 export default {
   name: 'Delete',
   props: ['ordem'],
-  /*   async asyncData({ $axios }) {
-    const tasks = await $axios.get('tasks');
-    const tasksData = tasks.data;
-    console.log('tasks :: ', tasks.data);
-    return { tasksData };
-  }, */
+
+  mounted() {
+    console.log('chamou o delete', this.ordem.id);
+    const idRef = 'modal-' + this.ordem.id;
+    console.log(idRef);
+    return { idRef };
+  },
   methods: {
     async remove(ordem) {
       // this.ordens.splice(index, 1);
@@ -53,3 +54,5 @@ export default {
   },
 };
 </script>
+
+
