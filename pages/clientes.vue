@@ -4,7 +4,13 @@
 
     <button v-b-modal.modal-lg class="my-5">Criar clientes</button>
 
-    <b-modal id="modal-lg" size="lg" hide-footer hide-header>
+    <b-modal
+      id="modal-lg"
+      ref="costumerModal"
+      size="lg"
+      hide-footer
+      hide-header
+    >
       <div class="mx-4">
         <div class="d-flex justify-content-between">
           <h1 class="mt-4 mb-5">Criar / Editar Cliente</h1>
@@ -101,6 +107,9 @@
             v-model="formData.photo"
             plain
             multiple
+            :class="{
+              'is-invalid': $v.formData.photo.$error,
+            }"
           ></b-form-file>
           <label for="file" class="label cor-label">Enviar Fotos</label>
         </BorderButton>
@@ -334,9 +343,9 @@ export default {
 
   methods: {
     async saveCustomer(_response) {
-      this.$v.$touch();
+      this.$v.formData.$touch();
 
-      if (!this.$v.$invalid) {
+      if (!this.$v.formData.$invalid) {
         this.formSend = true;
         console.log(this.formData);
 
@@ -345,9 +354,14 @@ export default {
           this.$v.$reset();
 
           console.log('executou o clic');
+          this.$refs.costumerModal.hide();
 
           await this.$axios
-            .post('customer', this.$data.formData)
+            .post('costumers', this.$data.formData)
+            .then((_res) => {
+              this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+              this.$nuxt.refresh();
+            })
             .catch((_err) => {});
         } catch (error) {
           console.log(error);
