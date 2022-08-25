@@ -231,7 +231,10 @@
           </b-col>
         </b-row>
 
-        <button class="mt-4 mb-2">Salvar</button>
+        <button class="mt-4 mb-2" :disabled="formSend" @click="saveCustomer">
+          <b-spinner v-if="formSend" small type="grow" />
+          Salvar
+        </button>
       </div>
     </b-modal>
 
@@ -326,6 +329,30 @@ export default {
       number: {
         required,
       },
+    },
+  },
+
+  methods: {
+    async saveCustomer(_response) {
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.formSend = true;
+        console.log(this.formData);
+
+        try {
+          this.formSend = false;
+          this.$v.$reset();
+
+          console.log('executou o clic');
+
+          await this.$axios
+            .post('customer', this.$data.formData)
+            .catch((_err) => {});
+        } catch (error) {
+          console.log(error);
+        }
+      }
     },
   },
 };
