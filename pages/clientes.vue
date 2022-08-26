@@ -1,8 +1,6 @@
 <template>
-  <main>
+  <div>
     <TheHeader> Clientes </TheHeader>
-
-    <button v-b-modal.modal-lg class="my-5">Criar clientes</button>
 
     <b-modal
       id="modal-lg"
@@ -247,11 +245,28 @@
       </div>
     </b-modal>
 
-    <div class="container">
+    <main>
+      <div class="d-flex align-items-center mb-5">
+        <b-form-input v-model="text" placeholder="Pesquisar"></b-form-input>
+        <img class="ml-3 mr-5" src="~/assets/img/icones/sliders.svg" />
+        <button v-b-modal.modal-lg>Criar clientes</button>
+      </div>
+
       <section>
         <h1 class="p-4">Clientes</h1>
         <ul>
-          <li>
+          <li class="p-4">
+            <p>UNIFEBE - Fundação Ed. de Brusque</p>
+            <div>
+              <a href=""
+                ><img src="~/assets/img/icones/edit-icon.svg" alt=""
+              /></a>
+              <a href="">
+                <img src="~/assets/img/icones/delete-icon.svg" alt=""
+              /></a>
+            </div>
+          </li>
+          <li class="p-4">
             <p>UNIFEBE - Fundação Ed. de Brusque</p>
             <div>
               <a href=""
@@ -264,8 +279,8 @@
           </li>
         </ul>
       </section>
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -288,7 +303,7 @@ export default {
         cnpj: null,
         phone: null,
         email: null,
-        photo: null,
+        photo: [],
         address: null,
         cep: null,
         district: null,
@@ -357,7 +372,7 @@ export default {
           this.$refs.costumerModal.hide();
 
           await this.$axios
-            .post('costumers', this.$data.formData)
+            .post('customers', this.$data.formData)
             .then((_res) => {
               this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
               this.$nuxt.refresh();
@@ -374,32 +389,47 @@ export default {
 
 <style lang="scss" scoped>
 main {
+  display: grid;
+  margin: auto;
+  width: 35.5625rem;
+  button {
+    width: 300px;
+    font-size: 1rem;
+  }
   section {
-    height: 500px;
-    background: #fff;
+    height: 33.5625rem;
+    background: #fbfbfb;
+    box-shadow: 0px 4px 4px rgba(0, 71, 187, 0.06);
+    border-radius: 8px;
 
     li {
       display: flex;
       justify-content: space-between;
-      padding: 10px;
-      border-bottom: 1px solid #000;
+      align-items: center;
+      border-bottom: 1px solid var(--gray-20);
+      p {
+        font-weight: 600;
+        font-size: 12px;
+        color: var(--primary-80);
+      }
       a {
         margin-right: 20px;
       }
     }
   }
-}
-label {
-  font-weight: 500;
-  color: var(--gray-40);
-}
-.cor-label {
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--primary-60);
-  margin: 0px;
-}
-.requerido {
-  color: var(--red-50);
+
+  label {
+    font-weight: 500;
+    color: var(--gray-40);
+  }
+  .cor-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--primary-60);
+    margin: 0px;
+  }
+  .requerido {
+    color: var(--red-50);
+  }
 }
 </style>
