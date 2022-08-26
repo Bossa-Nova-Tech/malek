@@ -9,15 +9,8 @@
           <Add />
           <div class="footer caixa mx-auto d-flex align-items-center mt-2">
             <b-button
-              v-if="!$screen.md"
               class="d-flex justify-content-center align-items-center create m-0 border-0"
               @click="$bvModal.show('criar')"
-              >Criar Ordem de Serviço</b-button
-            >
-            <b-button
-              v-else
-              class="d-flex justify-content-center align-items-center create m-0 border-0"
-              @click="$bvModal.show('criarGrande')"
               >Criar Ordem de Serviço</b-button
             >
           </div>

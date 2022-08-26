@@ -17,7 +17,6 @@
 export default {
   name: 'Delete',
   props: ['ordem'],
-
   mounted() {
     console.log('chamou o delete', this.ordem.id);
     const idRef = 'modal-' + this.ordem.id;
@@ -54,5 +53,3 @@ export default {
   },
 };
 </script>
-
-
