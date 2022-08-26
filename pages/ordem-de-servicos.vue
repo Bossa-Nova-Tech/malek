@@ -1,7 +1,69 @@
 <template>
   <div class="d-flex flex-column">
-    <TheHeader> Ordem de Serviço </TheHeader>
-    <main class="d-flex caixa mx-auto mb-5">
+    <header v-if="$screen.md">
+      <div class="top"></div>
+      <div class="container">
+        <div class="logo position-relative">
+          <b-img src="~/assets/img/logo-desktop-painel.svg" alt="" />
+        </div>
+        <div class="hello d-flex flex-column mt-5">
+          <h3>Olá {{ $auth.user.name }},</h3>
+          <p>Acompanhe por aqui o desempenho geral da sua empresa</p>
+        </div>
+      </div>
+    </header>
+    <TheHeader v-else> Ordem de Serviço </TheHeader>
+    <main v-if="$screen.md" class="container">
+      <aside v-if="$screen.md">
+        <NuxtLink to="/propostas" class="d-flex my-4 align-items-center">
+          <img src="~/assets/img/icones/proposta.svg" alt="" />
+          <p class="pl-4">Propostas</p>
+        </NuxtLink>
+        <NuxtLink
+          to="/ordem-de-servicos"
+          class="d-flex align-items-center my-4"
+        >
+          <img src="~/assets/img/icones/ordem.svg" alt="" />
+          <p class="pl-4 py-0">Ordem de Serviço</p>
+        </NuxtLink>
+        <NuxtLink to="/clientes" class="d-flex align-items-center my-4">
+          <img src="~/assets/img/icones/clientes.svg" alt="" />
+          <p class="pl-4">Clientes</p>
+        </NuxtLink>
+
+        <NuxtLink to="/cobranca" class="d-flex align-items-center my-4">
+          <img src="~/assets/img/icones/cobranca.svg" alt="" />
+          <p class="pl-4">Cobrança</p>
+        </NuxtLink>
+        <NuxtLink to="/orcamento" class="d-flex align-items-center my-4">
+          <img src="~/assets/img/icones/orcamento.svg" alt="" />
+          <p class="pl-4">Orçamento</p>
+        </NuxtLink>
+
+        <NuxtLink to="/colaboradores" class="d-flex align-items-center my-4">
+          <img src="~/assets/img/icones/colaboradores.svg" alt="" />
+          <p class="pl-4">Colaboradores</p>
+        </NuxtLink>
+      </aside>
+      <div class="ml-5 d-flex justify-content-between">
+        <div class="d-flex w-100">
+          <b-tabs pills class="mx-auto w-100">
+            <b-tab id="hoje" title="Hoje" active>
+              <h2 class="my-5 ml-3">Acontecendo Hoje</h2>
+              <Listing :tasks-data="tasksData" />
+            </b-tab>
+            <b-tab id="relatorio" title="Relatório">b </b-tab>
+          </b-tabs>
+          <b-button
+            class="d-flex justify-content-center align-items-center create m-0 border-0 w-50"
+            @click="$bvModal.show('criar')"
+            >Criar Ordem de Serviço</b-button
+          >
+        </div>
+      </div>
+    </main>
+
+    <main v-else class="d-flex caixa mx-auto mb-5">
       <b-tabs pills class="mx-auto caixa" align="center">
         <!-- início da tab HOJE -->
         <b-tab id="hoje" title="Hoje" active>
@@ -192,6 +254,46 @@ main {
   .tempo {
     font-weight: 500;
     font-size: 0.625rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .container {
+    width: min(59.125rem, 100%);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  header {
+    .top {
+      background: linear-gradient(82.86deg, #003283 -10.8%, #6d92d8 113.3%);
+      min-height: 7.125rem;
+      background: url('~/assets/img/top-painel-adm.svg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .logo {
+      margin-top: -2.5625rem;
+    }
+    .hello {
+      padding-left: 9.375rem;
+      margin-bottom: 5rem;
+    }
+  }
+  aside > a {
+    color: var(--gray-60);
+    font-weight: 600;
+  }
+  aside {
+    margin-bottom: 18.5rem;
+  }
+  main {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    .create {
+      height: 2.5rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
   }
 }
 </style>

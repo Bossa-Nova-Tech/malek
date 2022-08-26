@@ -47,7 +47,10 @@
       <div class="ml-5 d-flex">
         <div>
           <b-tabs pills class="mx-auto caixa w-100">
-            <b-tab id="hoje" title="Hoje" active>a </b-tab>
+            <b-tab id="hoje" title="Hoje" active>
+              <h2 class="mt-5 ml-3">Acontecendo Hoje</h2>
+              <Listing :tasks-data="tasksData" />
+            </b-tab>
             <b-tab id="relatorio" title="Relatório">b </b-tab>
           </b-tabs>
         </div>
@@ -105,8 +108,16 @@
 </template>
 
 <script>
+import Listing from '~/components/tasks/Listing.vue';
 export default {
+  components: { Listing },
   layout: 'auth',
+  async asyncData({ $axios }) {
+    const tasks = await $axios.get('tasks');
+    const tasksData = tasks.data;
+    console.log('tasks :: ', tasks.data);
+    return { tasksData };
+  },
   head() {
     return {
       title: `Painel |  ${process.env.title}`,

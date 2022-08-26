@@ -1,302 +1,35 @@
 <template>
   <div>
     <TheHeader> Clientes </TheHeader>
-
-    <b-modal
-      id="modal-lg"
-      ref="costumerModal"
-      size="lg"
-      hide-footer
-      hide-header
-    >
-      <div class="mx-4">
-        <div class="d-flex justify-content-between">
-          <h1 class="mt-4 mb-5">Criar / Editar Cliente</h1>
-          <a href="">
-            <img src="~/assets/img/icones/X-icon.svg" class="mb-5 mt-3" />
-          </a>
-        </div>
-
-        <b-form-group class="mb-4">
-          <label for="name">Nome <span class="requerido">*</span></label>
-          <b-form-input
-            v-model="formData.name"
-            name="name"
-            type="text"
-            placeholder="João"
-            :class="{
-              'is-invalid': $v.formData.name.$error,
-            }"
-          />
-          <b-form-invalid-feedback>
-            Preencha o campo acima
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group class="mb-4">
-          <label for="cnpj">CPF / CNPJ <span class="requerido">*</span></label>
-          <b-form-input
-            v-model="formData.cnpj"
-            v-mask="['###.###.###-##', '##.###.###/####-##']"
-            name="cnpj"
-            placeholder="00.000.000/000-00"
-            :class="{ 'is-invalid': $v.formData.cnpj.$error }"
-          />
-          <b-form-invalid-feedback>
-            {{
-              !$v.formData.cnpj.minLength
-                ? 'Insira um CNPJ válido'
-                : 'Preencha o campo acima'
-            }}
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-row>
-          <b-col cols="6">
-            <b-form-group class="mb-4">
-              <label for="phone"
-                >Telefone <span class="requerido">*</span></label
-              >
-              <b-form-input
-                v-model="formData.phone"
-                v-mask="['(##) # ####-####']"
-                name="phone"
-                placeholder="(00) 0 0000-0000"
-                :class="{
-                  'is-invalid': $v.formData.phone.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                {{
-                  !$v.formData.phone.minLength
-                    ? 'Insira um telefone válido'
-                    : 'Preencha o campo acima'
-                }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-
-          <b-col cols="6">
-            <b-form-group class="mb-4">
-              <label for="email">E-mail <span class="requerido">*</span></label>
-              <b-form-input
-                v-model="formData.email"
-                name="email"
-                type="email"
-                placeholder="email@gmail.com"
-                :class="{
-                  'is-invalid': $v.formData.email.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                {{
-                  !$v.formData.email.email
-                    ? 'Insira um e-mail válido'
-                    : 'Preencha o campo acima'
-                }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-        </b-row>
-
-        <BorderButton class="my-4">
-          <b-form-file
-            id="file"
-            v-model="formData.photo"
-            plain
-            multiple
-            :class="{
-              'is-invalid': $v.formData.photo.$error,
-            }"
-          ></b-form-file>
-          <label for="file" class="label cor-label">Enviar Fotos</label>
-        </BorderButton>
-
-        <b-form-group class="mb-4">
-          <label for="address">Endereço <span class="requerido">*</span></label>
-          <b-form-input
-            v-model="formData.address"
-            name="address"
-            type="text"
-            placeholder="-"
-            :class="{
-              'is-invalid': $v.formData.address.$error,
-            }"
-          />
-          <b-form-invalid-feedback>
-            Preencha o campo acima
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-row>
-          <b-col cols="6">
-            <b-form-group class="mb-4">
-              <label for="cep">CEP <span class="requerido">*</span></label>
-              <b-form-input
-                v-model="formData.cep"
-                name="cep"
-                type="number"
-                placeholder="000-00000"
-                :class="{
-                  'is-invalid': $v.formData.cep.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                Preencha o campo acima
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-
-          <b-col cols="6">
-            <b-form-group class="mb-4">
-              <label for="district">Bairro</label>
-              <b-form-input
-                v-model="formData.district"
-                name="district"
-                type="text"
-                placeholder="-"
-                :class="{
-                  'is-invalid': $v.formData.district.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                Preencha o campo acima
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-        </b-row>
-
-        <b-row>
-          <b-col cols="6">
-            <b-form-group class="mb-4">
-              <label for="city">Cidade</label>
-              <b-form-input
-                v-model="formData.city"
-                name="city"
-                type="text"
-                placeholder="-"
-                :class="{
-                  'is-invalid': $v.formData.city.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                Preencha o campo acima
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-
-          <b-col cols="6">
-            <b-form-group class="mb-4">
-              <label for="state">Estado</label>
-              <b-form-input
-                v-model="formData.state"
-                name="state"
-                type="text"
-                placeholder="-"
-                :class="{
-                  'is-invalid': $v.formData.state.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                Preencha o campo acima
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-        </b-row>
-
-        <b-row>
-          <b-col cols="6">
-            <b-form-group class="mb-4">
-              <label for="number"
-                >Número <span class="requerido">*</span></label
-              >
-              <b-form-input
-                v-model="formData.number"
-                name="number"
-                type="number"
-                placeholder="000"
-                :class="{
-                  'is-invalid': $v.formData.number.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                Preencha o campo acima
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-
-          <b-col cols="6">
-            <b-form-group class="mb-4">
-              <label for="complement">Complemento</label>
-              <b-form-input
-                v-model="formData.complement"
-                name="complement"
-                type="text"
-                placeholder="-"
-              />
-            </b-form-group>
-          </b-col>
-        </b-row>
-
-        <button class="mt-4 mb-2" :disabled="formSend" @click="saveCustomer">
-          <b-spinner v-if="formSend" small type="grow" />
-          Salvar
-        </button>
-      </div>
-    </b-modal>
-
     <main>
       <div class="d-flex align-items-center mb-5">
-        <b-form-input v-model="text" placeholder="Pesquisar"></b-form-input>
+        <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
         <img class="ml-3 mr-5" src="~/assets/img/icones/sliders.svg" />
-        <button v-b-modal.modal-lg>Criar clientes</button>
+        <button @click="$bvModal.show('criar-cliente')">Criar clientes</button>
       </div>
-
-      <section>
-        <h1 class="p-4">Clientes</h1>
-        <ul>
-          <li class="p-4">
-            <p>UNIFEBE - Fundação Ed. de Brusque</p>
-            <div>
-              <a href=""
-                ><img src="~/assets/img/icones/edit-icon.svg" alt=""
-              /></a>
-              <a href="">
-                <img src="~/assets/img/icones/delete-icon.svg" alt=""
-              /></a>
-            </div>
-          </li>
-          <li class="p-4">
-            <p>UNIFEBE - Fundação Ed. de Brusque</p>
-            <div>
-              <a href=""
-                ><img src="~/assets/img/icones/edit-icon.svg" alt=""
-              /></a>
-              <a href="">
-                <img src="~/assets/img/icones/delete-icon.svg" alt=""
-              /></a>
-            </div>
-          </li>
-        </ul>
-      </section>
+      <Listing :customers-data="customersData" />
+      <Add />
     </main>
   </div>
 </template>
 
 <script>
-import { required, email, minLength } from 'vuelidate/lib/validators';
-import { validationMixin } from 'vuelidate';
-import { mask } from 'vue-the-mask';
 import TheHeader from '~/components/layout/TheHeader.vue';
+import Add from '~/components/customers/Add.vue';
+import Listing from '~/components/customers/Listing.vue';
 
 export default {
-  components: { TheHeader },
-
-  directives: { mask },
-  mixins: [validationMixin],
+  async asyncData({ $axios }) {
+    const customers = await $axios.get('customers');
+    const customersData = customers.data;
+    console.log('customers :: ', customers.data);
+    return { customersData };
+  },
+  components: { TheHeader, Add, Listing },
 
   data: () => {
     return {
+      customersData: [],
       formSend: false,
       formData: {
         name: null,
@@ -314,76 +47,6 @@ export default {
       },
     };
   },
-
-  validations: {
-    formData: {
-      name: {
-        required,
-      },
-      cnpj: {
-        required,
-        minLength: minLength(13),
-      },
-      phone: {
-        required,
-        minLength: minLength(9),
-      },
-      email: {
-        required,
-        email,
-      },
-      photo: {
-        required,
-      },
-      address: {
-        required,
-      },
-      cep: {
-        required,
-      },
-      district: {
-        required,
-      },
-      city: {
-        required,
-      },
-      state: {
-        required,
-      },
-      number: {
-        required,
-      },
-    },
-  },
-
-  methods: {
-    async saveCustomer(_response) {
-      this.$v.formData.$touch();
-
-      if (!this.$v.formData.$invalid) {
-        this.formSend = true;
-        console.log(this.formData);
-
-        try {
-          this.formSend = false;
-          this.$v.$reset();
-
-          console.log('executou o clic');
-          this.$refs.costumerModal.hide();
-
-          await this.$axios
-            .post('customers', this.$data.formData)
-            .then((_res) => {
-              this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
-              this.$nuxt.refresh();
-            })
-            .catch((_err) => {});
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    },
-  },
 };
 </script>
 
@@ -395,27 +58,6 @@ main {
   button {
     width: 300px;
     font-size: 1rem;
-  }
-  section {
-    height: 33.5625rem;
-    background: #fbfbfb;
-    box-shadow: 0px 4px 4px rgba(0, 71, 187, 0.06);
-    border-radius: 8px;
-
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--gray-20);
-      p {
-        font-weight: 600;
-        font-size: 12px;
-        color: var(--primary-80);
-      }
-      a {
-        margin-right: 20px;
-      }
-    }
   }
 
   label {

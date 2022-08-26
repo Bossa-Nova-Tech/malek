@@ -129,12 +129,10 @@ import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 import CloseIcon from '../layout/CloseIcon.vue';
-/* import CloseIcon from '../layout/CloseIcon.vue';
- */
+
 export default {
   name: 'Add',
-  /*   components: { CloseIcon },
-   */ directives: { mask },
+  directives: { mask },
   components: { CloseIcon },
   mixins: [validationMixin],
   data() {
