@@ -8,7 +8,7 @@
         <b-row>
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="name">Nome *</label>
+              <label for="name">Nome <span class="requerido">*</span></label>
               <b-form-input
                 v-model="formData.name"
                 name="name"
@@ -26,7 +26,9 @@
 
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="last_name">Sobrenome *</label>
+              <label for="last_name"
+                >Sobrenome <span class="requerido">*</span></label
+              >
               <b-form-input
                 v-model="formData.last_name"
                 name="last_name"
@@ -44,7 +46,7 @@
         </b-row>
 
         <b-form-group class="mb-4">
-          <label for="cnpj">CPF / CNPJ *</label>
+          <label for="cnpj">CPF / CNPJ <span class="requerido">*</span></label>
           <b-form-input
             v-model="formData.cnpj"
             v-mask="['###.###.###-##', '##.###.###/####-##']"
@@ -62,7 +64,9 @@
         </b-form-group>
 
         <b-form-group class="mb-4">
-          <label for="fantasy_name">Nome da Empresa</label>
+          <label for="fantasy_name"
+            >Nome da Empresa <span class="requerido">*</span></label
+          >
           <b-form-input
             v-model="formData.fantasy_name"
             name="fantasy_name"
@@ -75,7 +79,7 @@
         </b-form-group>
 
         <b-form-group class="mb-4">
-          <label for="email">E-mail *</label>
+          <label for="email">E-mail <span class="requerido">*</span></label>
           <b-form-input
             v-model="formData.email"
             name="email"
@@ -97,7 +101,7 @@
         <b-row>
           <b-col cols="4">
             <b-form-group class="mb-4">
-              <label for="ddd">Telefone *</label>
+              <label for="ddd">Telefone <span class="requerido">*</span></label>
               <b-form-input
                 v-model="formData.ddd"
                 v-mask="['(##)']"
@@ -144,7 +148,9 @@
         <b-row>
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="password">Senha *</label>
+              <label for="password"
+                >Senha <span class="requerido">*</span></label
+              >
               <b-form-input
                 v-model="formData.password"
                 name="password"
@@ -166,7 +172,9 @@
 
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="confirm_password">Confirmar Senha *</label>
+              <label for="confirm_password"
+                >Confirmar Senha <span class="requerido">*</span></label
+              >
               <b-form-input
                 v-model="formData.confirm_password"
                 name="confirm_password"
@@ -188,7 +196,7 @@
         </b-row>
 
         <b-form-group class="mb-4">
-          <label for="address">Endereço</label>
+          <label for="address">Endereço <span class="requerido">*</span></label>
           <b-form-input
             v-model="formData.address"
             name="address"
@@ -206,7 +214,7 @@
         <b-row>
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="cep">CEP *</label>
+              <label for="cep">CEP <span class="requerido">*</span></label>
               <b-form-input
                 v-model="formData.cep"
                 name="cep"
@@ -282,7 +290,9 @@
         <b-row>
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="number">Número *</label>
+              <label for="number"
+                >Número <span class="requerido">*</span></label
+              >
               <b-form-input
                 v-model="formData.number"
                 name="number"
@@ -310,11 +320,30 @@
             </b-form-group>
           </b-col>
         </b-row>
+
+        <b-form-file
+          id="file"
+          v-model="formData.photo"
+          accept="image/jpeg, image/png, image/jpg"
+          plain
+          multiple
+          :class="{ 'is-invalid': $v.formData.photo.$error }"
+        ></b-form-file>
+        <b-form-feedback class="text-center h5">
+          Envio necessário. Clique abaixo para fazer o upload da sua logo.
+        </b-form-feedback>
+        <div class="campo-foto">
+          <label for="file">
+            <img src="~/assets/img/icones/upload.svg" alt="" />
+            <p>Clique para enviar sua logo</p>
+            <span>PNG, JPG (tamanho máximo X)</span>
+          </label>
+        </div>
       </b-form>
     </main>
 
-    <div class="row justify-content-center mb-4 mx-1">
-      <button class="col col-lg-4" :disabled="formSend" @click="register">
+    <div class="row justify-content-center">
+      <button class="col col-lg-4 mb-4" :disabled="formSend" @click="register">
         <b-spinner v-if="formSend" small type="grow" />
         Avançar
       </button>
@@ -350,7 +379,6 @@ export default {
   directives: { mask },
   mixins: [validationMixin],
 
-  layout: 'auth',
   data: () => {
     return {
       formSend: false,
@@ -371,6 +399,7 @@ export default {
         number: null,
         complement: null,
         address: null,
+        photo: null,
       },
     };
   },
@@ -426,6 +455,9 @@ export default {
         required,
       },
       address: {
+        required,
+      },
+      photo: {
         required,
       },
     },
@@ -486,7 +518,43 @@ label {
   color: var(--gray-40);
 }
 
+.requerido {
+  color: var(--red-50);
+}
+
 #phone {
   margin-top: 0.375rem;
+}
+
+.campo-foto {
+  label {
+    display: grid;
+    justify-items: center;
+    padding: 3.125rem;
+    background-color: var(--gray-10);
+    border-radius: 1.5625rem;
+    margin-bottom: 2rem;
+
+    img {
+      padding-bottom: 2.5rem;
+    }
+
+    p {
+      font-weight: 500;
+      font-size: 0.875rem;
+      line-height: 150%;
+      text-decoration-line: underline;
+      color: var(--gray-40);
+      padding-bottom: 0.3125rem;
+    }
+
+    span {
+      font-weight: 400;
+      font-size: 0.75rem;
+      line-height: 150%;
+      color: var(--gray-40);
+      padding-bottom: 2.5rem;
+    }
+  }
 }
 </style>

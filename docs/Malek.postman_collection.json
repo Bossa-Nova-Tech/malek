@@ -1,0 +1,1075 @@
+{
+  "info": {
+    "_postman_id": "ff409cce-5b50-4b0f-92e3-644a006e0540",
+    "name": "Malek",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "188031"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin@123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/api/auth/login",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "api", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC92MVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NTg2MTI4NjAsImV4cCI6MTY1ODYxNjQ2MCwibmJmIjoxNjU4NjEyODYwLCJqdGkiOiJNT2ZYTXNjS3RwSTFXNlFFIiwic3ViIjo1LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.2Fmq0-m6Qxs3EnWImFq8fYg1wjafGxzFiDLm1axDz0E",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/auth/refresh-token",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "auth", "refresh-token"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Me",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/api/auth/user",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "api", "auth", "user"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Companies",
+      "item": [
+        {
+          "name": "List All",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/companies",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "companies"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List By Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/companies/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "companies", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Pedro\",\n    \"last_name\": \"Santos\",\n    \"cnpj\": \"75508877000197\",\n    \"fantasy_name\": \"Empresa 2\",\n    \"email\": \"pedro@email.com\",\n    \"ddd\": \"81\",\n    \"phone\": \"9 7909-7603\",\n    \"password\": \"101010\",\n    \"confirm_password\": \"111\",\n    \"address\": \"Rua Legal\",\n    \"cep\": \"54310-230\",\n    \"district\": \"Bairro\",\n    \"city\": \"Cidade\",\n    \"state\": \"PE\",\n    \"number\": \"10\",\n    \"complement\": \"qualquer\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/companies",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "companies"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"fantasy_name\": \"Empresa A\",\n    \"cnpj\": \"21112\",\n    \"cpf\": \"45878788787\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/companies/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "companies", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/companies/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "companies", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Services",
+      "item": [
+        {
+          "name": "List All",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/services",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "services"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List By Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/services/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "services", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Serviço 3\",\n    \"time_of_execution\": \"00:30\",\n    \"estimated_value\": 11.50,\n    \"description\": \"Breve descrição do serviço\",\n    \"guarantee\": 10,\n    \"company_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/services",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "services"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Serviço A\",\n    \"time_of_execution\": \"00:30\",\n    \"estimated_value\": 11.50,\n    \"description\": \"Breve descrição do serviço\",\n    \"guarantee\": 10,\n    \"company_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/services/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "services", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/services/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "services", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "List All",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/tasks",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "tasks"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List By Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/tasks/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "tasks", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "estimated_time",
+                  "value": "02:00",
+                  "type": "text"
+                },
+                {
+                  "key": "total_time",
+                  "value": "01:30",
+                  "type": "text"
+                },
+                {
+                  "key": "customer_id",
+                  "value": "20",
+                  "type": "text"
+                },
+                {
+                  "key": "start_date",
+                  "value": "2022-07-15",
+                  "type": "text"
+                },
+                {
+                  "key": "end_date",
+                  "value": "2022-07-15",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "finished",
+                  "type": "text"
+                },
+                {
+                  "key": "priority",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "company_id",
+                  "value": "20",
+                  "type": "text"
+                },
+                {
+                  "key": "photo[0]",
+                  "type": "file",
+                  "src": "/home/user/Área de Trabalho/1647461473593.jpeg"
+                },
+                {
+                  "key": "photo[1]",
+                  "type": "file",
+                  "src": "/home/user/Área de Trabalho/1647461473593.jpeg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/tasks",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "tasks"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"estimated_time\": \"02:00\",\n    \"total_time\": \"01:30\",\n    \"customer_id\": 2,\n    \"start_date\": \"2022-07-15\",\n    \"end_date\": \"2022-07-15\",\n    \"status\": \"pause\",\n    \"priority\": \"1\",\n    \"company_id\": \"2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/tasks/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "tasks", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/tasks/6",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "tasks", "6"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Business Proposal",
+      "item": [
+        {
+          "name": "List All",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/business-proposal",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "business-proposal"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List By Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/business-proposal/3",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "business-proposal", "3"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"created\",\n    \"email\": \"email@email.com\",\n    \"phone\": \"81979097603\",\n    \"whatsapp\": \"81979097603\",\n    \"name_customer\": \"Pedro Santos\",\n    \"customer_id\": 1,\n    \"company_id\": 2,\n    \"services\": [\n        {\n            \"service_id\": 1,\n            \"total\": 12.0,\n            \"discount\": 0.0\n        },\n        {\n            \"service_id\": 2,\n            \"total\": 12.0,\n            \"discount\": 0.0\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/business-proposal",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "business-proposal"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Aprove",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/business-proposal/approve/3",
+              "host": ["{{host}}"],
+              "path": [
+                "api",
+                "{{version}}",
+                "business-proposal",
+                "approve",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"created\",\n    \"email\": \"email@email.com\",\n    \"phone\": \"81979097603\",\n    \"whatsapp\": \"81979097603\",\n    \"name_customer\": \"Pedro S\",\n    \"customer_id\": 1,\n    \"company_id\": 2,\n    \"services\": [\n        {\n            \"service_id\": 1,\n            \"total\": 12.0,\n            \"discount\": 0.0\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/business-proposal/3",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "business-proposal", "3"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/business-proposal/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "business-proposal", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customer",
+      "item": [
+        {
+          "name": "List All",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/customers",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "customers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List By Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/customers/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "customers", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "José",
+                  "type": "text"
+                },
+                {
+                  "key": "cnpj",
+                  "value": "",
+                  "type": "text"
+                },
+                {
+                  "key": "cpf",
+                  "value": "91150355069",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "81979097603",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "emailnovo@email.com",
+                  "type": "text"
+                },
+                {
+                  "key": "address",
+                  "value": "Rua massa",
+                  "type": "text"
+                },
+                {
+                  "key": "cep",
+                  "value": "54430140",
+                  "type": "text"
+                },
+                {
+                  "key": "district",
+                  "value": "Bairro",
+                  "type": "text"
+                },
+                {
+                  "key": "city",
+                  "value": "Cidade",
+                  "type": "text"
+                },
+                {
+                  "key": "state",
+                  "value": "SP",
+                  "type": "text"
+                },
+                {
+                  "key": "number",
+                  "value": "104",
+                  "type": "text"
+                },
+                {
+                  "key": "complement",
+                  "value": "-",
+                  "type": "text"
+                },
+                {
+                  "key": "company_id",
+                  "value": "2",
+                  "type": "text"
+                },
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "src": "/home/user/Área de Trabalho/user.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/customers",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "customers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Pedro\",\n    \"cnpj\": \"\",\n    \"cpf\": \"91150355069\",\n    \"phone\": \"81979097603\",\n    \"email\": \"phmsanttos@gmail.com\",\n    \"company_id\": \"2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/customers/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "customers", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/customers/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "customers", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List All",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/users",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List By Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/users/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "users", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Pedro\",\n    \"email\": \"meuemail@gmail.com\",\n    \"role\": \"administrator\",\n    \"password\": \"123\",\n    \"company_id\": 2,\n    \"cpf\": \"02473715050\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/users",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Pedro Santos\",\n    \"email\": \"meuemail@gmail.com\",\n    \"role\": \"administrator\",\n    \"password\": \"123\",\n    \"company_id\": 2,\n    \"cpf\": \"02473715050\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/{{version}}/users/2",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "users", "2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/{{version}}/users/1",
+              "host": ["{{host}}"],
+              "path": ["api", "{{version}}", "users", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

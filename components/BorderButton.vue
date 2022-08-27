@@ -1,6 +1,8 @@
 <template>
   <div>
-    <b-button variant="outline-primary border-1"><slot></slot></b-button>
+    <button>
+      <slot></slot>
+    </button>
   </div>
 </template>
 <script>
@@ -9,7 +11,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.outline-primary {
-  border-color: var(--primary-60);
+button {
+  border: solid 0.0625rem var(--primary-60);
+  background-color: #ffffff;
 }
 </style>

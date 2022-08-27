@@ -11,7 +11,9 @@
 <script>
 export default {
   name: 'Splash',
-  props: ['isLoading'],
+  props: {
+    isLoading: Boolean,
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -39,8 +41,11 @@ export default {
 }
 
 @keyframes fadeout {
+  from {
+    opacity: 100%;
+  }
   to {
-    opacity: 0;
+    opacity: 0%;
     visibility: hidden;
   }
 }

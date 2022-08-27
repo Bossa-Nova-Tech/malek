@@ -34,7 +34,6 @@
               <b-modal
                 v-if="formEditing === index"
                 id="modal-1"
-                title="BootstrapVue"
                 hide-footer
                 hide-header
               >
@@ -174,7 +173,6 @@
                 <b-modal
                   id="modal-2"
                   ref="modal2"
-                  title="BootstrapVue"
                   hide-header
                   footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
                 >

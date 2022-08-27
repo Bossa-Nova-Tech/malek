@@ -1,6 +1,6 @@
 <template>
-  <main class="caixa mx-auto">
-    <Splash :isLoading="isLoading" />
+  <main>
+    <Splash :is-loading="isLoading" />
     <Onboarding v-if="!isLoading" />
   </main>
 </template>
@@ -19,16 +19,16 @@ export default {
       isLoading: true,
     };
   },
-  mounted() {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 200);
-  },
 
   head() {
     return {
       title: `Onboarding |  ${process.env.title}`,
     };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
   },
 };
 </script>

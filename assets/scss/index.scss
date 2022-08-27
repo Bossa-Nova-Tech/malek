@@ -28,6 +28,7 @@ $font-family-sans-serif: 'Poppins', sans-serif;
   --gray-40: #6b6e84;
   --gray-60: #343752;
   --gray-80: #1f1f1f;
+  --red-50: #b3261e;
 }
 
 *,
@@ -69,10 +70,10 @@ body {
   color: var(--gray-20);
   font-weight: 600;
 }
-.nav-link#__BVID__14___BV_tab_button__ {
+.nav-link#hoje___BV_tab_button__ {
   border-radius: 8px 0px 0px 8px;
 }
-.nav-link#__BVID__17___BV_tab_button__ {
+.nav-link#relatorio___BV_tab_button__ {
   border-radius: 0px 8px 8px 0px;
 }
 .nav-pills .nav-link.active,
@@ -107,7 +108,7 @@ button {
   font-weight: 600;
   font-size: 1.25rem;
   background-color: var(--primary-50);
-  box-shadow: 0rem 0.25rem 0.25rem rgba(0, 71, 187, 0.06);
+  box-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.06);
   border-radius: 0.5rem;
 }
 

@@ -171,7 +171,13 @@ export default {
   // Auto import components: https://go.nuxtjs.dev/config-components
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
-    dirs: ['~/components', '~/components/layout', '~/components/shared'],
+    dirs: [
+      '~/components',
+      '~/components/layout',
+      '~/components/shared',
+      '~/components/tasks',
+      '~/components/customers',
+    ],
   },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
