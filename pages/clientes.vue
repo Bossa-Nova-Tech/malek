@@ -59,19 +59,5 @@ main {
     width: 300px;
     font-size: 1rem;
   }
-
-  label {
-    font-weight: 500;
-    color: var(--gray-40);
-  }
-  .cor-label {
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--primary-60);
-    margin: 0px;
-  }
-  .requerido {
-    color: var(--red-50);
-  }
 }
 </style>
