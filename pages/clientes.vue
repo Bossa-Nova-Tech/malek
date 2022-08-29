@@ -19,13 +19,13 @@ import Add from '~/components/customers/Add.vue';
 import Listing from '~/components/customers/Listing.vue';
 
 export default {
+  components: { TheHeader, Add, Listing },
   async asyncData({ $axios }) {
     const customers = await $axios.get('customers');
     const customersData = customers.data;
     console.log('customers :: ', customers.data);
     return { customersData };
   },
-  components: { TheHeader, Add, Listing },
 
   data: () => {
     return {

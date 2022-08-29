@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column">
-    <header v-if="$screen.md">
+    <header v-if="$screen.lg">
       <div class="top"></div>
       <div class="container">
         <div class="logo position-relative">
@@ -13,52 +13,26 @@
       </div>
     </header>
     <TheHeader v-else> Ordem de Serviço </TheHeader>
-    <main v-if="$screen.md" class="container">
-      <aside v-if="$screen.md">
-        <NuxtLink to="/propostas" class="d-flex my-4 align-items-center">
-          <img src="~/assets/img/icones/proposta.svg" alt="" />
-          <p class="pl-4">Propostas</p>
-        </NuxtLink>
-        <NuxtLink
-          to="/ordem-de-servicos"
-          class="d-flex align-items-center my-4"
-        >
-          <img src="~/assets/img/icones/ordem.svg" alt="" />
-          <p class="pl-4 py-0">Ordem de Serviço</p>
-        </NuxtLink>
-        <NuxtLink to="/clientes" class="d-flex align-items-center my-4">
-          <img src="~/assets/img/icones/clientes.svg" alt="" />
-          <p class="pl-4">Clientes</p>
-        </NuxtLink>
-
-        <NuxtLink to="/cobranca" class="d-flex align-items-center my-4">
-          <img src="~/assets/img/icones/cobranca.svg" alt="" />
-          <p class="pl-4">Cobrança</p>
-        </NuxtLink>
-        <NuxtLink to="/orcamento" class="d-flex align-items-center my-4">
-          <img src="~/assets/img/icones/orcamento.svg" alt="" />
-          <p class="pl-4">Orçamento</p>
-        </NuxtLink>
-
-        <NuxtLink to="/colaboradores" class="d-flex align-items-center my-4">
-          <img src="~/assets/img/icones/colaboradores.svg" alt="" />
-          <p class="pl-4">Colaboradores</p>
-        </NuxtLink>
-      </aside>
+    <main v-if="$screen.lg" class="container">
+      <AsideMenu />
       <div class="ml-5 d-flex justify-content-between">
         <div class="d-flex w-100">
-          <b-tabs pills class="mx-auto w-100">
+          <b-tabs id="tab-listing" pills class="mx-auto w-100">
             <b-tab id="hoje" title="Hoje" active>
-              <h2 class="my-5 ml-3">Acontecendo Hoje</h2>
+              <h2 class="mt-5 mb-3 ml-3">Acontecendo Hoje</h2>
               <Listing :tasks-data="tasksData" />
             </b-tab>
-            <b-tab id="relatorio" title="Relatório">b </b-tab>
+            <b-tab id="relatorio" title="Relatório">
+              <Report :tasks-data="tasksData" />
+            </b-tab>
+            <Add />
+            <b-tab
+              id="botao"
+              title="Criar Ordem de Serviço"
+              @click="$bvModal.show('criar')"
+            >
+            </b-tab>
           </b-tabs>
-          <b-button
-            class="d-flex justify-content-center align-items-center create m-0 border-0 w-50"
-            @click="$bvModal.show('criar')"
-            >Criar Ordem de Serviço</b-button
-          >
         </div>
       </div>
     </main>
@@ -80,31 +54,7 @@
         <b-tab id="relatorio">
           <!-- início da tab Relatório -->
           <template #title> Relatório </template>
-          <b-card class="box-shadow border-0 mt-2 mb-1">
-            <h2 class="mb-4">Em andamento</h2>
-            <Flicking :options="{ align: 'prev', bound: true }">
-              <div class="d-flex">
-                <div v-for="ordem in tasksData" :key="ordem.id" class="mr-4">
-                  <p>{{ ordem.name }}</p>
-                  <p class="lugar">{{ ordem.name_customer }}</p>
-                  <!-- <span class="font-weight-bolder">{{
-                    ordem.performance
-                  }}</span> -->
-                  <span class="horas">{{ ordem.estimated_time }}</span>
-                </div>
-              </div>
-            </Flicking>
-          </b-card>
-          <b-card class="box-shadow mb-1 border-0">
-            <h2 class="mb-3">Ordens de serviço</h2>
-            <Graphic />
-          </b-card>
-
-          <b-card class="box-shadow border-0">
-            <h2 class="mb-3">Desempenho por colaborador</h2>
-            <b-form-select v-model="formData.name" :options="optionsNames">
-            </b-form-select>
-          </b-card>
+          <Report :tasks-data="tasksData" />
         </b-tab>
       </b-tabs>
     </main>
@@ -112,15 +62,15 @@
 </template>
 
 <script>
-import { Flicking } from '@egjs/vue-flicking';
+import Report from '../components/tasks/Report.vue';
 import TheHeader from '~/components/layout/TheHeader.vue';
-import Graphic from '~/components/Graphic.vue';
 import Add from '~/components/tasks/Add.vue';
 import Listing from '~/components/tasks/Listing.vue';
+import AsideMenu from '~/components/layout/AsideMenu.vue';
 // import BorderButton from '~/components/BorderButton.vue';
 export default {
   // components: { Flicking, TheHeader, Graphic, BorderButton },
-  components: { Flicking, TheHeader, Graphic, Add, Listing },
+  components: { TheHeader, Add, Listing, AsideMenu, Report },
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks');
     const tasksData = tasks.data;
@@ -141,20 +91,6 @@ export default {
         services: null,
         time_of_execution: '02h30',
       },
-      optionsNames: [
-        {
-          value: null,
-          text: 'Selecione',
-        },
-        {
-          value: 'José da Silveira',
-          text: 'José da Silveira',
-        },
-        {
-          value: 'Pedro Santos',
-          text: 'Pedro Santos',
-        },
-      ],
     };
   },
   head() {
@@ -162,7 +98,6 @@ export default {
       title: `Ordem de Serviços | ${process.env.title}`,
     };
   },
-
   methods: {
     setToEditing(index) {
       this.formEditing = index;
@@ -196,23 +131,11 @@ export default {
 
 <style lang="scss" scoped>
 main {
-  h2 {
-    color: var(--primary-80);
-  }
   p {
     font-size: 0.75rem;
     color: var(--gray-40);
   }
-  p.lugar {
-    font-weight: 600;
-  }
-  span.horas {
-    font-size: 0.625rem;
-  }
-  span & .font-weight-bolder {
-    font-size: 1.25rem;
-    color: var(--primary-80);
-  }
+
   .card-body {
     background: var(--gray-10);
   }
@@ -256,7 +179,7 @@ main {
     font-size: 0.625rem;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .container {
     width: min(59.125rem, 100%);
     margin-inline: auto;
@@ -277,13 +200,6 @@ main {
       padding-left: 9.375rem;
       margin-bottom: 5rem;
     }
-  }
-  aside > a {
-    color: var(--gray-60);
-    font-weight: 600;
-  }
-  aside {
-    margin-bottom: 18.5rem;
   }
   main {
     display: grid;

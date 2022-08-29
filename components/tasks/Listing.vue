@@ -1,7 +1,7 @@
 <template>
-  <div class="listing">
+  <div class="listing overflow-auto">
     <section v-for="ordem in tasksData" :key="ordem.id" class="mt-3">
-      <div class="card-servico mb-4">
+      <b-card class="card-servico mb-4 border-0">
         <div class="d-flex justify-content-between pb-2">
           <h2 class="manutencao primary-80">
             #{{ ordem.id }}
@@ -36,7 +36,7 @@
           >
           <Delete :ordem="ordem" />
         </div>
-      </div>
+      </b-card>
     </section>
   </div>
 </template>
@@ -102,5 +102,15 @@ export default {
 <style lang="scss" scoped>
 .listing {
   padding-bottom: 5rem !important;
+}
+@media screen and (min-width: 756px) {
+  .listing {
+    max-height: 25rem;
+    padding-bottom: 0 !important;
+  }
+  .card-body {
+    width: 40rem;
+    margin-inline: auto;
+  }
 }
 </style>

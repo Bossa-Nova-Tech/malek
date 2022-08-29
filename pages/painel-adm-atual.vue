@@ -1,6 +1,6 @@
 <template>
   <div class="div-geral">
-    <header v-if="$screen.md">
+    <header v-if="$screen.lg">
       <div class="top"></div>
       <div class="container">
         <div class="logo position-relative">
@@ -12,54 +12,26 @@
         </div>
       </div>
     </header>
-    <main v-if="$screen.md" class="container">
-      <aside v-if="$screen.md">
-        <NuxtLink to="/propostas" class="d-flex my-4 align-items-center">
-          <img src="~/assets/img/icones/proposta.svg" alt="" />
-          <p class="pl-4">Propostas</p>
-        </NuxtLink>
-        <NuxtLink
-          to="/ordem-de-servicos"
-          class="d-flex align-items-center my-4"
-        >
-          <img src="~/assets/img/icones/ordem.svg" alt="" />
-          <p class="pl-4 py-0">Ordem de Serviço</p>
-        </NuxtLink>
-        <NuxtLink to="/clientes" class="d-flex align-items-center my-4">
-          <img src="~/assets/img/icones/clientes.svg" alt="" />
-          <p class="pl-4">Clientes</p>
-        </NuxtLink>
-
-        <NuxtLink to="/cobranca" class="d-flex align-items-center my-4">
-          <img src="~/assets/img/icones/cobranca.svg" alt="" />
-          <p class="pl-4">Cobrança</p>
-        </NuxtLink>
-        <NuxtLink to="/orcamento" class="d-flex align-items-center my-4">
-          <img src="~/assets/img/icones/orcamento.svg" alt="" />
-          <p class="pl-4">Orçamento</p>
-        </NuxtLink>
-
-        <NuxtLink to="/colaboradores" class="d-flex align-items-center my-4">
-          <img src="~/assets/img/icones/colaboradores.svg" alt="" />
-          <p class="pl-4">Colaboradores</p>
-        </NuxtLink>
-      </aside>
-      <div class="ml-5 d-flex">
-        <div>
-          <b-tabs pills class="mx-auto caixa w-100">
+    <main v-if="$screen.lg" class="container">
+      <AsideMenu />
+      <div class="ml-5 d-flex justify-content-between">
+        <div class="d-flex w-100">
+          <b-tabs id="tab-listing" pills class="mx-auto w-100">
             <b-tab id="hoje" title="Hoje" active>
-              <h2 class="mt-5 ml-3">Acontecendo Hoje</h2>
+              <h2 class="mt-5 mb-3 ml-3">Acontecendo Hoje</h2>
               <Listing :tasks-data="tasksData" />
             </b-tab>
-            <b-tab id="relatorio" title="Relatório">b </b-tab>
+            <b-tab id="relatorio" title="Relatório">
+              <Report :tasks-data="tasksData" />
+            </b-tab>
+            <Add />
+            <b-tab
+              id="botao"
+              title="Criar Ordem de Serviço"
+              @click="$bvModal.show('criar')"
+            >
+            </b-tab>
           </b-tabs>
-        </div>
-        <div>
-          <b-button
-            class="create ml-2 m-0 border-0"
-            @click="$bvModal.show('criar')"
-            >Criar Ordem de Serviço</b-button
-          >
         </div>
       </div>
     </main>
@@ -70,7 +42,7 @@
         <p>acompanhe as ordens de serviço hoje</p>
       </header>
 
-      <section class="d-flex">
+      <section class="links d-flex">
         <div class="m-auto">
           <NuxtLink to="/propostas">
             <img src="~/assets/img/icones/proposta.svg" alt="" />
@@ -109,8 +81,9 @@
 
 <script>
 import Listing from '~/components/tasks/Listing.vue';
+import AsideMenu from '~/components/layout/AsideMenu.vue';
 export default {
-  components: { Listing },
+  components: { Listing, AsideMenu },
   layout: 'auth',
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks');
@@ -151,8 +124,10 @@ main {
     }
   }
   section {
+    border-radius: 15px;
+    margin-top: -9px;
     width: 100%;
-    height: 100%;
+    height: 38.75rem;
     background-color: #ffffff;
     div {
       display: grid;

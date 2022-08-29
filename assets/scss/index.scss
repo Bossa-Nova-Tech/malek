@@ -70,15 +70,27 @@ body {
   color: var(--gray-20);
   font-weight: 600;
 }
+#botao___BV_tab_button__ {
+  width: 16rem;
+  border-radius: 8px;
+  background-color: var(--primary-50);
+  margin-left: 1rem;
+}
+#botao___BV_tab_button__:hover {
+  color: white;
+}
+
 .nav-link#hoje___BV_tab_button__ {
   border-radius: 8px 0px 0px 8px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
 }
 .nav-link#relatorio___BV_tab_button__ {
   border-radius: 0px 8px 8px 0px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  background-color: var(--primary-50);
+  background-color: var(--primary-60);
 }
 .form-control-file {
   height: 0;
@@ -132,4 +144,14 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+@media screen and(min-width: 756px) {
+  .nav-link {
+    display: flex;
+    width: min(11rem);
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-20);
+    font-weight: 600;
+  }
 }
