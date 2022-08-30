@@ -11,7 +11,7 @@
         <h1 class="mt-4 mb-5">Criar / Editar Cliente</h1>
         <img
           src="~/assets/img/icones/X-icon.svg"
-          class="mb-5 mt-3"
+          class="mb-5 mt-3 x-icon"
           @click="$bvModal.hide('criar-cliente')"
         />
       </div>
@@ -238,10 +238,12 @@
     </div>
   </b-modal>
 </template>
+
 <script>
 import { required, email, minLength } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
+
 export default {
   name: 'Add',
   directives: { mask },
@@ -266,6 +268,7 @@ export default {
       },
     };
   },
+
   validations: {
     formData: {
       name: {
@@ -334,3 +337,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.x-icon {
+  cursor: pointer;
+}
+.requerido {
+  color: var(--red-50);
+}
+</style>

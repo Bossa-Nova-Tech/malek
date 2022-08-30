@@ -1,25 +1,32 @@
 <template>
-  <div>
-    <TheHeader> Clientes </TheHeader>
-    <main>
-      <div class="d-flex align-items-center mb-5">
-        <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
-        <img class="ml-3 mr-5" src="~/assets/img/icones/sliders.svg" />
-        <button @click="$bvModal.show('criar-cliente')">Criar clientes</button>
-      </div>
-      <Listing :customers-data="customersData" />
-      <Add />
+  <div class="pb-5">
+    <PainelHeader />
+    <main class="container">
+      <PainelAside />
+      <section class="pl-5">
+        <div class="d-flex align-items-center mb-5">
+          <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
+          <img class="ml-3 mr-5" src="~/assets/img/icones/sliders.svg" />
+          <button @click="$bvModal.show('criar-cliente')">
+            Criar clientes
+          </button>
+        </div>
+        <Listing :customers-data="customersData" />
+        <Add />
+      </section>
     </main>
   </div>
 </template>
 
 <script>
-import TheHeader from '~/components/layout/TheHeader.vue';
+import PainelHeader from '~/components/layout/PainelHeader.vue';
+import PainelAside from '~/components/layout/PainelAside.vue';
 import Add from '~/components/customers/Add.vue';
 import Listing from '~/components/customers/Listing.vue';
 
 export default {
-  components: { TheHeader, Add, Listing },
+  components: { PainelHeader, PainelAside, Add, Listing },
+
   async asyncData({ $axios }) {
     const customers = await $axios.get('customers');
     const customersData = customers.data;
@@ -53,11 +60,9 @@ export default {
 <style lang="scss" scoped>
 main {
   display: grid;
-  margin: auto;
-  width: 35.5625rem;
-  button {
-    width: 300px;
-    font-size: 1rem;
-  }
+  grid-template-columns: 1fr 3fr;
+}
+button {
+  width: 50%;
 }
 </style>
