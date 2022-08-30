@@ -26,6 +26,7 @@ import Listing from '~/components/customers/Listing.vue';
 
 export default {
   components: { PainelHeader, PainelAside, Add, Listing },
+  layout: 'auth',
 
   async asyncData({ $axios }) {
     const customers = await $axios.get('customers');

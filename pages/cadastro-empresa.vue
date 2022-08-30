@@ -356,7 +356,6 @@
         centered
         hide-header
         hide-footer
-        title="BootstrapVue"
       >
         <div class="d-flex flex-column align-items-center">
           <img src="~/assets/img/icones/email-icon.svg" alt="" class="py-4" />

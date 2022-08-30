@@ -44,7 +44,7 @@
       </li>
     </ul>
 
-    <div class="d-flex mt-5 align-items-center">
+    <div class="d-flex mt-5 align-items-center justify-content-between">
       <div class="photo mr-2">
         <!-- <b-img :src="$auth.user.photo"></b-img> -->
         <b-img src="~/assets/img/icones/icone-perfil.svg"></b-img>
@@ -54,6 +54,7 @@
         <p class="name">{{ $auth.user.name }}</p>
         <p class="email">{{ $auth.user.email }}</p>
       </div>
+      <img src="~/assets/img/icones/logout-icon.svg" @click="logout" />
     </div>
   </aside>
 </template>

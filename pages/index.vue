@@ -1,29 +1,96 @@
 <template>
-  <div>
-    <h1>Home</h1>
+  <b-container>
+    <main class="row justify-content-center align-items-center min-vh-100">
+      <b-form class="col col-lg-6">
+        <img
+          class="row mx-auto"
+          src="~/assets/img/ilustracao/logo.png"
+          alt=""
+        />
 
-    <ul>
-      <li v-for="(router, index) in nestedRoutes" :key="index">
-        <nuxt-link :to="router.path" :title="router.name">
-          {{ router.name }}
-        </nuxt-link>
-      </li>
-    </ul>
-  </div>
+        <b-form-group class="mb-3">
+          <label for="email">E-mail ou CPF / CNPJ</label>
+          <b-form-input
+            v-model="formData.email"
+            name="email"
+            type="email"
+            placeholder="email@gmail.com"
+            :class="{
+              'is-invalid': $v.formData.email.$error,
+            }"
+          />
+          <b-form-invalid-feedback>
+            {{
+              !$v.formData.email.email
+                ? 'Insira um e-mail válido'
+                : 'Preencha o campo acima'
+            }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group class="mb-3">
+          <label for="password">Senha</label>
+          <b-form-input
+            v-model="formData.password"
+            name="password"
+            type="password"
+            placeholder="******"
+            :class="{
+              'is-invalid': $v.formData.password.$error,
+            }"
+          />
+          <b-form-invalid-feedback>
+            Preencha o campo acima
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <b-form-checkbox v-model="formData.checked" class="text-sm"
+            >Lembrar senha</b-form-checkbox
+          >
+          <NuxtLink to="/EsqueciMinhaSenha" class="text-sm"
+            ><u>Esqueci minha senha</u></NuxtLink
+          >
+        </div>
+
+        <button
+          block
+          variant="primary"
+          class="mt-3"
+          :disabled="formSend"
+          @click="login"
+        >
+          <b-spinner v-if="formSend" small type="grow" />
+          Entrar
+        </button>
+      </b-form>
+    </main>
+  </b-container>
 </template>
-<script>
-export default {
-  layout: 'navigation',
 
-  data() {
+<script>
+import { required, email } from 'vuelidate/lib/validators';
+import { validationMixin } from 'vuelidate';
+
+export default {
+  name: 'Login',
+
+  mixins: [validationMixin],
+
+  data: () => {
     return {
-      nestedRoutes: [],
+      formSend: false,
+      formData: {
+        email: null,
+        password: null,
+        checked: false,
+      },
     };
   },
 
   head() {
     return {
-      title: `${process.env.title}`,
+      title: `Login |  ${process.env.title}`,
 
       meta: [
         {
@@ -35,15 +102,59 @@ export default {
     };
   },
 
-  created() {
-    this.$router.options.routes.forEach((routeOption) => {
-      if (routeOption.path.startsWith(this.$route.path)) {
-        this.nestedRoutes.push({
-          name: routeOption.name,
-          path: routeOption.path,
-        });
+  validations: {
+    formData: {
+      email: {
+        required,
+        email,
+      },
+      password: {
+        required,
+      },
+    },
+  },
+
+  methods: {
+    async login() {
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.formSend = true;
+        try {
+          const { email, password } = this.formData;
+
+          await this.$auth.loginWith('laravelJWT', {
+            data: { email, password },
+          });
+
+          this.formSend = false;
+
+          if (this.$auth.$state.loggedIn) {
+            window.$nuxt.$router.push('/painel-adm-atual');
+          }
+        } catch (error) {
+          console.log(error);
+          this.toast('danger', 'Erro', error);
+        }
       }
-    });
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+img {
+  margin-bottom: 4.375rem;
+}
+
+label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--gray-40);
+}
+
+.text-sm {
+  font-weight: 400;
+  color: var(--gray-40);
+}
+</style>
