@@ -7,7 +7,6 @@
           src="~/assets/img/ilustracao/logo.png"
           alt=""
         />
-
         <b-form-group class="mb-3">
           <label for="email">E-mail ou CPF / CNPJ</label>
           <b-form-input

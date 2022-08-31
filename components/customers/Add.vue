@@ -96,15 +96,13 @@
       </b-row>
 
       <BorderButton class="my-4">
-        <b-form-file
+        <input
           id="file"
-          v-model="formData.photo"
-          name="photo"
-          accept="image/jpeg, image/png, image/jpg"
-          plain
-          multiple
-        ></b-form-file>
-        <label for="file" class="label cor-label">Enviar Fotos</label>
+          type="file"
+          accept=".png, .jpg"
+          @change="onFileChange"
+        />
+        <label for="file" class="text-center">Enviar Foto</label>
       </BorderButton>
 
       <b-form-group class="mb-4">
@@ -251,6 +249,10 @@ export default {
 
   data: () => {
     return {
+      file: null,
+      files: null,
+      reader: null,
+      vm: null,
       formSend: false,
       formData: {
         name: null,
@@ -333,6 +335,20 @@ export default {
           console.log(error);
         }
       }
+    },
+    onFileChange(e) {
+      this.files = e.target.files || e.dataTransfer.files;
+      if (!this.files.length) return;
+      this.createImage(this.files[0]);
+    },
+    createImage(file) {
+      this.reader = new FileReader();
+      this.vm = this;
+
+      this.reader.onload = (e) => {
+        this.vm.formData.photo = e.target.result;
+      };
+      this.reader.readAsDataURL(file);
     },
   },
 };
