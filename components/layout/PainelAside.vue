@@ -54,13 +54,23 @@
         <p class="name">{{ $auth.user.name }}</p>
         <p class="email">{{ $auth.user.email }}</p>
       </div>
-      <img src="~/assets/img/icones/logout-icon.svg" @click="logout" />
+      <img
+        src="~/assets/img/icones/logout-icon.svg"
+        role="button"
+        @click="logout"
+      />
     </div>
   </aside>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    async logout() {
+      await this.$auth.logout();
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

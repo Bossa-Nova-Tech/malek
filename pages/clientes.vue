@@ -2,12 +2,12 @@
   <div class="pb-5">
     <PainelHeader />
     <main class="container">
-      <PainelAside />
-      <section class="pl-5">
+      <PainelAside class="mobile" />
+      <section>
         <div class="d-flex align-items-center mb-5">
           <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
-          <img class="ml-3 mr-5" src="~/assets/img/icones/sliders.svg" />
-          <button @click="$bvModal.show('criar-cliente')">
+          <img class="ml-3" src="~/assets/img/icones/sliders.svg" />
+          <button class="mobile" @click="$bvModal.show('criar-cliente')">
             Criar clientes
           </button>
         </div>
@@ -62,8 +62,35 @@ export default {
 main {
   display: grid;
   grid-template-columns: 1fr 3fr;
+
+  section {
+    padding-left: 3rem;
+  }
+
+  img {
+    margin-right: 3rem;
+  }
+
+  button {
+    width: 50%;
+  }
 }
-button {
-  width: 50%;
+
+@media (max-width: 1000px) {
+  main {
+    grid-template-columns: 1fr;
+
+    section {
+      padding-left: 0rem;
+    }
+
+    img {
+      margin-right: 0rem;
+    }
+
+    .mobile {
+      display: none;
+    }
+  }
 }
 </style>
