@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import Report from '../components/tasks/Report.vue';
+import Report from '~/components/tasks/Report.vue';
 import TheHeader from '~/components/layout/TheHeader.vue';
 import Add from '~/components/tasks/Add.vue';
 import Listing from '~/components/tasks/Listing.vue';
@@ -71,8 +71,9 @@ import AsideMenu from '~/components/layout/AsideMenu.vue';
 export default {
   // components: { Flicking, TheHeader, Graphic, BorderButton },
   components: { TheHeader, Add, Listing, AsideMenu, Report },
-  async asyncData({ $axios }) {
-    const tasks = await $axios.get('tasks');
+  async asyncData({ $axios, params }) {
+    const id = params.id;
+    const tasks = await $axios.get(`tasks/${id}`);
     const tasksData = tasks.data;
     console.log('tasks :: ', tasks.data);
     return { tasksData };

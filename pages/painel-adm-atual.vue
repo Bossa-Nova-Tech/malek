@@ -21,8 +21,8 @@
               <h2 class="mt-5 mb-3 ml-3">Acontecendo Hoje</h2>
               <Listing :tasks-data="tasksData" />
             </b-tab>
-            <b-tab id="relatorio" title="Relatório">
-              <Report :tasks-data="tasksData" />
+            <b-tab id="relatorio" title="Relatório" class="overflow-hidden">
+              <Report :tasks-data="tasksData" class="mt-3" />
             </b-tab>
             <Add />
             <b-tab
@@ -48,7 +48,6 @@
             <img src="~/assets/img/icones/proposta.svg" alt="" />
             <p>Propostas</p>
           </NuxtLink>
-
           <NuxtLink to="/ordem-de-servicos">
             <img src="~/assets/img/icones/ordem.svg" alt="" />
             <p>Ordem de Serviço</p>
