@@ -14,5 +14,6 @@ export default {
 button {
   border: solid 0.0625rem var(--primary-60);
   background-color: #ffffff;
+  color: var(--primary-50);
 }
 </style>
