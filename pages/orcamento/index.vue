@@ -7,7 +7,7 @@
         <div class="d-flex align-items-center mb-5">
           <button class="mr-4">Exportar</button>
           <button class="mr-4">Relatórios</button>
-          <button class="mobile">Criar clientes</button>
+          <!-- <button class="mobile">Criar clientes</button> -->
         </div>
         <Listing :customers-data="customersData" />
         <Add />

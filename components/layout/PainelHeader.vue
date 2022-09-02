@@ -18,7 +18,7 @@
           <NuxtLink to="/painel-adm-atual">
             <img src="~/assets/img/icones/seta-voltar.svg" />
           </NuxtLink>
-          <h1>Clientes</h1>
+          <h1>{{ tela }}</h1>
         </b-container>
       </div>
     </header>
@@ -26,7 +26,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    tela: {
+      type: String,
+      required: true,
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,8 +1,8 @@
 <template>
-  <b-container>
-    <main class="mx-auto col col-lg-6">
+  <div class="background">
+    <main class="mx-auto col col-lg-6 pt-4">
       <b-form>
-        <h1 class="mt-5 pb-3">Criar Orçamento</h1>
+        <h1 class="pb-3">Criar Orçamento</h1>
 
         <b-row>
           <b-col>
@@ -74,6 +74,11 @@
           </b-col>
         </b-row>
 
+        <!-- <div
+          v-for="equipamento in equipamentos"
+          :key="equipamento"
+          class="separador mb-5"
+        > -->
         <div class="separador mb-5">
           <b-row>
             <b-col cols="6">
@@ -212,15 +217,19 @@
       >
         Li e Concordo
       </b-form-checkbox>
+      <div class="row justify-content-center">
+        <button
+          block
+          class="w-100 mb-4 mx-3"
+          :disabled="formSend"
+          @click="enviar"
+        >
+          <b-spinner v-if="formSend" small type="grow" />
+          Enviar
+        </button>
+      </div>
     </main>
-
-    <div class="row justify-content-center">
-      <button class="col col-lg-4 mb-4" :disabled="formSend" @click="enviar">
-        <b-spinner v-if="formSend" small type="grow" />
-        Enviar
-      </button>
-    </div>
-  </b-container>
+  </div>
 </template>
 
 <script>
@@ -281,6 +290,7 @@ export default {
       },
     },
   },
+
   head() {
     return {
       title: `Cadastro |  ${process.env.title}`,
@@ -290,6 +300,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.background {
+  background: var(--primary-80);
+}
+main {
+  width: min(30rem, 100%);
+  background: var(--primary-10);
+}
 h2 {
   color: var(--gray-40);
 }

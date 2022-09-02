@@ -1,6 +1,6 @@
 <template>
   <div class="pb-5">
-    <PainelHeader />
+    <PainelHeader :tela="telaName" />
     <main class="container">
       <PainelAside class="mobile" />
       <section>
@@ -37,6 +37,7 @@ export default {
 
   data: () => {
     return {
+      telaName: 'Clientes',
       customersData: [],
       formSend: false,
       formData: {
