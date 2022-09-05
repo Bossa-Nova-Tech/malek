@@ -29,30 +29,31 @@ export default {
   layout: 'auth',
 
   async asyncData({ $axios }) {
-    const customers = await $axios.get('customers');
-    const customersData = customers.data;
-    console.log('customers :: ', customers.data);
-    return { customersData };
+    const proposals = await $axios.get('business-proposal');
+    const proposalData = proposals.data;
+    console.log('business-proposal :: ', proposals.data);
+    return { proposalData };
   },
 
   data: () => {
     return {
       telaName: 'Proposta',
-      customersData: [],
+      proposalData: [],
       formSend: false,
       formData: {
-        name: null,
-        cnpj: null,
+        name_customer: null,
+        customer_id: null,
+        budget_name: null,
         phone: null,
+        ddd: null,
         email: null,
-        photo: [],
-        address: null,
-        cep: null,
-        district: null,
-        city: null,
-        state: null,
-        number: null,
-        complement: null,
+        photo: null,
+        details: null,
+        import: null,
+        services: [],
+        cnpj: null,
+        name: null,
+        proposal_expire_at: null,
       },
     };
   },

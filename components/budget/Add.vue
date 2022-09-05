@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    id="criar-cliente"
-    ref="costumerModal"
+    id="criar-orcamento"
+    ref="budgetModal"
     size="lg"
     hide-footer
     hide-header
@@ -12,7 +12,7 @@
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3 x-icon"
-          @click="$bvModal.hide('criar-cliente')"
+          @click="$bvModal.hide('criar-orcamento')"
         />
       </div>
       <b-form-group class="mb-4">
@@ -229,7 +229,7 @@
         </b-col>
       </b-row>
 
-      <button class="mt-4 mb-2" :disabled="formSend" @click="saveCustomer">
+      <button class="mt-4 mb-2" :disabled="formSend" @click="saveBudget">
         <b-spinner v-if="formSend" small type="grow" />
         Salvar
       </button>
@@ -310,7 +310,7 @@ export default {
   },
 
   methods: {
-    async saveCustomer(_response) {
+    async saveBudget(_response) {
       this.$v.formData.$touch();
 
       if (!this.$v.formData.$invalid) {
@@ -322,10 +322,10 @@ export default {
           this.$v.$reset();
 
           console.log('executou o clic');
-          this.$refs.costumerModal.hide();
+          this.$refs.budgetModal.hide();
 
           await this.$axios
-            .post('customers', this.$data.formData)
+            .post('budgets', this.$data.formData)
             .then((_res) => {
               this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
               this.$nuxt.refresh();

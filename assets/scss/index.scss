@@ -93,20 +93,23 @@ body {
 .nav-pills .show > .nav-link {
   background-color: var(--primary-60);
 }
-.form-control-file {
+[type='file'] {
   height: 0;
   overflow: hidden;
   width: 0;
 }
-label.label {
-  border-radius: 6px;
-  width: 100%;
+
+[type='file'] + label {
+  border-radius: 8px;
+  background: var(--gray-10);
+  color: var(--primary-60);
   font-size: 1rem;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
   margin: 0;
-  color: var(--primary-60);
+  width: 100%;
+
 }
 .modal-header,
 .modal-body,

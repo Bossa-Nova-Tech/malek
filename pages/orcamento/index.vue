@@ -1,15 +1,20 @@
 <template>
   <div class="pb-5">
-    <PainelHeader />
+    <PainelHeader :tela="telaName" />
     <main class="container">
       <PainelAside class="mobile" />
       <section>
-        <div class="d-flex align-items-center mb-5">
+        <div v-if="!$screen.lg" class="d-flex align-items-center mb-5">
+          <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
+          <img class="ml-3" src="~/assets/img/icones/sliders.svg" />
+        </div>
+        <div v-else class="d-flex align-items-center mb-5">
           <button class="mr-4">Exportar</button>
           <button class="mr-4">Relatórios</button>
-          <!-- <button class="mobile">Criar clientes</button> -->
+          <!--           <button @click="$bvModal.show('criar-orcamento')">Criar</button>
+ -->
         </div>
-        <Listing :customers-data="customersData" />
+        <Listing :budget-data="budgetsData" />
         <Add />
       </section>
     </main>
@@ -19,37 +24,33 @@
 <script>
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 import PainelAside from '~/components/layout/PainelAside.vue';
-import Add from '~/components/orcamento/Add.vue';
-import Listing from '~/components/orcamento/Listing.vue';
+import Add from '~/components/budget/Add.vue';
+import Listing from '~/components/budget/Listing.vue';
 
 export default {
   components: { PainelHeader, PainelAside, Add, Listing },
   layout: 'auth',
 
-  async asyncData({ $axios }) {
-    const customers = await $axios.get('customers');
-    const customersData = customers.data;
-    console.log('customers :: ', customers.data);
-    return { customersData };
-  },
+  /*   async asyncData({ $axios }) {
+    const budgets = await $axios.get('budgets');
+    const budgetsData = budgets.data;
+    console.log('budgets :: ', budgets.data);
+    return { budgetsData };
+  }, */
 
   data: () => {
     return {
-      customersData: [],
+      telaName: 'Orçamento',
+      budgetsData: [],
       formSend: false,
       formData: {
-        name: null,
+        name_customer: null,
+        id: null,
         cnpj: null,
         phone: null,
         email: null,
         photo: [],
-        address: null,
-        cep: null,
-        district: null,
-        city: null,
-        state: null,
-        number: null,
-        complement: null,
+        status: null,
       },
     };
   },

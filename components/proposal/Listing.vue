@@ -16,7 +16,7 @@
             @click="showModal(proposal)"
           />
         </div>
-        <Delete :business-proposal="business - proposal" />
+        <Delete :proposal="proposal" />
       </li>
     </ul>
   </section>
@@ -33,9 +33,9 @@ export default {
     },
   },
   async asyncData({ $axios }) {
-    const proposal = await $axios.get('business-proposal');
-    const proposalData = proposal.data;
-    console.log('business-proposal :: ', proposal.data);
+    const proposals = await $axios.get('business-proposal');
+    const proposalData = proposals.data;
+    console.log('business-proposal :: ', proposals.data);
     return { proposalData };
   },
   data() {
@@ -43,18 +43,19 @@ export default {
       id: null,
       formSend: false,
       formData: {
-        name: null,
-        cnpj: null,
+        name_customer: null,
+        customer_id: null,
+        budget_name: null,
         phone: null,
+        ddd: null,
         email: null,
         photo: null,
-        address: null,
-        cep: null,
-        district: null,
-        city: null,
-        state: null,
-        number: null,
-        complement: null,
+        details: null,
+        import: null,
+        services: [],
+        cnpj: null,
+        name: null,
+        proposal_expire_at: null,
       },
     };
   },

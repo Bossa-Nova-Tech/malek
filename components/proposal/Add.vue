@@ -19,11 +19,17 @@
         <label for="name_customer"
           >Cliente <span class="requerido">*</span></label
         >
-        <b-form-select
+        <!-- :options="`{$customers.name}`" -->
+        <!-- <b-form-select
           v-model="formData.name_customer"
           name="name_customer"
-          type="text"
-          :options="`{$customers.name}`"
+          :options="customerOptions"
+          :class="{
+            'is-invalid': $v.formData.name_customer.$error,
+          }"
+        /> -->
+        <b-form-input
+          v-model="formData.name_customer"
           :class="{
             'is-invalid': $v.formData.name_customer.$error,
           }"
@@ -71,130 +77,98 @@
             <b-form-input
               v-model="formData.details"
               name="details"
-              type="text"
               placeholder="descrição"
             />
           </b-form-group>
         </b-col>
       </b-row>
-
-      <BorderButton class="my-4">
-        <input
-          id="file"
-          type="file"
-          accept=".png, .jpg"
-          @change="onFileChange"
+      <div>
+        <h2>Serviços inclusos</h2>
+        <b-form-checkbox-group
+          v-model="formData.services"
+          :options="servicesOptions"
+          stacked
+        ></b-form-checkbox-group>
+        <p>Total R$ XXXX 03h30</p>
+      </div>
+      <div>
+        <h2 class="mt-4">Cabeçalho</h2>
+        <BorderButton class="my-4">
+          <input
+            id="file"
+            type="file"
+            accept=".png, .jpg"
+            @change="onFileChange"
+            plain
+          />
+          <label for="file" class="text-center">Enviar Foto</label>
+        </BorderButton>
+      </div>
+      <div class="my-4">
+        <h2>Minhas informações</h2>
+        <b-form-checkbox v-model="formData.import"
+          >Importar meus dados de cadastro</b-form-checkbox
+        >
+      </div>
+      <b-form-group class="mb-4">
+        <label for="name">Nome <span class="requerido">*</span></label>
+        <b-form-input
+          v-model="formData.name"
+          name="name"
+          placeholder="Nome Exemplo"
         />
-        <label for="file" class="text-center">Enviar Foto</label>
-      </BorderButton>
+        <b-form-invalid-feedback>
+          Preencha o campo acima
+        </b-form-invalid-feedback>
+      </b-form-group>
+      <b-form-group class="mb-4">
+        <label for="cpf">CPF <span class="requerido">*</span></label>
+        <b-form-input
+          v-model="formData.cpf"
+          v-mask="['###.###.###-##']"
+          name="cpf"
+          placeholder="111.111.111-00"
+        />
+      </b-form-group>
+      <b-form-invalid-feedback>
+        Preencha o campo acima
+      </b-form-invalid-feedback>
 
       <b-form-group class="mb-4">
-        <label for="address">Endereço <span class="requerido">*</span></label>
+        <label for="email">E-mail</label>
         <b-form-input
-          v-model="formData.address"
-          name="address"
-          type="text"
-          placeholder="-"
+          v-model="formData.email"
+          name="email"
+          placeholder="email@email.com"
         />
         <b-form-invalid-feedback>
           Preencha o campo acima
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-row>
-        <b-col cols="6">
-          <b-form-group class="mb-4">
-            <label for="cep">CEP <span class="requerido">*</span></label>
-            <b-form-input
-              v-model="formData.cep"
-              name="cep"
-              type="number"
-              placeholder="000-00000"
+      <b-row class="my-4">
+        <b-col class="col-4">
+          <b-input-group prepend="+55">
+            <b-input
+              v-model="formData.ddd"
+              v-mask="['##']"
+              placeholder="(00)"
             />
-            <b-form-invalid-feedback>
-              Preencha o campo acima
-            </b-form-invalid-feedback>
-          </b-form-group>
+          </b-input-group>
         </b-col>
-
-        <b-col cols="6">
-          <b-form-group class="mb-4">
-            <label for="district">Bairro</label>
-            <b-form-input
-              v-model="formData.district"
-              name="district"
-              type="text"
-              placeholder="-"
-            />
-            <b-form-invalid-feedback>
-              Preencha o campo acima
-            </b-form-invalid-feedback>
-          </b-form-group>
+        <b-col class="col-8">
+          <b-input
+            v-model="formData.phone"
+            v-mask="['# ####-####']"
+            placeholder="0 0000-0000"
+          />
         </b-col>
+        <b-form-invalid-feedback>
+          Preencha o campo acima
+        </b-form-invalid-feedback>
       </b-row>
 
-      <b-row>
-        <b-col cols="6">
-          <b-form-group class="mb-4">
-            <label for="city">Cidade</label>
-            <b-form-input
-              v-model="formData.city"
-              name="city"
-              type="text"
-              placeholder="-"
-            />
-            <b-form-invalid-feedback>
-              Preencha o campo acima
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
-
-        <b-col cols="6">
-          <b-form-group class="mb-4">
-            <label for="state">Estado</label>
-            <b-form-input
-              v-model="formData.state"
-              name="state"
-              type="text"
-              placeholder="-"
-            />
-            <b-form-invalid-feedback>
-              Preencha o campo acima
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
-      </b-row>
-
-      <b-row>
-        <b-col cols="6">
-          <b-form-group class="mb-4">
-            <label for="number">Número <span class="requerido">*</span></label>
-            <b-form-input
-              v-model="formData.number"
-              name="number"
-              type="number"
-              placeholder="000"
-            />
-            <b-form-invalid-feedback>
-              Preencha o campo acima
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
-
-        <b-col cols="6">
-          <b-form-group class="mb-4">
-            <label for="complement">Complemento</label>
-            <b-form-input
-              v-model="formData.complement"
-              name="complement"
-              type="text"
-              placeholder="-"
-            />
-          </b-form-group>
-        </b-col>
-      </b-row>
-
-      <button class="mt-4 mb-2" :disabled="formSend" @click="saveCustomer">
+      <button class="mt-4 mb-2" :disabled="formSend" @click="saveProposal">
         <b-spinner v-if="formSend" small type="grow" />
         Salvar
       </button>
@@ -224,13 +198,44 @@ export default {
         customer_id: null,
         budget_name: null,
         phone: null,
+        ddd: null,
         email: null,
         photo: null,
         details: null,
-        cnpj: null,
+        import: null,
+        services: [],
+        cpf: null,
         name: null,
         proposal_expire_at: null,
       },
+      customerOptions: [
+        {
+          value: null,
+          text: 'Cliente 1',
+        },
+        {
+          value: 'Cliente 2',
+          text: 'Cliente 2',
+        },
+      ],
+      servicesOptions: [
+        {
+          value: 'Manutenção',
+          html: '<span style="color:#5e5e5e; font-size:14px;">Manutenção</span>',
+        },
+        {
+          value: 'Limpeza',
+          html: '<span style="color:#5e5e5e; font-size:14px;">Limpeza</span>',
+        },
+        {
+          value: 'Chamado',
+          html: '<span style="color:#5e5e5e; font-size:14px;">Chamado</span>',
+        },
+        {
+          value: 'Instalação',
+          html: '<span style="color:#5e5e5e; font-size:14px;">Instalação</span>',
+        },
+      ],
     };
   },
 
@@ -239,13 +244,13 @@ export default {
       name: {
         required,
       },
-      cnpj: {
-        required,
-        minLength: minLength(13),
-      },
       phone: {
         required,
         minLength: minLength(9),
+      },
+      ddd: {
+        required,
+        minLength: minLength(2),
       },
       email: {
         required,
@@ -260,17 +265,11 @@ export default {
       budget_name: {
         required,
       },
-      state: {
-        required,
-      },
-      number: {
-        required,
-      },
     },
   },
 
   methods: {
-    async saveCustomer(_response) {
+    async saveProposal(_response) {
       this.$v.formData.$touch();
 
       if (!this.$v.formData.$invalid) {
@@ -282,10 +281,10 @@ export default {
           this.$v.$reset();
 
           console.log('executou o clic');
-          this.$refs.costumerModal.hide();
+          this.$refs.proposalModal.hide();
 
           await this.$axios
-            .post('customers', this.$data.formData)
+            .post('business-proposal', this.$data.formData)
             .then((_res) => {
               this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
               this.$nuxt.refresh();
@@ -320,5 +319,14 @@ export default {
 }
 .requerido {
   color: var(--red-50);
+}
+h2 {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--primary-80);
+  margin-bottom: 1rem;
+}
+.phone {
+  display: flex !important;
 }
 </style>

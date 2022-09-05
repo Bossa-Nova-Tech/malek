@@ -1,70 +1,69 @@
 <template>
   <section>
-    <h1 class="p-4">Orcamento</h1>
+    <h1 class="p-4">Orçamento</h1>
     <ul>
       <li
-        v-for="customer in customersData"
-        :key="customer.id"
+        v-for="budget in budgetsData"
+        :key="budget.id"
         class="p-4 d-flex justify-content-between"
       >
-        <p>#{{ customer.id }} {{ customer.name }}</p>
-        <div>
-          <img src="~/assets/img/icones/edit-icon.svg" alt="" />
+        <div class="d-flex justify-content-between">
+          <p>ID {{ budget.customer_id }}</p>
+          <p>{{ budget.name_customer }}</p>
+          <p>{{ budget.status }}</p>
+          <div>
+            <img src="~/assets/img/icones/edit-icon.svg" alt="" />
 
-          <img
-            src="~/assets/img/icones/delete-icon.svg"
-            alt=""
-            @click="showModal(customer)"
-          />
+            <img
+              src="~/assets/img/icones/delete-icon.svg"
+              alt=""
+              @click="showModal(budget)"
+            />
+          </div>
         </div>
-        <Delete :customer="customer" />
+        <Delete :budget="budget" />
       </li>
     </ul>
   </section>
 </template>
 <script>
-import Delete from '~/components/customers/Delete.vue';
+import Delete from '~/components/budget/Delete.vue';
 export default {
   name: 'Listing',
   components: { Delete },
   props: {
-    customersData: {
+    budgetsData: {
       type: Array,
       default: null,
     },
   },
   async asyncData({ $axios }) {
-    const customers = await $axios.get('customers');
-    const customersData = customers.data;
-    console.log('customers :: ', customers.data);
-    return { customersData };
+    const budgets = await $axios.get('budgets');
+    const budgetsData = budgets.data;
+    console.log('budgets :: ', budgets.data);
+    return { budgetsData };
   },
   data() {
     return {
       id: null,
       formSend: false,
       formData: {
-        name: null,
+        id: null,
+        name_customer: null,
         cnpj: null,
         phone: null,
         email: null,
         photo: null,
-        address: null,
-        cep: null,
-        district: null,
-        city: null,
-        state: null,
-        number: null,
-        complement: null,
+        status: null,
       },
     };
   },
   methods: {
-    showModal(customer) {
-      this.id = customer.id;
+    showModal(budget) {
+      this.id = budget.id;
       // this.$root.$emit('bv::show::modal', 'excluir', this.id);
       this.$bvModal.show(this.id);
-      console.log(customer.id + ' chamado');
+      console.log(budget.id + ' chamado');
     },
   },
 };
