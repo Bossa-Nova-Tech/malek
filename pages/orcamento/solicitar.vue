@@ -1,6 +1,6 @@
 <template>
-  <div class="background">
-    <main class="mx-auto col col-lg-6 pt-4">
+  <b-container>
+    <main class="mx-auto col col-lg-6 mt-5">
       <b-form>
         <h1 class="pb-3">Criar Orçamento</h1>
 
@@ -196,40 +196,70 @@
         </div>
       </b-form>
 
-      <b-button class="mb-5">adicionar +</b-button>
+      <b-button class="mb-5" @click="addNew">adicionar +</b-button>
 
-      <BorderButton class="mb-3">Termos de uso</BorderButton>
+      <BorderButton v-b-modal.modal-1 class="mb-3">Termos de uso</BorderButton>
       <b-form-checkbox
         id="checkbox-1"
-        v-model="status"
+        v-model="userTerms"
         name="checkbox-1"
         class="mb-4"
       >
         Li e Concordo
       </b-form-checkbox>
+      <b-modal id="modal-1" ref="modal-1" centered hide-header hide-footer>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut aperiam,
+          optio sunt ullam pariatur excepturi odio? Facilis et odio ea, natus
+          voluptate nulla quo tempora commodi quibusdam molestias soluta quas.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, esse
+          nesciunt veniam saepe tempore corporis commodi quis sint sapiente,
+          possimus consequatur aliquam dolor iure dignissimos, quae a quisquam
+          tenetur optio.
+        </p>
+      </b-modal>
 
-      <BorderButton class="mb-3">Politica de privacidade</BorderButton>
+      <BorderButton v-b-modal.modal-2 class="mb-3"
+        >Politica de privacidade</BorderButton
+      >
       <b-form-checkbox
         id="checkbox-2"
-        v-model="status"
+        v-model="security"
         name="checkbox-2"
         class="mb-4"
       >
         Li e Concordo
       </b-form-checkbox>
+      <b-modal id="modal-2" ref="modal-2" centered hide-header hide-footer>
+        <p>
+          2 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut
+          aperiam, optio sunt ullam pariatur excepturi odio? Facilis et odio ea,
+          natus voluptate nulla quo tempora commodi quibusdam molestias soluta
+          quas. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius,
+          esse nesciunt veniam saepe tempore corporis commodi quis sint
+          sapiente, possimus consequatur aliquam dolor iure dignissimos, quae a
+          quisquam tenetur optio.
+        </p>
+      </b-modal>
+
       <div class="row justify-content-center">
-        <button
-          block
-          class="w-100 mb-4 mx-3"
-          :disabled="formSend"
-          @click="enviar"
-        >
+        <button class="mb-4 mx-3" :disabled="formSend" @click="sendBudget">
           <b-spinner v-if="formSend" small type="grow" />
           Enviar
         </button>
       </div>
     </main>
-  </div>
+
+    <b-modal
+      id="modal-center"
+      ref="modal-center"
+      centered
+      hide-header
+      hide-footer
+    >
+      <h3 class="text-center">Orçamento enviado com sucesso com sucesso!</h3>
+    </b-modal>
+  </b-container>
 </template>
 
 <script>
@@ -257,6 +287,8 @@ export default {
         system: null,
         voltage: null,
         payment: null,
+        userTerms: null,
+        security: null,
       },
     };
   },
@@ -290,35 +322,45 @@ export default {
       },
     },
   },
-
   head() {
     return {
       title: `Cadastro |  ${process.env.title}`,
     };
   },
+
+  methods: {
+    async sendBudget(_response) {
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        // SIMULATION OF A DATA FETCHING REQUEST
+
+        this.formSend = true;
+        console.log(this.formData);
+
+        try {
+          this.formSend = false;
+          this.$v.$reset();
+
+          await this.$axios
+            .post('budget', this.$data.formData)
+            .then((_res) => {
+              this.$refs['modal-center'].show();
+            })
+            .catch((_err) => {});
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.background {
-  background: var(--primary-80);
-}
-main {
-  width: min(30rem, 100%);
-  background: var(--primary-10);
-}
-h2 {
-  color: var(--gray-40);
-}
-
 label {
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--gray-40);
-}
-
-.text-sm {
-  font-weight: 400;
   color: var(--gray-40);
 }
 
