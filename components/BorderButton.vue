@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="d-flex align-items-center justfy-content-center">
+    <button>
       <slot></slot>
     </button>
   </div>
@@ -15,5 +15,6 @@ button {
   border: solid 0.0625rem var(--primary-80);
   background-color: var(--gray-10);
   color: var(--primary-50);
+  padding: 5px 10px;
 }
 </style>

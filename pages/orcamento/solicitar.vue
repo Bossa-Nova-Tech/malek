@@ -199,14 +199,23 @@
       <b-button class="mb-5" @click="addNew">adicionar +</b-button>
 
       <BorderButton v-b-modal.modal-1 class="mb-3">Termos de uso</BorderButton>
-      <b-form-checkbox
-        id="checkbox-1"
-        v-model="userTerms"
-        name="checkbox-1"
-        class="mb-4"
-      >
-        Li e Concordo
-      </b-form-checkbox>
+      <b-form-group class="mt-2 mb-3 pb-1">
+        <b-form-checkbox
+          v-model="formData.term"
+          name="term"
+          :value="true"
+          :unchecked-value="false"
+          :class="{
+            'is-invalid': $v.formData.term.$error,
+          }"
+        >
+          Li e Concordo
+        </b-form-checkbox>
+
+        <b-form-invalid-feedback :class="{ block: $v.formData.term.$error }">
+          Campo obrigatório
+        </b-form-invalid-feedback>
+      </b-form-group>
       <b-modal id="modal-1" ref="modal-1" centered hide-header hide-footer>
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut aperiam,
@@ -222,14 +231,25 @@
       <BorderButton v-b-modal.modal-2 class="mb-3"
         >Politica de privacidade</BorderButton
       >
-      <b-form-checkbox
-        id="checkbox-2"
-        v-model="security"
-        name="checkbox-2"
-        class="mb-4"
-      >
-        Li e Concordo
-      </b-form-checkbox>
+      <b-form-group class="mt-2 mb-3 pb-1">
+        <b-form-checkbox
+          v-model="formData.security"
+          name="security"
+          :value="true"
+          :unchecked-value="false"
+          :class="{
+            'is-invalid': $v.formData.security.$error,
+          }"
+        >
+          Li e Concordo
+        </b-form-checkbox>
+
+        <b-form-invalid-feedback
+          :class="{ block: $v.formData.security.$error }"
+        >
+          Campo obrigatório
+        </b-form-invalid-feedback>
+      </b-form-group>
       <b-modal id="modal-2" ref="modal-2" centered hide-header hide-footer>
         <p>
           2 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut
@@ -263,7 +283,7 @@
 </template>
 
 <script>
-import { required, email, minLength } from 'vuelidate/lib/validators';
+import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 import BorderButton from '~/components/BorderButton.vue';
@@ -287,8 +307,8 @@ export default {
         system: null,
         voltage: null,
         payment: null,
-        userTerms: null,
-        security: null,
+        term: false,
+        security: false,
       },
     };
   },
@@ -319,6 +339,12 @@ export default {
       },
       voltage: {
         required,
+      },
+      term: {
+        sameAs: sameAs(() => true),
+      },
+      security: {
+        sameAs: sameAs(() => true),
       },
     },
   },
