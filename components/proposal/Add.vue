@@ -161,27 +161,51 @@
           }}
         </b-form-invalid-feedback>
       </b-form-group>
-
-      <b-row class="my-4">
-        <b-col class="col-4">
-          <b-input-group prepend="+55">
-            <b-input
+      <b-row class="mb-4">
+        <b-col cols="4">
+          <b-form-group>
+            <label for="ddd">Telefone <span class="requerido">*</span></label>
+            <b-form-input
               v-model="formData.ddd"
-              v-mask="['##']"
+              v-mask="['(##)']"
+              name="ddd"
               placeholder="(00)"
+              :class="{
+                'is-invalid': $v.formData.ddd.$error,
+              }"
             />
-          </b-input-group>
+            <b-form-invalid-feedback>
+              {{
+                !$v.formData.ddd.minLength
+                  ? 'Insira um ddd válido'
+                  : 'Preencha o campo acima'
+              }}
+            </b-form-invalid-feedback>
+          </b-form-group>
         </b-col>
-        <b-col class="col-8">
-          <b-input
-            v-model="formData.phone"
-            v-mask="['# ####-####']"
-            placeholder="0 0000-0000"
-          />
+
+        <b-col cols="8">
+          <b-form-group>
+            <label for="phone">&nbsp;</label>
+            <b-form-input
+              id="phone"
+              v-model="formData.phone"
+              v-mask="['#####-####']"
+              name="phone"
+              placeholder="0 0000-0000"
+              :class="{
+                'is-invalid': $v.formData.phone.$error,
+              }"
+            />
+            <b-form-invalid-feedback>
+              {{
+                !$v.formData.phone.minLength
+                  ? 'Insira um telefone válido'
+                  : 'Preencha o campo acima'
+              }}
+            </b-form-invalid-feedback>
+          </b-form-group>
         </b-col>
-        <b-form-invalid-feedback>
-          Preencha o campo acima
-        </b-form-invalid-feedback>
       </b-row>
 
       <button class="mt-4 mb-2" :disabled="formSend" @click="saveProposal">
@@ -313,6 +337,7 @@ export default {
         } catch (error) {
           console.log(error);
         }
+        this.$router.push();
       }
     },
     onFileChange(e) {

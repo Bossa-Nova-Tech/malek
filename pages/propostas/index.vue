@@ -2,12 +2,12 @@
   <div class="pb-5">
     <PainelHeader :tela="telaName" />
     <main class="container">
-      <PainelAside class="mobile" />
+      <PainelAside v-if="$screen.lg" />
       <section>
         <div class="d-flex align-items-center mb-5">
           <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
           <img class="ml-3" src="~/assets/img/icones/sliders.svg" />
-          <button class="mobile" @click="$bvModal.show('criar-proposta')">
+          <button v-if="$screen.md" @click="$bvModal.show('criar-proposta')">
             Criar Proposta
           </button>
         </div>
@@ -15,6 +15,16 @@
         <Add />
       </section>
     </main>
+    <div
+      v-if="!$screen.md"
+      class="footer caixa mx-auto d-flex align-items-center mt-2"
+    >
+      <b-button
+        class="d-flex justify-content-center align-items-center create m-0 border-0"
+        @click="$bvModal.show('criar-proposta')"
+        >Criar Proposta</b-button
+      >
+    </div>
   </div>
 </template>
 
@@ -77,6 +87,14 @@ main {
     width: 50%;
   }
 }
+.footer {
+  box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
+  height: 8.222rem;
+  background: var(--gray-10);
+  padding: 1.5rem;
+  position: fixed;
+  bottom: 0;
+}
 
 @media (max-width: 1000px) {
   main {
@@ -88,10 +106,6 @@ main {
 
     img {
       margin-right: 0rem;
-    }
-
-    .mobile {
-      display: none;
     }
   }
 }
