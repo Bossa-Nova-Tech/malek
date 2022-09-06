@@ -71,9 +71,7 @@
 
         <b-col cols="6">
           <b-form-group class="mb-4">
-            <label for="details"
-              >Detalhes <span class="requerido">*</span></label
-            >
+            <label for="details">Detalhes</label>
             <b-form-input
               v-model="formData.details"
               name="details"
@@ -98,8 +96,9 @@
             id="file"
             type="file"
             accept=".png, .jpg"
-            @change="onFileChange"
             plain
+            class="d-flex"
+            @change="onFileChange"
           />
           <label for="file" class="text-center">Enviar Foto</label>
         </BorderButton>
@@ -116,6 +115,9 @@
           v-model="formData.name"
           name="name"
           placeholder="Nome Exemplo"
+          :class="{
+            'is-invalid': $v.formData.name.$error,
+          }"
         />
         <b-form-invalid-feedback>
           Preencha o campo acima
@@ -128,10 +130,17 @@
           v-mask="['###.###.###-##']"
           name="cpf"
           placeholder="111.111.111-00"
+          :class="{
+            'is-invalid': $v.formData.cpf.$error,
+          }"
         />
       </b-form-group>
       <b-form-invalid-feedback>
-        Preencha o campo acima
+        {{
+          !$v.formData.cpf.minLength
+            ? 'Insira um CPF válido'
+            : 'Preencha o campo acima'
+        }}
       </b-form-invalid-feedback>
 
       <b-form-group class="mb-4">
@@ -140,9 +149,16 @@
           v-model="formData.email"
           name="email"
           placeholder="email@email.com"
+          :class="{
+            'is-invalid': $v.formData.email.$error,
+          }"
         />
         <b-form-invalid-feedback>
-          Preencha o campo acima
+          {{
+            !$v.formData.email.email
+              ? 'Insira um e-mail válido'
+              : 'Preencha o campo acima'
+          }}
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -264,6 +280,10 @@ export default {
       },
       budget_name: {
         required,
+      },
+      cpf: {
+        required,
+        minLength: minLength(11),
       },
     },
   },

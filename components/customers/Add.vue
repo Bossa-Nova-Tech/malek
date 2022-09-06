@@ -100,6 +100,7 @@
           id="file"
           type="file"
           accept=".png, .jpg"
+          class="d-flex"
           @change="onFileChange"
         />
         <label for="file" class="text-center">Enviar Foto</label>

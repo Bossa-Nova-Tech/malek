@@ -7,30 +7,33 @@
         :key="budget.id"
         class="p-4 d-flex justify-content-between"
       >
-        <div class="d-flex justify-content-between">
-          <p>ID {{ budget.customer_id }}</p>
-          <p>{{ budget.name_customer }}</p>
-          <p>{{ budget.status }}</p>
-          <div>
-            <img src="~/assets/img/icones/edit-icon.svg" alt="" />
+        <b-button @click="$bvModal.show('budget.id')">
+          <div class="d-flex justify-content-between">
+            <p>ID {{ budget.id }}</p>
+            <p>{{ budget.name_customer }}</p>
+            <p>{{ budget.name }}</p>
+            <p>{{ budget.status }}</p>
+            <div>
+              <img src="~/assets/img/icones/edit-icon.svg" alt="" />
 
-            <img
-              src="~/assets/img/icones/delete-icon.svg"
-              alt=""
-              @click="showModal(budget)"
-            />
+              <img
+                src="~/assets/img/icones/delete-icon.svg"
+                alt=""
+                @click="showModal(budget)"
+              />
+            </div>
           </div>
-        </div>
-        <Delete :budget="budget" />
+        </b-button>
+        <Viewing :budget="budget" />
       </li>
     </ul>
   </section>
 </template>
 <script>
-import Delete from '~/components/budget/Delete.vue';
+import Viewing from '~/components/budget/Viewing.vue';
 export default {
   name: 'Listing',
-  components: { Delete },
+  components: { Viewing },
   props: {
     budgetsData: {
       type: Array,
@@ -43,18 +46,23 @@ export default {
     console.log('budgets :: ', budgets.data);
     return { budgetsData };
   },
-  data() {
+  data: () => {
     return {
       id: null,
       formSend: false,
       formData: {
-        id: null,
+        name: null,
         name_customer: null,
-        cnpj: null,
         phone: null,
         email: null,
-        photo: null,
-        status: null,
+        equipment: null,
+        capacity: null,
+        cycle: null,
+        system: null,
+        voltage: null,
+        payment: null,
+        userTerms: null,
+        security: null,
       },
     };
   },

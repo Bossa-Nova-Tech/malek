@@ -369,7 +369,7 @@ export default {
           this.$v.$reset();
 
           await this.$axios
-            .post('budget', this.$data.formData)
+            .post('budgets', this.$data.formData)
             .then((_res) => {
               this.$refs['modal-center'].show();
             })

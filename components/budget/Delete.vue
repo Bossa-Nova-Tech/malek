@@ -1,39 +1,40 @@
 <template>
   <b-modal
-    :id="customer.id"
-    :ref="customer.id"
+    :id="budget.id"
+    :ref="budget.id"
     title="BootstrapVue"
     hide-header
     footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
   >
     <p class="my-4">Tem certeza de que deseja excluir este registro?</p>
     <template #modal-footer>
-      <b-button variant="danger" @click="remove(customer)">Sim</b-button>
-      <b-button @click="$bvModal.hide(customer.id)">Não</b-button>
+      <b-button variant="danger" @click="remove(budget)">Sim</b-button>
+      <b-button @click="$bvModal.hide(budget.id)">Não</b-button>
     </template>
   </b-modal>
 </template>
 <script>
 export default {
   name: 'Delete',
-  props: ['customer'],
+  props: ['budget'],
   mounted() {
-    console.log('chamou o delete', this.customer.id);
-    const idRef = 'modal-' + this.customer.id;
+    console.log('chamou o delete', this.budget.id);
+    const idRef = 'modal-' + this.budget.id;
     console.log(idRef);
     return { idRef };
   },
   methods: {
-    async remove(customer) {
+    async remove(budget) {
       // this.ordens.splice(index, 1);
       /* console.log('index :: ', index);
       console.log('ordem :: ', ordem); */
       try {
-        await this.$axios
-          .delete('customers/' + customer.id)
+        /*  */
+        await this.$axios /*  */
+          .delete('budgets/' + budget.id)
           .then((_res) => {
             if (_res.data.result === 'success') {
-              console.log(customer.id + ' excluido');
+              console.log(budget.id + ' excluido');
               this.toast('success', 'Sucesso', 'Item excluído!');
               this.$root.$emit('bv::hide::modal', 'excluir');
               this.$nuxt.refresh();

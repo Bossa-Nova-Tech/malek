@@ -15,6 +15,7 @@
  -->
         </div>
         <Listing :budget-data="budgetsData" />
+
         <Add />
       </section>
     </main>
@@ -31,7 +32,7 @@ export default {
   components: { PainelHeader, PainelAside, Add, Listing },
   layout: 'auth',
 
-  /*   async asyncData({ $axios }) {
+  /* async asyncData({ $axios }) {
     const budgets = await $axios.get('budgets');
     const budgetsData = budgets.data;
     console.log('budgets :: ', budgets.data);
