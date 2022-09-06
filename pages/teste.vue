@@ -1,215 +1,100 @@
 <template>
-  <div class="d-flex flex-column">
-    <header v-if="$screen.lg">
-      <div class="top"></div>
-      <div class="container">
-        <div class="logo position-relative">
-          <b-img src="~/assets/img/logo-desktop-painel.svg" alt="" />
-        </div>
-        <div class="hello d-flex flex-column mt-4">
-          <h3>Olá {{ $auth.user.name }},</h3>
-          <p>Acompanhe por aqui o desempenho geral da sua empresa</p>
-        </div>
-      </div>
-    </header>
-    <TheHeader v-else> Ordem de Serviço </TheHeader>
-    <main v-if="$screen.lg" class="container">
-      <AsideMenu />
-      <div class="ml-5 d-flex justify-content-between">
-        <div class="d-flex w-100">
-          <b-tabs id="tab-listing" pills class="mx-auto w-100">
-            <b-tab id="hoje" title="Hoje" active>
-              <h2 class="mt-5 mb-3 ml-3">Acontecendo Hoje</h2>
-              <Testing :tasks-data="tasksData" />
-            </b-tab>
-            <b-tab id="relatorio" title="Relatório">
-              <Report :tasks-data="tasksData" />
-            </b-tab>
-            <Add />
-            <b-tab
-              id="botao"
-              title="Criar Ordem de Serviço"
-              @click="$bvModal.show('criar')"
-            >
-            </b-tab>
-          </b-tabs>
-        </div>
-      </div>
-    </main>
+  <b-container>
+    <main class="mx-auto col col-lg-6 mt-5">
+      <b-form>
+        <h1 class="pb-3">Criar Orçamento</h1>
 
-    <main v-else class="d-flex caixa mx-auto mb-5">
-      <b-tabs pills class="mx-auto caixa" align="center">
-        <!-- início da tab HOJE -->
-        <b-tab id="hoje" title="Hoje" active>
-          <Testing :tasks-data="tasksData" />
-          <AddTeste />
-          <div class="footer caixa mx-auto d-flex align-items-center mt-2">
-            <b-button
-              class="d-flex justify-content-center align-items-center create m-0 border-0"
-              @click="$bvModal.show('criar')"
-              >Criar Ordem de Serviço</b-button
-            >
-          </div>
-        </b-tab>
-        <b-tab id="relatorio">
-          <!-- início da tab Relatório -->
-          <template #title> Relatório </template>
-          <Report :tasks-data="tasksData" />
-        </b-tab>
-      </b-tabs>
+        <b-row>
+          <b-col>
+            <b-form-group class="mb-4">
+              <label for="name"
+                >Nome do distribuidor <span class="requerido">*</span></label
+              >
+              <b-form-input
+                v-model="formData.name"
+                name="name"
+                type="text"
+                placeholder="-"
+              />
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <div
+          v-for="orcamento in orcamentos"
+          :key="orcamento.id"
+          class="separador mb-5"
+        >
+          <b-row>
+            <b-col cols="6">
+              <b-form-group class="mb-4">
+                <label for="equipment">Tipo equipamento</label>
+                <b-form-input
+                  v-model="orcamento.equipment"
+                  name="equipment"
+                  type="text"
+                  placeholder="-"
+                />
+              </b-form-group>
+            </b-col>
+          </b-row>
+        </div>
+        <pre>{{ orcamentos }}</pre>
+        <pre>{{ formData }}</pre>
+      </b-form>
+
+      <b-button class="mb-5" @click="addInput">adicionar +</b-button>
     </main>
-  </div>
+  </b-container>
 </template>
 
 <script>
-import Report from '../components/tasks/Report.vue';
-import TheHeader from '~/components/layout/TheHeader.vue';
-import AddTeste from '~/components/tasks/AddTeste.vue';
-import Testing from '~/components/tasks/Testing.vue';
-import AsideMenu from '~/components/layout/AsideMenu.vue';
-// import BorderButton from '~/components/BorderButton.vue';
 export default {
-  // components: { Flicking, TheHeader, Graphic, BorderButton },
-  components: { TheHeader, AddTeste, Testing, AsideMenu, Report },
-  async asyncData({ $axios }) {
-    const tasks = await $axios.get('tasks');
-    const tasksData = tasks.data;
-    console.log('tasks :: ', tasks.data);
-    return { tasksData };
-  },
+  name: 'Orcamento',
+
   data: () => {
     return {
-      tasksData: [],
       formData: {
-        need_signature: false,
-        photo: [],
-        estimated_time: null,
-        end_date: null,
-        note: null,
-        name_customer: 'HAVAN Unidade 02',
-        template: null,
-        services: null,
-        time_of_execution: '02h30',
+        name: null,
       },
+
+      counter: 0,
+      orcamentos: [
+        {
+          id: 0,
+          equipment: null,
+          capacity: null,
+        },
+      ],
     };
   },
-  head() {
-    return {
-      title: `Ordem de Serviços | ${process.env.title}`,
-    };
-  },
+
   methods: {
-    setToEditing(index) {
-      this.formEditing = index;
-      setTimeout(() => {
-        document.getElementById(`form-edit-${index}`).focus();
-      }, 1);
-      if (this.formDataEdited === null) {
-        this.formDataEdited = this.formData;
-      }
-    },
-    save(index) {
-      this.saved = true;
-      if (this.saved === true) {
-        this.formData = this.formDataEdited;
-      }
-      console.log(this.formData);
-      this.formEditing = !index;
-      this.$root.$emit('bv::hide::modal', 'modal-1', index);
-      this.formData = {
-        services: null,
-        name_customer: null,
-        template: null,
-        end_date: null,
-        time_of_execution: null,
-        estimated_time: null,
-      };
+    addInput() {
+      this.orcamentos.push({
+        id: ++this.counter,
+        equipment: null,
+        capacity: null,
+      });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-main {
-  p {
-    font-size: 0.75rem;
-    color: var(--gray-40);
-  }
-
-  .card-body {
-    background: var(--gray-10);
-  }
-  .box-shadow {
-    box-shadow: 0rem 0.25rem 0.25rem rgba(0, 71, 187, 0.06);
-  }
-  .create {
-    background: var(--primary-50);
-    height: 2.82rem;
-  }
-
-  .footer {
-    box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
-    height: 8.222rem;
-    background: var(--gray-10);
-    padding: 1.5rem;
-    position: fixed;
-    bottom: 0;
-  }
-
-  .card-servico {
-    padding: 1.25rem 1.5625rem;
-    background-color: #ffffff;
-    box-shadow: 0rem 0.25rem 0.25rem rgba(0, 71, 187, 0.06);
-  }
-  .manutencao {
-    font-weight: 600;
-    font-size: 1rem;
-  }
-
-  .local {
-    font-weight: 600;
-    font-size: 0.75rem;
-  }
-  .porcentagem {
-    font-weight: 700;
-    font-size: 1.25rem;
-  }
-  .tempo {
-    font-weight: 500;
-    font-size: 0.625rem;
-  }
+label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--gray-40);
 }
-@media screen and (min-width: 992px) {
-  .container {
-    width: min(59.125rem, 100%);
-    margin-inline: auto;
-    padding-inline: 1.5rem;
-  }
-  header {
-    .top {
-      background: linear-gradient(82.86deg, #003283 -10.8%, #6d92d8 113.3%);
-      min-height: 7.125rem;
-      background: url('~/assets/img/top-painel-adm.svg');
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-    .logo {
-      margin-top: -2.5625rem;
-    }
-    .hello {
-      padding-left: 9.375rem;
-      margin-bottom: 5rem;
-    }
-  }
-  main {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    .create {
-      height: 2.5rem;
-    }
-    h2 {
-      font-size: 1.5rem;
-    }
-  }
+
+.requerido {
+  color: var(--red-50);
+}
+
+.separador {
+  padding: 10px;
+  border: solid 1px #0047bb;
+  border-radius: 6px;
 }
 </style>

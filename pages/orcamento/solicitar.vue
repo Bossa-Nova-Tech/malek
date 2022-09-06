@@ -74,18 +74,17 @@
           </b-col>
         </b-row>
 
-        <!-- <div
-          v-for="equipamento in equipamentos"
-          :key="equipamento"
+        <div
+          v-for="orcamento in orcamentos"
+          :key="orcamento.id"
           class="separador mb-5"
-        > -->
-        <div class="separador mb-5">
+        >
           <b-row>
             <b-col cols="6">
               <b-form-group class="mb-4">
                 <label for="equipment">Tipo equipamento </label>
                 <b-form-input
-                  v-model="formData.equipment"
+                  v-model="orcamento.equipment"
                   name="equipment"
                   type="text"
                   placeholder="-"
@@ -103,7 +102,7 @@
               <b-form-group class="mb-4">
                 <label for="capacity">Capacidade</label>
                 <b-form-input
-                  v-model="formData.capacity"
+                  v-model="orcamento.capacity"
                   name="capacity"
                   type="text"
                   placeholder="-"
@@ -123,7 +122,7 @@
               <b-form-group class="mb-4">
                 <label for="cycle">Ciclo</label>
                 <b-form-input
-                  v-model="formData.cycle"
+                  v-model="orcamento.cycle"
                   name="cycle"
                   type="text"
                   placeholder="-"
@@ -141,7 +140,7 @@
               <b-form-group class="mb-4">
                 <label for="system">Tipo de sistema</label>
                 <b-form-input
-                  v-model="formData.system"
+                  v-model="orcamento.system"
                   name="system"
                   type="text"
                   placeholder="-"
@@ -161,7 +160,7 @@
               <b-form-group class="mb-4">
                 <label for="voltage">Voltagem </label>
                 <b-form-input
-                  v-model="formData.voltage"
+                  v-model="orcamento.voltage"
                   name="voltage"
                   type="text"
                   placeholder="-"
@@ -179,7 +178,7 @@
               <b-form-group class="mb-4">
                 <label for="payment">Pagamento</label>
                 <b-form-input
-                  v-model="formData.payment"
+                  v-model="orcamento.payment"
                   name="payment"
                   type="text"
                   placeholder="-"
@@ -196,7 +195,7 @@
         </div>
       </b-form>
 
-      <b-button class="mb-5" @click="addNew">adicionar +</b-button>
+      <b-button class="mb-5" @click="addInput">adicionar +</b-button>
 
       <BorderButton v-b-modal.modal-1 class="mb-3">Termos de uso</BorderButton>
       <b-form-group class="mt-2 mb-3 pb-1">
@@ -279,6 +278,8 @@
     >
       <h3 class="text-center">Orçamento enviado com sucesso com sucesso!</h3>
     </b-modal>
+    <pre>{{ formData }}</pre>
+    <pre>{{ orcamentos }}</pre>
   </b-container>
 </template>
 
@@ -301,15 +302,28 @@ export default {
         name: null,
         phone: null,
         email: null,
-        equipment: null,
-        capacity: null,
-        cycle: null,
-        system: null,
-        voltage: null,
-        payment: null,
+        // equipment: null,
+        // capacity: null,
+        // cycle: null,
+        // system: null,
+        // voltage: null,
+        // payment: null,
         term: false,
         security: false,
       },
+
+      counter: 0,
+      orcamentos: [
+        {
+          id: 0,
+          equipment: null,
+          capacity: null,
+          cycle: null,
+          system: null,
+          voltage: null,
+          payment: null,
+        },
+      ],
     };
   },
   validations: {
@@ -378,6 +392,17 @@ export default {
           console.log(error);
         }
       }
+    },
+    addInput() {
+      this.orcamentos.push({
+        id: ++this.counter,
+        equipment: null,
+        capacity: null,
+        cycle: null,
+        system: null,
+        voltage: null,
+        payment: null,
+      });
     },
   },
 };
