@@ -43,7 +43,7 @@
       </section>
     </main>
     <footer class="caixa mx-auto p">
-      <section class="info d-flex">
+      <section class="info d-flex align-items-center">
         <div class="logo-rodape mr-3">
           <b-img fluid src="~/assets/img/ilustracao/logo.png"></b-img>
         </div>

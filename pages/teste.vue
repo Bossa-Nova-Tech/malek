@@ -21,7 +21,7 @@
         </b-row>
 
         <div
-          v-for="orcamento in orcamentos"
+          v-for="orcamento in formData.orcamentos"
           :key="orcamento.id"
           class="separador mb-5"
         >
@@ -56,22 +56,22 @@ export default {
     return {
       formData: {
         name: null,
+        orcamentos: [
+          {
+            id: 0,
+            equipment: null,
+            capacity: null,
+          },
+        ],
       },
 
       counter: 0,
-      orcamentos: [
-        {
-          id: 0,
-          equipment: null,
-          capacity: null,
-        },
-      ],
     };
   },
 
   methods: {
     addInput() {
-      this.orcamentos.push({
+      this.formData.orcamentos.push({
         id: ++this.counter,
         equipment: null,
         capacity: null,

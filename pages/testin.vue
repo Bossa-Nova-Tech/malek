@@ -1,7 +1,8 @@
 <template>
   <div>
+    <button @click="$bvModal.show('budget')"></button>
     <b-modal
-      :id="budget.id"
+      id="budget"
       ref="viewModal"
       size="lg"
       header-class="border-0 d-flex flex-column"
@@ -105,12 +106,6 @@ export default {
       },
     };
   },
-  mounted() {
-    console.log('chamou o delete', this.budget.id);
-    const idRef = 'modal-' + this.budget.id;
-    console.log(idRef);
-    return { idRef };
-  },
 };
 </script>
 <style lang="scss" scoped>
@@ -120,8 +115,24 @@ export default {
 h3 {
   font-size: 0.75rem;
   color: var(--gray-40);
+  font-weight: 500;
 }
 p {
   font-size: 1rem;
+  color: var(--gray-40);
+}
+.caixa {
+  padding-inline: 2rem;
+}
+.container {
+  width: 33rem;
+}
+ul,
+li {
+  font-size: 1rem;
+  color: var(--gray-40);
+}
+li {
+  padding-left: 1rem;
 }
 </style>
