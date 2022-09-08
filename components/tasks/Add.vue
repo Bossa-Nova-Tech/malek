@@ -90,7 +90,6 @@
                 month: 'numeric',
                 day: 'numeric',
               }"
-              direction="rtl"
               locale="pt"
               placeholder="00/00/2022"
               class="mb-4"
@@ -224,9 +223,6 @@ export default {
                     required,
                   }, */
       template: {
-        required,
-      },
-      note: {
         required,
       },
       estimated_time: {

@@ -10,8 +10,31 @@
               <h2 class="mt-5 mb-3 ml-3">Acontecendo Hoje</h2>
               <Listing :tasks-data="tasksData" />
             </b-tab>
-            <b-tab id="relatorio" title="Relatório" class="overflow-hiden">
+            <!-- ============== ABA RELATÓRIO================= -->
+            <!-- <b-tab id="relatorio" title="Relatório" class="overflow-hiden">
               <Report :tasks-data="tasksData" />
+            </b-tab> -->
+            <b-tab id="em-atraso" title="Em atraso">
+              <Listing :tasks-data="tasksData" />
+              <Add />
+              <div class="footer caixa mx-auto d-flex align-items-center mt-2">
+                <b-button
+                  class="d-flex justify-content-center align-items-center create m-0 border-0"
+                  @click="$bvModal.show('criar')"
+                  >Criar Ordem de Serviço</b-button
+                >
+              </div>
+            </b-tab>
+            <b-tab id="futuras" title="Futuras">
+              <Listing :tasks-data="tasksData" />
+              <Add />
+              <div class="footer caixa mx-auto d-flex align-items-center mt-2">
+                <b-button
+                  class="d-flex justify-content-center align-items-center create m-0 border-0"
+                  @click="$bvModal.show('criar')"
+                  >Criar Ordem de Serviço</b-button
+                >
+              </div>
             </b-tab>
             <Add />
             <b-tab
@@ -39,25 +62,49 @@
             >
           </div>
         </b-tab>
-        <b-tab id="relatorio">
-          <!-- início da tab Relatório -->
+        <b-tab id="em-atraso" title="Em atraso">
+          <Listing :tasks-data="tasksData" />
+          <Add />
+          <div class="footer caixa mx-auto d-flex align-items-center mt-2">
+            <b-button
+              class="d-flex justify-content-center align-items-center create m-0 border-0"
+              @click="$bvModal.show('criar')"
+              >Criar Ordem de Serviço</b-button
+            >
+          </div>
+        </b-tab>
+        <b-tab id="futuras" title="Futuras">
+          <Listing :tasks-data="tasksData" />
+          <Add />
+          <div class="footer caixa mx-auto d-flex align-items-center mt-2">
+            <b-button
+              class="d-flex justify-content-center align-items-center create m-0 border-0"
+              @click="$bvModal.show('criar')"
+              >Criar Ordem de Serviço</b-button
+            >
+          </div>
+        </b-tab>
+
+        <!-- início da tab Relatório -->
+        <!-- <b-tab id="relatorio">
           <template #title> Relatório </template>
           <Report :tasks-data="tasksData" />
-        </b-tab>
+        </b-tab> -->
       </b-tabs>
     </main>
   </div>
 </template>
 
 <script>
-import Report from '../components/tasks/Report.vue';
+/* import Report from '../components/tasks/Report.vue'; */
+import TheHeader from '~/components/layout/TheHeader.vue';
 import Add from '~/components/tasks/Add.vue';
 import Listing from '~/components/tasks/Listing.vue';
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 
 export default {
-  components: { Add, Listing, Report, PainelHeader },
-
+  // components: { Flicking, TheHeader, Graphic, BorderButton },
+  components: { TheHeader, Add, Listing, AsideMenu },
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks');
     const tasksData = tasks.data;
