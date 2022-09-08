@@ -405,60 +405,22 @@ export default {
 
   validations: {
     formData: {
-      name: {
-        required,
-      },
-      last_name: {
-        required,
-      },
-      cnpj: {
-        required,
-        minLength: minLength(13),
-      },
-      ddd: {
-        required,
-        minLength: minLength(2),
-      },
-      phone: {
-        required,
-        minLength: minLength(9),
-      },
-      email: {
-        required,
-        email,
-      },
-      password: {
-        required,
-        minLength: minLength(8),
-      },
-      confirm_password: {
-        required,
-        sameAsPassword: sameAs('password'),
-      },
-      cep: {
-        required,
-      },
-      district: {
-        required,
-      },
-      city: {
-        required,
-      },
-      state: {
-        required,
-      },
-      number: {
-        required,
-      },
-      fantasy_name: {
-        required,
-      },
-      address: {
-        required,
-      },
-      photo: {
-        required,
-      },
+      name: { required },
+      last_name: { required },
+      cnpj: { required, minLength: minLength(13) },
+      ddd: { required, minLength: minLength(2) },
+      phone: { required, minLength: minLength(9) },
+      email: { required, email },
+      password: { required, minLength: minLength(8) },
+      confirm_password: { required, sameAsPassword: sameAs('password') },
+      cep: { required },
+      district: { required },
+      city: { required },
+      state: { required },
+      number: { required },
+      fantasy_name: { required },
+      address: { required },
+      photo: { required },
     },
   },
   head() {

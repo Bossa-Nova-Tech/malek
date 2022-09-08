@@ -1,18 +1,6 @@
 <template>
   <div class="d-flex flex-column">
-    <header v-if="$screen.lg">
-      <div class="top"></div>
-      <div class="container">
-        <div class="logo position-relative">
-          <b-img src="~/assets/img/logo-desktop-painel.svg" alt="" />
-        </div>
-        <div class="hello d-flex flex-column mt-5">
-          <h3>Olá {{ $auth.user.name }},</h3>
-          <p>Acompanhe por aqui o desempenho geral da sua empresa</p>
-        </div>
-      </div>
-    </header>
-    <TheHeader v-else> Ordem de Serviço </TheHeader>
+    <PainelHeader />
     <main v-if="$screen.lg" class="container">
       <AsideMenu />
       <div class="ml-5 d-flex justify-content-between">
@@ -63,20 +51,20 @@
 
 <script>
 import Report from '../components/tasks/Report.vue';
-import TheHeader from '~/components/layout/TheHeader.vue';
 import Add from '~/components/tasks/Add.vue';
 import Listing from '~/components/tasks/Listing.vue';
-import AsideMenu from '~/components/layout/AsideMenu.vue';
-// import BorderButton from '~/components/BorderButton.vue';
+import PainelHeader from '~/components/layout/PainelHeader.vue';
+
 export default {
-  // components: { Flicking, TheHeader, Graphic, BorderButton },
-  components: { TheHeader, Add, Listing, AsideMenu, Report },
+  components: { Add, Listing, Report, PainelHeader },
+
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks');
     const tasksData = tasks.data;
     console.log('tasks :: ', tasks.data);
     return { tasksData };
   },
+
   data: () => {
     return {
       tasksData: [],
@@ -93,11 +81,13 @@ export default {
       },
     };
   },
+
   head() {
     return {
       title: `Ordem de Serviços | ${process.env.title}`,
     };
   },
+
   methods: {
     setToEditing(index) {
       this.formEditing = index;
@@ -136,12 +126,6 @@ main {
     color: var(--gray-40);
   }
 
-  .card-body {
-    background: var(--gray-10);
-  }
-  .box-shadow {
-    box-shadow: 0rem 0.25rem 0.25rem rgba(0, 71, 187, 0.06);
-  }
   .create {
     background: var(--primary-50);
     height: 2.82rem;

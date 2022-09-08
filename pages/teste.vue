@@ -34,6 +34,10 @@
                   name="equipment"
                   type="text"
                   placeholder="-"
+                  :class="{
+                    'is-invalid':
+                      $v.formData.orcamnetos.$each[id].equipment.$error,
+                  }"
                 />
               </b-form-group>
             </b-col>
@@ -49,24 +53,57 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators';
+
 export default {
   name: 'Orcamento',
 
   data: () => {
     return {
+      counter: 0,
       formData: {
         name: null,
         orcamentos: [
           {
             id: 0,
             equipment: null,
+<<<<<<< Updated upstream
             capacity: null,
           },
         ],
       },
 
       counter: 0,
+=======
+          },
+        ],
+      },
+>>>>>>> Stashed changes
     };
+  },
+  validations: {
+    formData: {
+      name: {
+        required,
+      },
+      orcamentos: {
+        $each: {
+          equipment: { required },
+        },
+      },
+    },
+  },
+  validations: {
+    formData: {
+      name: {
+        required,
+      },
+      orcamentos: {
+        $each: {
+          equipment: { required },
+        },
+      },
+    },
   },
 
   methods: {

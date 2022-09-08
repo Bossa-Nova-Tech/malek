@@ -66,6 +66,7 @@ main {
 
   section {
     padding-left: 3rem;
+    padding-right: 3rem;
   }
 
   img {

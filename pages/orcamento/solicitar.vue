@@ -75,22 +75,20 @@
         </b-row>
 
         <div
-          v-for="orcamento in orcamentos"
-          :key="orcamento.id"
+          v-for="item in formData.items"
+          :key="item.id"
           class="separador mb-5"
         >
           <b-row>
             <b-col cols="6">
               <b-form-group class="mb-4">
+                <span>#{{ item.id }}</span>
                 <label for="equipment">Tipo equipamento </label>
                 <b-form-input
-                  v-model="orcamento.equipment"
+                  v-model="item.equipment"
                   name="equipment"
                   type="text"
                   placeholder="-"
-                  :class="{
-                    'is-invalid': $v.formData.equipment.$error,
-                  }"
                 />
                 <b-form-invalid-feedback>
                   Preencha o campo acima
@@ -102,13 +100,10 @@
               <b-form-group class="mb-4">
                 <label for="capacity">Capacidade</label>
                 <b-form-input
-                  v-model="orcamento.capacity"
+                  v-model="item.capacity"
                   name="capacity"
                   type="text"
                   placeholder="-"
-                  :class="{
-                    'is-invalid': $v.formData.capacity.$error,
-                  }"
                 />
                 <b-form-invalid-feedback>
                   Preencha o campo acima
@@ -122,13 +117,10 @@
               <b-form-group class="mb-4">
                 <label for="cycle">Ciclo</label>
                 <b-form-input
-                  v-model="orcamento.cycle"
+                  v-model="item.cycle"
                   name="cycle"
                   type="text"
                   placeholder="-"
-                  :class="{
-                    'is-invalid': $v.formData.cycle.$error,
-                  }"
                 />
                 <b-form-invalid-feedback>
                   Preencha o campo acima
@@ -140,13 +132,10 @@
               <b-form-group class="mb-4">
                 <label for="system">Tipo de sistema</label>
                 <b-form-input
-                  v-model="orcamento.system"
+                  v-model="item.system"
                   name="system"
                   type="text"
                   placeholder="-"
-                  :class="{
-                    'is-invalid': $v.formData.system.$error,
-                  }"
                 />
                 <b-form-invalid-feedback>
                   Preencha o campo acima
@@ -160,13 +149,10 @@
               <b-form-group class="mb-4">
                 <label for="voltage">Voltagem </label>
                 <b-form-input
-                  v-model="orcamento.voltage"
+                  v-model="item.voltage"
                   name="voltage"
                   type="text"
                   placeholder="-"
-                  :class="{
-                    'is-invalid': $v.formData.voltage.$error,
-                  }"
                 />
                 <b-form-invalid-feedback>
                   Preencha o campo acima
@@ -178,13 +164,10 @@
               <b-form-group class="mb-4">
                 <label for="payment">Pagamento</label>
                 <b-form-input
-                  v-model="orcamento.payment"
+                  v-model="item.payment"
                   name="payment"
                   type="text"
                   placeholder="-"
-                  :class="{
-                    'is-invalid': $v.formData.voltage.$error,
-                  }"
                 />
                 <b-form-invalid-feedback>
                   Preencha o campo acima
@@ -279,7 +262,7 @@
       <h3 class="text-center">Orçamento enviado com sucesso com sucesso!</h3>
     </b-modal>
     <pre>{{ formData }}</pre>
-    <pre>{{ orcamentos }}</pre>
+    <pre>{{ items }}</pre>
   </b-container>
 </template>
 
@@ -298,74 +281,40 @@ export default {
   data: () => {
     return {
       formSend: false,
+      counter: 1,
       formData: {
         name: null,
         phone: null,
         email: null,
-        // equipment: null,
-        // capacity: null,
-        // cycle: null,
-        // system: null,
-        // voltage: null,
-        // payment: null,
         term: false,
         security: false,
+        items: [
+          {
+            id: 1,
+            equipment: null,
+            capacity: null,
+            cycle: null,
+            system: null,
+            voltage: null,
+            payment: null,
+          },
+        ],
       },
-
-      counter: 0,
-      orcamentos: [
-        {
-          id: 0,
-          equipment: null,
-          capacity: null,
-          cycle: null,
-          system: null,
-          voltage: null,
-          payment: null,
-        },
-      ],
     };
   },
+
   validations: {
     formData: {
-      name: {
-        required,
-      },
-      phone: {
-        required,
-        minLength: minLength(9),
-      },
-      email: {
-        required,
-        email,
-      },
-      equipment: {
-        required,
-      },
-      capacity: {
-        required,
-      },
-      cycle: {
-        required,
-      },
-      system: {
-        required,
-      },
-      voltage: {
-        required,
-      },
-      term: {
-        sameAs: sameAs(() => true),
-      },
-      security: {
-        sameAs: sameAs(() => true),
-      },
+      name: { required },
+      phone: { required, minLength: minLength(9) },
+      email: { required, email },
+      term: { sameAs: sameAs(() => true) },
+      security: { sameAs: sameAs(() => true) },
     },
   },
+
   head() {
-    return {
-      title: `Cadastro |  ${process.env.title}`,
-    };
+    return { title: `Cadastro |  ${process.env.title}` };
   },
 
   methods: {
@@ -393,8 +342,9 @@ export default {
         }
       }
     },
+
     addInput() {
-      this.orcamentos.push({
+      this.formData.items.push({
         id: ++this.counter,
         equipment: null,
         capacity: null,
