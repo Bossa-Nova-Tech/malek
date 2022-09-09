@@ -44,15 +44,21 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="name_customer"
-          >Cliente <span class="requerido">*</span></label
-        >
+        <label for="customer">Cliente</label>
         <b-form-select
-          v-model="formData.name_customer"
-          name="name_customer"
-          :options="optionsNameCustomer"
-          :class="{ 'is-invalid': $v.formData.name_customer.$error }"
-        />
+          v-model="formData.customer"
+          name="customer"
+          :class="{ 'is-invalid': $v.formData.customer.$error }"
+        >
+          <b-form-select-option
+            :value="customer.name"
+            v-for="customer in customers"
+            :key="customer.id"
+          >
+            {{ customer.name }}
+          </b-form-select-option>
+        </b-form-select>
+
         <b-form-invalid-feedback>
           Selecione uma opção.
         </b-form-invalid-feedback>
@@ -133,6 +139,7 @@ export default {
 
   data() {
     return {
+      customers: [],
       formSend: false,
       formData: {
         need_signature: false,
@@ -140,7 +147,7 @@ export default {
         estimated_time: null,
         end_date: null,
         note: null,
-        name_customer: 'HAVAN Unidade 02',
+        customer: null,
         template: null,
         services: null,
         time: null,
@@ -211,7 +218,7 @@ export default {
     formData: {
       services: { required },
       end_date: { required },
-      name_customer: { required },
+      customer: { required },
       template: { required },
       estimated_time: { required },
     },
@@ -243,6 +250,12 @@ export default {
         }
       }
     },
+  },
+  async mounted() {
+    const { data } = await this.$axios.get('customers');
+    const customer = data;
+    console.log(customer);
+    this.customers = customer;
   },
 };
 </script>
