@@ -13,7 +13,9 @@
 
       <div class="grid">
         <b-form-group class="mb-4">
-          <label for="template">Serviço</label>
+          <label for="template"
+            >Categoria <span class="requerido">*</span></label
+          >
           <b-form-select
             v-model="formData.template"
             name="template"
@@ -26,7 +28,9 @@
         </b-form-group>
 
         <b-form-group class="mb-4">
-          <label for="services">Categoria</label>
+          <label for="services"
+            >Tamplate <span class="requerido">*</span></label
+          >
           <b-form-select
             v-model="formData.services"
             name="services"
@@ -40,7 +44,9 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="name_customer">Cliente</label>
+        <label for="name_customer"
+          >Cliente <span class="requerido">*</span></label
+        >
         <b-form-select
           v-model="formData.name_customer"
           name="name_customer"
@@ -52,37 +58,29 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <div class="grid align-items-end">
-        <div class="d-flex align-items-end">
-          <b-col cols="7" class="p-0">
-            <b-form-group class="mb-4">
-              <label for="estimated_time">Duração média da tarefa</label>
-              <b-form-select
-                v-model="formData.estimated_time"
-                name="estimated_time"
-                :options="optionsEstimatedTime"
-              >
-              </b-form-select>
-            </b-form-group>
-          </b-col>
-
-          <b-col cols="5" class="p-0">
-            <b-form-group class="mb-4">
-              <b-form-input
-                v-model="formData.time"
-                name="time"
-                type="time"
-                placeholder="00:00"
-              />
-              <b-form-invalid-feedback>
-                Preencha o campo acima
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
+      <div class="grid">
+        <div>
+          <label for="estimated_time"
+            >Duração média da tarefa <span class="requerido">*</span></label
+          >
+          <b-form-group class="mb-4">
+            <b-form-input
+              v-model="formData.estimated_time"
+              name="estimated_time"
+              type="time"
+              placeholder="00:00"
+              :class="{ 'is-invalid': $v.formData.estimated_time.$error }"
+            />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
+          </b-form-group>
         </div>
 
         <b-form-group class="mb-4">
-          <label for="end_date">Data prevista de conclusão</label>
+          <label for="end_date"
+            >Data prevista de conclusão <span class="requerido">*</span></label
+          >
           <b-form-datepicker
             v-model="formData.end_date"
             name="end_date"
@@ -102,7 +100,7 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="note">Observação</label>
+        <label for="note">Observação <span class="requerido">*</span></label>
         <b-form-input
           v-model="formData.note"
           name="note"
@@ -254,6 +252,10 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
+}
+
+.requerido {
+  color: var(--red-50);
 }
 
 @media screen and (max-width: 991px) {
