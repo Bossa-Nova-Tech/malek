@@ -97,28 +97,21 @@ body {
   animation-delay: 0.5s;
 }
 .nav-link#em-atraso___BV_tab_button__.active {
-  background-color: var(--red-50);
+  background: rgb(255, 104, 104);
   color: #ffffff;
 }
 @keyframes tab-animation {
   0% {
-    padding-left: -7px;
     background: rgba(255, 0, 0, 0.145);
   }
   25% {
-    padding-left: 0;
     background: rgba(255, 0, 0, 0.145);
   }
   50% {
-    padding-left: 7px;
   }
   75% {
-    padding-left: 0;
-    transform: rotate(5deg);
   }
   100% {
-    padding-left: -7px;
-    transform: rotate(360deg);
   }
 }
 .nav-pills .nav-link.active,

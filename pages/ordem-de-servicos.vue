@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column">
-    <PainelHeader />
+    <PainelHeader :tela="telaName" />
     <main v-if="$screen.lg" class="container">
       <AsideMenu />
       <div class="ml-5 d-flex justify-content-between">
@@ -53,7 +53,6 @@
         <!-- início da tab HOJE -->
         <b-tab id="hoje" title="Hoje" active>
           <Listing :tasks-data="tasksData" />
-          <Add />
           <div class="footer caixa mx-auto d-flex align-items-center mt-2">
             <b-button
               class="d-flex justify-content-center align-items-center create m-0 border-0"
@@ -64,7 +63,6 @@
         </b-tab>
         <b-tab id="em-atraso" title="Em atraso">
           <Listing :tasks-data="tasksData" />
-          <Add />
           <div class="footer caixa mx-auto d-flex align-items-center mt-2">
             <b-button
               class="d-flex justify-content-center align-items-center create m-0 border-0"
@@ -97,14 +95,13 @@
 
 <script>
 /* import Report from '../components/tasks/Report.vue'; */
-import TheHeader from '~/components/layout/TheHeader.vue';
 import Add from '~/components/tasks/Add.vue';
 import Listing from '~/components/tasks/Listing.vue';
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 
 export default {
-  // components: { Flicking, TheHeader, Graphic, BorderButton },
-  components: { TheHeader, Add, Listing, AsideMenu },
+  // components: { Flicking, Graphic, BorderButton },
+  components: { Add, Listing, PainelHeader },
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks');
     const tasksData = tasks.data;
@@ -114,6 +111,7 @@ export default {
 
   data: () => {
     return {
+      telaName: 'Ordem de serviços',
       tasksData: [],
       formData: {
         need_signature: false,
