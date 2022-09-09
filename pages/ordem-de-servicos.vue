@@ -2,7 +2,7 @@
   <div class="d-flex flex-column">
     <PainelHeader :tela="telaName" />
     <main v-if="$screen.lg" class="container">
-      <AsideMenu />
+      <PainelAside />
       <div class="ml-5 d-flex justify-content-between">
         <div class="d-flex w-100">
           <b-tabs id="tab-listing" pills class="mx-auto w-100">
@@ -98,10 +98,11 @@
 import Add from '~/components/tasks/Add.vue';
 import Listing from '~/components/tasks/Listing.vue';
 import PainelHeader from '~/components/layout/PainelHeader.vue';
+import PainelAside from '~/components/layout/PainelAside.vue';
 
 export default {
   // components: { Flicking, Graphic, BorderButton },
-  components: { Add, Listing, PainelHeader },
+  components: { Add, Listing, PainelHeader, PainelAside },
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks');
     const tasksData = tasks.data;

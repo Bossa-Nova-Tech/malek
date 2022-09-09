@@ -7,7 +7,7 @@
         <div class="d-flex align-items-center mb-5">
           <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
           <img class="ml-3" src="~/assets/img/icones/sliders.svg" />
-          <button v-if="$screen.md" @click="$bvModal.show('criar-proposta')">
+          <button v-if="$screen.lg" @click="$bvModal.show('criar-proposta')">
             Criar Proposta
           </button>
         </div>
@@ -16,7 +16,7 @@
       </section>
     </main>
     <div
-      v-if="!$screen.md"
+      v-if="!$screen.lg"
       class="footer caixa mx-auto d-flex align-items-center mt-2"
     >
       <b-button
@@ -96,7 +96,7 @@ main {
   bottom: 0;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 991px) {
   main {
     grid-template-columns: 1fr;
 

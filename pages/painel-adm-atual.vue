@@ -1,19 +1,8 @@
 <template>
   <div class="div-geral">
-    <header v-if="$screen.lg">
-      <div class="top"></div>
-      <div class="container">
-        <div class="logo position-relative">
-          <b-img src="~/assets/img/logo-desktop-painel.svg" alt="" />
-        </div>
-        <div class="hello d-flex flex-column mt-5">
-          <h3>Olá {{ $auth.user.name }},</h3>
-          <p>Acompanhe por aqui o desempenho geral da sua empresa</p>
-        </div>
-      </div>
-    </header>
+    <PainelHeader />
     <main v-if="$screen.lg" class="container">
-      <AsideMenu />
+      <PainelAside />
       <div class="ml-5 d-flex justify-content-between">
         <div class="d-flex w-100">
           <b-tabs id="tab-listing" pills class="mx-auto w-100">
@@ -80,9 +69,10 @@
 
 <script>
 import Listing from '~/components/tasks/Listing.vue';
-import AsideMenu from '~/components/layout/AsideMenu.vue';
+import PainelAside from '~/components/layout/PainelAside.vue';
+import PainelHeader from '~/components/layout/PainelHeader.vue';
 export default {
-  components: { Listing, AsideMenu },
+  components: { Listing, PainelAside, PainelHeader },
   layout: 'auth',
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks');
