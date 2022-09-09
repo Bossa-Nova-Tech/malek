@@ -11,7 +11,7 @@
         <h1 class="mt-4 mb-5">Criar / Editar Cliente</h1>
         <img
           src="~/assets/img/icones/X-icon.svg"
-          class="mb-5 mt-3 x-icon"
+          class="mb-5 mt-3"
           @click="$bvModal.hide('criar-cliente')"
         />
       </div>
@@ -356,9 +356,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.x-icon {
-  cursor: pointer;
-}
 .requerido {
   color: var(--red-50);
 }

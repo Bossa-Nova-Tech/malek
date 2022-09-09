@@ -1,117 +1,116 @@
 <template>
-  <b-modal
-    id="criar"
-    ref="criar"
-    size="lg"
-    header-class="border-0 d-flex flex-column"
-    footer-class="border-0 d-flex flex-column align-items-center"
-  >
-    <template #modal-header>
-      <div v-if="!$screen.md">
-        <b-img
-          src="~/assets/img/icones/seta-voltar-azul.svg"
-          class="mt-5 ml-3 mb-4"
+  <b-modal id="criar" ref="criar" size="lg" hide-header hide-footer>
+    <div class="mx-4">
+      <div class="d-flex justify-content-between">
+        <h1 class="mt-4 mb-5">Criar Ordem de Serviço</h1>
+        <img
+          src="~/assets/img/icones/X-icon.svg"
+          class="mb-5 mt-3"
+          role="button"
           @click="$bvModal.hide('criar')"
-        ></b-img>
-        <h1 class="mt-2 ml-3">Criar Ordem de Serviço</h1>
+        />
       </div>
-      <div v-else class="w-100 d-flex justify-content-between">
-        <h1 class="mt-2 ml-3">Criar Ordem de Serviço</h1>
-        <CloseIcon class="mr-3" @click.native="$bvModal.hide('criar')" />
-      </div>
-    </template>
-    <template #default>
-      <b-container>
-        <div class="grid">
-          <b-form-group
-            label="Serviço"
-            label-for="formData.template"
-            class="service"
-          >
-            <b-form-select
-              v-model="formData.template"
-              :options="optionsTemplate"
-              class="mb-4"
-              :class="{ 'is-invalid': $v.formData.template.$error }"
-            />
-            <b-form-invalid-feedback>
-              Selecione uma opção.
-            </b-form-invalid-feedback>
-          </b-form-group>
-          <b-form-group
-            label="Categoria"
-            label-for="formData.services"
-            class="category"
-          >
-            <b-form-select
-              v-model="formData.services"
-              :options="optionsServices"
-              class="mb-4"
-              :class="{ 'is-invalid': $v.formData.services.$error }"
-            />
-            <b-form-invalid-feedback>
-              Selecione uma opção.
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </div>
-        <b-form-group label="Cliente" label-for="formData.name_customer">
+
+      <div class="grid">
+        <b-form-group class="mb-4">
+          <label for="template">Serviço</label>
           <b-form-select
-            v-model="formData.name_customer"
-            :options="optionsNameCustomer"
-            class="mb-4"
-            :class="{ 'is-invalid': $v.formData.name_customer.$error }"
+            v-model="formData.template"
+            name="template"
+            :options="optionsTemplate"
+            :class="{ 'is-invalid': $v.formData.template.$error }"
           />
           <b-form-invalid-feedback>
             Selecione uma opção.
           </b-form-invalid-feedback>
         </b-form-group>
-        <div class="grid">
-          <b-form-group
-            label="Duração média da tarefa"
-            label-for="formData.estimated_time"
-            class="estimated"
-          >
-            <b-form-select
-              v-model="formData.estimated_time"
-              :options="optionsEstimatedTime"
-              class="mb-4"
-            >
-            </b-form-select>
-          </b-form-group>
-          <b-form-group
-            label="Data prevista de conclusão"
-            label-for="formData.end_date"
-            class="end-date mb-4"
-          >
-            <b-form-datepicker
-              v-model="formData.end_date"
-              :date-format-options="{
-                year: 'numeric',
-                month: 'numeric',
-                day: 'numeric',
-              }"
-              locale="pt"
-              placeholder="00/00/2022"
-              class="mb-4"
-              :class="{ 'is-invalid': $v.formData.end_date.$error }"
-            />
-            <b-form-invalid-feedback>
-              Selecione uma opção.
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </div>
-        <b-form-group label="Observação" label-for="formData.note">
-          <b-form-input
-            v-model="formData.note"
-            placeholder="Esta tarefa consiste em..."
-          >
-          </b-form-input>
-        </b-form-group>
-      </b-container>
-    </template>
 
-    <template #modal-footer>
-      <b-form-checkbox v-model="formData.need_signature"
+        <b-form-group class="mb-4">
+          <label for="services">Categoria</label>
+          <b-form-select
+            v-model="formData.services"
+            name="services"
+            :options="optionsServices"
+            :class="{ 'is-invalid': $v.formData.services.$error }"
+          />
+          <b-form-invalid-feedback>
+            Selecione uma opção.
+          </b-form-invalid-feedback>
+        </b-form-group>
+      </div>
+
+      <b-form-group class="mb-4">
+        <label for="name_customer">Cliente</label>
+        <b-form-select
+          v-model="formData.name_customer"
+          name="name_customer"
+          :options="optionsNameCustomer"
+          :class="{ 'is-invalid': $v.formData.name_customer.$error }"
+        />
+        <b-form-invalid-feedback>
+          Selecione uma opção.
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <div class="grid align-items-end">
+        <div class="d-flex align-items-end">
+          <b-col cols="7" class="p-0">
+            <b-form-group class="mb-4">
+              <label for="estimated_time">Duração média da tarefa</label>
+              <b-form-select
+                v-model="formData.estimated_time"
+                name="estimated_time"
+                :options="optionsEstimatedTime"
+              >
+              </b-form-select>
+            </b-form-group>
+          </b-col>
+
+          <b-col cols="5" class="p-0">
+            <b-form-group class="mb-4">
+              <b-form-input
+                v-model="formData.time"
+                name="time"
+                type="time"
+                placeholder="00:00"
+              />
+              <b-form-invalid-feedback>
+                Preencha o campo acima
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </div>
+
+        <b-form-group class="mb-4">
+          <label for="end_date">Data prevista de conclusão</label>
+          <b-form-datepicker
+            v-model="formData.end_date"
+            name="end_date"
+            :date-format-options="{
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+            }"
+            locale="pt"
+            placeholder="00/00/2022"
+            :class="{ 'is-invalid': $v.formData.end_date.$error }"
+          />
+          <b-form-invalid-feedback>
+            Selecione uma opção.
+          </b-form-invalid-feedback>
+        </b-form-group>
+      </div>
+
+      <b-form-group class="mb-4">
+        <label for="note">Observação</label>
+        <b-form-input
+          v-model="formData.note"
+          name="note"
+          placeholder="Esta tarefa consiste em..."
+        >
+        </b-form-input>
+      </b-form-group>
+      <b-form-checkbox v-model="formData.need_signature" class="mb-4"
         >É necessário coletar assinatura durante visita.</b-form-checkbox
       >
       <div class="w-100 mb-4 col-12">
@@ -120,20 +119,20 @@
           Salvar
         </button>
       </div>
-    </template>
+    </div>
   </b-modal>
 </template>
+
 <script>
 import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
-import CloseIcon from '../layout/CloseIcon.vue';
 
 export default {
   name: 'Add',
   directives: { mask },
-  components: { CloseIcon },
   mixins: [validationMixin],
+
   data() {
     return {
       formSend: false,
@@ -146,6 +145,7 @@ export default {
         name_customer: 'HAVAN Unidade 02',
         template: null,
         services: null,
+        time: null,
         // name: 'José da Silveira',
         /* performance: null, */
         time_of_execution: '02h30',
@@ -208,28 +208,17 @@ export default {
       ],
     };
   },
+
   validations: {
     formData: {
-      services: {
-        required,
-      },
-      end_date: {
-        required,
-      },
-      name_customer: {
-        required,
-      },
-      /* name: {
-                    required,
-                  }, */
-      template: {
-        required,
-      },
-      estimated_time: {
-        required,
-      },
+      services: { required },
+      end_date: { required },
+      name_customer: { required },
+      template: { required },
+      estimated_time: { required },
     },
   },
+
   methods: {
     async register(_response) {
       this.$v.formData.$touch();
@@ -259,23 +248,18 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-}
-.service,
-.estimated {
-  padding-right: 0.5rem;
-}
-.category,
-.end-date {
-  padding-left: 0.5rem;
+  gap: 1.25rem;
 }
 
 @media screen and (max-width: 991px) {
   .grid {
     grid-template-columns: 1fr;
+    gap: 0rem;
   }
 }
 </style>
