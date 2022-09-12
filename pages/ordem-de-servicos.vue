@@ -51,7 +51,7 @@
       <b-tabs pills class="mx-auto caixa" align="center">
         <!-- início da tab HOJE -->
         <b-tab id="em-atraso" title="Em atraso">
-          <Listing :tasks-data="tasksData" />
+          <ListingPast :tasks-data="tasksData" />
           <div class="footer caixa mx-auto d-flex align-items-center mt-2">
             <b-button
               class="d-flex justify-content-center align-items-center create m-0 border-0"
@@ -72,7 +72,7 @@
         </b-tab>
 
         <b-tab id="futuras" title="Futuras">
-          <Listing :tasks-data="tasksData" />
+          <ListingFuture :tasks-data="tasksData" />
           <Add />
           <div class="footer caixa mx-auto d-flex align-items-center mt-2">
             <b-button
@@ -97,12 +97,21 @@
 /* import Report from '../components/tasks/Report.vue'; */
 import Add from '~/components/tasks/Add.vue';
 import Listing from '~/components/tasks/Listing.vue';
+import ListingPast from '~/components/tasks/ListingPast.vue';
+import ListingFuture from '~/components/tasks/ListingFuture.vue';
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 import PainelAside from '~/components/layout/PainelAside.vue';
 
 export default {
   // components: { Flicking, Graphic, BorderButton },
-  components: { Add, Listing, PainelHeader, PainelAside },
+  components: {
+    Add,
+    Listing,
+    ListingPast,
+    ListingFuture,
+    PainelHeader,
+    PainelAside,
+  },
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks');
     const tasksData = tasks.data;

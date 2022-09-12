@@ -1,6 +1,6 @@
 <template>
   <section class="rounded">
-    <h1 class="p-4">Acontecendo hoje</h1>
+    <h1 class="p-4">Ordens atrasadas</h1>
     <ul>
       <li v-for="ordem in tasksData" :key="ordem.id" class="card-servico p-4">
         <div class="separador">
@@ -50,7 +50,7 @@
 import Delete from '~/components/tasks/Delete.vue';
 
 export default {
-  name: 'Listing',
+  name: 'ListingPast',
   components: { Delete },
   props: {
     tasksData: {
