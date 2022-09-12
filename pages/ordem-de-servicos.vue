@@ -51,16 +51,6 @@
     <main v-else class="d-flex caixa mx-auto mb-5">
       <b-tabs pills class="mx-auto caixa" align="center">
         <!-- início da tab HOJE -->
-        <b-tab id="hoje" title="Hoje" active>
-          <Listing :tasks-data="tasksData" />
-          <div class="footer caixa mx-auto d-flex align-items-center mt-2">
-            <b-button
-              class="d-flex justify-content-center align-items-center create m-0 border-0"
-              @click="$bvModal.show('criar')"
-              >Criar Ordem de Serviço</b-button
-            >
-          </div>
-        </b-tab>
         <b-tab id="em-atraso" title="Em atraso">
           <Listing :tasks-data="tasksData" />
           <div class="footer caixa mx-auto d-flex align-items-center mt-2">
@@ -71,6 +61,17 @@
             >
           </div>
         </b-tab>
+        <b-tab id="hoje" title="Hoje" active>
+          <Listing :tasks-data="tasksData" />
+          <div class="footer caixa mx-auto d-flex align-items-center mt-2">
+            <b-button
+              class="d-flex justify-content-center align-items-center create m-0 border-0"
+              @click="$bvModal.show('criar')"
+              >Criar Ordem de Serviço</b-button
+            >
+          </div>
+        </b-tab>
+
         <b-tab id="futuras" title="Futuras">
           <Listing :tasks-data="tasksData" />
           <Add />

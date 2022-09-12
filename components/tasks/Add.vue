@@ -44,16 +44,16 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="customer">Cliente</label>
+        <label for="customer">Cliente <span class="requerido">*</span></label>
         <b-form-select
           v-model="formData.customer"
           name="customer"
           :class="{ 'is-invalid': $v.formData.customer.$error }"
         >
           <b-form-select-option
-            :value="customer.name"
             v-for="customer in customers"
             :key="customer.id"
+            :value="customer.name"
           >
             {{ customer.name }}
           </b-form-select-option>
@@ -106,7 +106,7 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="note">Observação <span class="requerido">*</span></label>
+        <label for="note">Observação</label>
         <b-form-input
           v-model="formData.note"
           name="note"
@@ -223,6 +223,12 @@ export default {
       estimated_time: { required },
     },
   },
+  async mounted() {
+    const { data } = await this.$axios.get('customers');
+    const customer = data;
+    console.log(customer);
+    this.customers = customer;
+  },
 
   methods: {
     async register(_response) {
@@ -250,12 +256,6 @@ export default {
         }
       }
     },
-  },
-  async mounted() {
-    const { data } = await this.$axios.get('customers');
-    const customer = data;
-    console.log(customer);
-    this.customers = customer;
   },
 };
 </script>
