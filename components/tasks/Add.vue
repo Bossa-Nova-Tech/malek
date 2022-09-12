@@ -116,10 +116,12 @@
         >
         </b-form-input>
       </b-form-group>
-      <b-form-checkbox v-model="formData.need_signature" class="mb-4"
+      <b-form-checkbox
+        v-model="formData.need_signature"
+        class="checkbox mb-4 d-flex align-items-center"
         >É necessário coletar assinatura durante visita.</b-form-checkbox
       >
-      <div class="w-100 mb-4 col-12">
+      <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click="register">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
@@ -266,6 +268,14 @@ export default {
 
 .requerido {
   color: var(--red-50);
+}
+label {
+  color: var(--gray-40);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.custom-select {
+  color: #6c757d !important;
 }
 
 @media screen and (max-width: 991px) {
