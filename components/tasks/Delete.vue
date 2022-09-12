@@ -17,12 +17,12 @@
 export default {
   name: 'Delete',
   props: ['ordem'],
-  mounted() {
+  /* mounted() {
     console.log('chamou o delete', this.ordem.id);
     const idRef = 'modal-' + this.ordem.id;
     console.log(idRef);
     return { idRef };
-  },
+  }, */
   methods: {
     async remove(ordem) {
       // this.ordens.splice(index, 1);

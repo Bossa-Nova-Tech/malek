@@ -50,12 +50,14 @@
           name="customer"
           :class="{ 'is-invalid': $v.formData.name_customer.$error }"
         >
+          <b-form-select-option :value="null" desabled
+            >Selecione</b-form-select-option
+          >
           <b-form-select-option
             v-for="customer in customers"
             :key="customer.id"
             :value="customer.name"
-          >
-            {{ customer.name }}
+            >{{ customer.name }}
           </b-form-select-option>
         </b-form-select>
 
