@@ -1,46 +1,54 @@
 <template>
-  <section class="listing overflow-auto">
-    <ul v-for="ordem in tasksData" :key="ordem.id" class="mt-3">
-      <li class="card-servico mb-4 p-4">
-        <div class="d-flex justify-content-between pb-2">
-          <h2 class="manutencao primary-80">
-            #{{ ordem.id }}
-            {{ ordem.services }}
-          </h2>
-          <div class="d-flex">
+  <section class="rounded">
+    <h1 class="p-4">Acontecendo hoje</h1>
+    <ul>
+      <li v-for="ordem in tasksData" :key="ordem.id" class="card-servico p-4">
+        <div class="separador">
+          <h2 class="primary-80 pb-4">{{ ordem.services }}</h2>
+
+          <div class="posicao">
+            <p v-if="$screen.lg" class="gray-40 pb-2">
+              Ordem de serviço {{ ordem.id }}
+            </p>
+            <div class="d-flex align-items-center">
+              <b-img :src="photo_perfil" alt="foto de perfil" />
+              <p class="pl-2">nome cliente</p>
+            </div>
+          </div>
+
+          <p class="gray-40">{{ ordem.name_customer }}</p>
+        </div>
+
+        <div class="d-flex flex-column align-items-end">
+          <div class="d-flex mb-2">
             <img
               v-b-modal.modal-1
               src="~/assets/img/icones/edit-icon.svg"
               class="mr-3"
+              width="22"
+              height="24"
             />
 
-            <div>
-              <img
-                src="~/assets/img/icones/delete-icon.svg"
-                role="button"
-                @click="showModal(ordem)"
-              />
-              <Delete :ordem="ordem" />
-            </div>
+            <img
+              src="~/assets/img/icones/delete-icon.svg"
+              role="button"
+              width="22"
+              height="24"
+              @click="showModal(ordem)"
+            />
+            <Delete :ordem="ordem" />
           </div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between pb-3">
-          <div>
-            <b-img :src="photo_perfil" alt="foto de perfil" />
-            <span class="pl-3">{{ ordem.name }}</span>
-          </div>
-          <div>
-            <span class="tempo gray-40">{{ ordem.estimated_time }} </span>
-          </div>
-        </div>
 
-        <p class="local gray-40">{{ ordem.name_customer }}</p>
+          <span class="gray-40">{{ ordem.estimated_time }} </span>
+        </div>
       </li>
     </ul>
   </section>
 </template>
+
 <script>
 import Delete from '~/components/tasks/Delete.vue';
+
 export default {
   name: 'Listing',
   components: { Delete },
@@ -50,12 +58,14 @@ export default {
       default: null,
     },
   },
+
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks');
     const tasksData = tasks.data;
     console.log('tasks :: ', tasks.data);
     return { tasksData };
   },
+
   data() {
     return {
       id: null,
@@ -88,6 +98,7 @@ export default {
       photo_perfil: [require('~/assets/img/icones/icone-perfil.svg')],
     };
   },
+
   methods: {
     showModal(ordem) {
       this.id = ordem.id;
@@ -100,25 +111,64 @@ export default {
 
 <style lang="scss" scoped>
 section {
+  height: 25rem;
+  background: var(--gray-10);
+  box-shadow: 0px 4px 4px rgba(0, 71, 187, 0.06);
+
   p {
     font-weight: 600;
     font-size: 12px;
   }
+
   h2 {
     font-weight: 600;
+    font-size: 0.75rem;
   }
+
+  ul {
+    height: 18.75rem;
+    overflow: auto;
+
+    li {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+
+      .separador {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        .posicao {
+          grid-column: 1;
+          grid-row: 1 / 3;
+        }
+      }
+    }
+  }
+
   .card-servico {
-    background: var(--gray-10);
-    box-shadow: 0px 4px 4px rgba(0, 71, 187, 0.06);
+    border-top: 0.5px solid var(--gray-20);
   }
 }
-.listing {
-  padding-bottom: 5rem !important;
-}
-@media screen and (min-width: 756px) {
-  .listing {
-    max-height: 25rem;
-    padding-bottom: 0 !important;
+
+@media screen and (max-width: 991px) {
+  section {
+    height: 70vh;
+
+    ul {
+      height: 50vh;
+
+      li {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        .separador {
+          display: grid;
+          grid-template-columns: 1fr;
+          .posicao {
+            grid-row: 2;
+          }
+        }
+      }
+    }
   }
 }
 </style>

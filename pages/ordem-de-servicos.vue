@@ -7,7 +7,6 @@
         <div class="d-flex w-100">
           <b-tabs id="tab-listing" pills class="mx-auto w-100">
             <b-tab id="hoje" title="Hoje" active>
-              <h2 class="mt-5 mb-3 ml-3">Acontecendo Hoje</h2>
               <Listing :tasks-data="tasksData" />
             </b-tab>
             <!-- ============== ABA RELATÓRIO================= -->

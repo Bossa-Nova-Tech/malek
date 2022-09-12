@@ -67,22 +67,22 @@
       </b-form-group>
 
       <div class="grid">
-        <div>
+        <div class="mb-4">
           <label for="estimated_time"
             >Duração média da tarefa <span class="requerido">*</span></label
           >
-          <b-form-group class="mb-4">
-            <b-form-input
-              v-model="formData.estimated_time"
-              name="estimated_time"
-              type="time"
-              placeholder="00:00"
-              :class="{ 'is-invalid': $v.formData.estimated_time.$error }"
-            />
-            <b-form-invalid-feedback>
-              Preencha o campo acima
-            </b-form-invalid-feedback>
-          </b-form-group>
+          <b-form-timepicker
+            id="estimated_time"
+            v-model="formData.estimated_time"
+            placeholder="0h:00min"
+            label-close-button="fechar"
+            label-no-time-selected="selecione o tempo"
+            :class="{ 'is-invalid': $v.formData.estimated_time.$error }"
+          >
+          </b-form-timepicker>
+          <b-form-invalid-feedback>
+            Preencha o campo acima
+          </b-form-invalid-feedback>
         </div>
 
         <b-form-group class="mb-4">
@@ -145,17 +145,12 @@ export default {
       formSend: false,
       formData: {
         need_signature: false,
-        photo: [],
         estimated_time: null,
         end_date: null,
         note: null,
         name_customer: null,
         template: null,
         services: null,
-        time: null,
-        // name: 'José da Silveira',
-        /* performance: null, */
-        time_of_execution: '02h30',
       },
       optionsTemplate: [
         {

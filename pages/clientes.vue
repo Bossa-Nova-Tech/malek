@@ -78,7 +78,7 @@ main {
   }
 }
 
-@media (max-width: 1000px) {
+@media screen and (max-width: 992px) {
   main {
     grid-template-columns: 1fr;
 
