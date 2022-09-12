@@ -46,9 +46,9 @@
       <b-form-group class="mb-4">
         <label for="customer">Cliente <span class="requerido">*</span></label>
         <b-form-select
-          v-model="formData.customer"
+          v-model="formData.name_customer"
           name="customer"
-          :class="{ 'is-invalid': $v.formData.customer.$error }"
+          :class="{ 'is-invalid': $v.formData.name_customer.$error }"
         >
           <b-form-select-option
             v-for="customer in customers"
@@ -147,7 +147,7 @@ export default {
         estimated_time: null,
         end_date: null,
         note: null,
-        customer: null,
+        name_customer: null,
         template: null,
         services: null,
         time: null,
@@ -218,7 +218,7 @@ export default {
     formData: {
       services: { required },
       end_date: { required },
-      customer: { required },
+      name_customer: { required },
       template: { required },
       estimated_time: { required },
     },
