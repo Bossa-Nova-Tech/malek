@@ -61,14 +61,12 @@ export default {
       tasksData: [],
       formData: {
         need_signature: false,
-        photo: [],
         estimated_time: null,
         end_date: null,
         note: null,
-        name_customer: 'HAVAN Unidade 02',
+        name_customer: null,
         template: null,
         services: null,
-        time_of_execution: '02h30',
       },
     };
   },
@@ -77,35 +75,6 @@ export default {
     return {
       title: `Ordem de Serviços | ${process.env.title}`,
     };
-  },
-
-  methods: {
-    setToEditing(index) {
-      this.formEditing = index;
-      setTimeout(() => {
-        document.getElementById(`form-edit-${index}`).focus();
-      }, 1);
-      if (this.formDataEdited === null) {
-        this.formDataEdited = this.formData;
-      }
-    },
-    save(index) {
-      this.saved = true;
-      if (this.saved === true) {
-        this.formData = this.formDataEdited;
-      }
-      console.log(this.formData);
-      this.formEditing = !index;
-      this.$root.$emit('bv::hide::modal', 'modal-1', index);
-      this.formData = {
-        services: null,
-        name_customer: null,
-        template: null,
-        end_date: null,
-        time_of_execution: null,
-        estimated_time: null,
-      };
-    },
   },
 };
 </script>
