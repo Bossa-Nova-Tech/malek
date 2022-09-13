@@ -59,6 +59,7 @@
             :value="customer.name"
             >{{ customer.name }}
           </b-form-select-option>
+          `customer_id:customer.id`
         </b-form-select>
 
         <b-form-invalid-feedback>
@@ -84,7 +85,6 @@
             Preencha o campo acima
           </b-form-invalid-feedback>
         </div>
-
         <b-form-group class="mb-4">
           <label for="end_date"
             >Data prevista de conclusão <span class="requerido">*</span></label
@@ -106,7 +106,6 @@
           </b-form-invalid-feedback>
         </b-form-group>
       </div>
-
       <b-form-group class="mb-4">
         <label for="note">Observação</label>
         <b-form-input
@@ -121,6 +120,7 @@
         class="checkbox mb-4 d-flex align-items-center"
         >É necessário coletar assinatura durante visita.</b-form-checkbox
       >
+
       <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click="register">
           <b-spinner v-if="formSend" small type="grow" />
@@ -135,7 +135,6 @@
 import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
-
 export default {
   name: 'Add',
   directives: { mask },
@@ -146,6 +145,7 @@ export default {
       customers: [],
       formSend: false,
       formData: {
+        status: null,
         need_signature: false,
         estimated_time: null,
         end_date: null,
@@ -242,6 +242,7 @@ export default {
           this.formSend = false;
           this.$v.$reset();
           console.log('executou o clic');
+
           await this.$axios
             .post('tasks', this.$data.formData)
             .then((_res) => {

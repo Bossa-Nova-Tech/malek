@@ -7,7 +7,7 @@
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto" align="center">
           <b-tab id="em-atraso" title="Em atraso" class="mt-4">
-            <ListingPast :tasks-data="tasksData" />
+            <ListingPast :tasks-data="tasksDataOverdue" />
           </b-tab>
 
           <b-tab id="hoje" title="Hoje" active class="mt-4">
@@ -15,7 +15,7 @@
           </b-tab>
 
           <b-tab id="futuras" title="Futuras" class="mt-4">
-            <ListingFuture :tasks-data="tasksData" />
+            <ListingFuture :tasks-data="tasksDataFuture" />
           </b-tab>
 
           <Add />
@@ -49,10 +49,16 @@ export default {
     PainelAside,
   },
   async asyncData({ $axios }) {
-    const tasks = await $axios.get('tasks');
+    const tasks = await $axios.get('tasks?status=today');
     const tasksData = tasks.data;
     console.log('tasks :: ', tasks.data);
-    return { tasksData };
+    const tasksOverdue = await $axios.get('tasks?status=overdue');
+    const tasksDataOverdue = tasksOverdue.data;
+    console.log('tasks :: ', tasksOverdue.data);
+    const tasksFuture = await $axios.get('tasks?status=future');
+    const tasksDataFuture = tasksFuture.data;
+    console.log('tasks :: ', tasksFuture.data);
+    return { tasksData, tasksDataOverdue, tasksDataFuture };
   },
 
   data: () => {

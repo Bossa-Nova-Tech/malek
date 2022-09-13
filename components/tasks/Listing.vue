@@ -59,13 +59,6 @@ export default {
     },
   },
 
-  async asyncData({ $axios }) {
-    const tasks = await $axios.get('tasks');
-    const tasksData = tasks.data;
-    console.log('tasks :: ', tasks.data);
-    return { tasksData };
-  },
-
   data() {
     return {
       id: null,

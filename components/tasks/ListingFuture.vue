@@ -58,20 +58,11 @@ export default {
       default: null,
     },
   },
-
-  async asyncData({ $axios }) {
-    const tasks = await $axios.get('tasks');
-    const tasksData = tasks.data;
-    console.log('tasks :: ', tasks.data);
-    return { tasksData };
-  },
-
   data() {
     return {
       id: null,
       saved: false,
       formSend: false,
-      formEditing: null,
       editing: false,
       formData: {
         need_signature: false,
