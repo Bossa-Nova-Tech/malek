@@ -16,25 +16,26 @@
         />
       </div>
       <b-form-group class="mb-4">
-        <label for="name_customer"
-          >Cliente <span class="requerido">*</span></label
+        <label for="customer">Cliente <span class="requerido">*</span></label>
+        <b-form-select
+          v-model="formData.name_customer"
+          name="customer"
+          :class="{ 'is-invalid': $v.formData.name_customer.$error }"
         >
-        <!-- :options="`{$customers.name}`" -->
-        <!-- <b-form-select
-          v-model="formData.name_customer"
-          name="name_customer"
-          :options="customerOptions"
-          :class="{
-            'is-invalid': $v.formData.name_customer.$error,
-          }"
-        /> -->
-        <b-form-input
-          v-model="formData.name_customer"
-          :class="{
-            'is-invalid': $v.formData.name_customer.$error,
-          }"
-        />
-        <b-form-invalid-feedback> Selecione uma opção </b-form-invalid-feedback>
+          <b-form-select-option :value="null" desabled
+            >Selecione</b-form-select-option
+          >
+          <b-form-select-option
+            v-for="customer in customers"
+            :key="customer.id"
+            :value="customer.name"
+            >{{ customer.name }}
+          </b-form-select-option>
+        </b-form-select>
+
+        <b-form-invalid-feedback>
+          Selecione uma opção.
+        </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group class="mb-4">
@@ -228,6 +229,7 @@ export default {
 
   data: () => {
     return {
+      customers: [],
       file: null,
       files: null,
       reader: null,
@@ -278,7 +280,6 @@ export default {
       ],
     };
   },
-
   validations: {
     formData: {
       name: {
@@ -312,6 +313,12 @@ export default {
     },
   },
 
+  async mounted() {
+    const { data } = await this.$axios.get('customers');
+    const customer = data;
+    console.log(customer);
+    this.customers = customer;
+  },
   methods: {
     async saveProposal(_response) {
       this.$v.formData.$touch();

@@ -25,9 +25,6 @@ export default {
   }, */
   methods: {
     async remove(ordem) {
-      // this.ordens.splice(index, 1);
-      /* console.log('index :: ', index);
-      console.log('ordem :: ', ordem); */
       try {
         await this.$axios
           .delete('tasks/' + ordem.id)

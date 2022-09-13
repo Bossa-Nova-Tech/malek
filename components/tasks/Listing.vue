@@ -23,6 +23,14 @@
           <div class="d-flex mb-2">
             <img
               v-b-modal.modal-1
+              src="~/assets/img/icones/icone-concluir.svg"
+              class="mr-3"
+              width="22"
+              height="24"
+              @click="showFinishedModal(ordem)"
+            />
+            <img
+              v-b-modal.modal-1
               src="~/assets/img/icones/edit-icon.svg"
               class="mr-3"
               width="22"
@@ -37,6 +45,7 @@
               @click="showModal(ordem)"
             />
             <Delete :ordem="ordem" />
+            <Finished :ordem="ordem" />
           </div>
 
           <span class="gray-40">{{ ordem.estimated_time }} </span>
@@ -48,10 +57,11 @@
 
 <script>
 import Delete from '~/components/tasks/Delete.vue';
+import Finished from '~/components/tasks/Finished.vue';
 
 export default {
   name: 'Listing',
-  components: { Delete },
+  components: { Delete, Finished },
   props: {
     tasksData: {
       type: Array,
@@ -81,6 +91,11 @@ export default {
 
   methods: {
     showModal(ordem) {
+      this.id = ordem.id;
+      this.$bvModal.show(this.id);
+      console.log(ordem.id + ' chamado');
+    },
+    showFinishedModal(ordem) {
       this.id = ordem.id;
       this.$bvModal.show(this.id);
       console.log(ordem.id + ' chamado');
