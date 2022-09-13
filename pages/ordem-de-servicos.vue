@@ -1,109 +1,45 @@
 <template>
-  <div class="d-flex flex-column">
+  <div>
     <PainelHeader :tela="telaName" />
-    <main v-if="$screen.lg" class="container">
-      <PainelAside />
-      <div class="ml-5 d-flex justify-content-between">
-        <div class="d-flex w-100">
-          <b-tabs id="tab-listing" pills class="mx-auto w-100">
-            <b-tab id="hoje" title="Hoje" active>
-              <Listing :tasks-data="tasksData" />
-            </b-tab>
-            <!-- ============== ABA RELATÓRIO================= -->
-            <!-- <b-tab id="relatorio" title="Relatório" class="overflow-hiden">
-              <Report :tasks-data="tasksData" />
-            </b-tab> -->
-            <b-tab id="em-atraso" title="Em atraso">
-              <Listing :tasks-data="tasksData" />
-              <Add />
-              <div class="footer caixa mx-auto d-flex align-items-center mt-2">
-                <b-button
-                  class="d-flex justify-content-center align-items-center create m-0 border-0"
-                  @click="$bvModal.show('criar')"
-                  >Criar Ordem de Serviço</b-button
-                >
-              </div>
-            </b-tab>
-            <b-tab id="futuras" title="Futuras">
-              <Listing :tasks-data="tasksData" />
-              <Add />
-              <div class="footer caixa mx-auto d-flex align-items-center mt-2">
-                <b-button
-                  class="d-flex justify-content-center align-items-center create m-0 border-0"
-                  @click="$bvModal.show('criar')"
-                  >Criar Ordem de Serviço</b-button
-                >
-              </div>
-            </b-tab>
-            <Add />
-            <b-tab
-              id="botao"
-              title="Criar Ordem de Serviço"
-              @click="$bvModal.show('criar')"
-            >
-            </b-tab>
-          </b-tabs>
-        </div>
-      </div>
-    </main>
+    <main class="container p-0">
+      <PainelAside v-if="$screen.lg" />
 
-    <main v-else class="d-flex caixa mx-auto mb-5">
-      <b-tabs pills class="mx-auto caixa" align="center">
-        <!-- início da tab HOJE -->
-        <b-tab id="em-atraso" title="Em atraso">
-          <ListingPast :tasks-data="tasksData" />
-          <div class="footer caixa mx-auto d-flex align-items-center mt-2">
-            <b-button
-              class="d-flex justify-content-center align-items-center create m-0 border-0"
-              @click="$bvModal.show('criar')"
-              >Criar Ordem de Serviço</b-button
-            >
-          </div>
-        </b-tab>
-        <b-tab id="hoje" title="Hoje" active>
-          <Listing :tasks-data="tasksData" />
-          <div class="footer caixa mx-auto d-flex align-items-center mt-2">
-            <b-button
-              class="d-flex justify-content-center align-items-center create m-0 border-0"
-              @click="$bvModal.show('criar')"
-              >Criar Ordem de Serviço</b-button
-            >
-          </div>
-        </b-tab>
+      <div class="d-flex justify-content-center">
+        <b-tabs pills class="mx-auto" align="center">
+          <b-tab id="em-atraso" title="Em atraso" class="mt-4">
+            <ListingPast :tasks-data="tasksData" />
+          </b-tab>
 
-        <b-tab id="futuras" title="Futuras">
-          <ListingFuture :tasks-data="tasksData" />
+          <b-tab id="hoje" title="Hoje" active class="mt-4">
+            <Listing :tasks-data="tasksData" />
+          </b-tab>
+
+          <b-tab id="futuras" title="Futuras" class="mt-4">
+            <ListingFuture :tasks-data="tasksData" />
+          </b-tab>
+
           <Add />
-          <div class="footer caixa mx-auto d-flex align-items-center mt-2">
-            <b-button
-              class="d-flex justify-content-center align-items-center create m-0 border-0"
-              @click="$bvModal.show('criar')"
-              >Criar Ordem de Serviço</b-button
-            >
-          </div>
-        </b-tab>
 
-        <!-- início da tab Relatório -->
-        <!-- <b-tab id="relatorio">
-          <template #title> Relatório </template>
-          <Report :tasks-data="tasksData" />
-        </b-tab> -->
-      </b-tabs>
+          <div class="footer">
+            <button class="" @click="$bvModal.show('criar')">
+              Criar Ordem de Serviço
+            </button>
+          </div>
+        </b-tabs>
+      </div>
     </main>
   </div>
 </template>
 
 <script>
-/* import Report from '../components/tasks/Report.vue'; */
+import PainelHeader from '~/components/layout/PainelHeader.vue';
+import PainelAside from '~/components/layout/PainelAside.vue';
 import Add from '~/components/tasks/Add.vue';
 import Listing from '~/components/tasks/Listing.vue';
 import ListingPast from '~/components/tasks/ListingPast.vue';
 import ListingFuture from '~/components/tasks/ListingFuture.vue';
-import PainelHeader from '~/components/layout/PainelHeader.vue';
-import PainelAside from '~/components/layout/PainelAside.vue';
 
 export default {
-  // components: { Flicking, Graphic, BorderButton },
   components: {
     Add,
     Listing,
@@ -176,78 +112,32 @@ export default {
 
 <style lang="scss" scoped>
 main {
-  p {
-    font-size: 0.75rem;
-    color: var(--gray-40);
-  }
-
-  .create {
-    background: var(--primary-50);
-    height: 2.82rem;
-  }
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
 
   .footer {
-    box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
-    height: 8.222rem;
+    width: 100%;
+    height: 6rem;
     background: var(--gray-10);
     padding: 1.5rem;
-    position: fixed;
-    bottom: 0;
-  }
-
-  .card-servico {
-    padding: 1.25rem 1.5625rem;
-    background-color: #ffffff;
-    box-shadow: 0rem 0.25rem 0.25rem rgba(0, 71, 187, 0.06);
-  }
-  .manutencao {
-    font-weight: 600;
-    font-size: 1rem;
-  }
-
-  .local {
-    font-weight: 600;
-    font-size: 0.75rem;
-  }
-  .porcentagem {
-    font-weight: 700;
-    font-size: 1.25rem;
-  }
-  .tempo {
-    font-weight: 500;
-    font-size: 0.625rem;
+    position: inherit;
+    box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
   }
 }
-@media screen and (min-width: 992px) {
-  .container {
-    width: min(59.125rem, 100%);
-    margin-inline: auto;
-    padding-inline: 1.5rem;
-  }
-  header {
-    .top {
-      background: linear-gradient(82.86deg, #003283 -10.8%, #6d92d8 113.3%);
-      min-height: 7.125rem;
-      background: url('~/assets/img/top-painel-adm.svg');
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-    .logo {
-      margin-top: -2.5625rem;
-    }
-    .hello {
-      padding-left: 9.375rem;
-      margin-bottom: 5rem;
-    }
-  }
+
+@media screen and (max-width: 991px) {
   main {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    .create {
-      height: 2.5rem;
-    }
-    h2 {
-      font-size: 1.5rem;
+    grid-template-columns: 1fr;
+
+    .footer {
+      width: 100%;
+      height: 6rem;
+      background: var(--gray-10);
+      padding: 1.5rem;
+      position: fixed;
+      bottom: 0;
+      box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
     }
   }
 }
