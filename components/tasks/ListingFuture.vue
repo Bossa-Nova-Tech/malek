@@ -10,9 +10,16 @@
             <p class="gray-40">{{ ordem.name_customer }}</p>
           </div>
         </div>
-
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
+            <img
+              v-b-modal.modal-1
+              src="~/assets/img/icones/icone-concluir.svg"
+              class="mr-3"
+              width="22"
+              height="24"
+              @click="showFinishedModal(ordem)"
+            />
             <img
               v-b-modal.modal-1
               src="~/assets/img/icones/edit-icon.svg"
@@ -29,11 +36,11 @@
               @click="showModal(ordem)"
             />
             <Delete :ordem="ordem" />
+            <!-- <Finished :ordem="ordem" /> -->
           </div>
         </div>
-
         <div class="d-flex align-items-center">
-          <b-img :src="photo_perfil" alt="foto de perfil" />
+          <b-img :src="photo_perfil.photo" alt="foto de perfil" />
           <p class="pl-2">Colaborador</p>
         </div>
 
@@ -45,32 +52,22 @@
 
 <script>
 import Delete from '~/components/tasks/Delete.vue';
+/* import Finished from '~/components/tasks/Finished.vue'; */
 
 export default {
   name: 'ListingFuture',
   components: { Delete },
   props: {
     tasksData: {
-      type: Array,
+      type: Object,
       default: null,
     },
   },
+
   data() {
     return {
       id: null,
-      saved: false,
-      formSend: false,
-      editing: false,
-      formData: {
-        need_signature: false,
-        estimated_time: null,
-        end_date: null,
-        note: null,
-        name_customer: null,
-        template: null,
-        services: null,
-      },
-      photo_perfil: [require('~/assets/img/icones/icone-perfil.svg')],
+      photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
   },
 

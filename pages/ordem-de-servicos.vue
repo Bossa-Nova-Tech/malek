@@ -64,7 +64,7 @@ export default {
   data: () => {
     return {
       telaName: 'Ordem de serviços',
-      tasksData: [],
+      tasksData: {},
       formData: {
         need_signature: false,
         estimated_time: null,
