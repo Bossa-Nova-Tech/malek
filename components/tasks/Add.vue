@@ -11,37 +11,20 @@
         />
       </div>
 
-      <div class="grid">
-        <b-form-group class="mb-4">
-          <label for="template"
-            >Categoria <span class="requerido">*</span></label
-          >
-          <b-form-select
-            v-model="formData.template"
-            name="template"
-            :options="optionsTemplate"
-            :class="{ 'is-invalid': $v.formData.template.$error }"
-          />
-          <b-form-invalid-feedback>
-            Selecione uma opção.
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group class="mb-4">
-          <label for="services"
-            >Tamplate <span class="requerido">*</span></label
-          >
-          <b-form-select
-            v-model="formData.services"
-            name="services"
-            :options="optionsServices"
-            :class="{ 'is-invalid': $v.formData.services.$error }"
-          />
-          <b-form-invalid-feedback>
-            Selecione uma opção.
-          </b-form-invalid-feedback>
-        </b-form-group>
-      </div>
+      <b-form-group class="mb-4">
+        <label for="services"
+          >Tipo de serviços <span class="requerido">*</span></label
+        >
+        <b-form-select
+          v-model="formData.services"
+          name="services"
+          :options="optionsServices"
+          :class="{ 'is-invalid': $v.formData.services.$error }"
+        />
+        <b-form-invalid-feedback>
+          Selecione uma opção.
+        </b-form-invalid-feedback>
+      </b-form-group>
 
       <b-form-group class="mb-4">
         <label for="customer">Cliente <span class="requerido">*</span></label>
@@ -154,20 +137,7 @@ export default {
         template: null,
         services: null,
       },
-      optionsTemplate: [
-        {
-          value: null,
-          text: 'Selecione',
-        },
-        {
-          value: 'Manutenção',
-          text: 'Manutenção',
-        },
-        {
-          value: 'Instalação',
-          text: 'Instalação',
-        },
-      ],
+
       optionsServices: [
         {
           value: null,
@@ -182,34 +152,6 @@ export default {
           text: 'Instalação',
         },
       ],
-      optionsNameCustomer: [
-        {
-          value: null,
-          text: 'Selecione',
-        },
-        {
-          value: 'HAVAN Unidade 02',
-          text: 'HAVAN Unidade 02',
-        },
-        {
-          value: 'HAVAN Unidade 03',
-          text: 'HAVAN Unidade 03',
-        },
-      ],
-      optionsEstimatedTime: [
-        {
-          value: null,
-          text: 'Selecione',
-        },
-        {
-          value: '02horas e 30min',
-          text: '02horas e 30min',
-        },
-        {
-          value: '03horas e 30min',
-          text: '03horas e 30min',
-        },
-      ],
     };
   },
 
@@ -218,7 +160,6 @@ export default {
       services: { required },
       end_date: { required },
       name_customer: { required },
-      template: { required },
       estimated_time: { required },
     },
   },
@@ -270,11 +211,13 @@ export default {
 .requerido {
   color: var(--red-50);
 }
+
 label {
   color: var(--gray-40);
   font-size: 0.75rem;
   font-weight: 500;
 }
+
 .custom-select {
   color: #6c757d !important;
 }

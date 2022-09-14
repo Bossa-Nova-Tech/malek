@@ -1,13 +1,5 @@
 <template>
-  <div class="min-vh-100">
-    <!-- <TheHeader /> -->
-
-    <main>
-      <nuxt />
-    </main>
-
-    <!-- <TheFooter /> -->
-  </div>
+  <nuxt />
 </template>
 
 <script>
