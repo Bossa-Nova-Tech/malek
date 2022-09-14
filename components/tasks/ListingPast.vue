@@ -3,20 +3,12 @@
     <h1 class="p-4">Ordens atrasadas</h1>
     <ul>
       <li v-for="ordem in tasksData" :key="ordem.id" class="card-servico p-4">
-        <div class="separador">
-          <h2 class="primary-80 pb-4">{{ ordem.services }}</h2>
-
-          <div class="posicao">
-            <p v-if="$screen.lg" class="gray-40 pb-2">
-              Ordem de serviço {{ ordem.id }}
-            </p>
-            <div class="d-flex align-items-center">
-              <b-img :src="photo_perfil" alt="foto de perfil" />
-              <p class="pl-2">Nome do Colaborador</p>
-            </div>
+        <div class="d-flex pb-3">
+          <p class="gray-40">Ordem de serviço #{{ ordem.id }}</p>
+          <div class="pl-4">
+            <h2 class="primary-80 pb-1">{{ ordem.services }}</h2>
+            <p class="gray-40">{{ ordem.name_customer }}</p>
           </div>
-
-          <p class="gray-40">{{ ordem.name_customer }}</p>
         </div>
 
         <div class="d-flex flex-column align-items-end">
@@ -38,9 +30,14 @@
             />
             <Delete :ordem="ordem" />
           </div>
-
-          <span class="gray-40">{{ ordem.estimated_time }} </span>
         </div>
+
+        <div class="d-flex align-items-center">
+          <b-img :src="photo_perfil" alt="foto de perfil" />
+          <p class="pl-2">Colaborador</p>
+        </div>
+
+        <span class="gray-40">{{ ordem.estimated_time }} </span>
       </li>
     </ul>
   </section>
@@ -110,15 +107,11 @@ section {
 
     li {
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 3fr 1fr;
 
-      .separador {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        .posicao {
-          grid-column: 1;
-          grid-row: 1 / 3;
-        }
+      span {
+        align-self: center;
+        justify-self: end;
       }
     }
   }
@@ -134,19 +127,6 @@ section {
 
     ul {
       height: 50vh;
-
-      li {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-
-        .separador {
-          display: grid;
-          grid-template-columns: 1fr;
-          .posicao {
-            grid-row: 2;
-          }
-        }
-      }
     }
   }
 }

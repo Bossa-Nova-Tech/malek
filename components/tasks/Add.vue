@@ -12,9 +12,7 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="services"
-          >Tipo de serviços <span class="requerido">*</span></label
-        >
+        <label for="services">Template <span class="requerido">*</span></label>
         <b-form-select
           v-model="formData.services"
           name="services"
