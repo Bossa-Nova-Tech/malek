@@ -71,8 +71,8 @@ export default {
     return {
       formSend: false,
       formData: {
-        email: null,
-        password: null,
+        email: 'admin@admin.com',
+        password: 'admin@123',
         checked: false,
       },
     };

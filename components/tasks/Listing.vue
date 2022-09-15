@@ -2,34 +2,36 @@
   <section class="rounded">
     <h1 class="p-4">Acontecendo hoje</h1>
     <ul>
-      <li v-for="ordem in tasksData" :key="ordem.id" class="card-servico p-4">
+      <li
+        v-for="(itemOrdem, index) in tasksData"
+        :key="index"
+        class="card-servico p-4"
+      >
         <div class="d-flex pb-3">
           <p v-if="$screen.lg" class="gray-40">
-            Ordem de serviço #{{ ordem.id }}
+            Ordem de serviço #{{ itemOrdem.id }}
           </p>
           <div class="ajuste">
             <h2 v-if="$screen.lg" class="primary-80 pb-1">
-              {{ ordem.services }}
+              {{ itemOrdem.services }}
             </h2>
 
             <h2 v-if="!$screen.lg" class="primary-80 pb-1">
-              #{{ ordem.id }} {{ ordem.services }}
+              #{{ itemOrdem.id }} {{ itemOrdem.services }}
             </h2>
-            <p class="gray-40">{{ ordem.name_customer }}</p>
+            <p class="gray-40">{{ itemOrdem.name_customer }}</p>
           </div>
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
             <img
-              v-b-modal.modal-1
               src="~/assets/img/icones/icone-concluir.svg"
               class="mr-3"
               width="22"
               height="24"
-              @click="showModal2(ordem)"
+              @click="showConcluir(itemOrdem)"
             />
             <img
-              v-b-modal.modal-1
               src="~/assets/img/icones/edit-icon.svg"
               class="mr-3"
               width="22"
@@ -41,18 +43,18 @@
               role="button"
               width="22"
               height="24"
-              @click="showModal(ordem)"
+              @click="showExcluir(itemOrdem)"
             />
-            <Delete :ordem="ordem" :teste="teste" />
-            <Finished :ordem="ordem" :teste="teste" />
           </div>
         </div>
         <div class="d-flex align-items-center">
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
           <p class="pl-2">Colaborador</p>
         </div>
-        <span class="gray-40">{{ ordem.estimated_time }} </span>
+        <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
       </li>
+      <Delete :id="id" />
+      <Finished :id="id" />
     </ul>
   </section>
 </template>
@@ -63,38 +65,34 @@ import Finished from '~/components/tasks/Finished.vue';
 
 export default {
   name: 'Listing',
-  components: { Delete, Finished },
-  props: {
-    tasksData: {
-      type: Array,
-      default: null,
-    },
-  },
-
+  components: { Finished, Delete },
   data() {
     return {
-      teste: false,
+      tasksData: [],
       id: null,
+      teste: null,
+      ordem_selecionada: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
   },
-
+  async mounted() {
+    await this.listar();
+  },
   methods: {
-    showModal2(ordem) {
-      this.teste = true;
-      if (this.teste === true) {
-        this.id = ordem.id;
-        this.$bvModal.show(this.id);
-        console.log(ordem.id + 'chamado');
-      }
+    async listar() {
+      const { data } = await this.$axios.get('tasks?status=today');
+      this.tasksData = data;
     },
-    showModal(ordem) {
-      this.teste = false;
-      if (this.teste === false) {
-        this.id = ordem.id;
-        this.$bvModal.show(this.id);
-        console.log(ordem.id + 'chamado');
-      }
+
+    showConcluir(itemOrdem) {
+      this.id = itemOrdem.id;
+      this.$bvModal.show(`finished-${this.id}`);
+      this.ordem_selecionada = itemOrdem;
+    },
+    showExcluir(itemOrdem) {
+      this.id = itemOrdem.id;
+      this.$bvModal.show(`excluir-${this.id}`);
+      this.ordem_selecionada = itemOrdem;
     },
   },
 };

@@ -1,8 +1,7 @@
 <template>
   <b-modal
-    v-if="teste === true"
-    :id="ordem.id"
-    ref="finished"
+    :id="`finished-${id}`"
+    ref="f"
     title="BootstrapVue"
     hide-header
     footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
@@ -12,8 +11,8 @@
       <span class="font-weight-bolder">concluir</span> este registro?
     </p>
     <template #modal-footer>
-      <b-button variant="danger" @click="finishTask">Sim</b-button>
-      <b-button @click="$bvModal.hide(ordem.id)">Não</b-button>
+      <b-button variant="danger" @click="finishTask()">Sim</b-button>
+      <b-button @click="$bvModal.hide('finished')">Não</b-button>
     </template>
   </b-modal>
 </template>
@@ -21,13 +20,9 @@
 export default {
   name: 'Delete',
   props: {
-    ordem: {
-      type: Array,
+    id: {
+      type: Number,
       default: null,
-    },
-    teste: {
-      type: Boolean,
-      default: false,
     },
   },
   data() {
@@ -42,16 +37,18 @@ export default {
     return { idRef };
   }, */
   methods: {
+    /* async finishTask() {
+
+    }, */
     async finishTask(_response) {
+      const ordem = await this.$parent.ordem_selecionada;
+      console.log(ordem);
       try {
         await this.$axios
-          .post('tasks/finish/' + this.ordem.id)
+          .post('tasks/finish/' + ordem.id)
           .then((_res) => {
-            this.tasksData.splice(this.ordem.id, 1);
-            this.$refs.finished.hide();
-            /* if (this.status === 'finished') {
-                this.ordens.splice(this.ordens.indexOf(taskData), 1);
-              } */
+            this.$parent.listar();
+            this.$refs.f.hide();
             this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
             this.$nuxt.refresh();
           })

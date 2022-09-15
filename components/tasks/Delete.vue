@@ -1,7 +1,6 @@
 <template>
   <b-modal
-    v-if="teste === false"
-    :id="ordem.id"
+    :id="`excluir-${id}`"
     ref="excluir"
     title="BootstrapVue"
     hide-header
@@ -12,8 +11,8 @@
       <span class="font-weight-bolder">excluir</span> este registro?
     </p>
     <template #modal-footer>
-      <b-button variant="danger" @click="remove(ordem)">Sim</b-button>
-      <b-button @click="$bvModal.hide(ordem.id)">Não</b-button>
+      <b-button variant="danger" @click="remove()">Sim</b-button>
+      <b-button @click="$bvModal.hide(`excluir-${id}`)">Não</b-button>
     </template>
   </b-modal>
 </template>
@@ -21,16 +20,11 @@
 export default {
   name: 'Delete',
   props: {
-    ordem: {
-      type: Array,
+    id: {
+      type: Number,
       default: null,
     },
-    teste: {
-      type: Boolean,
-      default: false,
-    },
   },
-
   /* mounted() {
     console.log('chamou o delete', this.excluir.id);
     const idRef = 'modal-' + this.excluir.id;
@@ -38,16 +32,18 @@ export default {
     return { idRef };
   }, */
   methods: {
-    async remove(ordem, teste) {
-      teste = false;
+    async remove() {
+      const ordem = await this.$parent.ordem_selecionada;
+      console.log(ordem);
       try {
         await this.$axios
           .delete('tasks/' + ordem.id)
           .then((_res) => {
+            this.$parent.listar();
             if (_res.data.result === 'success') {
               console.log(ordem.id + ' excluido');
               this.toast('success', 'Sucesso', 'Item excluído!');
-              this.$root.$emit('bv::hide::modal', 'excluir');
+              this.$refs.excluir.hide();
               this.$nuxt.refresh();
             } else {
               this.toast(
