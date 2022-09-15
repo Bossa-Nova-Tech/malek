@@ -2,12 +2,12 @@
   <div class="pb-5">
     <PainelHeader :tela="telaName" />
     <main class="container">
-      <PainelAside class="mobile" />
+      <PainelAside v-if="$screen.lg" />
       <section>
         <div class="d-flex align-items-center mb-5">
           <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
           <img class="ml-3" src="~/assets/img/icones/sliders.svg" />
-          <button class="mobile" @click="$bvModal.show('criar-cliente')">
+          <button v-if="$screen.lg" @click="$bvModal.show('criar-cliente')">
             Criar clientes
           </button>
         </div>
@@ -84,14 +84,11 @@ main {
 
     section {
       padding-left: 0rem;
+      padding-right: 0rem;
     }
 
     img {
       margin-right: 0rem;
-    }
-
-    .mobile {
-      display: none;
     }
   }
 }

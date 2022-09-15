@@ -5,7 +5,7 @@
       <PainelAside v-if="$screen.lg" />
 
       <div class="d-flex justify-content-center">
-        <b-tabs pills class="mx-auto" align="center">
+        <b-tabs pills class="mx-auto position-relative" align="center">
           <b-tab id="em-atraso" title="Em atraso" class="mt-4">
             <ListingPast :tasks-data="tasksDataOverdue" />
           </b-tab>
@@ -110,7 +110,7 @@ main {
       height: 6rem;
       background: var(--gray-10);
       padding: 1.5rem;
-      position: fixed;
+      position: absolute;
       bottom: 0;
       box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
     }

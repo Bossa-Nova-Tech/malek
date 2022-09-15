@@ -4,9 +4,17 @@
     <ul>
       <li v-for="ordem in tasksData" :key="ordem.id" class="card-servico p-4">
         <div class="d-flex pb-3">
-          <p class="gray-40">Ordem de serviço #{{ ordem.id }}</p>
-          <div class="pl-4">
-            <h2 class="primary-80 pb-1">{{ ordem.services }}</h2>
+          <p v-if="$screen.lg" class="gray-40">
+            Ordem de serviço #{{ ordem.id }}
+          </p>
+          <div class="ajuste">
+            <h2 v-if="$screen.lg" class="primary-80 pb-1">
+              {{ ordem.services }}
+            </h2>
+
+            <h2 v-if="!$screen.lg" class="primary-80 pb-1">
+              #{{ ordem.id }} {{ ordem.services }}
+            </h2>
             <p class="gray-40">{{ ordem.name_customer }}</p>
           </div>
         </div>
@@ -108,6 +116,10 @@ section {
         align-self: center;
         justify-self: end;
       }
+
+      .ajuste {
+        padding-left: 3rem;
+      }
     }
   }
 
@@ -122,6 +134,11 @@ section {
 
     ul {
       height: 50vh;
+      li {
+        .ajuste {
+          padding-left: 0rem;
+        }
+      }
     }
   }
 }

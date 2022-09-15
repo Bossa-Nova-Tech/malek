@@ -142,12 +142,8 @@ export default {
           text: 'Selecione',
         },
         {
-          value: 'Manutenção',
-          text: 'Manutenção',
-        },
-        {
-          value: 'Instalação',
-          text: 'Instalação',
+          value: 'Refrigeração',
+          text: 'Refrigeração',
         },
       ],
     };
