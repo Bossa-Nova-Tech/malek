@@ -67,7 +67,7 @@ export default {
   components: { Delete },
   props: {
     tasksData: {
-      type: Object,
+      type: Array,
       default: null,
     },
   },

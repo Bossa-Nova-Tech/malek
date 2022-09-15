@@ -26,6 +26,7 @@
               class="mr-3"
               width="22"
               height="24"
+              @click="showModal2(ordem)"
             />
             <img
               v-b-modal.modal-1
@@ -42,15 +43,14 @@
               height="24"
               @click="showModal(ordem)"
             />
-            <Delete :ordem="ordem" />
-            <!-- <Finished :ordem="ordem" /> -->
+            <Delete :ordem="ordem" :teste="teste" />
+            <Finished :ordem="ordem" :teste="teste" />
           </div>
         </div>
         <div class="d-flex align-items-center">
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
           <p class="pl-2">Colaborador</p>
         </div>
-
         <span class="gray-40">{{ ordem.estimated_time }} </span>
       </li>
     </ul>
@@ -59,30 +59,42 @@
 
 <script>
 import Delete from '~/components/tasks/Delete.vue';
-/* import Finished from '~/components/tasks/Finished.vue'; */
+import Finished from '~/components/tasks/Finished.vue';
 
 export default {
   name: 'Listing',
-  components: { Delete },
+  components: { Delete, Finished },
   props: {
     tasksData: {
-      type: Object,
+      type: Array,
       default: null,
     },
   },
 
   data() {
     return {
+      teste: false,
       id: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
   },
 
   methods: {
+    showModal2(ordem) {
+      this.teste = true;
+      if (this.teste === true) {
+        this.id = ordem.id;
+        this.$bvModal.show(this.id);
+        console.log(ordem.id + 'chamado');
+      }
+    },
     showModal(ordem) {
-      this.id = ordem.id;
-      this.$bvModal.show(this.id);
-      console.log(ordem.id + ' chamado');
+      this.teste = false;
+      if (this.teste === false) {
+        this.id = ordem.id;
+        this.$bvModal.show(this.id);
+        console.log(ordem.id + 'chamado');
+      }
     },
   },
 };

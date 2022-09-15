@@ -1,5 +1,6 @@
 <template>
   <b-modal
+    v-if="teste === false"
     :id="ordem.id"
     ref="excluir"
     title="BootstrapVue"
@@ -24,7 +25,12 @@ export default {
       type: Array,
       default: null,
     },
+    teste: {
+      type: Boolean,
+      default: false,
+    },
   },
+
   /* mounted() {
     console.log('chamou o delete', this.excluir.id);
     const idRef = 'modal-' + this.excluir.id;
@@ -32,7 +38,8 @@ export default {
     return { idRef };
   }, */
   methods: {
-    async remove(ordem) {
+    async remove(ordem, teste) {
+      teste = false;
       try {
         await this.$axios
           .delete('tasks/' + ordem.id)

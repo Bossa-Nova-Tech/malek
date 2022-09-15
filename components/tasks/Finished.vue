@@ -1,5 +1,6 @@
 <template>
   <b-modal
+    v-if="teste === true"
     :id="ordem.id"
     ref="finished"
     title="BootstrapVue"
@@ -21,8 +22,12 @@ export default {
   name: 'Delete',
   props: {
     ordem: {
-      type: Object,
+      type: Array,
       default: null,
+    },
+    teste: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -45,8 +50,8 @@ export default {
             this.tasksData.splice(this.ordem.id, 1);
             this.$refs.finished.hide();
             /* if (this.status === 'finished') {
-              this.ordens.splice(this.ordens.indexOf(taskData), 1);
-            } */
+                this.ordens.splice(this.ordens.indexOf(taskData), 1);
+              } */
             this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
             this.$nuxt.refresh();
           })
