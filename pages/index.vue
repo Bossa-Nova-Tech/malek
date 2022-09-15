@@ -2,11 +2,7 @@
   <b-container>
     <main class="row justify-content-center align-items-center min-vh-100">
       <b-form class="col col-lg-6">
-        <img
-          class="row mx-auto"
-          src="~/assets/img/ilustracao/logo.png"
-          alt=""
-        />
+        <img class="row mx-auto" src="~/assets/img/V1.png" alt="" />
         <b-form-group class="mb-3">
           <label for="email">E-mail ou CPF / CNPJ</label>
           <b-form-input
