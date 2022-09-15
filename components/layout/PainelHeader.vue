@@ -5,7 +5,11 @@
         <div class="bg-separado"></div>
 
         <div class="titulo container">
-          <img src="~/assets/img/logo-bg-white.png" width="140" />
+          <img
+            src="~/assets/img/bom-humor.png"
+            width="140"
+            class="rounded-circle"
+          />
           <div>
             <h1>Olá {{ $auth.user.name }},</h1>
             <p>Acompanhe por aqui o desempenho geral da sua empresa</p>
@@ -41,7 +45,7 @@ header {
   padding-bottom: 3.125rem;
   .bg-separado {
     height: 6.25rem;
-    background-image: url(~/assets/img/top-painel-adm.svg);
+    background-image: url(~/assets/img/top-painel.png);
     background-repeat: no-repeat;
     background-size: cover;
   }
@@ -54,6 +58,7 @@ header {
       position: relative;
       top: -30px;
       margin-right: 40px;
+      background-color: #ffffff;
     }
 
     div {
@@ -72,11 +77,10 @@ header {
   }
 
   .mobile {
-    color: #ffffff;
     background: radial-gradient(
-      108.61% 221.61% at 104.58% 0%,
-      #76b4ff 0%,
-      #0f4181 100%
+      106.17% 238.89% at 2.47% 100%,
+      #ff762b 63.54%,
+      #f4af2f 100%
     );
     margin-bottom: 1.25rem;
 

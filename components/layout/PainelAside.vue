@@ -1,7 +1,11 @@
 <template>
   <aside>
     <div v-if="!$screen.lg" class="header-mobile text-center">
-      <img src="~/assets/img/logo-bg-white.png" width="140" class="my-5" />
+      <img
+        src="~/assets/img/bom-humor.png"
+        width="140"
+        class="my-5 rounded-circle"
+      />
       <h4>Olá {{ $auth.user.name }},</h4>
       <p class="pb-3">acompanhe as ordens de serviço hoje</p>
     </div>
@@ -128,6 +132,10 @@ aside {
 @media screen and (max-width: 991px) {
   aside {
     padding-left: 0rem;
+
+    img {
+      background-color: #ffffff;
+    }
 
     .header-mobile {
       background: url(~/assets/img/bg-painel.png) no-repeat;

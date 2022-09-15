@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap');
 @import url('node_modules/@egjs/vue-flicking/dist/flicking.css');
 @import '@egjs/flicking-plugins/dist/flicking-plugins.css';
 
-$blue: #6282fd !default;
+$orange: #ff5a00 !default;
 
 $theme-colors: (
-  primary: $blue,
+  primary: $orange,
 ) !default;
 
 // Custon theme bootstrap
-$font-family-sans-serif: 'Poppins', sans-serif;
+$font-family-sans-serif: 'Noto Sans', sans-serif;
 
 // Importa Bootstrap completo
 @import '~bootstrap/scss/bootstrap.scss';
@@ -17,18 +17,19 @@ $font-family-sans-serif: 'Poppins', sans-serif;
 @import '~bootstrap-vue/src/icons.scss';
 
 :root {
-  --primary-10: #f4f7ff;
-  --primary-20: #cfdeff;
+  --primary-10: #ffffff;
+  --primary-20: #fff6f1;
   --primary-40: #a3c2ff;
-  --primary-60: #003283;
+  --primary-60: #ff9155;
   --primary-50: #0047bb;
-  --primary-80: #001c4b;
-  --gray-10: #fbfbfb;
+  --primary-80: #ff5a00;
+  --gray-10: #fcfcfc;
   --gray-20: #a9b1ce;
   --gray-40: #6b6e84;
   --gray-60: #343752;
   --gray-80: #1f1f1f;
   --red-50: #b3261e;
+  --fosco: #282828;
 }
 
 *,
@@ -51,7 +52,7 @@ body {
 h1 {
   font-weight: 700;
   font-size: 1.5rem;
-  color: var(--primary-80);
+  color: var(--fosco);
 }
 
 h2 {
@@ -62,6 +63,7 @@ h2 {
 body {
   background-color: var(--primary-10);
 }
+
 .checkbox label.custom-control-label {
   color: var(--gray-40) !important;
   font-size: 0.75rem;
@@ -152,7 +154,7 @@ button {
   padding: 0.625rem;
   font-weight: 600;
   font-size: 1.25rem;
-  background-color: var(--primary-50);
+  background-color: var(--primary-80);
   box-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.06);
   border-radius: 0.5rem;
 }
