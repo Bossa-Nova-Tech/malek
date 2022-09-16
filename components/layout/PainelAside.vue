@@ -4,7 +4,7 @@
       <img
         src="~/assets/img/bom-humor.png"
         width="140"
-        class="my-5 rounded-circle"
+        class="my-5 profile rounded-circle"
       />
       <h4>Olá {{ $auth.user.name }},</h4>
       <p class="pb-3">acompanhe as ordens de serviço hoje</p>
@@ -133,7 +133,7 @@ aside {
   aside {
     padding-left: 0rem;
 
-    img {
+    .profile {
       background-color: #ffffff;
     }
 
