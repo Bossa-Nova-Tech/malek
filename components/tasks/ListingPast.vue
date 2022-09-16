@@ -8,7 +8,9 @@
         class="card-servico p-4"
       >
         <div class="d-flex pb-3">
-          <p v-if="$screen.lg" class="gray-40">Ordem de serviço #{{ o.id }}</p>
+          <p v-if="$screen.lg" class="gray-40">
+            Ordem de serviço #{{ itemOrdem.id }}
+          </p>
           <div class="ajuste">
             <h2 v-if="$screen.lg" class="primary-80 pb-1">
               {{ itemOrdem.services }}
@@ -63,32 +65,34 @@ import Finished from '~/components/tasks/Finished.vue';
 
 export default {
   name: 'ListingPast',
-  components: { Finished, Delete },
+  components: { Delete, Finished },
+  props: {
+    tasksData: {
+      type: Array,
+      default: null,
+    },
+  },
+
   data() {
     return {
-      tasksData: [],
       id: null,
-      ordem_selecionada: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
   },
-  async mounted() {
-    await this.listar();
-  },
-  methods: {
-    async listar() {
-      const { data } = await this.$axios.get('tasks?status=overdue');
-      this.tasksData = data;
-    },
 
+  methods: {
     showConcluir(itemOrdem) {
       this.id = itemOrdem.id;
-      this.$bvModal.show(`finished-${this.id}`);
+      this.$nextTick(function () {
+        this.$bvModal.show(`finished-${this.id}`);
+      });
       this.ordem_selecionada = itemOrdem;
     },
     showExcluir(itemOrdem) {
       this.id = itemOrdem.id;
-      this.$bvModal.show(`excluir-${this.id}`);
+      this.$nextTick(function () {
+        this.$bvModal.show(`excluir-${this.id}`);
+      });
       this.ordem_selecionada = itemOrdem;
     },
   },

@@ -6,13 +6,10 @@
     hide-header
     footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
   >
-    <p class="my-4">
-      Tem certeza de que deseja
-      <span class="font-weight-bolder">concluir</span> este registro?
-    </p>
+    <p class="my-4">Você completou essa tarefa?</p>
     <template #modal-footer>
-      <b-button variant="danger" @click="finishTask()">Sim</b-button>
-      <b-button @click="$bvModal.hide('finished')">Não</b-button>
+      <b-button variant="danger" @click="finishTask">Sim</b-button>
+      <b-button @click="$bvModal.hide(`finished-${id}`)">Não</b-button>
     </template>
   </b-modal>
 </template>
@@ -47,9 +44,8 @@ export default {
         await this.$axios
           .post('tasks/finish/' + ordem.id)
           .then((_res) => {
-            this.$parent.listar();
             this.$refs.f.hide();
-            this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+            this.toast('success', 'Sucesso', 'Tarefa Concluída!');
             this.$nuxt.refresh();
           })
           .catch((_err) => {});

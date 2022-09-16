@@ -39,7 +39,6 @@ export default {
         await this.$axios
           .delete('tasks/' + ordem.id)
           .then((_res) => {
-            this.$parent.listar();
             if (_res.data.result === 'success') {
               console.log(ordem.id + ' excluido');
               this.toast('success', 'Sucesso', 'Item excluído!');

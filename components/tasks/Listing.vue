@@ -65,33 +65,34 @@ import Finished from '~/components/tasks/Finished.vue';
 
 export default {
   name: 'Listing',
-  components: { Finished, Delete },
+  components: { Delete, Finished },
+  props: {
+    tasksData: {
+      type: Array,
+      default: null,
+    },
+  },
+
   data() {
     return {
-      tasksData: [],
       id: null,
-      teste: null,
-      ordem_selecionada: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
   },
-  async mounted() {
-    await this.listar();
-  },
-  methods: {
-    async listar() {
-      const { data } = await this.$axios.get('tasks?status=today');
-      this.tasksData = data;
-    },
 
+  methods: {
     showConcluir(itemOrdem) {
       this.id = itemOrdem.id;
-      this.$bvModal.show(`finished-${this.id}`);
+      this.$nextTick(function () {
+        this.$bvModal.show(`finished-${this.id}`);
+      });
       this.ordem_selecionada = itemOrdem;
     },
     showExcluir(itemOrdem) {
       this.id = itemOrdem.id;
-      this.$bvModal.show(`excluir-${this.id}`);
+      this.$nextTick(function () {
+        this.$bvModal.show(`excluir-${this.id}`);
+      });
       this.ordem_selecionada = itemOrdem;
     },
   },

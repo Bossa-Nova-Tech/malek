@@ -7,15 +7,15 @@
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto position-relative" align="center">
           <b-tab id="em-atraso" title="Em atraso" class="mt-4">
-            <ListingPast />
+            <ListingPast :tasks-data="tasksDataOverdue" />
           </b-tab>
 
           <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing />
+            <Listing :tasks-data="tasksData" />
           </b-tab>
 
           <b-tab id="futuras" title="Futuras" class="mt-4">
-            <ListingFuture />
+            <ListingFuture :tasks-data="tasksDataFuture" />
           </b-tab>
 
           <Add />
@@ -48,7 +48,7 @@ export default {
     PainelHeader,
     PainelAside,
   },
-  /* async asyncData({ $axios }) {
+  async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks?status=today');
     const tasksData = tasks.data;
     console.log('tasks :: ', tasks.data);
@@ -59,21 +59,12 @@ export default {
     const tasksDataFuture = tasksFuture.data;
     console.log('tasks :: ', tasksFuture.data);
     return { tasksData, tasksDataOverdue, tasksDataFuture };
-  }, */
+  },
 
   data: () => {
     return {
       telaName: 'Ordem de serviços',
       tasksData: [],
-      /* formData: {
-        need_signature: false,
-        estimated_time: null,
-        end_date: null,
-        note: null,
-        name_customer: null,
-        template: null,
-        services: null,
-      }, */
     };
   },
 
@@ -82,15 +73,6 @@ export default {
       title: `Ordem de Serviços | ${process.env.title}`,
     };
   },
-  /*  async mounted() {
-    await this.listar();
-  },
-  methods: {
-    async listar() {
-      const { data } = await this.$axios.get('tasks?status=today');
-      this.tasksData = data;
-    },
-  }, */
 };
 </script>
 
