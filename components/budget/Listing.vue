@@ -49,21 +49,6 @@ export default {
   data: () => {
     return {
       id: null,
-      formSend: false,
-      formData: {
-        name: null,
-        name_customer: null,
-        phone: null,
-        email: null,
-        equipment: null,
-        capacity: null,
-        cycle: null,
-        system: null,
-        voltage: null,
-        payment: null,
-        userTerms: null,
-        security: null,
-      },
     };
   },
   methods: {

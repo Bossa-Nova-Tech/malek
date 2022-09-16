@@ -42,21 +42,6 @@ export default {
   data() {
     return {
       id: null,
-      formSend: false,
-      formData: {
-        name: null,
-        cnpj: null,
-        phone: null,
-        email: null,
-        photo: null,
-        address: null,
-        cep: null,
-        district: null,
-        city: null,
-        state: null,
-        number: null,
-        complement: null,
-      },
     };
   },
   methods: {

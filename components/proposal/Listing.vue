@@ -41,22 +41,6 @@ export default {
   data() {
     return {
       id: null,
-      formSend: false,
-      formData: {
-        name_customer: null,
-        customer_id: null,
-        budget_name: null,
-        phone: null,
-        ddd: null,
-        email: null,
-        photo: null,
-        details: null,
-        import: null,
-        services: [],
-        cnpj: null,
-        name: null,
-        proposal_expire_at: null,
-      },
     };
   },
   methods: {

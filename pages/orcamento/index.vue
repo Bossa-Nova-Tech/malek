@@ -43,16 +43,6 @@ export default {
     return {
       telaName: 'Orçamento',
       budgetsData: [],
-      formSend: false,
-      formData: {
-        name_customer: null,
-        id: null,
-        cnpj: null,
-        phone: null,
-        email: null,
-        photo: [],
-        status: null,
-      },
     };
   },
 };

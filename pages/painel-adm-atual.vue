@@ -63,23 +63,13 @@ export default {
 
   data: () => {
     return {
-      telaName: 'Ordem de serviços',
       tasksData: [],
-      formData: {
-        need_signature: false,
-        estimated_time: null,
-        end_date: null,
-        note: null,
-        name_customer: null,
-        template: null,
-        services: null,
-      },
     };
   },
 
   head() {
     return {
-      title: `Ordem de Serviços | ${process.env.title}`,
+      title: `Painel | ${process.env.title}`,
     };
   },
 };

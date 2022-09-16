@@ -39,21 +39,6 @@ export default {
     return {
       telaName: 'Clientes',
       customersData: [],
-      formSend: false,
-      formData: {
-        name: null,
-        cnpj: null,
-        phone: null,
-        email: null,
-        photo: [],
-        address: null,
-        cep: null,
-        district: null,
-        city: null,
-        state: null,
-        number: null,
-        complement: null,
-      },
     };
   },
 };
