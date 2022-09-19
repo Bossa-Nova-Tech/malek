@@ -192,6 +192,13 @@ export default {
     'vue-screen/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
+    [
+      '@netsells/nuxt-hotjar',
+      {
+        id: '3163920',
+        sv: '6',
+      },
+    ],
   ],
 
   auth: {
