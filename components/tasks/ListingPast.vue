@@ -1,6 +1,6 @@
 <template>
   <section class="rounded">
-    <h1 class="p-4">Em atraso</h1>
+    <h1 class="p-4">Acontecendo hoje</h1>
     <ul>
       <li
         v-for="(itemOrdem, index) in tasksData"
@@ -27,15 +27,18 @@
             <img
               src="~/assets/img/icones/icone-concluir.svg"
               class="mr-3"
+              role="button"
               width="22"
               height="24"
               @click="showConcluir(itemOrdem)"
             />
             <img
               src="~/assets/img/icones/edit-icon.svg"
+              role="button"
               class="mr-3"
               width="22"
               height="24"
+              @click="showEditar(itemOrdem)"
             />
 
             <img
@@ -55,6 +58,7 @@
       </li>
       <Delete :id="id" />
       <Finished :id="id" />
+      <Add :id="id" :editar="editar" />
     </ul>
   </section>
 </template>
@@ -62,10 +66,11 @@
 <script>
 import Delete from '~/components/tasks/Delete.vue';
 import Finished from '~/components/tasks/Finished.vue';
+import Add from '~/components/tasks/Add.vue';
 
 export default {
   name: 'ListingPast',
-  components: { Delete, Finished },
+  components: { Delete, Finished, Add },
   props: {
     tasksData: {
       type: Array,
@@ -75,6 +80,7 @@ export default {
 
   data() {
     return {
+      editar: false,
       id: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
@@ -94,6 +100,22 @@ export default {
         this.$bvModal.show(`excluir-${this.id}`);
       });
       this.ordem_selecionada = itemOrdem;
+    },
+    showEditar(itemOrdem) {
+      this.editar = true;
+      if (this.editar === true) {
+        this.id = itemOrdem.id;
+        this.$router.push(`/testin/?ordem=${itemOrdem.id}`);
+        /* const taskID = this.$axios.$get(
+          `tasks/${this.id}`,
+          this.$data.formData,
+        );
+        this.formData = taskID; */
+        this.$nextTick(function () {
+          this.$bvModal.show(`criar-${this.editar}-${this.id}`);
+        });
+        this.ordem_selecionada = itemOrdem;
+      }
     },
   },
 };

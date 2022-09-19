@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-  name: 'Delete',
+  name: 'Finished',
   props: {
     id: {
       type: Number,

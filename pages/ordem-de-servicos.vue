@@ -18,12 +18,8 @@
             <ListingFuture :tasks-data="tasksDataFuture" />
           </b-tab>
 
-          <Add />
-
           <div class="footer">
-            <button class="" @click="$bvModal.show('criar')">
-              Criar Ordem de Serviço
-            </button>
+            <button class="" @click="criar">Criar Ordem de Serviço</button>
           </div>
         </b-tabs>
       </div>
@@ -34,14 +30,12 @@
 <script>
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 import PainelAside from '~/components/layout/PainelAside.vue';
-import Add from '~/components/tasks/Add.vue';
 import Listing from '~/components/tasks/Listing.vue';
 import ListingPast from '~/components/tasks/ListingPast.vue';
 import ListingFuture from '~/components/tasks/ListingFuture.vue';
 
 export default {
   components: {
-    Add,
     Listing,
     ListingPast,
     ListingFuture,
@@ -72,6 +66,17 @@ export default {
     return {
       title: `Ordem de Serviços | ${process.env.title}`,
     };
+  },
+  methods: {
+    criar() {
+      this.editar = false;
+      this.id = null;
+      if (this.editar === false && this.id === null) {
+        this.$nextTick(function () {
+          this.$bvModal.show(`criar-${this.editar}-${this.id}`);
+        });
+      }
+    },
   },
 };
 </script>

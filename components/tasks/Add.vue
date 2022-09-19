@@ -1,13 +1,23 @@
 <template>
-  <b-modal id="criar" ref="criar" size="lg" hide-header hide-footer>
+  <b-modal
+    :id="`criar-${editar}-${id}`"
+    ref="criar"
+    size="lg"
+    hide-header
+    hide-footer
+  >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
-        <h1 class="mt-4 mb-5">Criar Ordem de Serviço</h1>
+        <h1 v-if="editar === true" class="mt-4 mb-5">
+          Editar Ordem de Serviço
+        </h1>
+        <h1 v-else class="mt-4 mb-5">Criar Ordem de Serviço</h1>
+
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
-          @click="$bvModal.hide('criar')"
+          @click="$bvModal.hide(`criar-${editar}-${id}`)"
         />
       </div>
 
@@ -40,7 +50,6 @@
             :value="customer.name"
             >{{ customer.name }}
           </b-form-select-option>
-          `customer_id:customer.id`
         </b-form-select>
 
         <b-form-invalid-feedback>
@@ -101,9 +110,14 @@
         class="checkbox mb-4 d-flex align-items-center"
         >É necessário coletar assinatura durante visita.</b-form-checkbox
       >
-
-      <div class="w-100 mb-4 col-12 px-0">
+      <div v-if="editar === false" class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click="register">
+          <b-spinner v-if="formSend" small type="grow" />
+          Salvar
+        </button>
+      </div>
+      <div v-else class="w-100 mb-4 col-12 px-0">
+        <button :disable="formSend" @click="edit">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>
@@ -120,11 +134,21 @@ export default {
   name: 'Add',
   directives: { mask },
   mixins: [validationMixin],
-
+  props: {
+    id: {
+      type: Number,
+      default: null,
+    },
+    editar: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       customers: [],
       formSend: false,
+      ordem: null,
       formData: {
         status: null,
         need_signature: false,
@@ -162,15 +186,13 @@ export default {
     const customer = data;
     console.log(customer);
     this.customers = customer;
+    await this.teste();
   },
-
   methods: {
     async register(_response) {
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
-        /* this.ordens.push(this.formData); */
-        /* this.formDataEdited = this.formData; */
         console.log(this.formData);
         this.$v.$reset();
         try {
@@ -183,6 +205,42 @@ export default {
             .then((_res) => {
               this.$refs.criar.hide();
               this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+              this.$nuxt.refresh();
+            })
+            .catch((_err) => {});
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+    async teste() {
+      if (this.$route.query.ordem) {
+        const id = this.$route.query.ordem;
+        const taskID = await this.$axios.$get(
+          `tasks/${id}`,
+          this.$data.formData,
+        );
+        this.formData = taskID;
+      }
+    },
+    async edit(_response) {
+      const ordem = await this.$parent.ordem_selecionada;
+      console.log(ordem);
+      this.$v.formData.$touch();
+      if (!this.$v.formData.$invalid) {
+        this.formSend = true;
+        console.log(this.formData);
+        this.$v.$reset();
+        try {
+          this.formSend = false;
+          this.$v.$reset();
+          console.log('executou o clic');
+
+          await this.$axios
+            .put(`tasks/${ordem.id}`, this.$data.formData)
+            .then((_res) => {
+              this.$refs.criar.hide();
+              this.toast('success', 'Sucesso', 'Item editado com sucesso!');
               this.$nuxt.refresh();
             })
             .catch((_err) => {});

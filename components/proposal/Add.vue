@@ -41,7 +41,7 @@
       <b-form-group class="mb-4">
         <label for="customer_id">ID <span class="requerido">*</span></label>
         <b-form-input
-          v-model.number="formData.customer_id"
+          v-model="formData.customer_id"
           v-mask="['#####']"
           name="customer_id"
           placeholder="00001"
