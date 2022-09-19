@@ -13,6 +13,12 @@
         </div>
         <Listing :customers-data="customersData" />
         <Add />
+
+        <div class="footer">
+          <button v-if="!$screen.lg" @click="$bvModal.show('criar-cliente')">
+            Criar clientes
+          </button>
+        </div>
       </section>
     </main>
   </div>
@@ -74,6 +80,18 @@ main {
 
     img {
       margin-right: 0rem;
+    }
+
+    .footer {
+      background: var(--primary-10);
+      padding: 1.5rem;
+      position: inherit;
+      bottom: 0;
+      box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    button {
+      width: 100%;
     }
   }
 }
