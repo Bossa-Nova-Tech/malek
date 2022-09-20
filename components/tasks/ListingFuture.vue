@@ -1,6 +1,6 @@
 <template>
   <section class="rounded">
-    <h1 class="p-4">Acontecendo hoje</h1>
+    <h1 class="p-4">Estão por vir</h1>
     <ul>
       <li
         v-for="(itemOrdem, index) in tasksData"
@@ -90,7 +90,7 @@ export default {
       this.editar = true;
       if (this.editar === true) {
         this.id = itemOrdem.id;
-        this.$router.push(`/testin/?ordem=${itemOrdem.id}`);
+        this.$router.push(`/ordem-de-servicos/?ordem=${itemOrdem.id}`);
         this.$nextTick(function () {
           this.$bvModal.show(`criar-${this.editar}-${this.id}`);
         });

@@ -102,6 +102,8 @@ main {
     grid-template-columns: 1fr;
 
     .footer {
+      width: 100%;
+      height: 6rem;
       background: var(--primary-10);
       padding: 1.5rem;
       position: absolute;
