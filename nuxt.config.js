@@ -24,14 +24,14 @@ export default {
   },
 
   env: {
-    title: 'bossa',
-    description: 'bossa',
+    title: 'AíServe',
+    description: 'AíServe',
     api_url: 'http://localhost:8000/api/v1/',
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'MALEK',
+    title: 'AíServe',
     description: 'DESCRIPTION',
     htmlAttrs: {
       lang: 'pt_br',

@@ -49,6 +49,8 @@
           >
         </div>
 
+        <NuxtLink to="/cadastro-empresa">Criar conta</NuxtLink>
+
         <button block class="mt-3" :disabled="formSend" @click="login">
           <b-spinner v-if="formSend" small type="grow" />
           Entrar

@@ -2,7 +2,8 @@
   <b-container>
     <main class="row justify-content-center align-items-center min-vh-100">
       <b-form class="col col-lg-6">
-        <img class="row mx-auto" src="~/assets/img/V1.png" alt="" width="200" />
+        <img class="row mx-auto" src="~/assets/img/V1.png" width="200" />
+
         <b-form-group class="mb-3">
           <label for="email">E-mail ou CPF / CNPJ</label>
           <b-form-input
@@ -48,13 +49,9 @@
           >
         </div>
 
-        <button
-          block
-          variant="primary"
-          class="mt-3"
-          :disabled="formSend"
-          @click="login"
-        >
+        <NuxtLink to="/cadastro-empresa">Criar conta</NuxtLink>
+
+        <button block class="mt-3" :disabled="formSend" @click="login">
           <b-spinner v-if="formSend" small type="grow" />
           Entrar
         </button>
