@@ -80,7 +80,7 @@
           />
         </div>
         <p class="pb-4">Organize contas a pagar e a receber em um só lugar</p>
-        <NuxtLink to="/cadastro-empresa-01">
+        <NuxtLink to="/cadastro-empresa">
           <button class="d-flex mx-auto">Começar</button>
         </NuxtLink>
       </section>
@@ -107,7 +107,7 @@ export default {
 
 <style lang="scss" scoped>
 .animate {
-  animation: animate 3s ease-in;
+  animation: animate 1s ease-in;
 }
 @keyframes animate {
   from {

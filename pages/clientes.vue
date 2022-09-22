@@ -1,50 +1,50 @@
 <template>
-  <div>
-    <TheHeader> Clientes </TheHeader>
-    <main>
-      <div class="d-flex align-items-center mb-5">
-        <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
-        <img class="ml-3 mr-5" src="~/assets/img/icones/sliders.svg" />
-        <button @click="$bvModal.show('criar-cliente')">Criar clientes</button>
-      </div>
-      <Listing :customers-data="customersData" />
-      <Add />
+  <div class="pb-5">
+    <PainelHeader :tela="telaName" />
+    <main class="container">
+      <PainelAside v-if="$screen.lg" />
+      <section>
+        <div class="d-flex align-items-center mb-5">
+          <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
+          <img class="ml-3" src="~/assets/img/icones/sliders.svg" />
+          <button v-if="$screen.lg" @click="$bvModal.show('criar-cliente')">
+            Criar clientes
+          </button>
+        </div>
+        <Listing :customers-data="customersData" />
+        <Add />
+
+        <div class="footer">
+          <button v-if="!$screen.lg" @click="$bvModal.show('criar-cliente')">
+            Criar clientes
+          </button>
+        </div>
+      </section>
     </main>
   </div>
 </template>
 
 <script>
-import TheHeader from '~/components/layout/TheHeader.vue';
+import PainelHeader from '~/components/layout/PainelHeader.vue';
+import PainelAside from '~/components/layout/PainelAside.vue';
 import Add from '~/components/customers/Add.vue';
 import Listing from '~/components/customers/Listing.vue';
 
 export default {
+  components: { PainelHeader, PainelAside, Add, Listing },
+  layout: 'auth',
+
   async asyncData({ $axios }) {
     const customers = await $axios.get('customers');
     const customersData = customers.data;
     console.log('customers :: ', customers.data);
     return { customersData };
   },
-  components: { TheHeader, Add, Listing },
 
   data: () => {
     return {
+      telaName: 'Clientes',
       customersData: [],
-      formSend: false,
-      formData: {
-        name: null,
-        cnpj: null,
-        phone: null,
-        email: null,
-        photo: [],
-        address: null,
-        cep: null,
-        district: null,
-        city: null,
-        state: null,
-        number: null,
-        complement: null,
-      },
     };
   },
 };
@@ -53,25 +53,46 @@ export default {
 <style lang="scss" scoped>
 main {
   display: grid;
-  margin: auto;
-  width: 35.5625rem;
-  button {
-    width: 300px;
-    font-size: 1rem;
+  grid-template-columns: 1fr 3fr;
+
+  section {
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 
-  label {
-    font-weight: 500;
-    color: var(--gray-40);
+  img {
+    margin-right: 3rem;
   }
-  .cor-label {
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--primary-60);
-    margin: 0px;
+
+  button {
+    width: 50%;
   }
-  .requerido {
-    color: var(--red-50);
+}
+
+@media screen and (max-width: 992px) {
+  main {
+    grid-template-columns: 1fr;
+
+    section {
+      padding-left: 0rem;
+      padding-right: 0rem;
+    }
+
+    img {
+      margin-right: 0rem;
+    }
+
+    .footer {
+      background: var(--primary-10);
+      padding: 1.5rem;
+      position: inherit;
+      bottom: 0;
+      box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    button {
+      width: 100%;
+    }
   }
 }
 </style>

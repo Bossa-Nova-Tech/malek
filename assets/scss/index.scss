@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap');
 @import url('node_modules/@egjs/vue-flicking/dist/flicking.css');
 @import '@egjs/flicking-plugins/dist/flicking-plugins.css';
 
-$blue: #6282fd !default;
+$orange: #ff5a00 !default;
 
 $theme-colors: (
-  primary: $blue,
+  primary: $orange,
 ) !default;
 
 // Custon theme bootstrap
-$font-family-sans-serif: 'Poppins', sans-serif;
+$font-family-sans-serif: 'Noto Sans', sans-serif;
 
 // Importa Bootstrap completo
 @import '~bootstrap/scss/bootstrap.scss';
@@ -17,24 +17,26 @@ $font-family-sans-serif: 'Poppins', sans-serif;
 @import '~bootstrap-vue/src/icons.scss';
 
 :root {
-  --primary-10: #f4f7ff;
-  --primary-20: #cfdeff;
+  --primary-10: #ffffff;
+  --primary-20: #fff6f1;
   --primary-40: #a3c2ff;
-  --primary-60: #003283;
+  --primary-60: #ff9155;
   --primary-50: #0047bb;
-  --primary-80: #001c4b;
-  --gray-10: #fbfbfb;
+  --primary-80: #ff5a00;
+  --gray-10: #fcfcfc;
   --gray-20: #a9b1ce;
   --gray-40: #6b6e84;
   --gray-60: #343752;
   --gray-80: #1f1f1f;
   --red-50: #b3261e;
+  --fosco: #282828;
 }
 
 *,
 h1,
 h2,
-p {
+p,
+ul {
   padding: 0;
   margin: 0;
   vertical-align: baseline;
@@ -50,7 +52,7 @@ body {
 h1 {
   font-weight: 700;
   font-size: 1.5rem;
-  color: var(--primary-80);
+  color: var(--fosco);
 }
 
 h2 {
@@ -62,38 +64,83 @@ body {
   background-color: var(--primary-10);
 }
 
+.checkbox label.custom-control-label {
+  color: var(--gray-40) !important;
+  font-size: 0.75rem;
+  align-self: center;
+  line-height: 185%;
+}
 .nav-link {
   display: flex;
-  width: min(10.316rem);
+  width: min(7.3rem);
   align-items: center;
   justify-content: center;
   color: var(--gray-20);
   font-weight: 600;
 }
-.nav-link#hoje___BV_tab_button__ {
-  border-radius: 8px 0px 0px 8px;
+#botao___BV_tab_button__ {
+  width: 16rem;
+  border-radius: 8px;
+  background-color: var(--primary-50);
+  margin-left: 1rem;
 }
-.nav-link#relatorio___BV_tab_button__ {
+#botao___BV_tab_button__:hover {
+  color: white;
+}
+
+.nav-link#hoje___BV_tab_button__ {
+  border-radius: 0px 0px 0px 0px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
+}
+.nav-link#futuras___BV_tab_button__ {
   border-radius: 0px 8px 8px 0px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
+}
+
+.nav-link#em-atraso___BV_tab_button__ {
+  border-radius: 8px 0px 0px 8px;
+  box-shadow: 0px 3px 4px #b3261e1a;
+  animation: tab-animation 2s linear;
+  animation-delay: 0.5s;
+}
+.nav-link#em-atraso___BV_tab_button__.active {
+  background: rgb(255, 104, 104);
+  color: #ffffff;
+}
+@keyframes tab-animation {
+  0% {
+    background: rgba(255, 0, 0, 0.145);
+  }
+  25% {
+    background: rgba(255, 0, 0, 0.145);
+  }
+  50% {
+  }
+  75% {
+  }
+  100% {
+  }
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  background-color: var(--primary-50);
+  background-color: var(--primary-60);
 }
-.form-control-file {
+[type='file'] {
   height: 0;
   overflow: hidden;
   width: 0;
 }
-label.label {
-  border-radius: 6px;
-  width: 100%;
+
+[type='file'] + label {
+  border-radius: 8px;
+  background: var(--gray-10);
+  color: var(--primary-60);
   font-size: 1rem;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
   margin: 0;
-  color: var(--primary-60);
+  width: 100%;
 }
 .modal-header,
 .modal-body,
@@ -107,7 +154,7 @@ button {
   padding: 0.625rem;
   font-weight: 600;
   font-size: 1.25rem;
-  background-color: var(--primary-50);
+  background-color: var(--primary-80);
   box-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.06);
   border-radius: 0.5rem;
 }
@@ -132,4 +179,14 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+@media screen and(min-width: 756px) {
+  .nav-link {
+    display: flex;
+    width: min(11rem);
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-20);
+    font-weight: 600;
+  }
 }

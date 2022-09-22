@@ -12,7 +12,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 button {
-  border: solid 0.0625rem var(--primary-60);
-  background-color: #ffffff;
+  border: solid 0.0625rem var(--primary-80);
+  background-color: var(--gray-10);
+  color: var(--primary-50);
+  padding: 5px 10px;
 }
 </style>
