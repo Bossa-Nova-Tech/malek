@@ -47,6 +47,7 @@
           <p class="pl-2">Colaborador</p>
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
+        <Edit :ordem_item="itemOrdem" />
       </li>
       <Delete :id="id" />
       <Finished :id="id" />
@@ -56,13 +57,14 @@
 </template>
 
 <script>
+import Edit from './Edit.vue';
 import Delete from '~/components/tasks/Delete.vue';
 import Finished from '~/components/tasks/Finished.vue';
 import Add from '~/components/tasks/Add.vue';
 
 export default {
   name: 'ListingFuture',
-  components: { Delete, Finished, Add },
+  components: { Delete, Finished, Add, Edit },
   props: {
     tasksData: {
       type: Array,
@@ -90,11 +92,14 @@ export default {
       this.editar = true;
       if (this.editar === true) {
         this.id = itemOrdem.id;
-        this.$router.push(`/ordem-de-servicos/?ordem=${itemOrdem.id}`);
-        this.$nextTick(function () {
+        // this.$router.push(`/ordem-de-servicos/?ordem=${itemOrdem.id}`);
+        /* this.$nextTick(function () {
           this.$bvModal.show(`criar-${this.editar}-${this.id}`);
-        });
+        }); */
         this.ordem_selecionada = itemOrdem;
+        this.$nextTick(function () {
+          this.$bvModal.show(`update-task-${itemOrdem.id}`);
+        });
       }
     },
   },
