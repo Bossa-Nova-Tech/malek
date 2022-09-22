@@ -44,8 +44,9 @@
           <b-form-checkbox v-model="formData.checked" class="text-sm"
             >Lembrar senha</b-form-checkbox
           >
-          <NuxtLink to="/EsqueciMinhaSenha" class="text-sm"
-            ><u>Esqueci minha senha</u></NuxtLink
+          <a
+            href="https://api.whatsapp.com/send/?phone=554788510302&text=Esqueci+minha+senha+do+A%C3%ADServe&type=phone_number&app_absent=0"
+            ><u>Esqueci minha senha</u></a
           >
         </div>
 
