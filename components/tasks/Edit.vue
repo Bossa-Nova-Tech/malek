@@ -60,15 +60,27 @@
           <label for="estimated_time"
             >Duração média da tarefa <span class="requerido">*</span></label
           >
-          <b-form-timepicker
-            id="estimated_time"
-            v-model="formData.estimated_time"
-            placeholder="0h:00min"
-            label-close-button="fechar"
-            label-no-time-selected="selecione o tempo"
-            :class="{ 'is-invalid': $v.formData.estimated_time.$error }"
-          >
-          </b-form-timepicker>
+          <b-input-group>
+            <b-form-input
+              id="estimated_time"
+              v-model="formData.estimated_time"
+              placeholder="00h:00m00s"
+              v-mask="['##:##:##']"
+            ></b-form-input>
+            <b-input-group-append>
+              <b-form-timepicker
+                v-model="formData.estimated_time"
+                button-only
+                right
+                show-seconds
+                locale="br"
+                label-close-button="fechar"
+                label-no-time-selected="selecione o tempo"
+                aria-controls="estimated_time"
+                :class="{ 'is-invalid': $v.formData.estimated_time.$error }"
+              ></b-form-timepicker>
+            </b-input-group-append>
+          </b-input-group>
           <b-form-invalid-feedback>
             Preencha o campo acima
           </b-form-invalid-feedback>

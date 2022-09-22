@@ -62,15 +62,27 @@
           <label for="estimated_time"
             >Duração média da tarefa <span class="requerido">*</span></label
           >
-          <b-form-timepicker
-            id="estimated_time"
-            v-model="formData.estimated_time"
-            placeholder="0h:00min"
-            label-close-button="fechar"
-            label-no-time-selected="selecione o tempo"
-            :class="{ 'is-invalid': $v.formData.estimated_time.$error }"
-          >
-          </b-form-timepicker>
+          <b-input-group>
+            <b-form-input
+              id="estimated_time"
+              v-model="formData.estimated_time"
+              placeholder="00h:00m00s"
+              v-mask="['##:##:##']"
+            ></b-form-input>
+            <b-input-group-append>
+              <b-form-timepicker
+                v-model="formData.estimated_time"
+                button-only
+                right
+                show-seconds
+                locale="br"
+                label-close-button="fechar"
+                label-no-time-selected="selecione o tempo"
+                aria-controls="estimated_time"
+                :class="{ 'is-invalid': $v.formData.estimated_time.$error }"
+              ></b-form-timepicker>
+            </b-input-group-append>
+          </b-input-group>
           <b-form-invalid-feedback>
             Preencha o campo acima
           </b-form-invalid-feedback>
@@ -79,6 +91,28 @@
           <label for="end_date"
             >Data prevista de conclusão <span class="requerido">*</span></label
           >
+          <!-- <b-input-group>
+            <b-form-input
+              v-model="formData.end_date"
+              placeholder="00/00/2022"
+            ></b-form-input>
+            <b-input-group-append>
+              <b-form-datepicker
+                type="date"
+                v-model="formData.end_date"
+                button-only
+                right
+                locale="br"
+                :date-format-options="{
+                  day: 'numeric',
+                  month: 'numeric',
+                  year: 'numeric',
+                }"
+                aria-controls="end
+                -date"
+              ></b-form-datepicker>
+            </b-input-group-append>
+          </b-input-group> -->
           <b-form-datepicker
             v-model="formData.end_date"
             name="end_date"
@@ -87,7 +121,7 @@
               month: 'numeric',
               day: 'numeric',
             }"
-            locale="pt"
+            locale="br"
             placeholder="00/00/2022"
             :class="{ 'is-invalid': $v.formData.end_date.$error }"
           />
@@ -127,6 +161,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
@@ -146,6 +181,7 @@ export default {
   },
   data() {
     return {
+      format: 'DD-MM-YYYY',
       customers: [],
       formSend: false,
       ordem: null,
@@ -179,6 +215,15 @@ export default {
       end_date: { required },
       name_customer: { required },
       estimated_time: { required },
+    },
+  },
+  watch: {
+    formData() {
+      this.formData.end_date = moment(
+        this.formData.end_date,
+        'YYYY-MM-DD',
+      ).format('DD-MM-YYYY');
+      console.log('não funcionou');
     },
   },
 

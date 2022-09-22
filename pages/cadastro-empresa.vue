@@ -219,6 +219,7 @@
                 v-model="formData.cep"
                 name="cep"
                 type="number"
+                v-mask="['#####-###']"
                 placeholder="000-00000"
                 :class="{
                   'is-invalid': $v.formData.cep.$error,
