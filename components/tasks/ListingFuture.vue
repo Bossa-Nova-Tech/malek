@@ -51,7 +51,6 @@
       </li>
       <Delete :id="id" />
       <Finished :id="id" />
-      <Add :id="id" :editar="editar" />
     </ul>
   </section>
 </template>

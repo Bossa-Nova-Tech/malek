@@ -1,23 +1,14 @@
 <template>
-  <b-modal
-    :id="`criar-${editar}-${id}`"
-    ref="criar"
-    size="lg"
-    hide-header
-    hide-footer
-  >
+  <b-modal id="criar" ref="criar" size="lg" hide-header hide-footer>
     <div class="mx-4">
       <div class="d-flex justify-content-between">
-        <h1 v-if="editar === true" class="mt-4 mb-5">
-          Editar Ordem de Serviço
-        </h1>
-        <h1 v-else class="mt-4 mb-5">Criar Ordem de Serviço</h1>
+        <h1 class="mt-4 mb-5">Criar Ordem de Serviço</h1>
 
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
-          @click="$bvModal.hide(`criar-${editar}-${id}`)"
+          @click="$bvModal.hide('criar')"
         />
       </div>
 
@@ -66,8 +57,8 @@
             <b-form-input
               id="estimated_time"
               v-model="formData.estimated_time"
-              placeholder="00h:00m00s"
               v-mask="['##:##:##']"
+              placeholder="00h:00m00s"
             ></b-form-input>
             <b-input-group-append>
               <b-form-timepicker
@@ -144,14 +135,8 @@
         class="checkbox mb-4 d-flex align-items-center"
         >É necessário coletar assinatura durante visita.</b-form-checkbox
       >
-      <div v-if="editar === false" class="w-100 mb-4 col-12 px-0">
+      <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click="register">
-          <b-spinner v-if="formSend" small type="grow" />
-          Salvar
-        </button>
-      </div>
-      <div v-else class="w-100 mb-4 col-12 px-0">
-        <button :disable="formSend" @click="edit">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>
@@ -161,7 +146,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
@@ -169,16 +153,6 @@ export default {
   name: 'Add',
   directives: { mask },
   mixins: [validationMixin],
-  props: {
-    id: {
-      type: Number,
-      default: null,
-    },
-    editar: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       format: 'DD-MM-YYYY',
@@ -217,22 +191,12 @@ export default {
       estimated_time: { required },
     },
   },
-  watch: {
-    formData() {
-      this.formData.end_date = moment(
-        this.formData.end_date,
-        'YYYY-MM-DD',
-      ).format('DD-MM-YYYY');
-      console.log('não funcionou');
-    },
-  },
 
   async mounted() {
     const { data } = await this.$axios.get('customers');
     const customer = data;
     console.log(customer);
     this.customers = customer;
-    await this.setDataFormWithTask();
   },
   methods: {
     async register(_response) {
@@ -251,47 +215,6 @@ export default {
             .then((_res) => {
               this.$refs.criar.hide();
               this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
-              this.$nuxt.refresh();
-            })
-            .catch((_err) => {});
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    },
-    async setDataFormWithTask() {
-      if (this.$route.query.ordem) {
-        const id = this.$route.query.ordem;
-        const task = await this.$axios.$get(`tasks/${id}`, this.$data.formData);
-
-        this.formData.services = task.services;
-        this.formData.status = task.status;
-        this.formData.need_signature = task.need_signature;
-        this.formData.estimated_time = task.estimated_time;
-        this.formData.end_date = task.end_date;
-        this.formData.note = task.note;
-        this.formData.name_customer = task.name_customer;
-        this.formData.template = task.template;
-      }
-    },
-    async edit(_response) {
-      const ordem = await this.$parent.ordem_selecionada;
-      console.log(ordem);
-      this.$v.formData.$touch();
-      if (!this.$v.formData.$invalid) {
-        this.formSend = true;
-        console.log(this.formData);
-        this.$v.$reset();
-        try {
-          this.formSend = false;
-          this.$v.$reset();
-          console.log('executou o clic');
-
-          await this.$axios
-            .put(`tasks/${ordem.id}`, this.$data.formData)
-            .then((_res) => {
-              this.$refs.criar.hide();
-              this.toast('success', 'Sucesso', 'Item editado com sucesso!');
               this.$nuxt.refresh();
             })
             .catch((_err) => {});
