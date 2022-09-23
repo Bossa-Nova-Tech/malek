@@ -49,16 +49,18 @@ export default {
     PainelAside,
   },
   async asyncData({ $axios }) {
-    const tasks = await $axios.get('tasks?status=today');
-    const tasksData = tasks.data;
-    console.log('tasks :: ', tasks.data);
-    const tasksOverdue = await $axios.get('tasks?status=overdue');
-    const tasksDataOverdue = tasksOverdue.data;
-    console.log('tasks :: ', tasksOverdue.data);
-    const tasksFuture = await $axios.get('tasks?status=future');
-    const tasksDataFuture = tasksFuture.data;
-    console.log('tasks :: ', tasksFuture.data);
-    return { tasksData, tasksDataOverdue, tasksDataFuture };
+    if (screen.lg) {
+      const tasks = await $axios.get('tasks?status=today');
+      const tasksData = tasks.data;
+      console.log('tasks :: ', tasks.data);
+      const tasksOverdue = await $axios.get('tasks?status=overdue');
+      const tasksDataOverdue = tasksOverdue.data;
+      console.log('tasks :: ', tasksOverdue.data);
+      const tasksFuture = await $axios.get('tasks?status=future');
+      const tasksDataFuture = tasksFuture.data;
+      console.log('tasks :: ', tasksFuture.data);
+      return { tasksData, tasksDataOverdue, tasksDataFuture };
+    }
   },
 
   data: () => {
