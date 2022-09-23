@@ -155,7 +155,7 @@
                 v-model="formData.password"
                 name="password"
                 type="password"
-                placeholder="**"
+                placeholder="********"
                 :class="{
                   'is-invalid': $v.formData.password.$error,
                 }"
@@ -179,7 +179,7 @@
                 v-model="formData.confirm_password"
                 name="confirm_password"
                 type="password"
-                placeholder="**"
+                placeholder="********"
                 :class="{
                   'is-invalid': $v.formData.confirm_password.$error,
                 }"
@@ -217,9 +217,8 @@
               <label for="cep">CEP <span class="requerido">*</span></label>
               <b-form-input
                 v-model="formData.cep"
-                name="cep"
-                type="number"
                 v-mask="['#####-###']"
+                name="cep"
                 placeholder="000-00000"
                 :class="{
                   'is-invalid': $v.formData.cep.$error,
