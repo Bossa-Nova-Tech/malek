@@ -70,7 +70,7 @@
           <b-form-input
             v-model="formData.fantasy_name"
             name="fantasy_name"
-            placeholder="-"
+            placeholder="Nome da Empresa"
             :class="{ 'is-invalid': $v.formData.fantasy_name.$error }"
           />
           <b-form-invalid-feedback>
@@ -201,7 +201,7 @@
             v-model="formData.address"
             name="address"
             type="text"
-            placeholder="-"
+            placeholder="Rua"
             :class="{
               'is-invalid': $v.formData.address.$error,
             }"
@@ -257,7 +257,7 @@
                 v-model="formData.city"
                 name="city"
                 type="text"
-                placeholder="-"
+                placeholder="Cidade"
                 :class="{
                   'is-invalid': $v.formData.city.$error,
                 }"
@@ -275,7 +275,7 @@
                 v-model="formData.state"
                 name="state"
                 type="text"
-                placeholder="-"
+                placeholder="Estado"
                 :class="{
                   'is-invalid': $v.formData.state.$error,
                 }"
@@ -315,28 +315,35 @@
                 v-model="formData.complement"
                 name="complement"
                 type="text"
-                placeholder="-"
+                placeholder="Apartamento X, Bloco Y"
               />
             </b-form-group>
           </b-col>
         </b-row>
-
         <b-form-file
           id="file"
           v-model="formData.photo"
           accept="image/jpeg, image/png, image/jpg"
           plain
-          multiple
           :class="{ 'is-invalid': $v.formData.photo.$error }"
+          @change="onFileChange"
         ></b-form-file>
         <b-form-feedback class="text-center h5">
           Envio necessário. Clique abaixo para fazer o upload da sua logo.
         </b-form-feedback>
         <div class="campo-foto">
           <label for="file">
-            <img src="~/assets/img/icones/upload.svg" alt="" />
-            <p>Clique para enviar sua logo</p>
-            <span>PNG, JPG (tamanho máximo X)</span>
+            <div
+              v-if="!formData.photo"
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
+              <b-img src="~/assets/img/icones/upload.svg" />
+              <p>Clique para enviar sua logo</p>
+              <span>PNG, JPG (tamanho máximo X)</span>
+            </div>
+            <div v-else>
+              <img :src="formData.photo" alt="" width="100" />
+            </div>
           </label>
         </div>
       </b-form>
@@ -380,6 +387,10 @@ export default {
 
   data: () => {
     return {
+      file: null,
+      files: null,
+      reader: null,
+      vm: null,
       formSend: false,
       formData: {
         name: null,
@@ -435,6 +446,19 @@ export default {
   },
 
   methods: {
+    onFileChange(e) {
+      this.files = e.target.files || e.dataTransfer.files;
+      if (!this.files.length) return;
+      this.createImage(this.files[0]);
+    },
+    createImage(file) {
+      this.reader = new FileReader();
+      this.vm = this;
+      this.reader.onload = (e) => {
+        this.vm.formData.photo = e.target.result;
+      };
+      this.reader.readAsDataURL(file);
+    },
     async register(_response) {
       this.$v.$touch();
 

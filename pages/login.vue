@@ -45,7 +45,7 @@
             >Lembrar senha</b-form-checkbox
           >
           <a
-            href="https://api.whatsapp.com/send/?phone=554788510302&text=Esqueci+minha+senha+do+A%C3%ADServe&type=phone_number&app_absent=0"
+            href="https://wa.me/554788510302?text=Ol%C3%A1,%20tudo%20bem?%20Eu%20esqueci%20minha%20senha,%20poderia%20verificar%20por%20gentileza?"
             ><u>Esqueci minha senha</u></a
           >
         </div>
