@@ -232,7 +232,9 @@
 
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="district">Bairro</label>
+              <label for="district"
+                >Bairro <span class="requerido">*</span></label
+              >
               <b-form-input
                 v-model="formData.district"
                 name="district"
@@ -252,7 +254,7 @@
         <b-row>
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="city">Cidade</label>
+              <label for="city">Cidade <span class="requerido">*</span></label>
               <b-form-input
                 v-model="formData.city"
                 name="city"
@@ -270,7 +272,7 @@
 
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="state">Estado</label>
+              <label for="state">Estado <span class="requerido">*</span></label>
               <b-form-input
                 v-model="formData.state"
                 name="state"
