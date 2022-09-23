@@ -47,7 +47,7 @@
           <p class="pl-2">Colaborador</p>
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
-        <Edit :ordem_item="itemOrdem" />
+        <Edit :ordem_item="itemOrdem" :watching="id" />
       </li>
       <Delete :id="id" />
       <Finished :id="id" />
@@ -59,11 +59,10 @@
 import Edit from './Edit.vue';
 import Delete from '~/components/tasks/Delete.vue';
 import Finished from '~/components/tasks/Finished.vue';
-import Add from '~/components/tasks/Add.vue';
 
 export default {
   name: 'ListingFuture',
-  components: { Delete, Finished, Add, Edit },
+  components: { Delete, Finished, Edit },
   props: {
     tasksData: {
       type: Array,

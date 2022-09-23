@@ -64,8 +64,8 @@
             <b-form-input
               id="estimated_time"
               v-model="formData.estimated_time"
-              placeholder="00h:00m00s"
               v-mask="['##:##:##']"
+              placeholder="00h:00m00s"
             ></b-form-input>
             <b-input-group-append>
               <b-form-timepicker
@@ -139,7 +139,17 @@ export default {
   name: 'Edit',
   directives: { mask },
   mixins: [validationMixin],
-  props: ['ordem_item'],
+  props: {
+    ordem_item: {
+      type: Object,
+      default: null,
+    },
+    watching: {
+      type: Number,
+      default: null,
+    },
+  },
+
   data() {
     return {
       customers: [],
@@ -177,13 +187,17 @@ export default {
       estimated_time: { required },
     },
   },
+  watch: {
+    watching() {
+      this.setDataFormWithTask();
+    },
+  },
 
   async mounted() {
     const { data } = await this.$axios.get('customers');
     const customer = data;
     console.log(customer);
     this.customers = customer;
-    this.setDataFormWithTask();
   },
   methods: {
     setDataFormWithTask() {

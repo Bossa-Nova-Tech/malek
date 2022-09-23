@@ -210,14 +210,12 @@ export default {
           this.$v.$reset();
           console.log('executou o clic');
 
-          await this.$axios
-            .post('tasks', this.$data.formData)
-            .then((_res) => {
-              this.$refs.criar.hide();
-              this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
-              this.$nuxt.refresh();
-            })
-            .catch((_err) => {});
+          await this.$axios.post('tasks', this.$data.formData).then((_res) => {
+            this.$refs.criar.hide();
+            this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+            /* this.$router.go(0); */
+          });
+          this.$nuxt.refresh().catch((_err) => {});
         } catch (error) {
           console.log(error);
         }
