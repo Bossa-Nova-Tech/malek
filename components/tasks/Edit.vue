@@ -106,14 +106,14 @@
           </b-form-invalid-feedback>
         </b-form-group>
       </div>
-      <b-form-group class="mb-4">
+      <b-form-group name="form-text" class="mb-4">
         <label for="note">Observação</label>
-        <b-form-input
+        <b-form-textarea
           v-model="formData.note"
           name="note"
           placeholder="Esta tarefa consiste em..."
         >
-        </b-form-input>
+        </b-form-textarea>
       </b-form-group>
       <b-form-checkbox
         v-model="formData.need_signature"

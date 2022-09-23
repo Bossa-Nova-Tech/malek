@@ -105,15 +105,6 @@ export default {
       this.editar = true;
       if (this.editar === true) {
         this.id = itemOrdem.id;
-        // this.$router.push(`/ordem-de-servicos/?ordem=${itemOrdem.id}`);
-        /* const taskID = this.$axios.$get(
-          `tasks/${this.id}`,
-          this.$data.formData,
-        );
-        this.formData = taskID; */
-        /* this.$nextTick(function () {
-          this.$bvModal.show(`criar-${this.editar}-${this.id}`);
-        }); */
         this.$nextTick(function () {
           this.$bvModal.show(`update-task-${itemOrdem.id}`);
         });
