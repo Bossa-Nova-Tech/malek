@@ -45,17 +45,21 @@
             >Lembrar senha</b-form-checkbox
           >
           <a
-          href="https://wa.me/554788510302?text=Ol%C3%A1,%20tudo%20bem?%20Eu%20esqueci%20minha%20senha,%20poderia%20verificar%20por%20gentileza?"
+            href="https://wa.me/554788510302?text=Ol%C3%A1,%20tudo%20bem?%20Eu%20esqueci%20minha%20senha,%20poderia%20verificar%20por%20gentileza?"
             ><u>Esqueci minha senha</u></a
           >
         </div>
-
-        <NuxtLink to="/cadastro-empresa">Criar conta</NuxtLink>
 
         <button block class="mt-3" :disabled="formSend" @click="login">
           <b-spinner v-if="formSend" small type="grow" />
           Entrar
         </button>
+        <div class="d-flex mt-3">
+          <p class="mr-2">Não possui conta ainda?</p>
+          <NuxtLink to="/cadastro-empresa" class="font-weight-bolder"
+            >Cadastre-se</NuxtLink
+          >
+        </div>
       </b-form>
     </main>
   </b-container>

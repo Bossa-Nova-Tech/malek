@@ -50,12 +50,16 @@
           >
         </div>
 
-        <NuxtLink to="/cadastro-empresa">Criar conta</NuxtLink>
-
         <button block class="mt-3" :disabled="formSend" @click="login">
           <b-spinner v-if="formSend" small type="grow" />
           Entrar
         </button>
+        <div class="d-flex mt-3">
+          <p class="mr-2">Não possui conta ainda?</p>
+          <NuxtLink to="/cadastro-empresa" class="font-weight-bolder"
+            >Cadastre-se</NuxtLink
+          >
+        </div>
       </b-form>
     </main>
   </b-container>
