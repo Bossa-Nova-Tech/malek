@@ -1,18 +1,19 @@
 <template>
   <b-modal
-    id="criar-cliente"
-    ref="costumerModal"
+    :id="'update-task-' + clienteDaLista.id"
+    :ref="'update-task-' + clienteDaLista.id"
     size="lg"
     hide-footer
     hide-header
   >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
-        <h1 class="mt-4 mb-5">Criar Cliente</h1>
+        <h1 class="mt-4 mb-5">Editar Cliente</h1>
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
-          @click="$bvModal.hide('criar-cliente')"
+          role="button"
+          @click="$bvModal.hide('update-task-' + clienteDaLista.id)"
         />
       </div>
       <b-form-group class="mb-4">
@@ -229,7 +230,7 @@
         </b-col>
       </b-row>
 
-      <button class="mt-4 mb-2" :disabled="formSend" @click="saveCustomer">
+      <button class="mt-4 mb-2" :disabled="formSend" @click="edit">
         <b-spinner v-if="formSend" small type="grow" />
         Salvar
       </button>
@@ -248,10 +249,19 @@ import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 
 export default {
-  name: 'Add',
+  name: 'Edit',
   directives: { mask },
   mixins: [validationMixin],
-
+  props: {
+    clienteDaLista: {
+      type: Object,
+      default: null,
+    },
+    watching: {
+      type: Number,
+      default: null,
+    },
+  },
   data: () => {
     return {
       file: null,
@@ -313,31 +323,56 @@ export default {
       },
     },
   },
-
+  watch: {
+    watching() {
+      this.setDataFormWithTask();
+    },
+  },
   methods: {
-    async saveCustomer(_response) {
+    setDataFormWithTask() {
+      this.formData.name = this.clienteDaLista.name;
+      this.formData.cnpj = this.clienteDaLista.cnpj;
+      this.formData.cpf = this.clienteDaLista.cpf;
+      this.formData.phone = this.clienteDaLista.phone;
+      this.formData.email = this.clienteDaLista.email;
+      this.formData.address = this.clienteDaLista.address;
+      this.formData.cep = this.clienteDaLista.cep;
+      this.formData.district = this.clienteDaLista.district;
+      this.formData.city = this.clienteDaLista.city;
+      this.formData.state = this.clienteDaLista.state;
+      this.formData.number = this.clienteDaLista.number;
+      this.formData.complement = this.clienteDaLista.complement;
+    },
+    async edit(_response) {
+      const cliente = await this.$parent.clienteDaLista;
+      console.log(cliente);
       this.$v.formData.$touch();
-
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
         console.log(this.formData);
-
+        this.$v.$reset();
         try {
           this.formSend = false;
           this.$v.$reset();
-
           console.log('executou o clic');
-          this.$refs.costumerModal.hide();
 
           await this.$axios
-            .post('customers', this.$data.formData)
+            .put(`customers/${cliente.id}`, this.$data.formData)
             .then((_res) => {
-              this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+              console.log('sucesso');
+              this.$root.$emit(
+                'bv::hide::modal',
+                `update-task-${this.clienteDaLista.id}`,
+              );
+
+              // this.$refs.criar.hide();
+
+              this.toast('success', 'Sucesso', 'Item editado com sucesso!');
               this.$nuxt.refresh();
             })
             .catch((_err) => {});
         } catch (error) {
-          console.log(error);
+          console.log(error, 'sadasda');
         }
       }
     },

@@ -1,83 +1,130 @@
 <template>
-  <section>
-    <h1 class="p-4">Clientes</h1>
-    <ul>
-      <li
-        v-for="customer in customersData"
-        :key="customer.id"
-        class="p-4 d-flex justify-content-between"
-      >
-        <p>#{{ customer.id }} {{ customer.name }}</p>
-        <div>
-          <img src="~/assets/img/icones/edit-icon.svg" alt="" />
+  <div>
+    <div class="d-flex align-items-center mb-5">
+      <b-form-input
+        v-model="search"
+        placeholder="Pesquisar"
+        class="ml-3"
+      ></b-form-input>
+      <img class="mx-3" src="~/assets/img/icones/sliders.svg" />
+      <button v-if="$screen.lg" @click="$bvModal.show('criar-cliente')">
+        Criar clientes
+      </button>
+    </div>
+    <section>
+      <h1 class="p-4">Clientes</h1>
+      <ul class="push">
+        <li
+          v-for="customer in filteredList"
+          :key="customer.id"
+          class="card-cliente p-4 d-flex justify-content-between align-items-center py-4"
+        >
+          <p>#{{ customer.id }} {{ customer.name }}</p>
+          <div>
+            <img
+              src="~/assets/img/icones/edit-icon.svg"
+              role="button"
+              alt="botão para acessar o modal de edição de cliente"
+              @click="showEditar(customer)"
+            />
 
-          <img
-            src="~/assets/img/icones/delete-icon.svg"
-            alt=""
-            @click="showModal(customer)"
-          />
-        </div>
-        <Delete :customer="customer" />
-      </li>
-    </ul>
-  </section>
+            <img
+              src="~/assets/img/icones/delete-icon.svg"
+              role="button"
+              alt="botão para deletar cliente"
+              @click="showExcluir(customer)"
+            />
+          </div>
+          <Edit :cliente-da-lista="customer" :watching="id" />
+        </li>
+        <Delete :id="id" />
+      </ul>
+    </section>
+  </div>
 </template>
 <script>
 import Delete from '~/components/customers/Delete.vue';
+import Edit from '~/components/customers/Edit.vue';
+
 export default {
   name: 'Listing',
-  components: { Delete },
+  components: { Delete, Edit },
   props: {
     customersData: {
       type: Array,
       default: null,
     },
   },
-  async asyncData({ $axios }) {
-    const customers = await $axios.get('customers');
-    const customersData = customers.data;
-    console.log('customers :: ', customers.data);
-    return { customersData };
-  },
   data() {
     return {
       id: null,
+      search: '',
     };
   },
+  computed: {
+    filteredList() {
+      return this.customersData.filter((customer) => {
+        return customer.name.toLowerCase().match(this.search.toLowerCase());
+      });
+    },
+  },
+
   methods: {
-    showModal(customer) {
+    showExcluir(customer) {
       this.id = customer.id;
-      // this.$root.$emit('bv::show::modal', 'excluir', this.id);
-      this.$bvModal.show(this.id);
-      console.log(customer.id + ' chamado');
+      this.$nextTick(function () {
+        this.$bvModal.show(`excluir-${this.id}`);
+      });
+      this.clienteDaLista = customer;
+    },
+    showEditar(customer) {
+      this.id = customer.id;
+      this.$nextTick(function () {
+        this.$bvModal.show(`update-task-${customer.id}`);
+      });
+      this.clienteDaLista = customer;
     },
   },
 };
 </script>
 <style lang="scss" scoped>
 section {
-  height: 33.5625rem;
-  background: #fbfbfb;
-  box-shadow: 0rem 0.25rem 0.25rem rgba(0, 71, 187, 0.06);
-  border-radius: 0.5rem;
+  height: 25rem;
+  background: var(--gray-10);
+  box-shadow: 0px 4px 4px rgba(0, 71, 187, 0.06);
+
+  p {
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  h2 {
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+
   ul {
+    height: 18.75rem;
     overflow: auto;
-    height: 80%;
+
     li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 0.0625rem solid var(--gray-20);
-      p {
-        font-weight: 600;
-        font-size: 0.75rem;
-        color: var(--primary-80);
-      }
-      img {
-        margin-left: 1.25rem;
-        cursor: pointer;
-      }
+      display: grid;
+      grid-template-columns: 3fr 1fr;
     }
+  }
+
+  .card-cliente {
+    border-top: 0.5px solid var(--gray-20);
+  }
+}
+@media screen and (max-width: 991px) {
+  section {
+    height: 70vh;
+  }
+}
+@media screen and(max-height:667px) {
+  .push {
+    padding-bottom: 6rem;
   }
 }
 </style>

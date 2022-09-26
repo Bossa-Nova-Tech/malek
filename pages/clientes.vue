@@ -1,19 +1,12 @@
 <template>
-  <div class="pb-5">
+  <div class="vh-100 overflow-hidden">
     <PainelHeader :tela="telaName" />
-    <main class="container">
+    <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
       <section>
-        <div class="d-flex align-items-center mb-5">
-          <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
-          <img class="ml-3" src="~/assets/img/icones/sliders.svg" />
-          <button v-if="$screen.lg" @click="$bvModal.show('criar-cliente')">
-            Criar clientes
-          </button>
-        </div>
         <Listing :customers-data="customersData" />
         <Add />
-
+        <div class="push"></div>
         <div class="footer">
           <button v-if="!$screen.lg" @click="$bvModal.show('criar-cliente')">
             Criar clientes
@@ -83,9 +76,11 @@ main {
     }
 
     .footer {
+      width: 100%;
+      height: 6rem;
       background: var(--primary-10);
       padding: 1.5rem;
-      position: inherit;
+      position: absolute;
       bottom: 0;
       box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
     }
