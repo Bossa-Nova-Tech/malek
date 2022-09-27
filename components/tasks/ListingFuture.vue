@@ -47,7 +47,7 @@
           <p class="pl-2">Colaborador</p>
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
-        <Edit :ordem_item="itemOrdem" :watching="id" />
+        <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" />
       </li>
       <Delete :id="id" />
       <Finished :id="id" />

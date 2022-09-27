@@ -75,8 +75,8 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-row>
-        <b-col cols="6">
+      <div class="grid">
+        <div class="w-100 grid-1">
           <b-form-group class="mb-4">
             <label for="phone">Telefone <span class="requerido">*</span></label>
             <b-form-input
@@ -96,9 +96,9 @@
               }}
             </b-form-invalid-feedback>
           </b-form-group>
-        </b-col>
+        </div>
 
-        <b-col cols="6">
+        <div class="w-100 grid-2">
           <b-form-group class="mb-4">
             <label for="email">E-mail <span class="requerido">*</span></label>
             <b-form-input
@@ -118,8 +118,8 @@
               }}
             </b-form-invalid-feedback>
           </b-form-group>
-        </b-col>
-      </b-row>
+        </div>
+      </div>
 
       <BorderButton class="my-4">
         <input
@@ -360,7 +360,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 .requerido {
   color: var(--red-50);
+}
+.grid-1 {
+  margin-right: 15px;
+}
+.grid-2 {
+  margin-left: 15px;
+}
+@media screen and (max-width: 992px) {
+  .grid-1 {
+    margin: 0;
+  }
+  .grid-2 {
+    margin: 0;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

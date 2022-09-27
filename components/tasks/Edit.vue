@@ -148,6 +148,10 @@ export default {
       type: Number,
       default: null,
     },
+    clientes: {
+      type: Number,
+      default: null,
+    },
   },
 
   data() {
@@ -191,14 +195,14 @@ export default {
     watching() {
       this.setDataFormWithTask();
     },
+    async clientes() {
+      const { data } = await this.$axios.get('customers');
+      const customer = data;
+      console.log(customer);
+      this.customers = customer;
+    },
   },
 
-  async mounted() {
-    const { data } = await this.$axios.get('customers');
-    const customer = data;
-    console.log(customer);
-    this.customers = customer;
-  },
   methods: {
     setDataFormWithTask() {
       this.formData.services = this.ordem_item.services;

@@ -10,7 +10,7 @@
 
         <div v-if="!$screen.lg" class="footer">
           <button class="" @click="$bvModal.show('criar-cliente')">
-            Cadastrar Cliente
+            Criar Cliente
           </button>
         </div>
       </div>

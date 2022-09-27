@@ -11,18 +11,16 @@
           </b-tab>
 
           <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing :tasks-data="tasksData" />
+            <Listing :watching="telaName" :tasks-data="tasksData" />
           </b-tab>
 
           <b-tab id="futuras" title="Futuras" class="mt-4">
             <ListingFuture :tasks-data="tasksDataFuture" />
           </b-tab>
-          <Add />
+          <Add :watching="chamarCliente" />
 
           <div class="footer">
-            <button class="" @click="$bvModal.show('criar')">
-              Criar Ordem de Serviço
-            </button>
+            <button class="" @click="criar">Criar Ordem de Serviço</button>
           </div>
         </b-tabs>
       </div>
@@ -62,6 +60,7 @@ export default {
 
   data: () => {
     return {
+      chamarCliente: null,
       telaName: 'Ordem de serviços',
       tasksData: [],
     };
@@ -71,6 +70,12 @@ export default {
     return {
       title: `Ordem de Serviços | ${process.env.title}`,
     };
+  },
+  methods: {
+    criar() {
+      this.chamarCliente = 1;
+      this.$bvModal.show('criar');
+    },
   },
 };
 </script>

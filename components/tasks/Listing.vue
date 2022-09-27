@@ -55,7 +55,7 @@
           <p class="pl-2">Colaborador</p>
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
-        <Edit :ordem_item="itemOrdem" :watching="id" />
+        <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" />
       </li>
       <Delete :id="id" />
       <Finished :id="id" />
@@ -76,10 +76,17 @@ export default {
       type: Array,
       default: null,
     },
+    watching: {
+      type: String,
+      default: null,
+    },
   },
 
   data() {
     return {
+      tamanho: null,
+      indice: null,
+      espaco: null,
       editar: false,
       id: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
@@ -87,6 +94,17 @@ export default {
   },
 
   methods: {
+    cortaPalavra(itemOrdem) {
+      this.espaco = itemOrdem.name_customer;
+      if (itemOrdem) {
+        this.indice = this.espaco.indexOf(' ');
+        this.tamanho = this.espaco.length;
+        this.espaco = this.espaco.split('').reverse().join('');
+        this.espaco = this.espaco.slice(this.tamanho - this.indice);
+        this.espaco = this.espaco.split('').reverse().join('');
+      }
+      itemOrdem.name_customer = this.espaco;
+    },
     showConcluir(itemOrdem) {
       this.id = itemOrdem.id;
       this.$nextTick(function () {

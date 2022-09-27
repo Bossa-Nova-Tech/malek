@@ -8,7 +8,7 @@
       ></b-form-input>
       <img class="mx-3" src="~/assets/img/icones/sliders.svg" />
       <button v-if="$screen.lg" @click="$bvModal.show('criar-cliente')">
-        Criar clientes
+        Criar Cliente
       </button>
     </div>
     <section class="rounded w-100">

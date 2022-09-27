@@ -40,6 +40,7 @@
             :key="customer.id"
             :value="customer.name"
             >{{ customer.name }}
+            <span v-if="customer.cnpj !== null">PJ</span>
           </b-form-select-option>
         </b-form-select>
 
@@ -182,6 +183,12 @@ export default {
       ],
     };
   },
+  props: {
+    watching: {
+      type: Number,
+      default: null,
+    },
+  },
 
   validations: {
     formData: {
@@ -191,13 +198,21 @@ export default {
       estimated_time: { required },
     },
   },
+  watch: {
+    async watching() {
+      const { data } = await this.$axios.get('customers');
+      const customer = data;
+      console.log(customer);
+      this.customers = customer;
+    },
+  },
 
-  async mounted() {
+  /* async mounted() {
     const { data } = await this.$axios.get('customers');
     const customer = data;
     console.log(customer);
     this.customers = customer;
-  },
+  }, */
   methods: {
     async register(_response) {
       this.$v.formData.$touch();
