@@ -1,18 +1,19 @@
 <template>
-  <div class="vh-100 overflow-hidden">
+  <div>
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
-      <section>
+
+      <div class="d-flex justify-content-center ajuste-width">
         <Listing :customers-data="customersData" />
         <Add />
-        <div class="push"></div>
-        <div class="footer">
-          <button v-if="!$screen.lg" @click="$bvModal.show('criar-cliente')">
-            Criar clientes
+
+        <div v-if="!$screen.lg" class="footer">
+          <button class="" @click="$bvModal.show('criar-cliente')">
+            Cadastrar Cliente
           </button>
         </div>
-      </section>
+      </div>
     </main>
   </div>
 </template>
@@ -45,36 +46,30 @@ export default {
 
 <style lang="scss" scoped>
 main {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 3fr;
-
-  section {
-    padding-left: 3rem;
-    padding-right: 3rem;
+  .ajuste-width {
+    max-width: 33rem;
+    margin-inline: 5.5rem;
   }
-
-  img {
-    margin-right: 3rem;
-  }
-
-  button {
-    width: 50%;
+  .footer {
+    width: 100%;
+    height: 6rem;
+    background: var(--gray-10);
+    padding: 1.5rem;
+    position: inherit;
+    box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 991px) {
   main {
     grid-template-columns: 1fr;
-
-    section {
-      padding-left: 0rem;
-      padding-right: 0rem;
+    .ajuste-width {
+      max-width: 33rem;
+      margin-inline: 0rem;
     }
-
-    img {
-      margin-right: 0rem;
-    }
-
     .footer {
       width: 100%;
       height: 6rem;
@@ -83,10 +78,6 @@ main {
       position: absolute;
       bottom: 0;
       box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    button {
-      width: 100%;
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-100 mx-auto position-relative">
     <div class="d-flex align-items-center mb-5">
       <b-form-input
         v-model="search"
@@ -11,13 +11,13 @@
         Criar clientes
       </button>
     </div>
-    <section>
+    <section class="rounded w-100">
       <h1 class="p-4">Clientes</h1>
-      <ul class="push">
+      <ul>
         <li
           v-for="customer in filteredList"
           :key="customer.id"
-          class="card-cliente p-4 d-flex justify-content-between align-items-center py-4"
+          class="card-cliente p-5 d-flex justify-content-between align-items-center py-4"
         >
           <p>#{{ customer.id }} {{ customer.name }}</p>
           <div>
@@ -110,6 +110,11 @@ section {
     li {
       display: grid;
       grid-template-columns: 3fr 1fr;
+
+      span {
+        align-self: center;
+        justify-self: end;
+      }
     }
   }
 
@@ -117,14 +122,13 @@ section {
     border-top: 0.5px solid var(--gray-20);
   }
 }
+
 @media screen and (max-width: 991px) {
   section {
-    height: 70vh;
-  }
-}
-@media screen and(max-height:667px) {
-  .push {
-    padding-bottom: 6rem;
+    height: 69vh;
+    ul {
+      height: 49vh;
+    }
   }
 }
 </style>

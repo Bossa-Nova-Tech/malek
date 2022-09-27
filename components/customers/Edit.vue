@@ -152,8 +152,8 @@
             <label for="cep">CEP</label>
             <b-form-input
               v-model="formData.cep"
+              v-mask="['#####-###']"
               name="cep"
-              type="number"
               placeholder="000-00000"
             />
           </b-form-group>

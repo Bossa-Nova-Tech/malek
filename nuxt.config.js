@@ -146,7 +146,8 @@ export default {
       },
     ],
   },
-
+  publicRuntimeConfig: {},
+  privateRuntimeConfig: {},
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/scss/index.scss'],
 
