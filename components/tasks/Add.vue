@@ -154,6 +154,12 @@ export default {
   name: 'Add',
   directives: { mask },
   mixins: [validationMixin],
+  props: {
+    watching: {
+      type: Number,
+      default: null,
+    },
+  },
   data() {
     return {
       format: 'DD-MM-YYYY',
@@ -182,12 +188,6 @@ export default {
         },
       ],
     };
-  },
-  props: {
-    watching: {
-      type: Number,
-      default: null,
-    },
   },
 
   validations: {

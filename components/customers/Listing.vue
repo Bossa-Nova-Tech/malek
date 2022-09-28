@@ -7,6 +7,13 @@
         class="ml-3"
       ></b-form-input>
       <img class="mx-3" src="~/assets/img/icones/sliders.svg" />
+      <div v-if="!$screen.lg" class="d-flex justify-content-center mr-3">
+        <b-img
+          src="~/assets/img/icones/icone-criar.svg"
+          role="button"
+          @click="$bvModal.show('criar-cliente')"
+        />
+      </div>
       <button v-if="$screen.lg" @click="$bvModal.show('criar-cliente')">
         Criar Cliente
       </button>

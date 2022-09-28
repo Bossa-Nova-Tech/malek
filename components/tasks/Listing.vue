@@ -92,7 +92,6 @@ export default {
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
   },
-
   methods: {
     cortaPalavra(itemOrdem) {
       this.espaco = itemOrdem.name_customer;

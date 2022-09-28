@@ -3,7 +3,13 @@
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
-
+      <div v-if="!$screen.lg" class="d-flex justify-content-center mb-4">
+        <b-img
+          src="~/assets/img/icones/icone-criar.svg"
+          role="button"
+          @click="criar"
+        />
+      </div>
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto position-relative" align="center">
           <b-tab id="em-atraso" title="Em atraso" class="mt-4">
