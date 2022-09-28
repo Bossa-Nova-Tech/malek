@@ -45,14 +45,14 @@
         >
         </b-form-radio-group>
         <b-form-input
-          v-if="formData.accountType == 'cnpj'"
+          v-if="formData.accountType == 'juridica'"
           v-model="formData.cnpj"
           v-mask="['##.###.###/####-##']"
           value="cnpj"
           placeholder="00.000.000/000-00"
           :class="{ 'is-invalid': $v.formData.cnpj.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.accountType == 'cnpj'">
+        <b-form-invalid-feedback v-if="formData.accountType == 'juridica'">
           {{
             !$v.formData.cnpj.minLength
               ? 'Insira um CNPJ válido'
@@ -60,14 +60,14 @@
           }}
         </b-form-invalid-feedback>
         <b-form-input
-          v-if="formData.accountType == 'cpf'"
+          v-if="formData.accountType == 'fisica'"
           v-model="formData.cpf"
           v-mask="['###.###.###-##']"
           value="cpf"
           placeholder="000.000.000-00"
           :class="{ 'is-invalid': $v.formData.cpf.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.accountType == 'cpf'">
+        <b-form-invalid-feedback v-if="formData.accountType == 'fisica'">
           {{
             !$v.formData.cpf.minLength
               ? 'Insira um CPF válido'
@@ -270,7 +270,7 @@ export default {
       vm: null,
       formSend: false,
       formData: {
-        accountType: 'cpf',
+        accountType: null,
         name: null,
         cnpj: null,
         cpf: null,
@@ -287,11 +287,11 @@ export default {
       },
       types: [
         {
-          value: 'cpf',
+          value: 'fisica',
           html: '<span style="color:#5E5E5E;font-size:12px;">Pessoa física</span>',
         },
         {
-          value: 'cnpj',
+          value: 'juridica',
           html: '<span style="color:#5E5E5E;font-size:12px;">Pessoa jurídica</span>',
         },
       ],
@@ -304,14 +304,16 @@ export default {
         required,
       },
       cnpj: {
-        required,
+        required: requiredIf(function () {
+          return this.accountType;
+        }),
         minLength: minLength(17),
       },
       cpf: {
         required: requiredIf(function () {
           return this.accountType;
         }),
-        minLength: minLength(11),
+        minLength: minLength(14),
       },
       phone: {
         required,

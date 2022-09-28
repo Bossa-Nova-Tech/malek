@@ -3,6 +3,7 @@
     id="criar-cliente"
     ref="costumerModal"
     size="lg"
+    scrollable
     hide-footer
     hide-header
     class="vh-100"
@@ -39,20 +40,21 @@
         <b-form-radio-group
           v-model="formData.accountType"
           :options="types"
+          name="pessoa"
           plain
           size="sm"
           class="mb-2"
         >
         </b-form-radio-group>
         <b-form-input
-          v-if="formData.accountType == 'cnpj'"
+          v-if="formData.accountType == 'juridica'"
           v-model="formData.cnpj"
           v-mask="['##.###.###/####-##']"
-          value="cnpj"
+          name="cnpj"
           placeholder="00.000.000/000-00"
           :class="{ 'is-invalid': $v.formData.cnpj.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.accountType == 'cnpj'">
+        <b-form-invalid-feedback>
           {{
             !$v.formData.cnpj.minLength
               ? 'Insira um CNPJ válido'
@@ -60,14 +62,14 @@
           }}
         </b-form-invalid-feedback>
         <b-form-input
-          v-if="formData.accountType == 'cpf'"
+          v-if="formData.accountType == 'fisica'"
           v-model="formData.cpf"
           v-mask="['###.###.###-##']"
-          value="cpf"
+          name="cpf"
           placeholder="000.000.000-00"
           :class="{ 'is-invalid': $v.formData.cpf.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.accountType == 'cpf'">
+        <b-form-invalid-feedback v-if="formData.accountType == 'fisica'">
           {{
             !$v.formData.cpf.minLength
               ? 'Insira um CPF válido'
@@ -261,7 +263,7 @@ export default {
       vm: null,
       formSend: false,
       formData: {
-        accountType: 'cpf',
+        accountType: 'fisica',
         name: null,
         cnpj: null,
         cpf: null,
@@ -278,11 +280,11 @@ export default {
       },
       types: [
         {
-          value: 'cpf',
+          value: 'fisica',
           html: '<span style="color:#5E5E5E;font-size:12px;">Pessoa física</span>',
         },
         {
-          value: 'cnpj',
+          value: 'juridica',
           html: '<span style="color:#5E5E5E;font-size:12px;">Pessoa jurídica</span>',
         },
       ],
@@ -298,10 +300,12 @@ export default {
         required: requiredIf(function () {
           return this.accountType;
         }),
-        minLength: minLength(17),
+        minLength: minLength(18),
       },
       cpf: {
-        required,
+        required: requiredIf(function () {
+          return this.accountType;
+        }),
         minLength: minLength(14),
       },
       phone: {

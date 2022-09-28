@@ -46,6 +46,7 @@ export default {
 
 <style lang="scss" scoped>
 main {
+  max-height: 100%;
   position: relative;
   display: grid;
   grid-template-columns: 1fr 3fr;
