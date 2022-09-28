@@ -125,9 +125,9 @@ section {
 
 @media screen and (max-width: 991px) {
   section {
-    height: 69vh;
+    height: 67vh;
     ul {
-      height: 49vh;
+      height: 45vh;
     }
   }
 }

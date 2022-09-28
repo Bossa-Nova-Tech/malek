@@ -48,11 +48,11 @@
           v-if="formData.accountType == 'cnpj'"
           v-model="formData.cnpj"
           v-mask="['##.###.###/####-##']"
-          name="cnpj"
+          value="cnpj"
           placeholder="00.000.000/000-00"
           :class="{ 'is-invalid': $v.formData.cnpj.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.accountType == 'juridica'">
+        <b-form-invalid-feedback v-if="formData.accountType == 'cnpj'">
           {{
             !$v.formData.cnpj.minLength
               ? 'Insira um CNPJ válido'
@@ -63,11 +63,11 @@
           v-if="formData.accountType == 'cpf'"
           v-model="formData.cpf"
           v-mask="['###.###.###-##']"
-          name="cpf"
+          value="cpf"
           placeholder="000.000.000-00"
           :class="{ 'is-invalid': $v.formData.cpf.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.accountType == 'fisica'">
+        <b-form-invalid-feedback v-if="formData.accountType == 'cpf'">
           {{
             !$v.formData.cpf.minLength
               ? 'Insira um CPF válido'
@@ -304,13 +304,13 @@ export default {
         required,
       },
       cnpj: {
+        required,
+        minLength: minLength(17),
+      },
+      cpf: {
         required: requiredIf(function () {
           return this.accountType;
         }),
-        minLength: minLength(13),
-      },
-      cpf: {
-        required,
         minLength: minLength(11),
       },
       phone: {
@@ -331,6 +331,7 @@ export default {
   methods: {
     setDataFormWithTask() {
       this.formData.name = this.clienteDaLista.name;
+      this.formData.accountType = this.clienteDaLista.accountType;
       this.formData.cnpj = this.clienteDaLista.cnpj;
       this.formData.cpf = this.clienteDaLista.cpf;
       this.formData.phone = this.clienteDaLista.phone;

@@ -219,15 +219,24 @@ export default {
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
         console.log(this.formData);
-        this.$v.$reset();
         try {
           this.formSend = false;
-          this.$v.$reset();
+          this.$v.formData.$reset();
           console.log('executou o clic');
 
           await this.$axios.post('tasks', this.$data.formData).then((_res) => {
             this.$refs.criar.hide();
             this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+            this.formData = {
+              status: null,
+              need_signature: false,
+              estimated_time: null,
+              end_date: null,
+              note: null,
+              name_customer: null,
+              template: null,
+              services: null,
+            };
             /* this.$router.go(0); */
           });
           this.$nuxt.refresh().catch((_err) => {});

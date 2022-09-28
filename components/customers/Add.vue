@@ -5,6 +5,7 @@
     size="lg"
     hide-footer
     hide-header
+    class="vh-100"
   >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
@@ -47,11 +48,11 @@
           v-if="formData.accountType == 'cnpj'"
           v-model="formData.cnpj"
           v-mask="['##.###.###/####-##']"
-          name="cnpj"
+          value="cnpj"
           placeholder="00.000.000/000-00"
           :class="{ 'is-invalid': $v.formData.cnpj.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.accountType == 'juridica'">
+        <b-form-invalid-feedback v-if="formData.accountType == 'cnpj'">
           {{
             !$v.formData.cnpj.minLength
               ? 'Insira um CNPJ válido'
@@ -62,11 +63,11 @@
           v-if="formData.accountType == 'cpf'"
           v-model="formData.cpf"
           v-mask="['###.###.###-##']"
-          name="cpf"
+          value="cpf"
           placeholder="000.000.000-00"
           :class="{ 'is-invalid': $v.formData.cpf.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.accountType == 'fisica'">
+        <b-form-invalid-feedback v-if="formData.accountType == 'cpf'">
           {{
             !$v.formData.cpf.minLength
               ? 'Insira um CPF válido'
@@ -297,11 +298,11 @@ export default {
         required: requiredIf(function () {
           return this.accountType;
         }),
-        minLength: minLength(13),
+        minLength: minLength(17),
       },
       cpf: {
         required,
-        minLength: minLength(11),
+        minLength: minLength(14),
       },
       phone: {
         required,
@@ -324,8 +325,7 @@ export default {
 
         try {
           this.formSend = false;
-          this.$v.$reset();
-
+          this.$v.formData.$reset();
           console.log('executou o clic');
           this.$refs.costumerModal.hide();
 
@@ -333,6 +333,22 @@ export default {
             .post('customers', this.$data.formData)
             .then((_res) => {
               this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+              this.formData = {
+                accountType: null,
+                name: null,
+                cnpj: null,
+                cpf: null,
+                phone: null,
+                email: null,
+                photo: null,
+                address: null,
+                cep: null,
+                district: null,
+                city: null,
+                state: null,
+                number: null,
+                complement: null,
+              };
               this.$nuxt.refresh();
             })
             .catch((_err) => {});
