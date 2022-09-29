@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="vh-100">
     <PainelHeader v-if="$screen.lg" :tela="telaName" />
     <main class="p-0">
       <PainelAside />
