@@ -6,6 +6,7 @@
         id="example-input"
         v-model="value"
         type="text"
+        v-mask="['##:##']"
         placeholder="HH:mm"
       ></b-form-input>
       <b-input-group-append>
@@ -23,7 +24,10 @@
 </template>
 
 <script>
+import { mask } from 'vue-the-mask';
 export default {
+  directives: { mask },
+
   data() {
     return {
       value: '',

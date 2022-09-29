@@ -37,7 +37,7 @@
           >Pessoa física ou jurídica?<span class="requerido">*</span></label
         >
         <b-form-radio-group
-          v-model="formData.accountType"
+          v-model="formData.type"
           :options="types"
           plain
           size="sm"
@@ -45,14 +45,14 @@
         >
         </b-form-radio-group>
         <b-form-input
-          v-if="formData.accountType == 'juridica'"
+          v-if="formData.type == 'pj'"
           v-model="formData.cnpj"
           v-mask="['##.###.###/####-##']"
           value="cnpj"
           placeholder="00.000.000/000-00"
           :class="{ 'is-invalid': $v.formData.cnpj.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.accountType == 'juridica'">
+        <b-form-invalid-feedback v-if="formData.type == 'pj'">
           {{
             !$v.formData.cnpj.minLength
               ? 'Insira um CNPJ válido'
@@ -60,14 +60,14 @@
           }}
         </b-form-invalid-feedback>
         <b-form-input
-          v-if="formData.accountType == 'fisica'"
+          v-if="formData.type == 'f'"
           v-model="formData.cpf"
           v-mask="['###.###.###-##']"
           value="cpf"
           placeholder="000.000.000-00"
           :class="{ 'is-invalid': $v.formData.cpf.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.accountType == 'fisica'">
+        <b-form-invalid-feedback v-if="formData.type == 'f'">
           {{
             !$v.formData.cpf.minLength
               ? 'Insira um CPF válido'
@@ -82,7 +82,7 @@
             <label for="phone">Telefone <span class="requerido">*</span></label>
             <b-form-input
               v-model="formData.phone"
-              v-mask="['(##) # ####-####']"
+              v-mask="['(##) ####-####', '(##) # ####-####']"
               name="phone"
               placeholder="(00) 0 0000-0000"
               :class="{
@@ -270,7 +270,7 @@ export default {
       vm: null,
       formSend: false,
       formData: {
-        accountType: null,
+        type: null,
         name: null,
         cnpj: null,
         cpf: null,
@@ -287,11 +287,11 @@ export default {
       },
       types: [
         {
-          value: 'fisica',
+          value: 'f',
           html: '<span style="color:#5E5E5E;font-size:12px;">Pessoa física</span>',
         },
         {
-          value: 'juridica',
+          value: 'pj',
           html: '<span style="color:#5E5E5E;font-size:12px;">Pessoa jurídica</span>',
         },
       ],
@@ -305,19 +305,19 @@ export default {
       },
       cnpj: {
         required: requiredIf(function () {
-          return this.accountType;
+          return this.type;
         }),
         minLength: minLength(17),
       },
       cpf: {
         required: requiredIf(function () {
-          return this.accountType;
+          return this.type;
         }),
         minLength: minLength(14),
       },
       phone: {
         required,
-        minLength: minLength(9),
+        minLength: minLength(8),
       },
       email: {
         required,
@@ -333,7 +333,7 @@ export default {
   methods: {
     setDataFormWithTask() {
       this.formData.name = this.clienteDaLista.name;
-      this.formData.accountType = this.clienteDaLista.accountType;
+      this.formData.type = this.clienteDaLista.type;
       this.formData.cnpj = this.clienteDaLista.cnpj;
       this.formData.cpf = this.clienteDaLista.cpf;
       this.formData.phone = this.clienteDaLista.phone;
