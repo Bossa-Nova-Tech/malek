@@ -98,52 +98,25 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-row>
-          <b-col cols="4">
-            <b-form-group class="mb-4">
-              <label for="ddd">Telefone <span class="requerido">*</span></label>
-              <b-form-input
-                v-model="formData.ddd"
-                v-mask="['(##)']"
-                name="ddd"
-                placeholder="(00)"
-                :class="{
-                  'is-invalid': $v.formData.ddd.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                {{
-                  !$v.formData.ddd.minLength
-                    ? 'Insira um ddd válido'
-                    : 'Preencha o campo acima'
-                }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-
-          <b-col cols="8">
-            <b-form-group class="mb-4">
-              <label for="phone"></label>
-              <b-form-input
-                id="phone"
-                v-model="formData.phone"
-                v-mask="['#####-####']"
-                name="phone"
-                placeholder="0 0000-0000"
-                :class="{
-                  'is-invalid': $v.formData.phone.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                {{
-                  !$v.formData.phone.minLength
-                    ? 'Insira um telefone válido'
-                    : 'Preencha o campo acima'
-                }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-        </b-row>
+        <b-form-group class="mb-4">
+          <label for="phone">Telefone <span class="requerido">*</span></label>
+          <b-form-input
+            v-model="formData.phone"
+            v-mask="['(##) # ####-####']"
+            name="phone"
+            placeholder="(00) 0 0000-0000"
+            :class="{
+              'is-invalid': $v.formData.phone.$error,
+            }"
+          />
+          <b-form-invalid-feedback>
+            {{
+              !$v.formData.phone.minLength
+                ? 'Insira um telefone válido'
+                : 'Preencha o campo acima'
+            }}
+          </b-form-invalid-feedback>
+        </b-form-group>
 
         <b-row>
           <b-col cols="6">
@@ -399,7 +372,6 @@ export default {
         last_name: null,
         cnpj: null,
         fantasy_name: null,
-        ddd: null,
         phone: null,
         email: null,
         password: null,
@@ -421,8 +393,7 @@ export default {
       name: { required },
       last_name: { required },
       cnpj: { required, minLength: minLength(13) },
-      ddd: { required, minLength: minLength(2) },
-      phone: { required, minLength: minLength(9) },
+      phone: { required, minLength: minLength(11) },
       email: { required, email },
       password: { required, minLength: minLength(8) },
       confirm_password: { required, sameAsPassword: sameAs('password') },
