@@ -7,7 +7,10 @@
         class="ml-3"
       ></b-form-input>
       <img class="mx-3" src="~/assets/img/icones/sliders.svg" />
-      <div v-if="!$screen.lg" class="d-flex justify-content-center mr-3">
+      <div
+        v-if="!$screen.lg"
+        class="icone-criar d-flex justify-content-center mr-3"
+      >
         <b-img
           src="~/assets/img/icones/icone-criar2.svg"
           role="button"
@@ -131,6 +134,22 @@ section {
 }
 
 @media screen and (max-width: 991px) {
+  .icone-criar {
+    animation: criar 1.5s ease-in-out;
+  }
+  @keyframes criar {
+    0% {
+      scale: 0;
+    }
+
+    50% {
+      scale: 1.2;
+    }
+    100% {
+      transform: rotate(1deg);
+      scale: 1;
+    }
+  }
   section {
     height: 67vh;
     ul {

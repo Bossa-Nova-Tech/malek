@@ -120,6 +120,20 @@ main {
     }
     .icone-criar {
       margin-top: -40px;
+      animation: criar 1.5s ease-in-out;
+    }
+    @keyframes criar {
+      0% {
+        scale: 0;
+      }
+
+      50% {
+        scale: 1.2;
+      }
+      100% {
+        transform: rotate(1deg);
+        scale: 1;
+      }
     }
   }
 }
