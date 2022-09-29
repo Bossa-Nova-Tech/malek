@@ -3,9 +3,12 @@
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
-      <div v-if="!$screen.lg" class="d-flex justify-content-center mb-4">
+      <div
+        v-if="!$screen.lg"
+        class="icone-criar d-flex justify-content-center mb-4"
+      >
         <b-img
-          src="~/assets/img/icones/icone-criar.svg"
+          src="~/assets/img/icones/icone-criar2.svg"
           role="button"
           @click="criar"
         />
@@ -114,6 +117,9 @@ main {
       position: absolute;
       bottom: 0;
       box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
+    }
+    .icone-criar {
+      margin-top: -40px;
     }
   }
 }

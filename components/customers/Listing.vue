@@ -9,7 +9,7 @@
       <img class="mx-3" src="~/assets/img/icones/sliders.svg" />
       <div v-if="!$screen.lg" class="d-flex justify-content-center mr-3">
         <b-img
-          src="~/assets/img/icones/icone-criar.svg"
+          src="~/assets/img/icones/icone-criar2.svg"
           role="button"
           @click="$bvModal.show('criar-cliente')"
         />
