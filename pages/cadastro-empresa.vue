@@ -125,7 +125,7 @@
                 >Senha <span class="requerido">*</span></label
               >
               <b-form-input
-                v-model="formData.password"
+                v-model="$v.formData.password.$model"
                 name="password"
                 type="password"
                 placeholder="********"
@@ -149,7 +149,7 @@
                 >Confirmar Senha <span class="requerido">*</span></label
               >
               <b-form-input
-                v-model="formData.confirm_password"
+                v-model="$v.formData.confirm_password.$model"
                 name="confirm_password"
                 type="password"
                 placeholder="********"
@@ -350,7 +350,7 @@
         <div class="d-flex flex-column align-items-center">
           <img src="~/assets/img/icones/email-icon.svg" alt="" class="py-4" />
           <h3 class="text-center">Cadastro realizado com sucesso!</h3>
-          <NuxtLink to="/login">Clique aqui para realizar o login</NuxtLink>
+          <NuxtLink to="/">Clique aqui para realizar o login</NuxtLink>
         </div>
       </b-modal>
     </div>

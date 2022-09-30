@@ -13,7 +13,20 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="services">Template <span class="requerido">*</span></label>
+        <label for="template">Template <span class="requerido">*</span></label>
+        <b-form-select
+          v-model="formData.template"
+          name="template"
+          :options="optionsTemplate"
+          :class="{ 'is-invalid': $v.formData.template.$error }"
+        />
+        <b-form-invalid-feedback>
+          Selecione uma opção.
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group class="mb-4">
+        <label for="services">Serviço <span class="requerido">*</span></label>
         <b-form-select
           v-model="formData.services"
           name="services"
@@ -183,6 +196,21 @@ export default {
           text: 'Selecione',
         },
         {
+          value: 'Manutenção de ar condicionado',
+          text: 'Manutenção de ar condicionado',
+        },
+        {
+          value: 'Instalação de ar condicionado',
+          text: 'Instalação de ar condicionado',
+        },
+      ],
+
+      optionsTemplate: [
+        {
+          value: null,
+          text: 'Selecione',
+        },
+        {
           value: 'Refrigeração',
           text: 'Refrigeração',
         },
@@ -193,6 +221,7 @@ export default {
   validations: {
     formData: {
       services: { required },
+      template: { required },
       end_date: { required },
       name_customer: { required },
       estimated_time: { required },

@@ -8,7 +8,7 @@
         class="div-botao d-flex justify-content-center align-items-center"
       >
         <b-img
-          src="~/assets/img/icones/criar-3.svg"
+          src="~/assets/img/icones/criar-4.svg"
           role="button"
           @click="criar"
           class="botao-criar"

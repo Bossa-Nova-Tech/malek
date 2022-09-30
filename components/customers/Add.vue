@@ -13,6 +13,7 @@
         <h1 class="mt-4 mb-5">Criar Cliente</h1>
         <img
           src="~/assets/img/icones/X-icon.svg"
+          role="button"
           class="mb-5 mt-3"
           @click="$bvModal.hide('criar-cliente')"
         />
