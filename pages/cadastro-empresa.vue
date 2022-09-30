@@ -192,7 +192,7 @@
                 v-model="formData.cep"
                 v-mask="['#####-###']"
                 name="cep"
-                placeholder="000-00000"
+                placeholder="00000-000"
                 :class="{
                   'is-invalid': $v.formData.cep.$error,
                 }"
@@ -307,19 +307,27 @@
           Envio necessário. Clique abaixo para fazer o upload da sua logo.
         </b-form-feedback>
         <div class="campo-foto">
-          <label for="file">
+          <label v-if="!formData.photo" for="file">
             <div
-              v-if="!formData.photo"
               class="d-flex flex-column justify-content-center align-items-center"
             >
               <b-img src="~/assets/img/icones/upload.svg" />
               <p>Clique para enviar sua logo</p>
               <span>PNG, JPG (tamanho máximo X)</span>
             </div>
-            <div v-else>
-              <img :src="formData.photo" alt="" width="100" />
-            </div>
           </label>
+          <div
+            v-else
+            class="d-flex flex-column justify-content-center align-items-center"
+          >
+            <b-img
+              src="~/assets/img/icones/delete-icon.svg"
+              role="button"
+              class="ml-5 pl-5 pb-2"
+              @click="excluiFoto"
+            />
+            <img :src="formData.photo" alt="" width="100" class="pb-5" />
+          </div>
         </div>
       </b-form>
     </main>
@@ -419,6 +427,13 @@ export default {
   },
 
   methods: {
+    excluiFoto() {
+      if (this.formData.photo) {
+        this.formData = {
+          photo: null,
+        };
+      }
+    },
     onFileChange(e) {
       this.files = e.target.files || e.dataTransfer.files;
       if (!this.files.length) return;

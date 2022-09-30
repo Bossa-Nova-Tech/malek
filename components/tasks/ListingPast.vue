@@ -72,9 +72,15 @@ import Finished from '~/components/tasks/Finished.vue';
 
 export default {
   name: 'ListingPast',
-  mixins: [Vue2Filters.mixin],
 
   components: { Delete, Finished, Edit },
+  filters: {
+    truncate(str) {
+      str = str.split(' ');
+      return str[0];
+    },
+  },
+  mixins: [Vue2Filters.mixin],
   props: {
     tasksData: {
       type: Array,
@@ -88,12 +94,6 @@ export default {
       id: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
-  },
-  filters: {
-    truncate(str) {
-      str = str.split(' ');
-      return str[0];
-    },
   },
 
   methods: {

@@ -134,6 +134,21 @@
         />
         <label for="file" class="text-center">Enviar Foto</label>
       </BorderButton>
+      <div class="campo-foto d-flex align-self center justify-content-center">
+        <div
+          v-if="formData.photo"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <b-img
+            src="~/assets/img/icones/delete-icon.svg"
+            role="button"
+            class="ml-5 pl-5 pb-2"
+            @click="excluiFoto"
+          />
+
+          <img :src="formData.photo" alt="" width="100" />
+        </div>
+      </div>
 
       <b-form-group class="mb-4">
         <label for="address">Endereço</label>
@@ -363,6 +378,13 @@ export default {
         } catch (error) {
           console.log(error);
         }
+      }
+    },
+    excluiFoto() {
+      if (this.formData.photo) {
+        this.formData = {
+          photo: null,
+        };
       }
     },
     onFileChange(e) {

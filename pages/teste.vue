@@ -5,8 +5,8 @@
       <b-form-input
         id="example-input"
         v-model="value"
-        type="text"
         v-mask="['##:##']"
+        type="text"
         placeholder="HH:mm"
       ></b-form-input>
       <b-input-group-append>
