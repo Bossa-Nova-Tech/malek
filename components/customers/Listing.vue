@@ -12,7 +12,7 @@
         class="icone-criar d-flex justify-content-center mr-3"
       >
         <b-img
-          src="~/assets/img/icones/icone-criar2.svg"
+          src="~/assets/img/icones/criar-3.svg"
           role="button"
           @click="$bvModal.show('criar-cliente')"
         />

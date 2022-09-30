@@ -5,12 +5,13 @@
       <PainelAside v-if="$screen.lg" />
       <div
         v-if="!$screen.lg"
-        class="icone-criar d-flex justify-content-center mb-4"
+        class="div-botao d-flex justify-content-center align-items-center"
       >
         <b-img
-          src="~/assets/img/icones/icone-criar2.svg"
+          src="~/assets/img/icones/criar-3.svg"
           role="button"
           @click="criar"
+          class="botao-criar"
         />
       </div>
       <div class="d-flex justify-content-center">
@@ -108,6 +109,13 @@ main {
 @media screen and (max-width: 991px) {
   main {
     grid-template-columns: 1fr;
+    .div-botao {
+      margin-top: -4rem !important;
+      width: 80px;
+      margin-inline: auto;
+      height: 80px;
+      filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.22));
+    }
 
     .footer {
       width: 100%;
