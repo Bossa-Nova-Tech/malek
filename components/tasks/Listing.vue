@@ -97,7 +97,8 @@ export default {
   },
   filters: {
     truncate(str) {
-      return str.substring(0, 8);
+      str = str.split(' ');
+      return str[0];
     },
   },
 

@@ -84,7 +84,7 @@
             <label for="phone">Telefone <span class="requerido">*</span></label>
             <b-form-input
               v-model="formData.phone"
-              v-mask="['(##) ####-####', '(##) # ####-####']"
+              v-mask="['(##) ####-####', '(##) #####-####']"
               name="phone"
               placeholder="(00) 0 0000-0000"
               :class="{
@@ -310,7 +310,7 @@ export default {
       },
       phone: {
         required,
-        minLength: minLength(9),
+        minLength: minLength(14),
       },
       email: {
         required,
@@ -336,7 +336,11 @@ export default {
           await this.$axios
             .post('customers', this.$data.formData)
             .then((_res) => {
-              this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+              this.toast(
+                'success',
+                'Sucesso',
+                'Cliente adicionado com sucesso!',
+              );
               this.formData = {
                 type: null,
                 name: null,

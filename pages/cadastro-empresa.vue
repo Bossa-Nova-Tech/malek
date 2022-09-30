@@ -102,7 +102,7 @@
           <label for="phone">Telefone <span class="requerido">*</span></label>
           <b-form-input
             v-model="formData.phone"
-            v-mask="['(##) # ####-####']"
+            v-mask="['(##) ####-####', '(##) #####-####']"
             name="phone"
             placeholder="(00) 0 0000-0000"
             :class="{
@@ -393,7 +393,7 @@ export default {
       name: { required },
       last_name: { required },
       cnpj: { required, minLength: minLength(13) },
-      phone: { required, minLength: minLength(11) },
+      phone: { required, minLength: minLength(14) },
       email: { required, email },
       password: { required, minLength: minLength(8) },
       confirm_password: { required, sameAsPassword: sameAs('password') },
