@@ -19,7 +19,7 @@
             <h2 v-if="!$screen.lg" class="primary-80 pb-1">
               #{{ itemOrdem.id }} {{ itemOrdem.services }}
             </h2>
-            <p class="gray-40">{{ itemOrdem.name_customer }}</p>
+            <p class="gray-40">{{ itemOrdem.name_customer | truncate() }}</p>
           </div>
         </div>
         <div class="d-flex flex-column align-items-end">
@@ -56,12 +56,14 @@
 </template>
 
 <script>
+import Vue2Filters from 'vue2-filters';
 import Edit from './Edit.vue';
 import Delete from '~/components/tasks/Delete.vue';
 import Finished from '~/components/tasks/Finished.vue';
 
 export default {
   name: 'ListingFuture',
+  mixins: [Vue2Filters.mixin],
   components: { Delete, Finished, Edit },
   props: {
     tasksData: {
@@ -76,6 +78,12 @@ export default {
       id: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
+  },
+  filters: {
+    truncate(str) {
+      str = str.split(' ');
+      return str[0];
+    },
   },
 
   methods: {
