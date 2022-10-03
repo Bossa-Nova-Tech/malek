@@ -336,7 +336,7 @@
     <div class="row justify-content-center">
       <button class="col col-lg-4 mb-4" :disabled="formSend" @click="register">
         <b-spinner v-if="formSend" small type="grow" />
-        Avançar
+        Finalizar
       </button>
     </div>
     <!-- <b-button v-b-modal="'modal-center'">Show Modal</b-button> -->
@@ -455,14 +455,14 @@ export default {
         console.log(this.formData);
 
         try {
-          this.formSend = false;
           this.$v.$reset();
 
           await this.$axios
-            .post('companies', this.$data.formData)
-            .then((_res) => {
-              this.$refs['modal-center'].show();
-            })
+          .post('companies', this.$data.formData)
+          .then((_res) => {
+            this.$refs['modal-center'].show();
+            this.formSend = false;
+          })
             .catch((_err) => {});
         } catch (error) {
           console.log(error);

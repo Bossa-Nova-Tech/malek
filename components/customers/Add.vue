@@ -402,6 +402,9 @@ export default {
       };
       this.reader.readAsDataURL(file);
     },
+    onFileSelected(event) {
+      this.selectedFile = event.target.files[0];
+    },
   },
 };
 </script>
