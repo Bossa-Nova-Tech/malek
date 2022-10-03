@@ -76,51 +76,47 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-row>
-        <b-col cols="6">
-          <b-form-group class="mb-4">
-            <label for="phone">Telefone <span class="requerido">*</span></label>
-            <b-form-input
-              v-model="formData.phone"
-              v-mask="['(##) ####-####', '(##) #####-####']"
-              name="phone"
-              placeholder="(00) 0 0000-0000"
-              :class="{
-                'is-invalid': $v.formData.phone.$error,
-              }"
-            />
-            <b-form-invalid-feedback>
-              {{
-                !$v.formData.phone.minLength
-                  ? 'Insira um telefone válido'
-                  : 'Preencha o campo acima'
-              }}
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
+      <div class="grid">
+        <b-form-group class="mb-4">
+          <label for="phone">Telefone <span class="requerido">*</span></label>
+          <b-form-input
+            v-model="formData.phone"
+            v-mask="['(##) ####-####', '(##) #####-####']"
+            name="phone"
+            placeholder="(00) 0 0000-0000"
+            :class="{
+              'is-invalid': $v.formData.phone.$error,
+            }"
+          />
+          <b-form-invalid-feedback>
+            {{
+              !$v.formData.phone.minLength
+                ? 'Insira um telefone válido'
+                : 'Preencha o campo acima'
+            }}
+          </b-form-invalid-feedback>
+        </b-form-group>
 
-        <b-col cols="6">
-          <b-form-group class="mb-4">
-            <label for="email">E-mail <span class="requerido">*</span></label>
-            <b-form-input
-              v-model="formData.email"
-              name="email"
-              type="email"
-              placeholder="email@gmail.com"
-              :class="{
-                'is-invalid': $v.formData.email.$error,
-              }"
-            />
-            <b-form-invalid-feedback>
-              {{
-                !$v.formData.email.email
-                  ? 'Insira um e-mail válido'
-                  : 'Preencha o campo acima'
-              }}
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
-      </b-row>
+        <b-form-group class="mb-4">
+          <label for="email">E-mail <span class="requerido">*</span></label>
+          <b-form-input
+            v-model="formData.email"
+            name="email"
+            type="email"
+            placeholder="email@gmail.com"
+            :class="{
+              'is-invalid': $v.formData.email.$error,
+            }"
+          />
+          <b-form-invalid-feedback>
+            {{
+              !$v.formData.email.email
+                ? 'Insira um e-mail válido'
+                : 'Preencha o campo acima'
+            }}
+          </b-form-invalid-feedback>
+        </b-form-group>
+      </div>
 
       <BorderButton class="my-4">
         <input
@@ -400,5 +396,18 @@ export default {
 <style lang="scss" scoped>
 .requerido {
   color: var(--red-50);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.875rem;
+}
+
+@media screen and (max-width: 991px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0rem;
+  }
 }
 </style>
