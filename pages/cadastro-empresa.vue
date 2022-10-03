@@ -295,6 +295,7 @@
             </b-form-group>
           </b-col>
         </b-row>
+
         <b-form-file
           id="file"
           v-model="formData.photo"
@@ -354,6 +355,7 @@
         </div>
       </b-modal>
     </div>
+    <pre>{{ formData }}</pre>
   </b-container>
 </template>
 
@@ -428,12 +430,9 @@ export default {
 
   methods: {
     excluiFoto() {
-      if (this.formData.photo) {
-        this.formData = {
-          photo: null,
-        };
-      }
+      this.formData.photo = null;
     },
+
     onFileChange(e) {
       this.files = e.target.files || e.dataTransfer.files;
       if (!this.files.length) return;
