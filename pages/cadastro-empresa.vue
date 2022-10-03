@@ -355,7 +355,6 @@
         </div>
       </b-modal>
     </div>
-    <pre>{{ formData }}</pre>
   </b-container>
 </template>
 
