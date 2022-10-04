@@ -10,8 +10,8 @@
         <b-img
           src="~/assets/img/icones/criar-4.svg"
           role="button"
-          @click="criar"
           class="botao-criar"
+          @click="criar"
         />
       </div>
       <div class="d-flex justify-content-center">
@@ -115,6 +115,20 @@ main {
       margin-inline: auto;
       height: 80px;
       filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.22));
+      animation: criar 1.5s ease-in-out;
+    }
+    @keyframes criar {
+      0% {
+        scale: 0;
+      }
+
+      50% {
+        scale: 1.2;
+      }
+      100% {
+        transform: rotate(1deg);
+        scale: 1;
+      }
     }
 
     .footer {

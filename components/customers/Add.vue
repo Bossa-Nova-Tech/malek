@@ -334,6 +334,12 @@ export default {
       },
     },
   },
+  filters: {
+    truncate(str) {
+      str = str.split(' ');
+      return str[0];
+    },
+  },
 
   methods: {
     async saveCustomer(_response) {

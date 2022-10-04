@@ -51,9 +51,12 @@
           <b-form-select-option
             v-for="customer in customers"
             :key="customer.id"
-            :value="customer.name"
-            >{{ customer.name }}
-            <span v-if="customer.cnpj !== null">PJ</span>
+            :value="customer.name + ' pessoa ' + customer.type"
+          >
+            <!-- <span v-if="customer.type === 'f'">
+              {{ customer.name | truncate() }}
+            </span> -->
+            {{ customer.name }}
           </b-form-select-option>
         </b-form-select>
 
@@ -160,13 +163,14 @@
 </template>
 
 <script>
+import Vue2Filters from 'vue2-filters';
 import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 export default {
   name: 'Add',
   directives: { mask },
-  mixins: [validationMixin],
+  mixins: [validationMixin, Vue2Filters.mixin],
   props: {
     watching: {
       type: Number,
@@ -235,7 +239,14 @@ export default {
       this.customers = customer;
     },
   },
-
+  filters: {
+    truncate(data) {
+      const reqdString = data.split('');
+      const teste = data.split(' ');
+      console.log(reqdString);
+      return teste[0];
+    },
+  },
   /* async mounted() {
     const { data } = await this.$axios.get('customers');
     const customer = data;

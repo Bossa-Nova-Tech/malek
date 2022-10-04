@@ -149,11 +149,12 @@ export default {
   publicRuntimeConfig: {},
   privateRuntimeConfig: {},
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/scss/index.scss'],
+  css: ['~/assets/scss/index.scss', 'element-ui/lib/theme-chalk/index.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~plugins/helpers.js',
+    '@/plugins/element-ui',
     '~plugins/vue-the-mask.js',
     { src: '~/plugins/vue-screen.client.js', mode: 'client' },
     '~plugins/teste.js',

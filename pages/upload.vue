@@ -295,41 +295,41 @@
             </b-form-group>
           </b-col>
         </b-row>
-
-        <b-form-file
-          id="file"
-          v-model="formData.photo"
-          accept="image/jpeg, image/png, image/jpg"
-          plain
-          :class="{ 'is-invalid': $v.formData.photo.$error }"
-          @change="onFileChange"
-        ></b-form-file>
-        <b-form-feedback class="text-center h5">
-          Envio necessário. Clique abaixo para fazer o upload da sua logo.
-        </b-form-feedback>
-        <div class="campo-foto">
-          <label v-if="!formData.photo" for="file">
-            <div
-              class="d-flex flex-column justify-content-center align-items-center"
-            >
-              <b-img src="~/assets/img/icones/upload.svg" />
-              <p>Clique para enviar sua logo</p>
-              <span>PNG, JPG (tamanho máximo X)</span>
-            </div>
-          </label>
-          <div
-            v-else
+        <div v-if="!formData.logo" for="file" class="campo-foto">
+          <el-upload
+            v-model="formData.logo"
+            action="#"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :on-remove="handleRemove"
+            :before-upload="beforeAvatarUpload"
+            :class="{ 'is-invalid': $v.formData.logo.$error }"
             class="d-flex flex-column justify-content-center align-items-center"
           >
-            <b-img
-              src="~/assets/img/icones/delete-icon.svg"
-              role="button"
-              class="ml-5 pl-5 pb-2"
-              @click="excluiFoto"
-            />
-            <img :src="formData.photo" alt="" width="100" class="pb-5" />
-          </div>
+            <b-form-feedback class="text-center h5">
+              Envio necessário. Clique abaixo para fazer o upload da sua logo.
+            </b-form-feedback>
+            <b-img src="~/assets/img/icones/upload.svg" />
+            <p>Clique para enviar sua logo</p>
+            <span>PNG, JPG (tamanho máximo X)</span>
+          </el-upload>
         </div>
+
+        <div
+          v-else
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <b-img
+            src="~/assets/img/icones/delete-icon.svg"
+            role="button"
+            class="ml-5 pl-5 pb-2"
+            @click="excluiFoto"
+          />
+          <img :src="formData.logo" alt="" width="100" class="avatar pb-5" />
+        </div>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="formData.logo" alt="" />
+        </el-dialog>
       </b-form>
     </main>
 
@@ -371,6 +371,9 @@ export default {
 
   data: () => {
     return {
+      dialogImageUrl: '',
+      dialogVisible: false,
+      disabled: false,
       file: null,
       files: null,
       reader: null,
@@ -392,7 +395,7 @@ export default {
         number: null,
         complement: null,
         address: null,
-        photo: null,
+        logo: null,
       },
     };
   },
@@ -413,7 +416,7 @@ export default {
       number: { required },
       fantasy_name: { required },
       address: { required },
-      photo: { required },
+      logo: { required },
     },
   },
   head() {
@@ -428,8 +431,31 @@ export default {
   },
 
   methods: {
+    handlePictureCardPreview(file) {
+      this.formData.logo = file.url;
+      this.dialogVisible = true;
+    },
+    handleAvatarSuccess(res, file) {
+      this.formData.logo = URL.createObjectURL(file.raw);
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isPNG = file.type === 'image/png';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!(isJPG || isPNG)) {
+        this.$message.error('A logo de ser em formato jpeg ou png!');
+      }
+      if (!isLt2M) {
+        this.$message.error('Avatar picture size can not exceed 2MB!');
+      }
+      return (isPNG || isJPG) && isLt2M;
+    },
     excluiFoto() {
-      this.formData.photo = null;
+      this.formData.logo = null;
     },
 
     onFileChange(e) {
@@ -441,7 +467,7 @@ export default {
       this.reader = new FileReader();
       this.vm = this;
       this.reader.onload = (e) => {
-        this.vm.formData.photo = e.target.result;
+        this.vm.formData.logo = e.target.result;
       };
       this.reader.readAsDataURL(file);
     },
@@ -498,34 +524,32 @@ label {
 }
 
 .campo-foto {
-  label {
-    display: grid;
-    justify-items: center;
-    padding: 3.125rem;
-    background-color: var(--gray-10);
-    border-radius: 1.5625rem;
-    margin-bottom: 2rem;
+  display: grid;
+  justify-items: center;
+  padding: 3.125rem;
+  background-color: var(--gray-10);
+  border-radius: 1.5625rem;
+  margin-bottom: 2rem;
 
-    img {
-      padding-bottom: 2.5rem;
-    }
+  img {
+    padding-bottom: 2.5rem;
+  }
 
-    p {
-      font-weight: 500;
-      font-size: 0.875rem;
-      line-height: 150%;
-      text-decoration-line: underline;
-      color: var(--gray-40);
-      padding-bottom: 0.3125rem;
-    }
+  p {
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 150%;
+    text-decoration-line: underline;
+    color: var(--gray-40);
+    padding-bottom: 0.3125rem;
+  }
 
-    span {
-      font-weight: 400;
-      font-size: 0.75rem;
-      line-height: 150%;
-      color: var(--gray-40);
-      padding-bottom: 2.5rem;
-    }
+  span {
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 150%;
+    color: var(--gray-40);
+    padding-bottom: 2.5rem;
   }
 }
 </style>
