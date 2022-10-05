@@ -64,12 +64,20 @@ import Finished from '~/components/tasks/Finished.vue';
 export default {
   name: 'ListingFuture',
   components: { Delete, Finished, Edit },
+
   filters: {
-    truncate(str) {
-      str = str.split(' ');
-      return str[0];
+    truncate(data) {
+      const search = 'pessoa f';
+      if (data.match(search)) {
+        const str = data.split(' ');
+        return str[0];
+      } else {
+        const str = data.replace('pessoa pj', '');
+        return str + ' PJ';
+      }
     },
   },
+
   mixins: [Vue2Filters.mixin],
   props: {
     tasksData: {

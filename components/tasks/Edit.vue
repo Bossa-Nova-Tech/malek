@@ -56,9 +56,9 @@
           <b-form-select-option
             v-for="customer in customers"
             :key="customer.id"
-            :value="customer.name"
-            >{{ customer.name }}
-            <span v-if="customer.cnpj !== null">PJ</span>
+            :value="customer.name + ' pessoa ' + customer.type"
+          >
+            {{ customer.name }}
           </b-form-select-option>
         </b-form-select>
 

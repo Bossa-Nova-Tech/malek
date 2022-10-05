@@ -53,9 +53,6 @@
             :key="customer.id"
             :value="customer.name + ' pessoa ' + customer.type"
           >
-            <!-- <span v-if="customer.type === 'f'">
-              {{ customer.name | truncate() }}
-            </span> -->
             {{ customer.name }}
           </b-form-select-option>
         </b-form-select>
@@ -170,6 +167,14 @@ import { mask } from 'vue-the-mask';
 export default {
   name: 'Add',
   directives: { mask },
+  filters: {
+    truncate(data) {
+      const reqdString = data.split('');
+      const teste = data.split(' ');
+      console.log(reqdString);
+      return teste[0];
+    },
+  },
   mixins: [validationMixin, Vue2Filters.mixin],
   props: {
     watching: {
@@ -237,14 +242,6 @@ export default {
       const customer = data;
       console.log(customer);
       this.customers = customer;
-    },
-  },
-  filters: {
-    truncate(data) {
-      const reqdString = data.split('');
-      const teste = data.split(' ');
-      console.log(reqdString);
-      return teste[0];
     },
   },
   /* async mounted() {

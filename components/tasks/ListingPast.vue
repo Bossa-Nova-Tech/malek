@@ -65,7 +65,6 @@
 
 <script>
 import Vue2Filters from 'vue2-filters';
-
 import Edit from './Edit.vue';
 import Delete from '~/components/tasks/Delete.vue';
 import Finished from '~/components/tasks/Finished.vue';
@@ -75,9 +74,15 @@ export default {
 
   components: { Delete, Finished, Edit },
   filters: {
-    truncate(str) {
-      str = str.split(' ');
-      return str[0];
+    truncate(data) {
+      const search = 'pessoa f';
+      if (data.match(search)) {
+        const str = data.split(' ');
+        return str[0];
+      } else {
+        const str = data.replace('pessoa pj', '');
+        return str + ' PJ';
+      }
     },
   },
   mixins: [Vue2Filters.mixin],

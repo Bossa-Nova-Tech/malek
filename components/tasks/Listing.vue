@@ -72,6 +72,18 @@ import Finished from '~/components/tasks/Finished.vue';
 export default {
   name: 'Listing',
   components: { Delete, Finished, Edit },
+  filters: {
+    truncate(data) {
+      const search = 'pessoa f';
+      if (data.match(search)) {
+        const str = data.split(' ');
+        return str[0];
+      } else {
+        const str = data.replace('pessoa pj', '');
+        return str + ' PJ';
+      }
+    },
+  },
   mixins: [Vue2Filters.mixin],
   props: {
     tasksData: {
@@ -94,18 +106,6 @@ export default {
       id: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
-  },
-  filters: {
-    truncate(data) {
-      const search = 'pessoa f';
-      if (data.match(search)) {
-        const str = data.split(' ');
-        return str[0];
-      } else {
-        const str = data.replace('pessoa pj', '');
-        return str + ' PJ';
-      }
-    },
   },
 
   methods: {
