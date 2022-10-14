@@ -24,6 +24,10 @@ export default {
       type: Number,
       default: null,
     },
+    watching: {
+      type: Number,
+      default: null,
+    },
   },
   /* mounted() {
     console.log('chamou o delete', this.excluir.id);
@@ -42,8 +46,10 @@ export default {
             if (_res.data.result === 'success') {
               console.log(ordem.id + ' excluido');
               this.toast('success', 'Sucesso', 'Item excluído!');
-              this.$refs.excluir.hide();
               this.$nuxt.refresh();
+              this.$nextTick(function () {
+                this.$bvModal.hide(`excluir-${this.id}`);
+              });
             } else {
               this.toast(
                 'danger',

@@ -109,17 +109,6 @@ export default {
   },
 
   methods: {
-    cortaPalavra(itemOrdem) {
-      this.espaco = itemOrdem.name_customer;
-      if (itemOrdem) {
-        this.indice = this.espaco.indexOf(' ');
-        this.tamanho = this.espaco.length;
-        this.espaco = this.espaco.split('').reverse().join('');
-        this.espaco = this.espaco.slice(this.tamanho - this.indice);
-        this.espaco = this.espaco.split('').reverse().join('');
-      }
-      itemOrdem.name_customer = this.espaco;
-    },
     showConcluir(itemOrdem) {
       this.id = itemOrdem.id;
       this.$nextTick(function () {
