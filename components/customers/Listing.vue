@@ -90,7 +90,7 @@ export default {
     showEditar(customer) {
       this.id = customer.id;
       this.$nextTick(function () {
-        this.$bvModal.show(`update-task-${customer.id}`);
+        this.$bvModal.show(`update-client-${customer.id}`);
       });
       this.clienteDaLista = customer;
     },

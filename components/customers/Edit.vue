@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    :id="'update-task-' + clienteDaLista.id"
-    :ref="'update-task-' + clienteDaLista.id"
+    :id="'update-client-' + clienteDaLista.id"
+    :ref="'update-client-' + clienteDaLista.id"
     size="lg"
     hide-footer
     hide-header
@@ -13,7 +13,7 @@
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
-          @click="$bvModal.hide('update-task-' + clienteDaLista.id)"
+          @click="$bvModal.hide('update-client-' + clienteDaLista.id)"
         />
       </div>
       <b-form-group class="mb-4">
@@ -323,11 +323,11 @@ export default {
   },
   watch: {
     watching() {
-      this.setDataFormWithTask();
+      this.setDataFormWithClient();
     },
   },
   methods: {
-    setDataFormWithTask() {
+    setDataFormWithClient() {
       this.formData.name = this.clienteDaLista.name;
       this.formData.type = this.clienteDaLista.type;
       this.formData.cnpj = this.clienteDaLista.cnpj;
@@ -361,7 +361,7 @@ export default {
               console.log('sucesso');
               this.$root.$emit(
                 'bv::hide::modal',
-                `update-task-${this.clienteDaLista.id}`,
+                `update-client-${this.clienteDaLista.id}`,
               );
 
               // this.$refs.criar.hide();
