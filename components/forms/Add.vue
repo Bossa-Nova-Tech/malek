@@ -2,7 +2,7 @@
   <b-modal id="criar" ref="criar" size="lg" hide-header hide-footer>
     <div class="mx-4">
       <div class="d-flex justify-content-between">
-        <h1 class="mt-4 mb-5">Criar Serviço</h1>
+        <h1 class="mt-4 mb-5">Criar Formulário</h1>
 
         <img
           src="~/assets/img/icones/X-icon.svg"
@@ -21,40 +21,10 @@
         </b-form-input>
       </b-form-group>
 
-      <div class="mb-4">
-        <label for="time_of_execution"
-          >Duração média da tarefa <span class="requerido">*</span></label
-        >
-        <b-input-group>
-          <b-form-input
-            id="time_of_execution"
-            v-model="formData.time_of_execution"
-            v-mask="['##:##:##']"
-            placeholder="00h:00m00s"
-          ></b-form-input>
-          <b-input-group-append>
-            <b-form-timepicker
-              v-model="formData.time_of_execution"
-              button-only
-              right
-              show-seconds
-              locale="br"
-              label-close-button="fechar"
-              label-no-time-selected="selecione o tempo"
-              aria-controls="time_of_execution"
-              :class="{ 'is-invalid': $v.formData.time_of_execution.$error }"
-            ></b-form-timepicker>
-          </b-input-group-append>
-        </b-input-group>
-        <b-form-invalid-feedback>
-          Preencha o campo acima
-        </b-form-invalid-feedback>
-      </div>
-
       <b-form-checkbox
-        v-model="formData.need_signature"
+        v-model="formData.is_required"
         class="checkbox mb-4 d-flex align-items-center"
-        >É necessário coletar assinatura durante visita.</b-form-checkbox
+        >É Obrigatório</b-form-checkbox
       >
 
       <b-form-checkbox
@@ -66,7 +36,7 @@
       <b-form-checkbox
         v-model="formData.additional_form"
         class="checkbox mb-4 d-flex align-items-center"
-        >Formulário para personalização de Ordem de Serviços
+        >Formulário para personalização de Ordem de Formulários
       </b-form-checkbox>
 
       <div class="w-100 mb-4 col-12 px-0">
@@ -98,18 +68,17 @@ export default {
     return {
       customers: [],
       formSend: false,
-      formulario: null,
+      servico: null,
       formData: {
         estimated_value: 11.5,
-        description: 'Breve descrição do serviço',
+        description: 'Breve descrição do Formulário',
         guarantee: 10,
         status: null,
+        need_signature: false,
         time_of_execution: null,
         name: null,
-        company_id: 1,
-        need_signature: false,
         send_to_email: false,
-        additional_form: false,
+        company_id: 1,
       },
     };
   },
@@ -145,19 +114,18 @@ export default {
               this.toast(
                 'success',
                 'Sucesso',
-                'Serviço cadastrado com sucesso!',
+                'Formulário cadastrado com sucesso!',
               );
               this.formData = {
                 estimated_value: null,
                 description: null,
                 guarantee: null,
                 status: null,
+                need_signature: false,
                 time_of_execution: null,
                 name: null,
-                company_id: 1,
                 send_to_email: false,
-                need_signature: false,
-                additional_form: false,
+                company_id: 1,
               };
               /* this.$router.go(0); */
             });

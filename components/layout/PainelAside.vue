@@ -158,6 +158,20 @@
           <p>Colaboradores</p>
         </NuxtLink>
       </li>
+      <li>
+        <NuxtLink to="/tipos-de-servicos">
+          <b-img src="~/assets/img/icones/service-icon.svg"></b-img>
+
+          <p>Serviços</p>
+        </NuxtLink>
+      </li>
+      <li>
+        <NuxtLink to="/formularios">
+          <b-img src="~/assets/img/icones/form-icon.svg"></b-img>
+
+          <p>Formulários</p>
+        </NuxtLink>
+      </li>
     </ul>
 
     <div
@@ -196,7 +210,7 @@ aside {
   padding-left: 3rem;
   ul {
     display: grid;
-    gap: 20px;
+    gap: 10px;
     li :hover {
       background-color: var(--primary-20);
       border-radius: 0.5rem;

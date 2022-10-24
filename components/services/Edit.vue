@@ -10,7 +10,6 @@
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Editar Serviço</h1>
-        {{ servicoSelecionado.id }} {{ servicoSelecionado.name }}
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
@@ -69,6 +68,11 @@
         class="checkbox mb-4 d-flex align-items-center"
         >Enviar automaticamente por e-mail
       </b-form-checkbox>
+      <b-form-checkbox
+        v-model="formData.additional_form"
+        class="checkbox mb-4 d-flex align-items-center"
+        >Formulário para personalização de Ordem de Serviços
+      </b-form-checkbox>
 
       <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click="edit">
@@ -112,6 +116,7 @@ export default {
         name: null,
         send_to_email: false,
         company_id: null,
+        additional_form: false,
       },
     };
   },
@@ -141,6 +146,7 @@ export default {
       this.formData.need_signature = this.servicoSelecionado.need_signature;
       this.formData.status = this.servicoSelecionado.status;
       this.formData.send_to_email = this.servicoSelecionado.send_to_email;
+      this.formData.additional_form = this.servicoSelecionado.additional_form;
     },
     async edit(_response) {
       const servico = await this.$parent.servicoSelecionado;

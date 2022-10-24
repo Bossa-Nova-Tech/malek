@@ -123,7 +123,7 @@ export default {
           await this.$auth.loginWith('laravelJWT', {
             data: { email, password },
           });
-
+            
           this.formSend = false;
 
           if (this.$auth.$state.loggedIn) {

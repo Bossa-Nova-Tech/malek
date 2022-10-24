@@ -1,6 +1,6 @@
 <template>
   <section class="rounded">
-    <h1 class="p-4">Serviços cadastrados</h1>
+    <h1 class="p-4">Formulários cadastrados</h1>
     <ul>
       <li
         v-for="(servicoLista, index) in servicesData"
@@ -40,7 +40,7 @@
             />
           </div>
         </div>
-        <Edit :servicoSelecionado="servicoLista" :watching="id" />
+        <Edit :servico-selecionado="servicoLista" :watching="id" />
       </li>
       <Delete :id="id" />
     </ul>

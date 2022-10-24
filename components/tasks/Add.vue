@@ -13,19 +13,29 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="template">Template <span class="requerido">*</span></label>
+        <label for="service">Serviço <span class="requerido">*</span></label>
         <b-form-select
-          v-model="formData.template"
-          name="template"
-          :options="optionsTemplate"
-          :class="{ 'is-invalid': $v.formData.template.$error }"
-        />
+          v-model="formData.services"
+          name="service"
+          :class="{ 'is-invalid': $v.formData.services.$error }"
+        >
+          <b-form-select-option :value="null" desabled
+            >Selecione</b-form-select-option
+          >
+          <b-form-select-option
+            v-for="service in services"
+            :key="service.id"
+            :value="service.name"
+          >
+            {{ service.name }}
+          </b-form-select-option>
+        </b-form-select>
+
         <b-form-invalid-feedback>
           Selecione uma opção.
         </b-form-invalid-feedback>
       </b-form-group>
-
-      <b-form-group class="mb-4">
+      <!-- b-form-group class="mb-4">
         <label for="services">Serviço <span class="requerido">*</span></label>
         <b-form-select
           v-model="formData.services"
@@ -36,7 +46,7 @@
         <b-form-invalid-feedback>
           Selecione uma opção.
         </b-form-invalid-feedback>
-      </b-form-group>
+      </b-form-group> -->
 
       <b-form-group class="mb-4">
         <label for="customer">Cliente <span class="requerido">*</span></label>
@@ -186,6 +196,7 @@ export default {
     return {
       format: 'DD-MM-YYYY',
       customers: [],
+      services: [],
       formSend: false,
       ordem: null,
       formData: {
@@ -198,32 +209,6 @@ export default {
         template: null,
         services: null,
       },
-
-      optionsServices: [
-        {
-          value: null,
-          text: 'Selecione',
-        },
-        {
-          value: 'Manutenção de ar condicionado',
-          text: 'Manutenção de ar condicionado',
-        },
-        {
-          value: 'Instalação de ar condicionado',
-          text: 'Instalação de ar condicionado',
-        },
-      ],
-
-      optionsTemplate: [
-        {
-          value: null,
-          text: 'Selecione',
-        },
-        {
-          value: 'Refrigeração',
-          text: 'Refrigeração',
-        },
-      ],
     };
   },
 
@@ -239,9 +224,12 @@ export default {
   watch: {
     async watching() {
       const { data } = await this.$axios.get('customers');
+      /* const service = await this.$axios.get('services'); */
       const customer = data;
-      console.log(customer);
       this.customers = customer;
+      console.log('custumer' + customer);
+      /* this.services = service;
+      console.log('servicesn' + this.services); */
     },
   },
   /* async mounted() {

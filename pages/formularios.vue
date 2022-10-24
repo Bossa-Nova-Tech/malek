@@ -15,21 +15,21 @@
         />
       </div>
       <div>
-        <Listing :watching="telaName" :services-data="servicesData" />
+        <Listing :watching="telaName" :forms-data="formsData" />
         <Add />
       </div>
       <div class="footer">
-        <button @click="criar">Criar Serviço</button>
+        <button @click="criar">Criar Formulário</button>
       </div>
     </main>
   </div>
 </template>
 
 <script>
-import Add from '~/components/services/Add.vue';
+import Add from '~/components/forms/Add.vue';
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 import PainelAside from '~/components/layout/PainelAside.vue';
-import Listing from '~/components/services/Listing.vue';
+import Listing from '~/components/forms/Listing.vue';
 
 export default {
   components: {
@@ -38,21 +38,21 @@ export default {
     PainelHeader,
     PainelAside,
   },
-  async asyncData({ $axios }) {
-    const services = await $axios.get('services');
-    const servicesData = services.data;
-    return { servicesData };
-  },
+  /* async asyncData({ $axios }) {
+    const forms = await $axios.get('forms');
+    const formsData = forms.data;
+    return { formsData };
+  }, */
   data: () => {
     return {
-      telaName: 'Tipos de Serviços',
-      servicesData: [],
+      telaName: 'Formulários',
+      formsData: [],
     };
   },
 
   head() {
     return {
-      title: `Tipos de Serviços | ${process.env.title}`,
+      title: `Formulários | ${process.env.title}`,
     };
   },
   methods: {
