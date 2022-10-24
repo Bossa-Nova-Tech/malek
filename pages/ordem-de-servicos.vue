@@ -27,7 +27,7 @@
           <b-tab id="futuras" title="Futuras" class="mt-4">
             <ListingFuture :tasks-data="tasksDataFuture" />
           </b-tab>
-          <Add :watching="chamarCliente" />
+          <Add :watching="chamarCliente" :watching2="chamarCliente" />
 
           <div class="footer">
             <button class="" @click="criar">Criar Ordem de Serviço</button>

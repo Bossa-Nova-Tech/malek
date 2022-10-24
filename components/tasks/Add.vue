@@ -15,9 +15,9 @@
       <b-form-group class="mb-4">
         <label for="service">Serviço <span class="requerido">*</span></label>
         <b-form-select
-          v-model="formData.services"
+          v-model="formData.services_names"
           name="service"
-          :class="{ 'is-invalid': $v.formData.services.$error }"
+          :class="{ 'is-invalid': $v.formData.services_names.$error }"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -191,6 +191,10 @@ export default {
       type: Number,
       default: null,
     },
+    watching2: {
+      type: Number,
+      default: null,
+    },
   },
   data() {
     return {
@@ -207,14 +211,14 @@ export default {
         note: null,
         name_customer: null,
         template: null,
-        services: null,
+        services_names: null,
       },
     };
   },
 
   validations: {
     formData: {
-      services: { required },
+      services_names: { required },
       template: { required },
       end_date: { required },
       name_customer: { required },
@@ -224,12 +228,15 @@ export default {
   watch: {
     async watching() {
       const { data } = await this.$axios.get('customers');
-      /* const service = await this.$axios.get('services'); */
       const customer = data;
       this.customers = customer;
       console.log('custumer' + customer);
-      /* this.services = service;
-      console.log('servicesn' + this.services); */
+    },
+    async watching2() {
+      const { data } = await this.$axios.get('services');
+      const service = data;
+      this.services = service;
+      console.log('servicesn' + this.services);
     },
   },
   /* async mounted() {
