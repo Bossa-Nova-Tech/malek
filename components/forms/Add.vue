@@ -79,8 +79,6 @@
           </b-form-invalid-feedback>
         </b-form-group>
       </b-card>
-      <pre>{{ formData }}</pre>
-      <pre>{{ ask }}</pre>
       <b-button
         class="shadow-none mb-4 add_ask d-flex align-items-center"
         @click="adicionarPergunta"
@@ -129,6 +127,7 @@ import Vue2Filters from 'vue2-filters';
 import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
+
 export default {
   name: 'Add',
   directives: { mask },
@@ -148,7 +147,7 @@ export default {
         display_at: null,
         ask: [
           {
-            id: null,
+            id: 0,
             text: null,
             answer: null,
             type_of: null,
