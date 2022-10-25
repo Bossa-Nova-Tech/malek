@@ -19,25 +19,24 @@
         />
       </div>
       <b-form-group class="mb-4">
-        <label for="template">Template <span class="requerido">*</span></label>
+        <label for="service">Serviço <span class="requerido">*</span></label>
         <b-form-select
-          v-model="formData.template"
-          name="template"
-          :options="optionsTemplate"
-          :class="{ 'is-invalid': $v.formData.template.$error }"
-        />
-        <b-form-invalid-feedback>
-          Selecione uma opção.
-        </b-form-invalid-feedback>
-      </b-form-group>
-      <b-form-group class="mb-4">
-        <label for="services">Serviço <span class="requerido">*</span></label>
-        <b-form-select
-          v-model="formData.services"
-          name="services"
-          :options="optionsServices"
-          :class="{ 'is-invalid': $v.formData.services.$error }"
-        />
+          v-model="formData.services_names"
+          name="service"
+          :class="{ 'is-invalid': $v.formData.services_names.$error }"
+        >
+          <b-form-select-option :value="null" desabled
+            >Selecione</b-form-select-option
+          >
+          <b-form-select-option
+            v-for="service in services"
+            :key="service.id"
+            :value="service.name"
+          >
+            {{ service.name }}
+          </b-form-select-option>
+        </b-form-select>
+
         <b-form-invalid-feedback>
           Selecione uma opção.
         </b-form-invalid-feedback>
@@ -164,11 +163,16 @@ export default {
       type: Number,
       default: null,
     },
+    watching2: {
+      type: Number,
+      default: null,
+    },
   },
 
   data() {
     return {
       customers: [],
+      services: [],
       formSend: false,
       ordem: null,
       formData: {
@@ -178,42 +182,14 @@ export default {
         end_date: null,
         note: null,
         name_customer: null,
-        template: null,
-        services: null,
+        services_names: null,
       },
-
-      optionsServices: [
-        {
-          value: null,
-          text: 'Selecione',
-        },
-        {
-          value: 'Manutenção de ar condicionado',
-          text: 'Manutenção de ar condicionado',
-        },
-        {
-          value: 'Instalação de ar condicionado',
-          text: 'Instalação de ar condicionado',
-        },
-      ],
-
-      optionsTemplate: [
-        {
-          value: null,
-          text: 'Selecione',
-        },
-        {
-          value: 'Refrigeração',
-          text: 'Refrigeração',
-        },
-      ],
     };
   },
 
   validations: {
     formData: {
-      services: { required },
-      template: { required },
+      services_names: { required },
       end_date: { required },
       name_customer: { required },
       estimated_time: { required },
@@ -229,6 +205,12 @@ export default {
       console.log(customer);
       this.customers = customer;
     },
+    async watching2() {
+      const { data } = await this.$axios.get('services');
+      const service = data;
+      this.services = service;
+      console.log('servicesn' + this.services);
+    },
   },
 
   methods: {
@@ -241,6 +223,7 @@ export default {
       this.formData.note = this.ordem_item.note;
       this.formData.name_customer = this.ordem_item.name_customer;
       this.formData.template = this.ordem_item.template;
+      this.formData.services_names = this.ordem_item.services_names;
     },
     async edit(_response) {
       const ordem = await this.$parent.ordem_selecionada;

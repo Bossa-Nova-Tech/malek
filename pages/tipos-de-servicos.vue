@@ -17,9 +17,9 @@
       <div>
         <Listing :watching="telaName" :services-data="servicesData" />
         <Add />
-      </div>
-      <div class="footer">
-        <button @click="criar">Criar Serviço</button>
+        <div class="footer">
+          <button @click="criar">Criar Serviço</button>
+        </div>
       </div>
     </main>
   </div>

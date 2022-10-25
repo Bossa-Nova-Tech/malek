@@ -36,8 +36,8 @@
             <b-form-timepicker
               v-model="formData.time_of_execution"
               button-only
-              right
               show-seconds
+              right
               locale="br"
               label-close-button="fechar"
               label-no-time-selected="selecione o tempo"

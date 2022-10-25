@@ -219,7 +219,6 @@ export default {
   validations: {
     formData: {
       services_names: { required },
-      template: { required },
       end_date: { required },
       name_customer: { required },
       estimated_time: { required },

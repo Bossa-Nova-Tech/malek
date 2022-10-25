@@ -144,9 +144,19 @@ export default {
         this.servicoSelecionado.time_of_execution;
       this.formData.name = this.servicoSelecionado.name;
       this.formData.need_signature = this.servicoSelecionado.need_signature;
+      if (this.formData.need_signature === 1) {
+        this.formData.need_signature = true;
+      }
       this.formData.status = this.servicoSelecionado.status;
+
       this.formData.send_to_email = this.servicoSelecionado.send_to_email;
+      if (this.formData.send_to_email === 1) {
+        this.formData.send_to_email = true;
+      }
       this.formData.additional_form = this.servicoSelecionado.additional_form;
+      if (this.formData.additional_form === 1) {
+        this.formData.additional_form = true;
+      }
     },
     async edit(_response) {
       const servico = await this.$parent.servicoSelecionado;

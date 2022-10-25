@@ -17,9 +17,9 @@
       <div>
         <Listing :watching="telaName" :forms-data="formsData" />
         <Add />
-      </div>
-      <div class="footer">
-        <button @click="criar">Criar Formulário</button>
+        <div class="footer">
+          <button @click="criar">Criar Formulário</button>
+        </div>
       </div>
     </main>
   </div>
