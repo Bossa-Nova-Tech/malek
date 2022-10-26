@@ -15,7 +15,7 @@
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
-          @click="$bvModal.hide(`update-task-${ordem_item.id}`)"
+          @click.once="$bvModal.hide(`update-task-${ordem_item.id}`)"
         />
       </div>
       <b-form-group class="mb-4">
@@ -133,7 +133,7 @@
       >
 
       <div class="w-100 mb-4 col-12 px-0">
-        <button :disable="formSend" @click="edit">
+        <button :disable="formSend" @click.once="edit">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>

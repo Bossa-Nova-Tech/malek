@@ -13,7 +13,7 @@
           </p>
           <div class="ajuste">
             <h2 v-if="$screen.lg" class="primary-80 pb-1">
-              {{ itemOrdem.services }}
+              {{ itemOrdem.services_names }}
             </h2>
 
             <h2 v-if="!$screen.lg" class="primary-80 pb-1">

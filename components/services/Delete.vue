@@ -11,8 +11,8 @@
       <span class="font-weight-bolder">excluir</span> este registro?
     </p>
     <template #modal-footer>
-      <b-button variant="danger" @click="remove()">Sim</b-button>
-      <b-button @click="$bvModal.hide(`excluir-${id}`)">Não</b-button>
+      <b-button variant="danger" @click.once="remove()">Sim</b-button>
+      <b-button @click.once="$bvModal.hide(`excluir-${id}`)">Não</b-button>
     </template>
   </b-modal>
 </template>

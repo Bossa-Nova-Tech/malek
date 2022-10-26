@@ -160,7 +160,7 @@
         >É necessário coletar assinatura durante visita.</b-form-checkbox
       >
       <div class="w-100 mb-4 col-12 px-0">
-        <button :disable="formSend" @click="register">
+        <button :disable="formSend" @click.once="register">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>

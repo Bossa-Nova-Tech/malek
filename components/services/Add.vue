@@ -8,7 +8,7 @@
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
-          @click="$bvModal.hide('criar')"
+          @click.once="$bvModal.hide('criar')"
         />
       </div>
       <b-form-group class="mb-4">
@@ -70,7 +70,7 @@
       </b-form-checkbox>
 
       <div class="w-100 mb-4 col-12 px-0">
-        <button :disable="formSend" @click="register">
+        <button :disable="formSend" @click.once="register">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>
