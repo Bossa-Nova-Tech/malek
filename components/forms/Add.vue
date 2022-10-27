@@ -38,13 +38,22 @@
       </b-form-group>
 
       <b-card
+        v-for="(ask, index) in formData.ask"
         v-show="ask.id > 0"
-        v-for="ask in formData.ask"
         :key="ask.id"
+        :index="index"
         class="separador mb-3"
+        @remove="formData.ask.splice(ask.id, 1)"
       >
+        <div class="d-flex justify-content-end">
+          <b-img
+            role="button"
+            src="~/assets/img/icones/delete-icon.svg"
+            @click.once="deletAsk(index)"
+          />
+        </div>
         <b-form-group v-if="ask.id > 0" class="mb-4">
-          <label for="ask_text">Pergunta {{ ask.id }} </label>
+          <label for="ask_text">Pergunta </label>
           <b-form-input
             v-model="ask.text"
             name="ask_text"
@@ -71,16 +80,27 @@
               ask.type_of === 'Alternativas(radio)'
             "
           >
-            <p class="answer mt-3">Escreva as opções da resposta:</p>
+            <p class="answer mt-3 mb-2">Escreva as opções da resposta:</p>
             <b-form-group
-              v-for="answer_options in formData.answer_options"
+              v-for="(answer_options, index) in formData.answer_options"
               :key="answer_options.id"
+              :index="index"
             >
-              <b-form-input
-                name="answer_options"
-                v-model="answer_options.text"
-                placeholder="Opção de resposta"
-              ></b-form-input>
+              <div class="d-flex align-items-center">
+                <b-form-input
+                  v-model="answer_options.text"
+                  name="answer_options"
+                  placeholder="Opção de resposta"
+                ></b-form-input>
+                <div class="pl-2">
+                  <b-img
+                    role="button"
+                    fluid
+                    src="~/assets/img/icones/delete-icon.svg"
+                    @click.once="deletAnswer(index)"
+                  />
+                </div>
+              </div>
             </b-form-group>
 
             <b-button
@@ -168,6 +188,7 @@ export default {
   },
   data() {
     return {
+      id: null,
       counter: 0,
       counter_answer: 0,
       formSend: false,
@@ -266,7 +287,6 @@ export default {
     },
   },
 
-  options() {},
   methods: {
     adicionarPergunta() {
       this.formData.ask.push({
@@ -283,6 +303,12 @@ export default {
         text: null,
       });
       console.log(this.formData);
+    },
+    deletAsk(index) {
+      this.formData.ask.splice(index, 1);
+    },
+    deletAnswer(index) {
+      this.formData.answer_options.splice(index, 1);
     },
     async register(_response) {
       this.$v.formData.$touch();

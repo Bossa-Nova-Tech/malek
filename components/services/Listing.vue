@@ -40,7 +40,7 @@
             />
           </div>
         </div>
-        <Edit :servicoSelecionado="servicoLista" :watching="id" />
+        <Edit :servico-selecionado="servicoLista" :watching="id" />
       </li>
       <Delete :id="id" />
     </ul>
