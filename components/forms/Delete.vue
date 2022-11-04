@@ -11,7 +11,7 @@
       <span class="font-weight-bolder">excluir</span> este registro?
     </p>
     <template #modal-footer>
-      <b-button variant="danger" @click="remove()">Sim</b-button>
+      <b-button variant="danger" @click="remove">Sim</b-button>
       <b-button @click="$bvModal.hide(`excluir-${id}`)">Não</b-button>
     </template>
   </b-modal>
@@ -24,28 +24,18 @@ export default {
       type: Number,
       default: null,
     },
-    watching: {
-      type: Number,
-      default: null,
-    },
   },
-  /* mounted() {
-    console.log('chamou o delete', this.excluir.id);
-    const idRef = 'modal-' + this.excluir.id;
-    console.log(idRef);
-    return { idRef };
-  }, */
   methods: {
     async remove() {
-      const servico = await this.$parent.servicoSelecionado;
-      console.log(servico);
+      const forms = await this.$parent.formsSelecionado;
+      console.log(forms);
       try {
         await this.$axios
-          .delete('services/' + servico.id)
+          .delete('forms/' + forms.id)
           .then((_res) => {
             if (_res.data.result === 'success') {
-              console.log(servico.id + ' excluido');
-              this.toast('success', 'Sucesso', 'Item excluído!');
+              console.log(forms.id + ' excluido');
+              this.toast('success', 'Sucesso', 'Formulário excluído!');
               this.$nuxt.refresh();
               this.$nextTick(function () {
                 this.$bvModal.hide(`excluir-${this.id}`);

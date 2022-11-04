@@ -38,11 +38,11 @@ export default {
     PainelHeader,
     PainelAside,
   },
-  /* async asyncData({ $axios }) {
+  async asyncData({ $axios }) {
     const forms = await $axios.get('forms');
     const formsData = forms.data;
     return { formsData };
-  }, */
+  },
   data: () => {
     return {
       telaName: 'Formulários',

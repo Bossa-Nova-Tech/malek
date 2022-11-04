@@ -39,9 +39,7 @@
 
       <b-card
         v-for="(ask, index) in formData.ask"
-        v-show="ask.id > 0"
-        :key="ask.id"
-        :index="index"
+        :key="index"
         class="separador mb-3"
         @remove="formData.ask.splice(ask.id, 1)"
       >
@@ -52,7 +50,7 @@
             @click.once="deletAsk(index)"
           />
         </div>
-        <b-form-group v-if="ask.id > 0" class="mb-4">
+        <b-form-group class="mb-4">
           <label for="ask_text">Pergunta </label>
           <b-form-input
             v-model="ask.text"
@@ -65,14 +63,27 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group v-if="ask.id" class="mb-4">
+        <b-form-group class="mb-4">
           <label for="type_of_answer">Tipo de resposta</label>
           <b-form-radio-group
             v-model="ask.type_of"
             name="type_of_answer"
+            multiple
             :options="typeOfAnswer"
             class="d-flex flex-column"
           />
+          <pre>{{ formData.ask }}</pre>
+          <b-form-group class="mb-4">
+            <label for="required">A resposta é obrigatória?</label>
+            <b-form-radio-group
+              v-model="ask.is_required"
+              name="required"
+              :options="isRequired"
+            />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
+          </b-form-group>
           <div
             v-if="
               ask.type_of === 'Checkbox' ||
@@ -82,8 +93,9 @@
           >
             <p class="answer mt-3 mb-2">Escreva as opções da resposta:</p>
             <b-form-group
-              v-for="(answer_options, index) in formData.answer_options"
-              :key="answer_options.id"
+              v-for="(answer_options, index) in formData.ask[index]
+                .answer_options"
+              :key="index"
               :index="index"
             >
               <div class="d-flex align-items-center">
@@ -105,7 +117,7 @@
 
             <b-button
               class="shadow-none my-3 add_ask d-flex align-items-center"
-              @click="adicionarResposta"
+              @click="adicionarOpcaoDeResposta(index)"
             >
               <svg
                 width="26"
@@ -122,18 +134,6 @@
               <h3 class="p-0 m-0 ml-2">Adicionar opção</h3>
             </b-button>
           </div>
-        </b-form-group>
-
-        <b-form-group v-if="ask.id" class="mb-4">
-          <label for="required">A resposta é obrigatória?</label>
-          <b-form-radio-group
-            v-model="formData.ask.is_required"
-            name="required"
-            :options="isRequired"
-          />
-          <b-form-invalid-feedback>
-            Preencha o campo acima
-          </b-form-invalid-feedback>
         </b-form-group>
       </b-card>
 
@@ -155,7 +155,6 @@
         </svg>
         <h3 class="p-0 m-0 ml-2">Adicionar Perguntas</h3>
       </b-button>
-
       <b-form-checkbox
         v-model="formData.is_required"
         class="checkbox mb-4 d-flex align-items-center"
@@ -188,26 +187,19 @@ export default {
   },
   data() {
     return {
-      id: null,
+      option: null,
       counter: 0,
       counter_answer: 0,
       formSend: false,
       formData: {
         forms_name: null,
         display_at: null,
-        answer_options: [
-          {
-            id: 0,
-            text: null,
-          },
-        ],
         ask: [
           {
-            id: 0,
             text: null,
-            answer: null,
             type_of: null,
-            is_required: null,
+            is_required: false,
+            answer_options: [{ text: null }],
           },
         ],
       },
@@ -269,11 +261,11 @@ export default {
       ],
       isRequired: [
         {
-          value: 'Sim',
+          value: true,
           html: '<span style="color:#212529; font-weight:500; font-size:0.8rem;">Sim</span>',
         },
         {
-          value: 'Não',
+          value: false,
           html: '<span style="color:#212529; font-weight:500; font-size:0.8rem;">Não</span>',
         },
       ],
@@ -290,19 +282,16 @@ export default {
   methods: {
     adicionarPergunta() {
       this.formData.ask.push({
-        id: ++this.counter,
         text: null,
         type_of: null,
-        answer: null,
+        answer_options: null,
         is_required: null,
       });
+      console.log(this.formData.ask);
     },
-    adicionarResposta() {
-      this.formData.answer_options.push({
-        id: ++this.counter_answer,
-        text: null,
-      });
-      console.log(this.formData);
+    adicionarOpcaoDeResposta(index) {
+      this.formData.ask[index].answer_options.push({ text: null });
+      console.log(index);
     },
     deletAsk(index) {
       this.formData.ask.splice(index, 1);
@@ -320,28 +309,26 @@ export default {
           this.$v.formData.$reset();
           console.log('executou o clic');
 
-          await this.$axios
-            .post('services', this.$data.formData)
-            .then((_res) => {
-              this.$refs.criar.hide();
-              this.toast(
-                'success',
-                'Sucesso',
-                'Formulário cadastrado com sucesso!',
-              );
-              this.formData = {
-                estimated_value: null,
-                description: null,
-                guarantee: null,
-                status: null,
-                need_signature: false,
-                time_of_execution: null,
-                forms_name: null,
-                send_to_email: false,
-                company_id: 1,
-              };
-              /* this.$router.go(0); */
-            });
+          await this.$axios.post('forms', this.$data.formData).then((_res) => {
+            this.$refs.criar.hide();
+            this.toast(
+              'success',
+              'Sucesso',
+              'Formulário cadastrado com sucesso!',
+            );
+            this.formData = {
+              estimated_value: null,
+              description: null,
+              guarantee: null,
+              status: null,
+              need_signature: false,
+              time_of_execution: null,
+              forms_name: null,
+              send_to_email: false,
+              company_id: 1,
+            };
+            /* this.$router.go(0); */
+          });
           this.$nuxt.refresh().catch((_err) => {});
         } catch (error) {
           console.log(error);

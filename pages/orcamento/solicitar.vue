@@ -277,7 +277,12 @@ export default {
   components: { BorderButton },
   directives: { mask },
   mixins: [validationMixin],
-
+  props: {
+    budgetsData: {
+      type: Array,
+      default: null,
+    },
+  },
   data: () => {
     return {
       formSend: false,

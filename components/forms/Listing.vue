@@ -3,20 +3,20 @@
     <h1 class="p-4">Formulários cadastrados</h1>
     <ul>
       <li
-        v-for="(servicoLista, index) in servicesData"
+        v-for="(formsLista, index) in formsData"
         :key="index"
-        class="card-servico p-4"
+        class="card-forms p-4"
       >
         <div class="d-flex pb-3">
           <p v-if="$screen.lg" class="gray-40">
-            Serviço #{{ servicoLista.id }}
+            Formulário #{{ formsLista.id }}
           </p>
           <div class="ajuste">
             <h2 v-if="$screen.lg" class="primary-80 pb-1">
-              {{ servicoLista.name }}
+              {{ formsLista.name }}
             </h2>
             <h2 v-if="!$screen.lg" class="primary-80">
-              #{{ servicoLista.id }} {{ servicoLista.name }}
+              #{{ formsLista.id }} {{ formsLista.name }}
             </h2>
           </div>
         </div>
@@ -28,7 +28,7 @@
               class="mr-3"
               width="22"
               height="24"
-              @click="showEditar(servicoLista)"
+              @click="showEditar(formsLista)"
             />
 
             <img
@@ -36,11 +36,11 @@
               role="button"
               width="22"
               height="24"
-              @click="showExcluir(servicoLista)"
+              @click="showExcluir(formsLista)"
             />
           </div>
         </div>
-        <Edit :servico-selecionado="servicoLista" :watching="id" />
+        <Edit :forms-selecionado="formsLista" :watching="id" />
       </li>
       <Delete :id="id" />
     </ul>
@@ -49,13 +49,13 @@
 
 <script>
 import Edit from './Edit.vue';
-import Delete from '~/components/services/Delete.vue';
+import Delete from '~/components/forms/Delete.vue';
 
 export default {
   name: 'Listing',
   components: { Delete, Edit },
   props: {
-    servicesData: {
+    formsData: {
       type: Array,
       default: null,
     },
@@ -74,21 +74,21 @@ export default {
   },
 
   methods: {
-    showExcluir(servicoLista) {
-      this.id = servicoLista.id;
+    showExcluir(formsLista) {
+      this.id = formsLista.id;
       this.$nextTick(function () {
         this.$bvModal.show(`excluir-${this.id}`);
       });
-      this.servicoSelecionado = servicoLista;
+      this.formsSelecionado = formsLista;
     },
-    showEditar(servicoLista) {
+    showEditar(formsLista) {
       this.editar = true;
       if (this.editar === true) {
-        this.id = servicoLista.id;
+        this.id = formsLista.id;
         this.$nextTick(function () {
-          this.$bvModal.show(`update-service-${servicoLista.id}`);
+          this.$bvModal.show(`update-forms-${formsLista.id}`);
         });
-        this.servicoSelecionado = servicoLista;
+        this.formsSelecionado = formsLista;
       }
     },
   },
@@ -130,7 +130,7 @@ section {
     }
   }
 
-  .card-servico {
+  .card-forms {
     border-top: 0.5px solid var(--gray-20);
   }
 }
