@@ -194,6 +194,7 @@ export default {
     'vue-screen/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
+    'nuxt-leaflet',
     [
       '@netsells/nuxt-hotjar',
       {

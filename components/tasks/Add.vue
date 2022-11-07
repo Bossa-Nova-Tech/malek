@@ -54,6 +54,7 @@
           v-model="formData.name_customer"
           name="customer"
           :class="{ 'is-invalid': $v.formData.name_customer.$error }"
+          @click="wacthing"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -70,6 +71,16 @@
         <b-form-invalid-feedback>
           Selecione uma opção.
         </b-form-invalid-feedback>
+        <div class="d-flex py-3 align-items-center">
+          <h5 class="p-0">Cadastrar cliente</h5>
+          <b-img
+            src="~/assets/img/icones/criar-4.svg"
+            role="button"
+            class="pl-2"
+            @click="$bvModal.show('criar-cliente')"
+          />
+        </div>
+        <AddOrdem />
       </b-form-group>
 
       <div class="grid">
@@ -146,7 +157,7 @@
         </b-form-group>
       </div>
       <b-form-group class="mb-4">
-        <label for="note">Observação</label>
+        <label for="note">Descrição da Ordem de Serviço</label>
         <b-form-input
           v-model="formData.note"
           name="note"
@@ -154,11 +165,6 @@
         >
         </b-form-input>
       </b-form-group>
-      <b-form-checkbox
-        v-model="formData.need_signature"
-        class="checkbox mb-4 d-flex align-items-center"
-        >É necessário coletar assinatura durante visita.</b-form-checkbox
-      >
       <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click.once="register">
           <b-spinner v-if="formSend" small type="grow" />
@@ -174,9 +180,11 @@ import Vue2Filters from 'vue2-filters';
 import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
+import AddOrdem from '~/components/customers/AddOrdem.vue';
 export default {
   name: 'Add',
   directives: { mask },
+  components: { AddOrdem },
   filters: {
     truncate(data) {
       const reqdString = data.split('');
@@ -205,7 +213,6 @@ export default {
       ordem: null,
       formData: {
         status: null,
-        need_signature: false,
         estimated_time: null,
         end_date: null,
         note: null,
@@ -252,6 +259,7 @@ export default {
         console.log(this.formData);
         try {
           this.formSend = false;
+          this.formData.status = 'created';
           this.$v.formData.$reset();
           console.log('executou o clic');
 

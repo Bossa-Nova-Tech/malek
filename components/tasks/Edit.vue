@@ -118,7 +118,7 @@
         </b-form-group>
       </div>
       <b-form-group name="form-text" class="mb-4">
-        <label for="note">Observação</label>
+        <label for="note">Descrição da Ordem de Serviço</label>
         <b-form-textarea
           v-model="formData.note"
           name="note"
@@ -126,12 +126,6 @@
         >
         </b-form-textarea>
       </b-form-group>
-      <b-form-checkbox
-        v-model="formData.need_signature"
-        class="checkbox mb-4 d-flex align-items-center"
-        >É necessário coletar assinatura durante visita.</b-form-checkbox
-      >
-
       <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click.once="edit">
           <b-spinner v-if="formSend" small type="grow" />
@@ -177,7 +171,6 @@ export default {
       ordem: null,
       formData: {
         status: null,
-        need_signature: false,
         estimated_time: null,
         end_date: null,
         note: null,
@@ -217,7 +210,6 @@ export default {
     setDataFormWithTask() {
       this.formData.services = this.ordem_item.services;
       this.formData.status = this.ordem_item.status;
-      this.formData.need_signature = this.ordem_item.need_signature;
       this.formData.estimated_time = this.ordem_item.estimated_time;
       this.formData.end_date = this.ordem_item.end_date;
       this.formData.note = this.ordem_item.note;
