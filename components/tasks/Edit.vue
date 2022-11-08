@@ -117,6 +117,31 @@
           </b-form-invalid-feedback>
         </b-form-group>
       </div>
+      <BorderButton class="my-4">
+        <input
+          id="file"
+          type="file"
+          accept=".png, .jpg"
+          class="d-flex"
+          @change="onFileChange"
+        />
+        <label for="file" class="text-center">Enviar Foto</label>
+      </BorderButton>
+      <div class="campo-foto d-flex align-self center justify-content-center">
+        <div
+          v-if="formData.photo"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <b-img
+            src="~/assets/img/icones/delete-icon.svg"
+            role="button"
+            class="ml-5 pl-5 pb-2"
+            @click="excluiFoto"
+          />
+
+          <img :src="formData.photo" alt="" width="100" />
+        </div>
+      </div>
       <b-form-group name="form-text" class="mb-4">
         <label for="note">Descrição da Ordem de Serviço</label>
         <b-form-textarea
@@ -157,7 +182,7 @@ export default {
       type: Number,
       default: null,
     },
-    watching2: {
+    servicos: {
       type: Number,
       default: null,
     },
@@ -165,6 +190,10 @@ export default {
 
   data() {
     return {
+      file: null,
+      files: null,
+      reader: null,
+      vm: null,
       customers: [],
       services: [],
       formSend: false,
@@ -198,7 +227,7 @@ export default {
       console.log(customer);
       this.customers = customer;
     },
-    async watching2() {
+    async servicos() {
       const { data } = await this.$axios.get('services');
       const service = data;
       this.services = service;
@@ -208,7 +237,6 @@ export default {
 
   methods: {
     setDataFormWithTask() {
-      this.formData.services = this.ordem_item.services;
       this.formData.status = this.ordem_item.status;
       this.formData.estimated_time = this.ordem_item.estimated_time;
       this.formData.end_date = this.ordem_item.end_date;
@@ -249,6 +277,30 @@ export default {
           console.log(error, 'sadasda');
         }
       }
+    },
+    excluiFoto() {
+      if (this.formData.photo) {
+        this.formData = {
+          photo: null,
+        };
+      }
+    },
+    onFileChange(e) {
+      this.files = e.target.files || e.dataTransfer.files;
+      if (!this.files.length) return;
+      this.createImage(this.files[0]);
+    },
+    createImage(file) {
+      this.reader = new FileReader();
+      this.vm = this;
+
+      this.reader.onload = (e) => {
+        this.vm.formData.photo = e.target.result;
+      };
+      this.reader.readAsDataURL(file);
+    },
+    onFileSelected(event) {
+      this.selectedFile = event.target.files[0];
     },
   },
 };

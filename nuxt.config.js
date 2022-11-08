@@ -149,7 +149,11 @@ export default {
   publicRuntimeConfig: {},
   privateRuntimeConfig: {},
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/scss/index.scss', 'element-ui/lib/theme-chalk/index.css'],
+  css: [
+    '~/assets/scss/index.scss',
+    'element-ui/lib/theme-chalk/index.css',
+    'leaflet/dist/leaflet.css',
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -159,6 +163,10 @@ export default {
     { src: '~/plugins/vue-screen.client.js', mode: 'client' },
     '~plugins/teste.js',
     '~plugins/axios.js',
+    {
+      src: '~/plugins/nuxt-leaflet',
+      ssr: false,
+    },
   ],
 
   render: {

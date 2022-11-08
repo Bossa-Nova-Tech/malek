@@ -1,23 +1,56 @@
 <template>
   <div>
-    <div id="map-wrap" style="height: 100vh">
-      <client-only>
-        <l-map :zoom="13" :center="[55.9464418, 8.1277591]">
-          <l-tile-layer
-            url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-          ></l-tile-layer>
-          <l-marker :lat-lng="[-39, -80]"></l-marker>
-        </l-map>
-      </client-only>
-    </div>
+    <l-map :zoom="zoom" :center="center" style="height: 500px; width: 100%">
+      <l-tile-layer :url="url" :attribution="attribution" />
+      <l-control class="example-custom-control">
+        <p @click="showAlert">Click me</p>
+      </l-control>
+      <l-control :position="'bottomleft'" class="custom-control-watermark">
+        Vue2Leaflet Watermark Control
+      </l-control>
+    </l-map>
   </div>
 </template>
+
 <script>
+import { latLng } from 'leaflet';
+import { LMap, LTileLayer, LControl } from 'vue2-leaflet';
+
 export default {
+  name: 'Example',
+  components: {
+    LMap,
+    LTileLayer,
+    LControl,
+  },
+  data() {
+    return {
+      zoom: 13,
+      center: latLng(47.41322, -1.219482),
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    };
+  },
   methods: {
-    doSomethingOnReady() {
-      this.map = this.$refs.myMap.mapObject;
+    showAlert() {
+      alert('Click!');
     },
   },
 };
 </script>
+
+<style>
+.example-custom-control {
+  background: #fff;
+  padding: 0 0.5em;
+  border: 1px solid #aaa;
+  border-radius: 0.1em;
+}
+.custom-control-watermark {
+  font-size: 200%;
+  font-weight: bolder;
+  color: #aaa;
+  text-shadow: #555;
+}
+</style>

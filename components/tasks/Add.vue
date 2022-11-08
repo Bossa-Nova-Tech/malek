@@ -48,13 +48,12 @@
         </b-form-invalid-feedback>
       </b-form-group> -->
 
-      <b-form-group class="mb-4">
+      <b-form-group>
         <label for="customer">Cliente <span class="requerido">*</span></label>
         <b-form-select
           v-model="formData.name_customer"
           name="customer"
           :class="{ 'is-invalid': $v.formData.name_customer.$error }"
-          @click="wacthing"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -71,7 +70,7 @@
         <b-form-invalid-feedback>
           Selecione uma opção.
         </b-form-invalid-feedback>
-        <div class="d-flex py-3 align-items-center">
+        <div class="d-flex pt-4 pb-2 align-items-center">
           <h5 class="p-0">Cadastrar cliente</h5>
           <b-img
             src="~/assets/img/icones/criar-4.svg"
@@ -156,6 +155,31 @@
           </b-form-invalid-feedback>
         </b-form-group>
       </div>
+      <BorderButton class="my-4">
+        <input
+          id="file"
+          type="file"
+          accept=".png, .jpg"
+          class="d-flex"
+          @change="onFileChange"
+        />
+        <label for="file" class="text-center">Enviar Foto</label>
+      </BorderButton>
+      <div class="campo-foto d-flex align-self center justify-content-center">
+        <div
+          v-if="formData.photo"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <b-img
+            src="~/assets/img/icones/delete-icon.svg"
+            role="button"
+            class="ml-5 pl-5 pb-2"
+            @click="excluiFoto"
+          />
+
+          <img :src="formData.photo" alt="" width="100" />
+        </div>
+      </div>
       <b-form-group class="mb-4">
         <label for="note">Descrição da Ordem de Serviço</label>
         <b-form-input
@@ -165,6 +189,27 @@
         >
         </b-form-input>
       </b-form-group>
+      <label for="mapa">Localização do Cliente</label>
+      <div name="map" class="mb-4">
+        <l-map
+          :zoom="zoom"
+          :center="center"
+          style="height: 300px; width: 100%; border-radius: 8px"
+        >
+          <l-tile-layer
+            :center="center"
+            :url="url"
+            :attribution="attribution"
+          />
+          <l-control class="example-custom-control">
+            <p @click="showAlert">Click me</p>
+          </l-control>
+          <l-control :position="'bottomleft'" class="custom-control-watermark">
+            AíServe &copy; Malek 2022
+          </l-control>
+          <l-circle :lat-lng="circle.center" :radius="circle.radius" />
+        </l-map>
+      </div>
       <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click.once="register">
           <b-spinner v-if="formSend" small type="grow" />
@@ -176,6 +221,8 @@
 </template>
 
 <script>
+import { latLng } from 'leaflet';
+import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
 import Vue2Filters from 'vue2-filters';
 import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
@@ -184,7 +231,7 @@ import AddOrdem from '~/components/customers/AddOrdem.vue';
 export default {
   name: 'Add',
   directives: { mask },
-  components: { AddOrdem },
+  components: { AddOrdem, LMap, LTileLayer, LControl, LCircle },
   filters: {
     truncate(data) {
       const reqdString = data.split('');
@@ -206,6 +253,18 @@ export default {
   },
   data() {
     return {
+      circle: {
+        center: latLng(47.41322, -1.0482),
+        radius: 4500,
+      },
+      zoom: 13,
+      center: latLng(47.41322, -1.219482),
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      files: null,
+      reader: null,
+      vm: null,
       format: 'DD-MM-YYYY',
       customers: [],
       services: [],
@@ -216,10 +275,21 @@ export default {
         estimated_time: null,
         end_date: null,
         note: null,
+        photo: [],
         name_customer: null,
         template: null,
         services_names: null,
       },
+    };
+  },
+  head() {
+    return {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: '//unpkg.com/leaflet/dist/leaflet.css',
+        },
+      ],
     };
   },
 
@@ -231,6 +301,7 @@ export default {
       estimated_time: { required },
     },
   },
+
   watch: {
     async watching() {
       const { data } = await this.$axios.get('customers');
@@ -252,6 +323,10 @@ export default {
     this.customers = customer;
   }, */
   methods: {
+    showAlert() {
+      alert('Click!');
+    },
+
     async register(_response) {
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
@@ -284,11 +359,42 @@ export default {
         }
       }
     },
+    excluiFoto() {
+      if (this.formData.photo) {
+        this.formData = {
+          photo: null,
+        };
+      }
+    },
+    onFileChange(e) {
+      this.files = e.target.files || e.dataTransfer.files;
+      if (!this.files.length) return;
+      this.createImage(this.files[0]);
+    },
+    createImage(file) {
+      this.reader = new FileReader();
+      this.vm = this;
+
+      this.reader.onload = (e) => {
+        this.vm.formData.photo = e.target.result;
+      };
+      this.reader.readAsDataURL(file);
+    },
+    onFileSelected(event) {
+      this.selectedFile = event.target.files[0];
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+#map-wrap {
+  height: 300px;
+  border-radius: 20px;
+}
+h5 {
+  font-size: 1.2rem;
+}
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -416,6 +416,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.modal-body {
+  border: 2px !important;
+}
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
