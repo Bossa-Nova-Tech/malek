@@ -5,9 +5,10 @@
       <li
         v-for="(itemOrdem, index) in tasksData"
         :key="index"
+        role="button"
         class="card-servico p-4"
       >
-        <div class="d-flex pb-3">
+        <div class="d-flex pb-3" @click="showVer(itemOrdem)">
           <p v-if="$screen.lg" class="gray-40">
             Ordem de serviço #{{ itemOrdem.id }}
           </p>
@@ -50,12 +51,13 @@
             />
           </div>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center" @click="showVer(itemOrdem)">
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
           <p class="pl-2">Colaborador</p>
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
         <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" />
+        <Viewing :id="id" :ordem_item="itemOrdem" />
       </li>
       <Delete :id="id" />
       <Finished :id="id" />
@@ -66,12 +68,13 @@
 <script>
 import Vue2Filters from 'vue2-filters';
 import Edit from './Edit.vue';
+import Viewing from './Viewing.vue';
 import Delete from '~/components/tasks/Delete.vue';
 import Finished from '~/components/tasks/Finished.vue';
 
 export default {
   name: 'Listing',
-  components: { Delete, Finished, Edit },
+  components: { Delete, Finished, Edit, Viewing },
   filters: {
     truncate(data) {
       const search = 'pessoa f';
@@ -109,6 +112,13 @@ export default {
   },
 
   methods: {
+    showVer(itemOrdem) {
+      this.id = itemOrdem.id;
+      this.$nextTick(function () {
+        this.$bvModal.show(`view-task-${this.id}`);
+      });
+      this.ordem_selecionada = itemOrdem;
+    },
     showConcluir(itemOrdem) {
       this.id = itemOrdem.id;
       this.$nextTick(function () {

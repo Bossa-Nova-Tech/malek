@@ -15,9 +15,9 @@
       <b-form-group class="mb-4">
         <label for="service">Serviço <span class="requerido">*</span></label>
         <b-form-select
-          v-model="formData.services_names"
+          v-model="formData.services"
           name="service"
-          :class="{ 'is-invalid': $v.formData.services_names.$error }"
+          :class="{ 'is-invalid': $v.formData.services.$error }"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -190,26 +190,21 @@
         </b-form-input>
       </b-form-group>
       <label for="mapa">Localização do Cliente</label>
-      <div name="map" class="mb-4">
-        <l-map
-          :zoom="zoom"
-          :center="center"
-          style="height: 300px; width: 100%; border-radius: 8px"
-        >
-          <l-tile-layer
-            :center="center"
-            :url="url"
-            :attribution="attribution"
-          />
-          <l-control class="example-custom-control">
-            <p @click="showAlert">Click me</p>
-          </l-control>
-          <l-control :position="'bottomleft'" class="custom-control-watermark">
-            AíServe &copy; Malek 2022
-          </l-control>
-          <l-circle :lat-lng="circle.center" :radius="circle.radius" />
-        </l-map>
-      </div>
+      <l-map
+        ref="myMap"
+        name="mapa"
+        style="height: 300px"
+        :zoom="zoom"
+        :center="center"
+        class="mb-4"
+      >
+        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+        <l-marker :lat-lng="center"></l-marker>
+        <l-control :position="'bottomleft'" class="custom-control-watermark">
+          AíServe &copy; Malek 2022
+        </l-control>
+        <l-circle :lat-lng="circle.center" :radius="circle.radius" />
+      </l-map>
       <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click.once="register">
           <b-spinner v-if="formSend" small type="grow" />
@@ -254,11 +249,11 @@ export default {
   data() {
     return {
       circle: {
-        center: latLng(47.41322, -1.0482),
+        center: latLng(-27.64337, -48.68869),
         radius: 4500,
       },
-      zoom: 13,
-      center: latLng(47.41322, -1.219482),
+      zoom: 18,
+      center: latLng(-27.64337, -48.68869),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -278,24 +273,14 @@ export default {
         photo: [],
         name_customer: null,
         template: null,
-        services_names: null,
+        services: null,
       },
-    };
-  },
-  head() {
-    return {
-      link: [
-        {
-          rel: 'stylesheet',
-          href: '//unpkg.com/leaflet/dist/leaflet.css',
-        },
-      ],
     };
   },
 
   validations: {
     formData: {
-      services_names: { required },
+      services: { required },
       end_date: { required },
       name_customer: { required },
       estimated_time: { required },

@@ -5,14 +5,19 @@
       <PainelAside v-if="$screen.lg" />
       <div
         v-if="!$screen.lg"
-        class="div-botao d-flex justify-content-center align-items-center"
+        class="div-botao w-50 container justify-content-between d-flex align-items-center"
       >
-        <b-img
-          src="~/assets/img/icones/criar-4.svg"
-          role="button"
-          class="botao-criar"
-          @click="criar"
-        />
+        <div>
+          <b-img
+            src="~/assets/img/icones/criar-4.svg"
+            role="button"
+            class="botao-criar"
+            @click="criar"
+          />
+        </div>
+        <b-button variant="primary" to="ordem-de-servicos/visitas"
+          >Visitas</b-button
+        >
       </div>
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto position-relative" align="center">
@@ -107,14 +112,18 @@ main {
 }
 
 @media screen and (max-width: 991px) {
+  .btn {
+    max-width: 6rem;
+  }
   main {
     grid-template-columns: 1fr;
     .div-botao {
       margin-top: -4rem !important;
-      width: 80px;
-      margin-inline: auto;
-      height: 80px;
+      justify-self: end;
+      height: 5rem;
       filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.22));
+    }
+    .botao-criar {
       animation: criar 1.5s ease-in-out;
     }
     @keyframes criar {

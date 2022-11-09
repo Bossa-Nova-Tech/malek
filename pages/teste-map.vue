@@ -1,13 +1,12 @@
 <template>
   <div>
-    <l-map :zoom="zoom" :center="center" style="height: 500px; width: 100%">
-      <l-tile-layer :url="url" :attribution="attribution" />
-      <l-control class="example-custom-control">
-        <p @click="showAlert">Click me</p>
-      </l-control>
+    <l-map ref="myMap" style="height: 300px" :zoom="zoom" :center="center">
+      <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+      <l-marker :lat-lng="center"></l-marker>
       <l-control :position="'bottomleft'" class="custom-control-watermark">
-        Vue2Leaflet Watermark Control
+        AíServe &copy; Malek 2022
       </l-control>
+      <l-circle :lat-lng="circle.center" :radius="circle.radius" />
     </l-map>
   </div>
 </template>
@@ -25,8 +24,12 @@ export default {
   },
   data() {
     return {
-      zoom: 13,
-      center: latLng(47.41322, -1.219482),
+      circle: {
+        center: latLng(-27.64337, -48.68869),
+        radius: 4500,
+      },
+      zoom: 18,
+      center: latLng(-27.64337, -48.68869),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',

@@ -142,6 +142,7 @@
           <img :src="formData.photo" alt="" width="100" />
         </div>
       </div>
+      {{ formData.photo }}
       <b-form-group name="form-text" class="mb-4">
         <label for="note">Descrição da Ordem de Serviço</label>
         <b-form-textarea
@@ -203,6 +204,7 @@ export default {
         estimated_time: null,
         end_date: null,
         note: null,
+        photo: [],
         name_customer: null,
         services_names: null,
       },
@@ -241,6 +243,7 @@ export default {
       this.formData.estimated_time = this.ordem_item.estimated_time;
       this.formData.end_date = this.ordem_item.end_date;
       this.formData.note = this.ordem_item.note;
+      this.formData.photo = this.ordem_item.photo;
       this.formData.name_customer = this.ordem_item.name_customer;
       this.formData.template = this.ordem_item.template;
       this.formData.services_names = this.ordem_item.services_names;
