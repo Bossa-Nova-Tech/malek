@@ -163,10 +163,7 @@ export default {
     { src: '~/plugins/vue-screen.client.js', mode: 'client' },
     '~plugins/teste.js',
     '~plugins/axios.js',
-    {
-      src: '~/plugins/nuxt-leaflet',
-      ssr: false,
-    },
+    { src: '~plugins/leaflet.js', ssr: false },
   ],
 
   render: {
@@ -202,7 +199,6 @@ export default {
     'vue-screen/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    'nuxt-leaflet',
     [
       '@netsells/nuxt-hotjar',
       {

@@ -1,40 +1,31 @@
-<!-- <template>
+<template>
   <div>
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
       <div
         v-if="!$screen.lg"
-        class="div-botao container justify-content-end d-flex align-items-center"
+        class="div-botao w-100 container justify-content-center d-flex align-items-center"
       >
-        <b-img
-          src="~/assets/img/icones/criar-4.svg"
-          role="button"
-          class="botao-criar"
-          @click="criar"
-        />
-        <b-button
-          variant="primary"
-          class="ml-5 mr-3"
-          to="ordem-de-servicos/visitas"
-          >Visitas</b-button
-        >
+        <div>
+          <b-img
+            src="~/assets/img/icones/criar-4.svg"
+            role="button"
+            class="botao-criar"
+            @click="criar"
+          />
+        </div>
       </div>
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto position-relative" align="center">
-          <b-tab id="em-atraso" title="Em atraso" class="mt-4">
-            <ListingPast :tasks-data="tasksDataOverdue" />
-          </b-tab>
-
           <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing :watching="telaName" :tasks-data="tasksData" />
+            <Listing />
           </b-tab>
 
           <b-tab id="futuras" title="Futuras" class="mt-4">
-            <ListingFuture :tasks-data="tasksDataFuture" />
+            <ListingFuture />
           </b-tab>
           <Add :watching="chamarCliente" :watching2="chamarCliente" />
-
           <div class="footer">
             <button class="" @click="criar">Criar Ordem de Serviço</button>
           </div>
@@ -48,18 +39,22 @@
 import Add from '~/components/tasks/Add.vue';
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 import PainelAside from '~/components/layout/PainelAside.vue';
-import Listing from '~/components/tasks/Listing.vue';
-import ListingPast from '~/components/tasks/ListingPast.vue';
+import Listing from '~/components/tasks/visits/Listing.vue';
 import ListingFuture from '~/components/tasks/ListingFuture.vue';
 
 export default {
   components: {
     Add,
     Listing,
-    ListingPast,
     ListingFuture,
     PainelHeader,
     PainelAside,
+  },
+  async asyncData({ $axios }) {
+    const users = await $axios.get('users');
+    const usersData = users.data;
+    console.log('users' + usersData);
+    return usersData;
   },
 
   data: () => {
@@ -101,9 +96,6 @@ main {
 }
 
 @media screen and (max-width: 991px) {
-  .btn {
-    max-width: 6rem;
-  }
   main {
     grid-template-columns: 1fr;
     .div-botao {
@@ -158,4 +150,3 @@ main {
   }
 }
 </style>
- -->

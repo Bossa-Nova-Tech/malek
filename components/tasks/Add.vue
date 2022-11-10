@@ -1,5 +1,12 @@
 <template>
-  <b-modal id="criar" ref="criar" size="lg" hide-header hide-footer>
+  <b-modal
+    id="criar"
+    ref="criar"
+    size="lg"
+    hide-header
+    hide-footer
+    @shown="modalShown"
+  >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Criar Ordem de Serviço</h1>
@@ -156,18 +163,19 @@
         </b-form-group>
       </div>
       <BorderButton class="my-4">
-        <input
+        <b-form-file
           id="file"
-          type="file"
+          v-model="formData.photos"
           accept=".png, .jpg"
           class="d-flex"
+          plain
           @change="onFileChange"
         />
         <label for="file" class="text-center">Enviar Foto</label>
       </BorderButton>
       <div class="campo-foto d-flex align-self center justify-content-center">
         <div
-          v-if="formData.photo"
+          v-if="formData.photos"
           class="d-flex flex-column justify-content-center align-items-center"
         >
           <b-img
@@ -177,7 +185,7 @@
             @click="excluiFoto"
           />
 
-          <img :src="formData.photo" alt="" width="100" />
+          <img :src="formData.photos" alt="" width="100" />
         </div>
       </div>
       <b-form-group class="mb-4">
@@ -193,14 +201,14 @@
       <l-map
         ref="myMap"
         name="mapa"
-        style="height: 300px"
+        style="height: 300px; border-radius: 8px"
         :zoom="zoom"
         :center="center"
         class="mb-4"
       >
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <l-marker :lat-lng="center"></l-marker>
-        <l-control :position="'bottomleft'" class="custom-control-watermark">
+        <l-control :position="'topright'" class="custom-control-watermark">
           AíServe &copy; Malek 2022
         </l-control>
         <l-circle :lat-lng="circle.center" :radius="circle.radius" />
@@ -270,7 +278,7 @@ export default {
         estimated_time: null,
         end_date: null,
         note: null,
-        photo: [],
+        photos: null,
         name_customer: null,
         template: null,
         services: null,
@@ -308,8 +316,11 @@ export default {
     this.customers = customer;
   }, */
   methods: {
-    showAlert() {
-      alert('Click!');
+    modalShown() {
+      setTimeout(() => {
+        // mapObject is a property that is part of leaflet
+        this.$refs.myMap.mapObject.invalidateSize();
+      }, 100);
     },
 
     async register(_response) {
@@ -345,9 +356,9 @@ export default {
       }
     },
     excluiFoto() {
-      if (this.formData.photo) {
+      if (this.formData.photos) {
         this.formData = {
-          photo: null,
+          photos: null,
         };
       }
     },
@@ -361,7 +372,7 @@ export default {
       this.vm = this;
 
       this.reader.onload = (e) => {
-        this.vm.formData.photo = e.target.result;
+        this.vm.formData.photos = e.target.result;
       };
       this.reader.readAsDataURL(file);
     },
