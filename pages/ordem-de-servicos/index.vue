@@ -77,7 +77,6 @@ export default {
     return {
       chamarCliente: null,
       telaName: 'Ordem de serviços',
-      tasksData: [],
     };
   },
 

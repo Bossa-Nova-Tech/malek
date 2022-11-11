@@ -2,31 +2,17 @@
   <section class="rounded">
     <h1 class="p-4">Acontecendo hoje</h1>
     <ul>
-      <li
-        v-for="(itemOrdem, index) in tasksData"
-        :key="index"
-        role="button"
-        class="card-servico p-4"
-      >
+      <li class="card-servico p-4">
         <div class="d-flex pb-3" @click="showVer(itemOrdem)">
-          <p v-if="$screen.lg" class="gray-40">
-            Ordem de serviço #{{ itemOrdem.id }}
-          </p>
           <div class="ajuste">
-            <h2 v-if="$screen.lg" class="primary-80 pb-1">
-              {{ itemOrdem.services_names }}
-            </h2>
-
-            <h2 v-if="!$screen.lg" class="primary-80 pb-1">
-              #{{ itemOrdem.id }} {{ itemOrdem.services }}
-            </h2>
-            <p class="gray-40">{{ itemOrdem.name_customer | truncate() }}</p>
+            <h2 class="primary-80 pb-1"># ID Tipo de Serviço</h2>
+            <p class="gray-40">Nome do Colaborador</p>
           </div>
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
             <img
-              src="~/assets/img/icones/icone-concluir.svg"
+              src="~/assets/img/icones/pause-icon.svg"
               class="mr-3"
               role="button"
               width="22"
@@ -34,7 +20,7 @@
               @click="showConcluir(itemOrdem)"
             />
             <img
-              src="~/assets/img/icones/edit-icon.svg"
+              src="~/assets/img/icones/play-icon.svg"
               role="button"
               class="mr-3"
               width="22"
@@ -43,7 +29,7 @@
             />
 
             <img
-              src="~/assets/img/icones/delete-icon.svg"
+              src="~/assets/img/icones/stop-icon.svg"
               role="button"
               width="22"
               height="24"
@@ -53,14 +39,10 @@
         </div>
         <div class="d-flex align-items-center" @click="showVer(itemOrdem)">
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
-          <p class="pl-2">Colaborador</p>
+          <p class="pl-2">Cliente</p>
         </div>
-        <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
-        <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" />
-        <Viewing :id="id" :ordem_item="itemOrdem" />
+        <span class="gray-40">13/12/2022</span>
       </li>
-      <Delete :id="id" />
-      <Finished :id="id" />
     </ul>
   </section>
 </template>
@@ -105,39 +87,7 @@ export default {
     };
   },
 
-  methods: {
-    showVer(itemOrdem) {
-      this.id = itemOrdem.id;
-      this.$nextTick(function () {
-        this.$bvModal.show(`view-task-${this.id}`);
-      });
-      this.ordem_selecionada = itemOrdem;
-    },
-    showConcluir(itemOrdem) {
-      this.id = itemOrdem.id;
-      this.$nextTick(function () {
-        this.$bvModal.show(`finished-${this.id}`);
-      });
-      this.ordem_selecionada = itemOrdem;
-    },
-    showExcluir(itemOrdem) {
-      this.id = itemOrdem.id;
-      this.$nextTick(function () {
-        this.$bvModal.show(`excluir-${this.id}`);
-      });
-      this.ordem_selecionada = itemOrdem;
-    },
-    showEditar(itemOrdem) {
-      this.editar = true;
-      if (this.editar === true) {
-        this.id = itemOrdem.id;
-        this.$nextTick(function () {
-          this.$bvModal.show(`update-task-${itemOrdem.id}`);
-        });
-        this.ordem_selecionada = itemOrdem;
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -152,7 +102,8 @@ section {
     font-size: 12px;
   }
 
-  h2 {
+  h2,
+  h3 {
     font-weight: 600;
     font-size: 0.75rem;
   }
@@ -171,7 +122,7 @@ section {
       }
 
       .ajuste {
-        padding-left: 3rem;
+        padding-left: 0.5rem;
       }
     }
   }

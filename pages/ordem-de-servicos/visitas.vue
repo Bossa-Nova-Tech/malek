@@ -3,32 +3,19 @@
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
-      <div
-        v-if="!$screen.lg"
-        class="div-botao w-100 container justify-content-center d-flex align-items-center"
-      >
-        <div>
-          <b-img
-            src="~/assets/img/icones/criar-4.svg"
-            role="button"
-            class="botao-criar"
-            @click="criar"
-          />
-        </div>
-      </div>
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto position-relative" align="center">
+          <b-tab id="em-atraso" title="Em atraso" class="mt-4">
+            <!-- <ListingPast :tasks-data="tasksDataOverdue" /> -->
+          </b-tab>
           <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing />
+            <Listing :tasksData="tasksData" />
           </b-tab>
 
           <b-tab id="futuras" title="Futuras" class="mt-4">
-            <ListingFuture />
+            <!-- <ListingFuture /> -->
           </b-tab>
           <Add :watching="chamarCliente" :watching2="chamarCliente" />
-          <div class="footer">
-            <button class="" @click="criar">Criar Ordem de Serviço</button>
-          </div>
         </b-tabs>
       </div>
     </main>
@@ -40,13 +27,15 @@ import Add from '~/components/tasks/Add.vue';
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 import PainelAside from '~/components/layout/PainelAside.vue';
 import Listing from '~/components/tasks/visits/Listing.vue';
-import ListingFuture from '~/components/tasks/ListingFuture.vue';
+/* import ListingFuture from '~/components/tasks/visits/ListingFuture.vue';
+import ListingPast from '~/components/tasks/visits/ListingPast.vue'; */
 
 export default {
   components: {
     Add,
     Listing,
-    ListingFuture,
+    /* ListingFuture,
+    ListingPast, */
     PainelHeader,
     PainelAside,
   },

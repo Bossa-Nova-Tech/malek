@@ -153,7 +153,7 @@
         </b-form-textarea>
       </b-form-group>
       <div class="w-100 mb-4 col-12 px-0">
-        <button :disable="formSend" @click.once="edit">
+        <button :disable="formSend" @click="edit">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>

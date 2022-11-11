@@ -23,8 +23,8 @@
     </b-form-group>
     <b-form-group label-for="colaborador" label="Colaborador">
       <b-form-select
-        name="colaborador"
         v-model="colaborator"
+        name="colaborador"
         :options="colaborators"
       >
       </b-form-select>

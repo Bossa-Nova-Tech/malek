@@ -11,17 +11,23 @@
   >
     <div class="view-modal mx-4">
       <div class="d-flex justify-content-between">
-        <h1 class="mt-4 mb-5">
+        <h1 class="mt-4">
           Ordem de Serviço <span> {{ ordem_item.id }}</span>
         </h1>
 
         <img
           src="~/assets/img/icones/X-icon.svg"
-          class="mb-5 mt-3"
+          class="mt-3"
           role="button"
           @click.once="$bvModal.hide(`view-task-${ordem_item.id}`)"
         />
       </div>
+      <b-button
+        size="sm"
+        class="imprimir d-flex justify-content-center align-items-center my-4 text-center font-weight-bolder"
+      >
+        Imprimir OS<b-img src="~/assets/img/icones/resume-icon.svg" />
+      </b-button>
       <h3>Tipo de serviço</h3>
       <p>{{ ordem_item.services }}</p>
       <h3 class="mt-4">Cliente</h3>
@@ -86,7 +92,7 @@ export default {
     return {
       circle: {
         center: latLng(-27.64337, -48.68869),
-        radius: 4500,
+        radius: 300,
       },
       zoom: 18,
       center: latLng(-27.64337, -48.68869),
@@ -114,6 +120,14 @@ export default {
     span {
       color: var(--primary-80);
     }
+  }
+  .imprimir {
+    border: 1px solid var(--primary-80);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--fosco);
+    font-size: 1rem;
+    box-shadow: none;
   }
   h3 {
     font-size: 0.8rem;

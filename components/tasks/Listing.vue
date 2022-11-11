@@ -102,7 +102,6 @@ export default {
   data() {
     return {
       tamanho: null,
-      name: 'Para Bailar la bamba',
       indice: null,
       espaco: null,
       editar: false,

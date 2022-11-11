@@ -214,7 +214,7 @@
         <l-circle :lat-lng="circle.center" :radius="circle.radius" />
       </l-map>
       <div class="w-100 mb-4 col-12 px-0">
-        <button :disable="formSend" @click.once="register">
+        <button :disable="formSend" @click="register">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>

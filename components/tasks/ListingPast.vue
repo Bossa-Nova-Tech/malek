@@ -53,6 +53,7 @@
         <div class="d-flex align-items-center" @click="showVer(itemOrdem)">
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
           <p class="pl-2">Colaborador</p>
+          <b-badge class="tag">Criada</b-badge>
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
         <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" />
@@ -149,6 +150,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tag {
+  margin-left: 20px;
+  background: green;
+}
 section {
   height: 25rem;
   background: var(--gray-10);
