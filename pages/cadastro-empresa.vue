@@ -44,28 +44,118 @@
             </b-form-group>
           </b-col>
         </b-row>
-
         <b-form-group class="mb-4">
-          <label for="cnpj">CPF / CNPJ <span class="requerido">*</span></label>
+          <label for="pessoa"
+            >Pessoa física ou jurídica? <span class="requerido">*</span></label
+          >
+          <b-form-radio-group
+            v-model="formData.type"
+            :options="types"
+            name="pessoa"
+            plain
+            size="sm"
+            class="mb-2"
+          >
+          </b-form-radio-group>
           <b-form-input
+            v-if="formData.type == 'pj'"
             v-model="formData.cnpj"
-            v-mask="['###.###.###-##', '##.###.###/####-##']"
+            v-mask="['##.###.###/####-##']"
             name="cnpj"
             placeholder="00.000.000/000-00"
             :class="{ 'is-invalid': $v.formData.cnpj.$error }"
           />
-          <b-form-invalid-feedback>
+          <b-form-invalid-feedback v-if="formData.type == 'pj'">
             {{
               !$v.formData.cnpj.minLength
                 ? 'Insira um CNPJ válido'
                 : 'Preencha o campo acima'
             }}
           </b-form-invalid-feedback>
+          <b-form-input
+            v-if="formData.type == 'f'"
+            v-model="formData.cpf"
+            v-mask="['###.###.###-##']"
+            name="cpf"
+            placeholder="000.000.000-00"
+            :class="{ 'is-invalid': $v.formData.cpf.$error }"
+          />
+          <b-form-invalid-feedback v-if="formData.type == 'f'">
+            {{
+              !$v.formData.cpf.minLength
+                ? 'Insira um CPF válido'
+                : 'Preencha o campo acima'
+            }}
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="mb-4">
+        <b-row>
+          <b-col cols="12">
+            <b-form-group v-if="formData.type == 'f'" class="mb-4">
+              <label for="rg">RG <span class="requerido">*</span></label>
+              <b-form-input
+                v-model="formData.rg"
+                name="rg"
+                placeholder="00.000.000"
+                :class="{ 'is-invalid': $v.formData.rg.$error }"
+              />
+              <b-form-invalid-feedback>
+                {{
+                  !$v.formData.rg.minLength
+                    ? 'Insira um RG válido'
+                    : 'Preencha o campo acima'
+                }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col cols="6">
+            <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+              <label for="corporate_name"
+                >Razão Social <span class="requerido">*</span></label
+              >
+              <b-form-input
+                v-model="formData.corporate_name"
+                name="corporate_name"
+                type="text"
+                placeholder="Empresa X"
+                :class="{
+                  'is-invalid': $v.formData.corporate_name.$error,
+                }"
+              />
+              <b-form-invalid-feedback>
+                Preencha o campo acima
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+          <b-col cols="6">
+            <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+              <label for="state_registration"
+                >Inscrição Estadual <span class="requerido">*</span></label
+              >
+              <b-form-input
+                v-model="formData.state_registration"
+                v-mask="['###.###.###']"
+                name="state_registration"
+                placeholder="000.000.000"
+                :class="{ 'is-invalid': $v.formData.state_registration.$error }"
+              />
+              <b-form-invalid-feedback>
+                {{
+                  !$v.formData.state_registration.minLength
+                    ? 'Insira uma IE válida'
+                    : 'Preencha o campo acima'
+                }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-form-group class="mb-4" v-if="formData.type == 'pj'">
           <label for="fantasy_name"
-            >Nome da Empresa <span class="requerido">*</span></label
+            >Nome Fantasia <span class="requerido">*</span></label
           >
           <b-form-input
             v-model="formData.fantasy_name"
@@ -77,6 +167,26 @@
             Preencha o campo acima
           </b-form-invalid-feedback>
         </b-form-group>
+
+        <b-row>
+          <b-col cols="12">
+            <b-form-group class="mb-4">
+              <label for="occupation"
+                >Qual seu cargo atual na empresa?
+                <span class="requerido">*</span></label
+              >
+              <b-form-select
+                v-model="formData.occupation"
+                name="occupation"
+                :options="occupations"
+                :class="{ 'is-invalid': $v.formData.occupation.$error }"
+              ></b-form-select>
+              <b-form-invalid-feedback>
+                Selecione o campo acima
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
 
         <b-form-group class="mb-4">
           <label for="email">E-mail <span class="requerido">*</span></label>
@@ -118,65 +228,15 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-row>
-          <b-col cols="6">
-            <b-form-group class="mb-4">
-              <label for="password"
-                >Senha <span class="requerido">*</span></label
-              >
-              <b-form-input
-                v-model="$v.formData.password.$model"
-                name="password"
-                type="password"
-                placeholder="********"
-                :class="{
-                  'is-invalid': $v.formData.password.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                {{
-                  !$v.formData.password.minLength
-                    ? 'No mínimo 8 caracteres'
-                    : 'Insira uma senha'
-                }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-
-          <b-col cols="6">
-            <b-form-group class="mb-4">
-              <label for="confirm_password"
-                >Confirmar Senha <span class="requerido">*</span></label
-              >
-              <b-form-input
-                v-model="$v.formData.confirm_password.$model"
-                name="confirm_password"
-                type="password"
-                placeholder="********"
-                :class="{
-                  'is-invalid': $v.formData.confirm_password.$error,
-                }"
-              />
-              <b-form-invalid-feedback>
-                {{
-                  !$v.formData.confirm_password.sameAsPassword
-                    ? 'Senhas diferentes'
-                    : 'Insira uma senha'
-                }}
-              </b-form-invalid-feedback>
-            </b-form-group>
-          </b-col>
-        </b-row>
-
         <b-form-group class="mb-4">
-          <label for="address">Endereço <span class="requerido">*</span></label>
+          <label for="cep">CEP <span class="requerido">*</span></label>
           <b-form-input
-            v-model="formData.address"
-            name="address"
-            type="text"
-            placeholder="Rua"
+            v-model="formData.cep"
+            v-mask="['#####-###']"
+            name="cep"
+            placeholder="00000-000"
             :class="{
-              'is-invalid': $v.formData.address.$error,
+              'is-invalid': $v.formData.cep.$error,
             }"
           />
           <b-form-invalid-feedback>
@@ -187,16 +247,21 @@
         <b-row>
           <b-col cols="6">
             <b-form-group class="mb-4">
-              <label for="cep">CEP <span class="requerido">*</span></label>
+              <label for="address"
+                >Endereço <span class="requerido">*</span></label
+              >
               <b-form-input
-                v-model="formData.cep"
-                v-mask="['#####-###']"
-                name="cep"
-                placeholder="00000-000"
-                :class="{
-                  'is-invalid': $v.formData.cep.$error,
-                }"
+                v-model="formData.address"
+                name="address"
+                type="text"
+                placeholder="Rua"
+                disabled
               />
+              <!--
+                :class="{
+                  'is-invalid': $v.formData.address.$error,
+                }"
+              -->
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -213,10 +278,12 @@
                 name="district"
                 type="text"
                 placeholder="-"
-                :class="{
+                disabled
+              />
+              <!-- :class="{
                   'is-invalid': $v.formData.district.$error,
                 }"
-              />
+              -->
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -233,10 +300,13 @@
                 name="city"
                 type="text"
                 placeholder="Cidade"
+                disabled
+              />
+              <!--
                 :class="{
                   'is-invalid': $v.formData.city.$error,
                 }"
-              />
+               -->
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -251,10 +321,12 @@
                 name="state"
                 type="text"
                 placeholder="Estado"
-                :class="{
+                disabled
+              />
+              <!-- :class="{
                   'is-invalid': $v.formData.state.$error,
                 }"
-              />
+              -->
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -325,11 +397,97 @@
               src="~/assets/img/icones/delete-icon.svg"
               role="button"
               class="ml-5 pl-5 pb-2"
+              aria-describedby="helpBlock"
               @click="excluiFoto"
             />
             <img :src="formData.photo" alt="" width="100" class="pb-5" />
           </div>
+          <small id="helpBlock" class="form-text text-muted mt-n4 mb-4">
+            A imagem carregada será utilizada como sua foto de perfil ao logar
+            em sua conta.
+          </small>
         </div>
+
+        <b-row>
+          <b-col cols="6">
+            <b-form-group class="mb-4">
+              <label for="password"
+                >Senha <span class="requerido">*</span></label
+              >
+              <b-form-input
+                v-model="$v.formData.password.$model"
+                name="password"
+                type="password"
+                placeholder="********"
+                aria-describedby="helpPassword"
+                :class="{
+                  'is-invalid': $v.formData.password.$error,
+                }"
+              />
+              <b-form-invalid-feedback>
+                {{
+                  !$v.formData.password.minLength
+                    ? 'No mínimo 8 caracteres'
+                    : 'Insira uma senha'
+                }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+            <small id="helpPassword" class="form-text text-muted mt-n4 mb-4">
+              Miníno de 8 caracteres.
+            </small>
+          </b-col>
+
+          <b-col cols="6">
+            <b-form-group class="mb-4">
+              <label for="confirm_password"
+                >Confirmar Senha <span class="requerido">*</span></label
+              >
+              <b-form-input
+                v-model="$v.formData.confirm_password.$model"
+                name="confirm_password"
+                type="password"
+                placeholder="********"
+                :class="{
+                  'is-invalid': $v.formData.confirm_password.$error,
+                }"
+              />
+              <b-form-invalid-feedback>
+                {{
+                  !$v.formData.confirm_password.sameAsPassword
+                    ? 'Senhas diferentes'
+                    : 'Insira uma senha'
+                }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-form-group class="mb-4">
+          <label for="term"
+            >Aceite de termos <span class="requerido">*</span></label
+          >
+          <b-row class="mt-n1">
+            <b-col cols="12">
+              <b-button variant="outline-primary" block>
+                Termos de uso e Política de Privacidade
+              </b-button>
+            </b-col>
+          </b-row>
+          <b-form-checkbox
+            v-model="formData.term"
+            name="term"
+            :value="true"
+            :unchecked-value="false"
+            class="mt-2"
+            :class="{
+              'is-invalid': $v.formData.term.$error,
+            }"
+          >
+            Li e Concordo
+          </b-form-checkbox>
+
+          <b-form-invalid-feedback> Campo obrigatório </b-form-invalid-feedback>
+        </b-form-group>
       </b-form>
     </main>
 
@@ -359,7 +517,13 @@
 </template>
 
 <script>
-import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
+import {
+  required,
+  email,
+  minLength,
+  sameAs,
+  requiredIf,
+} from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 
@@ -377,9 +541,15 @@ export default {
       vm: null,
       formSend: false,
       formData: {
+        type: 'f',
         name: null,
         last_name: null,
         cnpj: null,
+        cpf: null,
+        rg: null,
+        occupation: null,
+        corporate_name: null,
+        state_registration: null,
         fantasy_name: null,
         phone: null,
         email: null,
@@ -393,7 +563,36 @@ export default {
         complement: null,
         address: null,
         photo: null,
+        term: null,
       },
+      types: [
+        {
+          value: 'f',
+          html: '<span style="color:#5E5E5E;font-size:12px;">Pessoa física</span>',
+        },
+        {
+          value: 'pj',
+          html: '<span style="color:#5E5E5E;font-size:12px;">Pessoa jurídica</span>',
+        },
+      ],
+      occupations: [
+        {
+          text: 'Selecione o seu cargo',
+          value: null,
+        },
+        {
+          text: 'Proprietário',
+          value: 'owner',
+        },
+        {
+          text: 'Gerente',
+          value: 'manager',
+        },
+        {
+          text: 'Colaborador',
+          value: 'employee',
+        },
+      ],
     };
   },
 
@@ -401,7 +600,36 @@ export default {
     formData: {
       name: { required },
       last_name: { required },
-      cnpj: { required, minLength: minLength(13) },
+      corporate_name: {
+        required: requiredIf(function () {
+          return this.formData.type === 'pj';
+        }),
+      },
+      cnpj: {
+        required: requiredIf(function () {
+          return this.formData.type === 'pj';
+        }),
+        minLength: minLength(18),
+      },
+      state_registration: {
+        required: requiredIf(function () {
+          return this.formData.type === 'pj';
+        }),
+        minLength: minLength(11),
+      },
+      cpf: {
+        required: requiredIf(function () {
+          return this.formData.type === 'f';
+        }),
+        minLength: minLength(14),
+      },
+      rg: {
+        required: requiredIf(function () {
+          return this.formData.type === 'f';
+        }),
+        minLength: minLength(6),
+      },
+      occupation: { required },
       phone: { required, minLength: minLength(14) },
       email: { required, email },
       password: { required, minLength: minLength(8) },
@@ -414,6 +642,9 @@ export default {
       fantasy_name: { required },
       address: { required },
       photo: { required },
+      term: {
+        sameAs: sameAs(() => true),
+      },
     },
   },
   head() {
