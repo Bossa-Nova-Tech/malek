@@ -19,7 +19,12 @@
         />
       </div>
       <b-form-group class="mb-4">
-        <label for="name">Nome <span class="requerido">*</span></label>
+        <label v-if="formData.type == 'f'" for="name"
+          >Nome <span class="requerido">*</span></label
+        >
+        <label v-else for="name"
+          >Nome Fantasia <span class="requerido">*</span></label
+        >
         <b-form-input
           v-model="formData.name"
           name="name"
@@ -36,7 +41,7 @@
 
       <b-form-group class="mb-4">
         <label for="pessoa"
-          >Pessoa física ou jurídica?<span class="requerido">*</span></label
+          >Pessoa física ou jurídica? <span class="requerido">*</span></label
         >
         <b-form-radio-group
           v-model="formData.type"
@@ -55,7 +60,7 @@
           placeholder="00.000.000/000-00"
           :class="{ 'is-invalid': $v.formData.cnpj.$error }"
         />
-        <b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="formData.type == 'pj'">
           {{
             !$v.formData.cnpj.minLength
               ? 'Insira um CNPJ válido'
@@ -78,6 +83,70 @@
           }}
         </b-form-invalid-feedback>
       </b-form-group>
+
+      <b-row>
+        <b-col cols="12">
+          <b-form-group v-if="formData.type == 'f'" class="mb-4">
+            <label for="rg">RG <span class="requerido">*</span></label>
+            <b-form-input
+              v-model="formData.rg"
+              name="rg"
+              placeholder="00.000.000"
+              :class="{ 'is-invalid': $v.formData.rg.$error }"
+            />
+            <b-form-invalid-feedback>
+              {{
+                !$v.formData.rg.minLength
+                  ? 'Insira um RG válido'
+                  : 'Preencha o campo acima'
+              }}
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
+      </b-row>
+
+      <b-row>
+        <b-col cols="6">
+          <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+            <label for="corporateName"
+              >Razão Social <span class="requerido">*</span></label
+            >
+            <b-form-input
+              v-model="formData.corporateName"
+              name="corporateName"
+              type="text"
+              placeholder="Empresa X"
+              :class="{
+                'is-invalid': $v.formData.corporateName.$error,
+              }"
+            />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
+        <b-col cols="6">
+          <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+            <label for="stateRegistration"
+              >Inscrição Estadual <span class="requerido">*</span></label
+            >
+            <b-form-input
+              v-model="formData.stateRegistration"
+              v-mask="['###.###.###']"
+              name="stateRegistration"
+              placeholder="000.000.000"
+              :class="{ 'is-invalid': $v.formData.stateRegistration.$error }"
+            />
+            <b-form-invalid-feedback>
+              {{
+                !$v.formData.stateRegistration.minLength
+                  ? 'Insira uma IE válida'
+                  : 'Preencha o campo acima'
+              }}
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
+      </b-row>
 
       <div class="grid">
         <div class="w-100 grid-1">
@@ -133,7 +202,10 @@
           class="d-flex"
           @change="onFileChange"
         />
-        <label for="file" class="text-center">Enviar Foto</label>
+        <label v-if="formData.type == 'f'" for="file" class="text-center"
+          >Enviar Foto</label
+        >
+        <label v-else for="file" class="text-center">Enviar Logotipo</label>
       </BorderButton>
       <div class="campo-foto d-flex align-self center justify-content-center">
         <div
@@ -152,28 +224,39 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="address">Endereço</label>
+        <label for="cep">CEP</label>
         <b-form-input
-          v-model="formData.address"
-          name="address"
-          type="text"
-          placeholder="Rua"
+          v-model="formData.cep"
+          v-mask="['#####-###']"
+          name="cep"
+          placeholder="000-00000"
+          :class="{
+            'is-invalid': $v.formData.cep.$error,
+          }"
         />
         <b-form-invalid-feedback>
-          Preencha o campo acima
+          {{
+            !$v.formData.cep.minLength
+              ? 'Insira um CEP válido'
+              : 'Preencha o campo acima'
+          }}
         </b-form-invalid-feedback>
       </b-form-group>
 
       <b-row>
         <b-col cols="6">
           <b-form-group class="mb-4">
-            <label for="cep">CEP</label>
+            <label for="address">Endereço</label>
             <b-form-input
-              v-model="formData.cep"
-              v-mask="['#####-###']"
-              name="cep"
-              placeholder="000-00000"
+              v-model="formData.address"
+              name="address"
+              type="text"
+              placeholder="Rua"
+              disabled
             />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
 
@@ -185,6 +268,7 @@
               name="district"
               type="text"
               placeholder="Bairro"
+              disabled
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -202,6 +286,7 @@
               name="city"
               type="text"
               placeholder="Cidade"
+              disabled
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -217,6 +302,7 @@
               name="state"
               type="text"
               placeholder="Estado"
+              disabled
             />
           </b-form-group>
         </b-col>
@@ -231,7 +317,13 @@
               name="number"
               type="number"
               placeholder="000"
+              :class="{
+                'is-invalid': $v.formData.number.$error,
+              }"
             />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
 
@@ -248,6 +340,15 @@
         </b-col>
       </b-row>
 
+      <b-row class="mt-2">
+        <b-col sm="12">
+          <label for="textarea-default">Observações</label>
+          <b-form-textarea
+            v-model="formData.note"
+            placeholder="Opcional"
+          ></b-form-textarea>
+        </b-col>
+      </b-row>
       <button class="mt-4 mb-2" :disabled="formSend" @click="saveCustomer">
         <b-spinner v-if="formSend" small type="grow" />
         Salvar
@@ -279,10 +380,14 @@ export default {
       vm: null,
       formSend: false,
       formData: {
+        status: 'active',
         type: 'f',
         name: null,
         cnpj: null,
         cpf: null,
+        rg: null,
+        corporateName: null,
+        stateRegistration: null,
         phone: null,
         email: null,
         photo: null,
@@ -293,6 +398,7 @@ export default {
         state: null,
         number: null,
         complement: null,
+        node: null,
       },
       types: [
         {
@@ -312,17 +418,34 @@ export default {
       name: {
         required,
       },
+      corporateName: {
+        required: requiredIf(function () {
+          return this.formData.type === 'pj';
+        }),
+      },
       cnpj: {
         required: requiredIf(function () {
-          return this.type;
+          return this.formData.type === 'pj';
         }),
         minLength: minLength(18),
       },
+      stateRegistration: {
+        required: requiredIf(function () {
+          return this.formData.type === 'pj';
+        }),
+        minLength: minLength(11),
+      },
       cpf: {
         required: requiredIf(function () {
-          return this.type;
+          return this.formData.type === 'f';
         }),
         minLength: minLength(14),
+      },
+      rg: {
+        required: requiredIf(function () {
+          return this.formData.type === 'f';
+        }),
+        minLength: minLength(6),
       },
       phone: {
         required,
@@ -331,6 +454,13 @@ export default {
       email: {
         required,
         email,
+      },
+      cep: {
+        required,
+        minLength: minLength(9),
+      },
+      number: {
+        required,
       },
     },
   },
@@ -364,10 +494,14 @@ export default {
                 'Cliente adicionado com sucesso!',
               );
               this.formData = {
+                status: 'active',
                 type: null,
                 name: null,
                 cnpj: null,
                 cpf: null,
+                rg: null,
+                corporateName: null,
+                stateRegistration: null,
                 phone: null,
                 email: null,
                 photo: null,
@@ -378,6 +512,7 @@ export default {
                 state: null,
                 number: null,
                 complement: null,
+                note: null,
               };
               this.$nuxt.refresh();
             })

@@ -16,7 +16,17 @@
           @click="$bvModal.hide('update-client-' + clienteDaLista.id)"
         />
       </div>
-      <b-form-group class="mb-4">
+      <b-form-group>
+        <label for="status">Status do cliente:</label>
+        <b-form-radio-group
+          v-model="formData.status"
+          name="status"
+          :options="status"
+          class="mb-3"
+          value-field="value"
+          text-field="text"
+          disabled-field="notEnabled"
+        ></b-form-radio-group>
         <label for="name">Nome <span class="requerido">*</span></label>
         <b-form-input
           v-model="formData.name"
@@ -76,6 +86,70 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+      <b-row>
+        <b-col cols="12">
+          <b-form-group v-if="formData.type == 'f'" class="mb-4">
+            <label for="rg">RG <span class="requerido">*</span></label>
+            <b-form-input
+              v-model="formData.rg"
+              name="rg"
+              placeholder="00.000.000"
+              :class="{ 'is-invalid': $v.formData.rg.$error }"
+            />
+            <b-form-invalid-feedback>
+              {{
+                !$v.formData.rg.minLength
+                  ? 'Insira um RG válido'
+                  : 'Preencha o campo acima'
+              }}
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
+      </b-row>
+
+      <b-row>
+        <b-col cols="6">
+          <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+            <label for="corporateName"
+              >Razão Social <span class="requerido">*</span></label
+            >
+            <b-form-input
+              v-model="formData.corporateName"
+              name="corporateName"
+              type="text"
+              placeholder="Empresa X"
+              :class="{
+                'is-invalid': $v.formData.corporateName.$error,
+              }"
+            />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
+        <b-col cols="6">
+          <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+            <label for="stateRegistration"
+              >Inscrição Estadual <span class="requerido">*</span></label
+            >
+            <b-form-input
+              v-model="formData.stateRegistration"
+              v-mask="['###.###.###']"
+              name="stateRegistration"
+              placeholder="000.000.000"
+              :class="{ 'is-invalid': $v.formData.stateRegistration.$error }"
+            />
+            <b-form-invalid-feedback>
+              {{
+                !$v.formData.stateRegistration.minLength
+                  ? 'Insira uma IE válida'
+                  : 'Preencha o campo acima'
+              }}
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
+      </b-row>
+
       <div class="grid">
         <b-form-group class="mb-4">
           <label for="phone">Telefone <span class="requerido">*</span></label>
@@ -130,12 +204,15 @@
       </BorderButton>
 
       <b-form-group class="mb-4">
-        <label for="address">Endereço</label>
+        <label for="cep">CEP</label>
         <b-form-input
-          v-model="formData.address"
-          name="address"
-          type="text"
-          placeholder="Rua"
+          v-model="formData.cep"
+          v-mask="['#####-###']"
+          name="cep"
+          placeholder="000-00000"
+          :class="{
+            'is-invalid': $v.formData.cep.$error,
+          }"
         />
         <b-form-invalid-feedback>
           Preencha o campo acima
@@ -145,13 +222,16 @@
       <b-row>
         <b-col cols="6">
           <b-form-group class="mb-4">
-            <label for="cep">CEP</label>
+            <label for="address">Endereço</label>
             <b-form-input
-              v-model="formData.cep"
-              v-mask="['#####-###']"
-              name="cep"
-              placeholder="000-00000"
+              v-model="formData.address"
+              name="address"
+              type="text"
+              placeholder="Rua"
             />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
 
@@ -266,10 +346,14 @@ export default {
       vm: null,
       formSend: false,
       formData: {
+        status: null,
         type: null,
         name: null,
         cnpj: null,
         cpf: null,
+        rg: null,
+        corporateName: null,
+        stateRegistration: null,
         phone: null,
         email: null,
         photo: null,
@@ -291,6 +375,16 @@ export default {
           html: '<span style="color:#5E5E5E;font-size:12px;">Pessoa jurídica</span>',
         },
       ],
+      status: [
+        {
+          text: 'Ativo',
+          value: 'active',
+        },
+        {
+          text: 'Inativo',
+          value: 'inactive',
+        },
+      ],
     };
   },
 
@@ -299,17 +393,34 @@ export default {
       name: {
         required,
       },
+      corporateName: {
+        required: requiredIf(function () {
+          return this.formData.type === 'pj';
+        }),
+      },
       cnpj: {
         required: requiredIf(function () {
-          return this.type;
+          return this.formData.type === 'pj';
         }),
-        minLength: minLength(17),
+        minLength: minLength(18),
+      },
+      stateRegistration: {
+        required: requiredIf(function () {
+          return this.formData.type === 'pj';
+        }),
+        minLength: minLength(11),
       },
       cpf: {
         required: requiredIf(function () {
-          return this.type;
+          return this.formData.type === 'f';
         }),
         minLength: minLength(14),
+      },
+      rg: {
+        required: requiredIf(function () {
+          return this.formData.type === 'f';
+        }),
+        minLength: minLength(6),
       },
       phone: {
         required,
@@ -318,6 +429,10 @@ export default {
       email: {
         required,
         email,
+      },
+      cep: {
+        required,
+        minLength: minLength(8),
       },
     },
   },
@@ -328,10 +443,12 @@ export default {
   },
   methods: {
     setDataFormWithClient() {
+      this.formData.status = this.clienteDaLista.status;
       this.formData.name = this.clienteDaLista.name;
       this.formData.type = this.clienteDaLista.type;
       this.formData.cnpj = this.clienteDaLista.cnpj;
       this.formData.cpf = this.clienteDaLista.cpf;
+      this.formData.rg = this.clienteDaLista.rg;
       this.formData.phone = this.clienteDaLista.phone;
       this.formData.email = this.clienteDaLista.email;
       this.formData.address = this.clienteDaLista.address;
