@@ -1,12 +1,18 @@
 <template>
   <div class="w-100 mx-auto position-relative">
-    <div class="d-flex align-items-center mb-5">
+    <div class="d-flex align-items-center mb-2">
       <b-form-input
         v-model="search"
         placeholder="Pesquisar"
         class="ml-3"
       ></b-form-input>
-      <img class="mx-3" src="~/assets/img/icones/sliders.svg" />
+      <img
+        ref="dropdown"
+        role="button"
+        src="~/assets/img/icones/sliders.svg"
+        class="mx-2"
+        @click="isFiltered = !isFiltered"
+      />
       <div
         v-if="!$screen.lg"
         class="icone-criar d-flex justify-content-center mr-3"
@@ -21,6 +27,27 @@
         Criar Cliente
       </button>
     </div>
+    <b-container v-if="isFiltered">
+      <b-row class="mx-0 p-2 border rounded mb-3">
+        <p class="mb-2">Selecione o filtro:</p>
+        <b-col cols="10">
+          <b-form-checkbox-group
+            v-model="selected"
+            :options="options"
+            :unchecked-value="null"
+          ></b-form-checkbox-group>
+        </b-col>
+        <b-col cols="2">
+          <b-img
+            v-b-tooltip.hover
+            role="button"
+            title="Limpar filtro"
+            src="~/assets/img/icones/delete-icon.svg"
+            @click="cleanFilter"
+          />
+        </b-col>
+      </b-row>
+    </b-container>
     <section class="rounded w-100">
       <h1 class="p-4">Clientes</h1>
       <ul>
@@ -28,8 +55,8 @@
           v-for="customer in filteredList"
           :key="customer.id"
           class="card-cliente p-5 d-flex justify-content-between align-items-center py-4"
-          @click="showVer(customer)"
           role="button"
+          @click="showVer(customer)"
         >
           <p>#{{ customer.id }} {{ customer.name }}</p>
           <div>
@@ -48,7 +75,7 @@
             />
           </div>
           <Edit :cliente-da-lista="customer" :watching="id" />
-          <Viewing :clienteDaLista="customer" :watching="id" />
+          <Viewing :cliente-da-lista="customer" :watching="id" />
         </li>
         <Delete :id="id" />
       </ul>
@@ -71,15 +98,37 @@ export default {
   },
   data() {
     return {
+      selected: null,
+      isFiltered: false,
+      options: [
+        {
+          text: 'CNPJ',
+          value: 'pj',
+        },
+        {
+          text: 'CPF',
+          value: 'f',
+        },
+      ],
       id: null,
       search: '',
     };
   },
   computed: {
     filteredList() {
-      return this.customersData.filter((customer) => {
+      let customers = this.customersData.filter((customer) => {
         return customer.name.toLowerCase().match(this.search.toLowerCase());
       });
+
+      customers = customers.filter((customer) => {
+        if (this.selected === null) {
+          return customer;
+        }
+
+        return customer.type === this.selected;
+      });
+
+      return customers;
     },
   },
 
@@ -104,6 +153,10 @@ export default {
         this.$bvModal.show(`view-client-${this.id}`);
       });
       this.clienteDaLista = customer;
+    },
+    cleanFilter() {
+      this.search = '';
+      this.selected = null;
     },
   },
 };

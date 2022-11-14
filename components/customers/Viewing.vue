@@ -261,6 +261,15 @@ h1 {
   color: var(--primary-80);
 }
 
+label {
+  font-size: 0.75rem;
+}
+
+label,
+input {
+  color: var(--gray-40);
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
