@@ -28,6 +28,8 @@
           v-for="customer in filteredList"
           :key="customer.id"
           class="card-cliente p-5 d-flex justify-content-between align-items-center py-4"
+          @click="showVer(customer)"
+          role="button"
         >
           <p>#{{ customer.id }} {{ customer.name }}</p>
           <div>
@@ -46,6 +48,7 @@
             />
           </div>
           <Edit :cliente-da-lista="customer" :watching="id" />
+          <Viewing :clienteDaLista="customer" :watching="id" />
         </li>
         <Delete :id="id" />
       </ul>
@@ -55,10 +58,11 @@
 <script>
 import Delete from '~/components/customers/Delete.vue';
 import Edit from '~/components/customers/Edit.vue';
+import Viewing from '~/components/customers/Viewing.vue';
 
 export default {
   name: 'Listing',
-  components: { Delete, Edit },
+  components: { Delete, Edit, Viewing },
   props: {
     customersData: {
       type: Array,
@@ -91,6 +95,13 @@ export default {
       this.id = customer.id;
       this.$nextTick(function () {
         this.$bvModal.show(`update-client-${customer.id}`);
+      });
+      this.clienteDaLista = customer;
+    },
+    showVer(customer) {
+      this.id = customer.id;
+      this.$nextTick(function () {
+        this.$bvModal.show(`view-client-${this.id}`);
       });
       this.clienteDaLista = customer;
     },
