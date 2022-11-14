@@ -2,46 +2,56 @@
   <section class="rounded">
     <h1 class="p-4">Acontecendo hoje</h1>
     <ul>
-      <li class="card-servico p-4">
-        <div class="d-flex pb-3" @click="showVer(itemOrdem)">
+      <li
+        class="card-servico p-4"
+        v-for="(visita, index) in visitsData"
+        :key="index"
+      >
+        <div class="d-flex pb-3" @click="showVer(itemVisita)">
           <div class="ajuste">
-            <h2 class="primary-80 pb-1"># ID Tipo de Serviço</h2>
-            <p class="gray-40">Nome do Colaborador</p>
+            <h2 class="primary-80 pb-1">
+              # {{ visita.id }} {{ visita.services }}
+            </h2>
+            <p class="gray-40">{{ visita.colaborator }}</p>
           </div>
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
             <img
+              v-if="pause === true"
               src="~/assets/img/icones/pause-icon.svg"
               class="mr-3"
               role="button"
               width="22"
               height="24"
-              @click="showConcluir(itemOrdem)"
+              @click="pauseService(itemVisita)"
             />
             <img
+              v-if="start === true"
               src="~/assets/img/icones/play-icon.svg"
               role="button"
               class="mr-3"
               width="22"
               height="24"
-              @click="showEditar(itemOrdem)"
+              @click="playService(itemVisita)"
             />
-
             <img
+              v-if="stop === true"
               src="~/assets/img/icones/stop-icon.svg"
               role="button"
               width="22"
               height="24"
-              @click="showExcluir(itemOrdem)"
+              @click="stopService(itemVisita)"
             />
           </div>
         </div>
-        <div class="d-flex align-items-center" @click="showVer(itemOrdem)">
+        <div class="d-flex align-items-center" @click="showVer(itemVisita)">
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
           <p class="pl-2">Cliente</p>
         </div>
-        <span class="gray-40">13/12/2022</span>
+        <span class="gray-40">
+          {{ visita.date_of_visit }}
+        </span>
       </li>
     </ul>
   </section>
@@ -77,17 +87,61 @@ export default {
   },
   data() {
     return {
-      tamanho: null,
-      name: 'Para Bailar la bamba',
-      indice: null,
-      espaco: null,
-      editar: false,
       id: null,
+      stop: false,
+      visitsData: [
+        {
+          colaborator: 'Vanessa Gonçalves',
+          date_of_visit: '02/06/2023',
+          services: 'Limpeza de equipamento',
+          id: 1,
+        },
+      ],
+      start: true,
+      stopwatchRunning: false,
+      timeIsSeconds: 0,
+      stopwatch: 0,
+      pause: false,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
   },
-
-  methods: {},
+  methods: {
+    playService() {
+      if (this.start === true) {
+        this.start = !this.start;
+        this.stop = !this.stop;
+        this.pause = !this.pause;
+        this.stopwatchRunning = true;
+        this.stopwatch = setInterval(() => {
+          this.timeIsSeconds += 1;
+        }, 1000);
+      } else {
+        this.start = true;
+      }
+    },
+    stopService() {
+      if (this.stop === true) {
+        this.start = !this.start;
+        this.stop = !this.stop;
+        this.pause = !this.pause;
+      } else {
+        this.stop = !this.stop;
+        this.stopwatchRunning = true;
+        this.stopwatch = setInterval(() => {
+          this.timeIsSeconds += 1;
+        }, 1000);
+      }
+    },
+    pauseService() {
+      if (this.pause === true) {
+        this.start = !this.start;
+        this.stop = !this.stop;
+        this.pause = !this.pause;
+      } else {
+        this.pause = true;
+      }
+    },
+  },
 };
 </script>
 

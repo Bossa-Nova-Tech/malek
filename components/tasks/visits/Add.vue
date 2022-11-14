@@ -60,9 +60,7 @@ export default {
   },
   methods: {
     registerVisit() {
-      if (this.colaborator) {
-        this.colaborator_data.push(this.colaborator);
-      }
+      this.colaborator_data.push(this.colaborator, this.date_of_visit);
       alert('Visita Registrada!');
       this.$bvModal.hide('visitas');
     },

@@ -58,6 +58,9 @@
         >Agendar Visita</b-button
       >
       <Add />
+      <ul>
+        <li v-for="(itemVisita, index) in visitsData" :key="index"></li>
+      </ul>
     </div>
   </b-modal>
 </template>

@@ -153,7 +153,7 @@
           </b-col>
         </b-row>
 
-        <b-form-group class="mb-4" v-if="formData.type == 'pj'">
+        <b-form-group v-if="formData.type == 'pj'" class="mb-4">
           <label for="fantasy_name"
             >Nome Fantasia <span class="requerido">*</span></label
           >
