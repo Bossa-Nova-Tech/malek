@@ -28,12 +28,12 @@
         <label v-if="formData.type == 'pj'">CNPJ</label>
         <label v-else>CPF</label>
         <b-form-input
-          :value="formData.cnpj"
           v-if="formData.type == 'pj'"
+          :value="formData.cnpj"
           disabled
           class="bg-white"
         />
-        <b-form-input :value="formData.cpf" v-else disabled class="bg-white" />
+        <b-form-input v-else :value="formData.cpf" disabled class="bg-white" />
       </b-form-group>
 
       <b-row>

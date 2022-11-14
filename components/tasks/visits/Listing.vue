@@ -3,9 +3,9 @@
     <h1 class="p-4">Acontecendo hoje</h1>
     <ul>
       <li
-        class="card-servico p-4"
         v-for="(visita, index) in visitsData"
         :key="index"
+        class="card-servico p-4"
       >
         <div class="d-flex pb-3" @click="showVer(itemVisita)">
           <div class="ajuste">
@@ -48,10 +48,24 @@
         <div class="d-flex align-items-center" @click="showVer(itemVisita)">
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
           <p class="pl-2">Cliente</p>
+          <b-badge
+            class="ml-2 px-2"
+            :class="{
+              green: visita.status === 'Agendada',
+              red: visita.status === 'Cancelada',
+              yellow: visita.status === 'Em andamento',
+            }"
+            ><small>{{ visita.status }}</small></b-badge
+          >
         </div>
         <span class="gray-40">
           {{ visita.date_of_visit }}
         </span>
+        <div>
+          <small
+            >Quem irá atender: <strong>{{ visita.user }}</strong></small
+          >
+        </div>
       </li>
     </ul>
   </section>
@@ -95,6 +109,8 @@ export default {
           date_of_visit: '02/06/2023',
           services: 'Limpeza de equipamento',
           id: 1,
+          status: 'Agendada',
+          user: 'Joaquim da Silva',
         },
       ],
       start: true,
@@ -177,6 +193,16 @@ section {
 
       .ajuste {
         padding-left: 0.5rem;
+      }
+
+      .red {
+        background: var(--red-50);
+      }
+      .yellow {
+        background: yellow;
+      }
+      .green {
+        background: green;
       }
     }
   }

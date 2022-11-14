@@ -388,9 +388,11 @@ export default {
   height: 300px;
   border-radius: 20px;
 }
+
 h5 {
   font-size: 1.2rem;
 }
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

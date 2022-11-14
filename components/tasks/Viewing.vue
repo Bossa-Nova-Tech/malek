@@ -26,7 +26,8 @@
         size="sm"
         class="imprimir d-flex justify-content-center align-items-center my-4 text-center font-weight-bolder"
       >
-        Imprimir OS<b-img src="~/assets/img/icones/resume-icon.svg" />
+        Imprimir OS
+        <b-img src="~/assets/img/icones/resume-icon.svg" />
       </b-button>
       <h3>Tipo de serviço</h3>
       <p>{{ ordem_item.services }}</p>
@@ -120,10 +121,12 @@ export default {
 .view-modal {
   h1 {
     font-size: 1.4rem;
+
     span {
       color: var(--primary-80);
     }
   }
+
   .imprimir {
     border: 1px solid var(--primary-80);
     border-radius: 8px;
@@ -132,11 +135,13 @@ export default {
     font-size: 1rem;
     box-shadow: none;
   }
+
   h3 {
     font-size: 0.8rem;
     font-weight: bolder;
     color: var(--gray-60);
   }
+
   p {
     font-size: 1rem;
     color: var(--gray-60);
