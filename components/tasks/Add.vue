@@ -197,6 +197,7 @@
         >
         </b-form-input>
       </b-form-group>
+      <pre>{{ services }} </pre>
       <label for="mapa">Localização do Cliente</label>
       <l-map
         ref="myMap"
@@ -273,6 +274,7 @@ export default {
       services: [],
       formSend: false,
       ordem: null,
+      estimated_time: null,
       formData: {
         status: null,
         estimated_time: null,
@@ -306,8 +308,8 @@ export default {
       const { data } = await this.$axios.get('services');
       const service = data;
       this.services = service;
-      console.log('servicesn' + this.services);
     },
+    async estimated_time() {},
   },
   /* async mounted() {
     const { data } = await this.$axios.get('customers');

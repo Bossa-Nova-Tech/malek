@@ -9,13 +9,12 @@
             <!-- <ListingPast :tasks-data="tasksDataOverdue" /> -->
           </b-tab>
           <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing :tasks-data="tasksData" />
+            <Listing :visitsData="visitsData" />
           </b-tab>
 
           <b-tab id="futuras" title="Futuras" class="mt-4">
             <!-- <ListingFuture /> -->
           </b-tab>
-          <Add :watching="chamarCliente" :watching2="chamarCliente" />
         </b-tabs>
       </div>
     </main>
@@ -23,7 +22,6 @@
 </template>
 
 <script>
-import Add from '~/components/tasks/Add.vue';
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 import PainelAside from '~/components/layout/PainelAside.vue';
 import Listing from '~/components/tasks/visits/Listing.vue';
@@ -32,7 +30,6 @@ import ListingPast from '~/components/tasks/visits/ListingPast.vue'; */
 
 export default {
   components: {
-    Add,
     Listing,
     /* ListingFuture,
     ListingPast, */
@@ -40,17 +37,16 @@ export default {
     PainelAside,
   },
   async asyncData({ $axios }) {
-    const users = await $axios.get('users');
-    const usersData = users.data;
-    console.log('users' + usersData);
-    return usersData;
+    const visits = await $axios.get('tasks?visits');
+    const visitsData = visits.data;
+    return { visitsData };
   },
 
   data: () => {
     return {
       chamarCliente: null,
       telaName: 'Visitas',
-      tasksData: [],
+      visitsData: [],
     };
   },
 

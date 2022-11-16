@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    :id="'view-task-' + ordem_item.id"
-    :ref="'view-task-' + ordem_item.id"
+    :id="'view-visit-' + visitaItem.id"
+    :ref="'view-visit'"
     size="lg"
     centered
     no-close-on-backdrop
@@ -12,30 +12,24 @@
     <div class="view-modal mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4">
-          Ordem de Serviço <span> {{ ordem_item.id }}</span>
+          Visita da OS <span> {{ visitaItem.id }}</span>
         </h1>
 
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mt-3"
           role="button"
-          @click.once="$bvModal.hide(`view-task-${ordem_item.id}`)"
+          @click.once="$bvModal.hide(`view-visit-${visitaItem.id}`)"
         />
       </div>
-      <b-button
-        size="sm"
-        class="imprimir d-flex justify-content-center align-items-center my-4 text-center font-weight-bolder"
-      >
-        Imprimir OS<b-img src="~/assets/img/icones/resume-icon.svg" />
-      </b-button>
       <h3>Tipo de serviço</h3>
-      <p>{{ ordem_item.services }}</p>
+      <p>{{ visitaItem.services }}</p>
       <h3 class="mt-4">Cliente</h3>
-      <p>{{ ordem_item.name_customer | truncate() }}</p>
+      <p>{{ visitaItem.name_customer }}</p>
       <h3 class="mt-4">Duração média da tarefa</h3>
-      <p>{{ ordem_item.estimated_time }}</p>
-      <h3 class="mt-4">Data prevista para conclusão</h3>
-      <p>{{ ordem_item.end_date }}</p>
+      <p>{{ visitaItem.estimated_time }}</p>
+      <h3 class="mt-4">Colaborador</h3>
+      <p>{{ visitaItem.colaborator }}</p>
       <h3 class="mt-4">Localização do Cliente</h3>
       <client-only>
         <l-map
@@ -54,21 +48,38 @@
           <l-circle :lat-lng="circle.center" :radius="circle.radius" />
         </l-map>
       </client-only>
-      <b-button variant="primary" @click="$bvModal.show('visitas')"
-        >Agendar Visita</b-button
+      <h3 class="mt-4">Comentário:</h3>
+      <b-form-group v-if="this.listComment === false">
+        <b-form-textarea
+          id="user-comment"
+          v-model="comment.text"
+          placeholder="Digite o comentário..."
+          rows="3"
+          max-rows="6"
+          :class="{
+            'is-invalid': $v.comment.text.$error,
+          }"
+        ></b-form-textarea>
+        <b-form-invalid-feedback>
+          Para salvar, preencha o comentário.
+        </b-form-invalid-feedback>
+      </b-form-group>
+      <b-button
+        v-if="this.listComment === false"
+        variant="primary"
+        @click="salvarComentario"
+        >Salvar comentário</b-button
       >
-      <Add />
-      <ul>
-        <li v-for="(itemVisita, index) in visitsData" :key="index"></li>
-      </ul>
+      <p v-if="this.listComment === true">{{ comment.text }}</p>
     </div>
   </b-modal>
 </template>
 <script>
 import 'leaflet/dist/leaflet.css';
+import { required } from 'vuelidate/lib/validators';
+import { validationMixin } from 'vuelidate';
 import { latLng, Icon } from 'leaflet';
 import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
-import Add from '~/components/tasks/visits/Add.vue';
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
@@ -78,21 +89,21 @@ Icon.Default.mergeOptions({
 });
 export default {
   name: 'Viewing',
-  components: { LMap, LTileLayer, LControl, LCircle, Add },
-  filters: {
-    truncate(data) {
-      const teste = data.split(' ');
-      return teste[0];
-    },
-  },
+  components: { LMap, LTileLayer, LControl, LCircle },
+  mixins: [validationMixin],
   props: {
-    ordem_item: {
+    visitaItem: {
       type: Object,
       default: null,
     },
   },
   data() {
     return {
+      listComment: false,
+      comment: {
+        text: null,
+      },
+      id: null,
       circle: {
         center: latLng(-27.64337, -48.68869),
         radius: 300,
@@ -102,16 +113,48 @@ export default {
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      date_of_visit: null,
+      visitsData: [
+        {
+          colaborator: 'Vanessa Gonçalves',
+          date_of_visit: '02/06/2023',
+          services: 'Limpeza de equipamento',
+          id: 1,
+        },
+      ],
     };
   },
-
+  validations: {
+    comment: {
+      text: {
+        required,
+      },
+    },
+  },
   methods: {
     modalShown() {
       setTimeout(() => {
         // mapObject is a property that is part of leaflet
         this.$refs.myMap.mapObject.invalidateSize();
       }, 100);
+    },
+    showVer(visita) {
+      this.id = visita.id;
+      this.$nextTick(function () {
+        this.$bvModal.show(`view-visit-${this.id}`);
+      });
+      this.visita_selecionada = visita;
+    },
+    async salvarComentario() {
+      this.$v.comment.$touch();
+
+      if (!this.$v.comment.$invalid) {
+        await this.$axios.post(
+          'tasks/comment/' + this.visitaItem.id,
+          this.$data.comment,
+        );
+        this.listComment = true;
+      }
+      this.$bvModal.hide('view-visit-' + this.visitaItem.id);
     },
   },
 };
@@ -120,10 +163,12 @@ export default {
 .view-modal {
   h1 {
     font-size: 1.4rem;
+
     span {
       color: var(--primary-80);
     }
   }
+
   .imprimir {
     border: 1px solid var(--primary-80);
     border-radius: 8px;
@@ -132,14 +177,17 @@ export default {
     font-size: 1rem;
     box-shadow: none;
   }
+
   h3 {
     font-size: 0.8rem;
     font-weight: bolder;
     color: var(--gray-60);
   }
+
   p {
     font-size: 1rem;
     color: var(--gray-60);
   }
 }
 </style>
+
