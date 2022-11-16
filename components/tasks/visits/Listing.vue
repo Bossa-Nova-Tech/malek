@@ -15,12 +15,14 @@
             <h2 class="primary-80 pb-1">
               # {{ visita.id }} {{ visita.services }}
             </h2>
-            <p class="gray-40">{{ visita.colaborator }}</p>
+            <p class="gray-40">
+              Quem irá atender: <strong>{{ visita.colaborator }}</strong>
+            </p>
           </div>
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
-            <Viewing :id="id" :visitaItem="visita" />
+            <Viewing :id="id" :visita-item="visita" />
             <img
               v-if="start === false"
               src="~/assets/img/icones/pause-icon.svg"
@@ -65,11 +67,6 @@
         <span class="gray-40">
           {{ visita.date_of_visit }}
         </span>
-        <div>
-          <small
-            >Quem irá atender: <strong>{{ visita.user }}</strong></small
-          >
-        </div>
       </li>
     </ul>
   </section>
@@ -80,7 +77,6 @@ import Vue2Filters from 'vue2-filters';
 import Viewing from '~/components/tasks/visits/Viewing.vue';
 export default {
   name: 'Listing',
-  emits: ['timerFinish'],
   components: { Viewing },
   filters: {
     truncate(data) {
@@ -105,6 +101,7 @@ export default {
       default: null,
     },
   },
+  emits: ['timerFinish'],
   data() {
     return {
       id: null,
@@ -119,7 +116,6 @@ export default {
           date_of_visit: '02/06/2023',
           services: 'Limpeza de equipamento',
           status: 'Agendada',
-          user: 'Joaquim da Silva',
         },
       ],
       intervalList: [],

@@ -49,7 +49,7 @@
         </l-map>
       </client-only>
       <h3 class="mt-4">Comentário:</h3>
-      <b-form-group v-if="this.listComment === false">
+      <b-form-group v-if="listComment === false">
         <b-form-textarea
           id="user-comment"
           v-model="comment.text"
@@ -65,12 +65,12 @@
         </b-form-invalid-feedback>
       </b-form-group>
       <b-button
-        v-if="this.listComment === false"
+        v-if="listComment === false"
         variant="primary"
         @click="salvarComentario"
         >Salvar comentário</b-button
       >
-      <p v-if="this.listComment === true">{{ comment.text }}</p>
+      <p v-if="listComment === true">{{ comment.text }}</p>
     </div>
   </b-modal>
 </template>
@@ -190,4 +190,3 @@ export default {
   }
 }
 </style>
-

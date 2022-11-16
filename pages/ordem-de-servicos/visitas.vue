@@ -9,7 +9,7 @@
             <!-- <ListingPast :tasks-data="tasksDataOverdue" /> -->
           </b-tab>
           <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing :visitsData="visitsData" />
+            <Listing :visits-data="visitsData" />
           </b-tab>
 
           <b-tab id="futuras" title="Futuras" class="mt-4">

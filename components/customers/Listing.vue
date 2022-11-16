@@ -54,8 +54,8 @@
         <li
           v-for="customer in filteredList"
           :key="customer.id"
-          class="card-cliente p-5 d-flex justify-content-between align-items-center py-4"
           role="button"
+          class="card-cliente p-5 d-flex justify-content-between align-items-center py-4"
           @click="showVer(customer)"
         >
           <p>#{{ customer.id }} {{ customer.name }}</p>

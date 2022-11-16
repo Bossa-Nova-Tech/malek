@@ -1,6 +1,30 @@
 <template>
   <section class="rounded">
-    <h1 class="p-4">Em atraso</h1>
+    <div class="d-flex align-items-center">
+      <b-col cols="9">
+        <h1 class="m-4">Em atraso</h1>
+      </b-col>
+      <b-col cols="3" class="text-center">
+        <img
+          role="button"
+          src="~/assets/img/icones/sliders.svg"
+          alt="Icon filters"
+          @click="isFiltered = !isFiltered"
+        />
+      </b-col>
+    </div>
+    <b-container class="mx-auto my-2">
+      <b-row v-if="isFiltered" class="mx-auto">
+        <b-col cols="6">
+          <p class="mb-2">Pesquisa:</p>
+          <b-form-input
+            v-model="search"
+            size="sm"
+            placeholder="Digite sua busca"
+          ></b-form-input>
+        </b-col>
+      </b-row>
+    </b-container>
     <ul>
       <li
         v-for="(itemOrdem, index) in tasksData"
@@ -98,6 +122,8 @@ export default {
 
   data() {
     return {
+      search: null,
+      isFiltered: false,
       editar: false,
       id: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
