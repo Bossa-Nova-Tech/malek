@@ -14,20 +14,54 @@
       </b-col>
     </div>
     <b-container class="mx-auto my-2">
-      <b-row v-if="isFiltered" class="mx-auto">
-        <b-col cols="6">
-          <p class="mb-2">Pesquisa:</p>
+      <b-row v-if="isFiltered" class="mx-auto border p-2 py-4 rounded">
+        <b-col cols="12">
+          <span class="h5">Filtre sua busca:</span>
+          <p class="mb-2 mt-3">Nome/Número OS:</p>
           <b-form-input
             v-model="search"
             size="sm"
             placeholder="Digite sua busca"
           ></b-form-input>
         </b-col>
+        <b-col cols="12" class="mt-2">
+          <p class="mb-2">Status:</p>
+          <b-form-checkbox-group
+            v-model="selected"
+            :options="options"
+            size="sm"
+            :unchecked-value="null"
+          ></b-form-checkbox-group>
+        </b-col>
+        <b-col cols="12" class="mt-2">
+          <!-- <p class="mb-2">Data OS:</p>
+          <b-form-datepicker
+            v-model="date"
+            :date-format-options="{
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+            }"
+            locale="pt-br"
+            size="sm"
+          ></b-form-datepicker> -->
+        </b-col>
+        <b-col cols="6" align-self="end" class="mt-2">
+          <!-- <b-img
+            v-b-tooltip.hover
+            role="button"
+            title="Limpar filtro"
+            src="~/assets/img/icones/delete-icon.svg"
+          /> -->
+          <b-button variant="outline-danger" size="sm" @click="cleanFilter"
+            >Limpar Filtro</b-button
+          >
+        </b-col>
       </b-row>
     </b-container>
     <ul>
       <li
-        v-for="(itemOrdem, index) in tasksData"
+        v-for="(itemOrdem, index) in filteredList"
         :key="index"
         class="card-servico p-4"
       >
@@ -122,12 +156,45 @@ export default {
 
   data() {
     return {
-      search: null,
+      search: '',
+      date: '',
+      selected: null,
       isFiltered: false,
       editar: false,
       id: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
+      options: [
+        {
+          text: 'Criada',
+          value: 'created',
+        },
+        {
+          text: 'Em andamento',
+          value: 'start',
+        },
+      ],
     };
+  },
+
+  computed: {
+    filteredList() {
+      let tasks = this.tasksData.filter((t) => {
+        return (
+          t.name_customer.toLowerCase().match(this.search.toLowerCase()) ||
+          t.id.toString().match(this.search)
+        );
+      });
+
+      tasks = tasks.filter((t) => {
+        if (this.selected === null) {
+          return t;
+        }
+
+        return t.status === this.selected;
+      });
+
+      return tasks;
+    },
   },
 
   methods: {
@@ -170,6 +237,10 @@ export default {
         });
         this.ordem_selecionada = itemOrdem;
       }
+    },
+    cleanFilter() {
+      this.search = '';
+      this.selected = null;
     },
   },
 };
