@@ -22,7 +22,10 @@
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
-            <Viewing :id="id" :visita-item="visita" />
+            <Viewing
+              :coordenadas-data="coordenadasData"
+              :visita-item="visita"
+            />
             <img
               v-if="start === false"
               src="~/assets/img/icones/pause-icon.svg"

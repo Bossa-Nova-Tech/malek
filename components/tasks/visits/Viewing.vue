@@ -48,6 +48,10 @@
           <l-circle :lat-lng="circle.center" :radius="circle.radius" />
         </l-map>
       </client-only>
+      <b-button variant="primary" @click="getLocate"
+        >Ver localização do cliente</b-button
+      >
+
       <h3 class="mt-4">Comentário:</h3>
       <b-form-group v-if="listComment === false">
         <b-form-textarea
@@ -78,7 +82,7 @@
 import 'leaflet/dist/leaflet.css';
 import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
-import { latLng, Icon } from 'leaflet';
+import { Icon } from 'leaflet';
 import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
 
 delete Icon.Default.prototype._getIconUrl;
@@ -96,6 +100,10 @@ export default {
       type: Object,
       default: null,
     },
+    coordenadasData: {
+      type: Array,
+      default: null,
+    },
   },
   data() {
     return {
@@ -103,13 +111,15 @@ export default {
       comment: {
         text: null,
       },
-      id: null,
       circle: {
-        center: latLng(-27.64337, -48.68869),
+        center: [1, 2],
         radius: 300,
       },
       zoom: 18,
-      center: latLng(-27.64337, -48.68869),
+      center: [1, 2],
+      latitude: null,
+      longitude: null,
+      coordenadas: [],
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -130,19 +140,22 @@ export default {
       },
     },
   },
+
   methods: {
+    async getLocate() {
+      const coordenadas = await this.$axios.get(
+        'customers/get-coordinates/113',
+      );
+      this.coordenadas = coordenadas.data;
+      this.latitude = this.coordenadas.latitude;
+      this.longitude = this.coordenadas.longitude;
+      this.center = [this.latitude, this.longitude];
+    },
     modalShown() {
       setTimeout(() => {
         // mapObject is a property that is part of leaflet
         this.$refs.myMap.mapObject.invalidateSize();
       }, 100);
-    },
-    showVer(visita) {
-      this.id = visita.id;
-      this.$nextTick(function () {
-        this.$bvModal.show(`view-visit-${this.id}`);
-      });
-      this.visita_selecionada = visita;
     },
     async salvarComentario() {
       this.$v.comment.$touch();

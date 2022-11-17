@@ -150,7 +150,7 @@
           class="mb-4"
         >
           <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-          <l-marker :lat-lng="center"></l-marker>
+          <l-marker :draggable="true" :lat-lng="center"></l-marker>
           <l-control :position="'topright'" class="custom-control-watermark">
             AíServe &copy; Malek 2022
           </l-control>
