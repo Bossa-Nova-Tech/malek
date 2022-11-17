@@ -8,6 +8,7 @@
     hide-header
     class="vh-100"
   >
+    <!-- @shown="modalShown" -->
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Criar Cliente</h1>
@@ -19,7 +20,12 @@
         />
       </div>
       <b-form-group class="mb-4">
-        <label for="name">Nome <span class="requerido">*</span></label>
+        <label v-if="formData.type == 'f'" for="name"
+          >Nome <span class="requerido">*</span></label
+        >
+        <label v-else for="name"
+          >Nome Fantasia <span class="requerido">*</span></label
+        >
         <b-form-input
           v-model="formData.name"
           name="name"
@@ -36,7 +42,7 @@
 
       <b-form-group class="mb-4">
         <label for="pessoa"
-          >Pessoa física ou jurídica?<span class="requerido">*</span></label
+          >Pessoa física ou jurídica? <span class="requerido">*</span></label
         >
         <b-form-radio-group
           v-model="formData.type"
@@ -55,7 +61,7 @@
           placeholder="00.000.000/000-00"
           :class="{ 'is-invalid': $v.formData.cnpj.$error }"
         />
-        <b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="formData.type == 'pj'">
           {{
             !$v.formData.cnpj.minLength
               ? 'Insira um CNPJ válido'
@@ -78,6 +84,70 @@
           }}
         </b-form-invalid-feedback>
       </b-form-group>
+
+      <b-row>
+        <b-col cols="12">
+          <b-form-group v-if="formData.type == 'f'" class="mb-4">
+            <label for="rg">RG <span class="requerido">*</span></label>
+            <b-form-input
+              v-model="formData.rg"
+              name="rg"
+              placeholder="00.000.000"
+              :class="{ 'is-invalid': $v.formData.rg.$error }"
+            />
+            <b-form-invalid-feedback>
+              {{
+                !$v.formData.rg.minLength
+                  ? 'Insira um RG válido'
+                  : 'Preencha o campo acima'
+              }}
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
+      </b-row>
+
+      <b-row>
+        <b-col md="6" sm="12">
+          <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+            <label for="corporateName"
+              >Razão Social <span class="requerido">*</span></label
+            >
+            <b-form-input
+              v-model="formData.corporateName"
+              name="corporateName"
+              type="text"
+              placeholder="Empresa X"
+              :class="{
+                'is-invalid': $v.formData.corporateName.$error,
+              }"
+            />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
+        <b-col md="6" sm="12">
+          <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+            <label for="stateRegistration"
+              >Inscrição Estadual <span class="requerido">*</span></label
+            >
+            <b-form-input
+              v-model="formData.stateRegistration"
+              v-mask="['###.###.###']"
+              name="stateRegistration"
+              placeholder="000.000.000"
+              :class="{ 'is-invalid': $v.formData.stateRegistration.$error }"
+            />
+            <b-form-invalid-feedback>
+              {{
+                !$v.formData.stateRegistration.minLength
+                  ? 'Insira uma IE válida'
+                  : 'Preencha o campo acima'
+              }}
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
+      </b-row>
 
       <div class="grid">
         <div class="w-100 grid-1">
@@ -133,7 +203,10 @@
           class="d-flex"
           @change="onFileChange"
         />
-        <label for="file" class="text-center">Enviar Foto</label>
+        <label v-if="formData.type == 'f'" for="file" class="text-center"
+          >Enviar Foto</label
+        >
+        <label v-else for="file" class="text-center">Enviar Logotipo</label>
       </BorderButton>
       <div class="campo-foto d-flex align-self center justify-content-center">
         <div
@@ -152,28 +225,38 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="address">Endereço</label>
+        <label for="cep">CEP</label>
         <b-form-input
-          v-model="formData.address"
-          name="address"
-          type="text"
-          placeholder="Rua"
+          v-model="formData.cep"
+          v-mask="['#####-###']"
+          name="cep"
+          placeholder="000-00000"
+          :class="{
+            'is-invalid': $v.formData.cep.$error,
+          }"
         />
         <b-form-invalid-feedback>
-          Preencha o campo acima
+          {{
+            !$v.formData.cep.minLength
+              ? 'Insira um CEP válido'
+              : 'Preencha o campo acima'
+          }}
         </b-form-invalid-feedback>
       </b-form-group>
 
       <b-row>
         <b-col cols="6">
           <b-form-group class="mb-4">
-            <label for="cep">CEP</label>
+            <label for="address">Endereço</label>
             <b-form-input
-              v-model="formData.cep"
-              v-mask="['#####-###']"
-              name="cep"
-              placeholder="000-00000"
+              v-model="formData.address"
+              name="address"
+              type="text"
+              placeholder="Rua"
             />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
 
@@ -231,7 +314,13 @@
               name="number"
               type="number"
               placeholder="000"
+              :class="{
+                'is-invalid': $v.formData.number.$error,
+              }"
             />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
 
@@ -248,6 +337,35 @@
         </b-col>
       </b-row>
 
+      <!-- <b-row>
+        <b-col cols="12">
+          <l-map
+            ref="myMap"
+            name="mapa"
+            style="height: 300px; border-radius: 8px"
+            :zoom="zoom"
+            :center="center"
+            class="mb-4"
+          >
+            <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+            <l-marker :lat-lng="center" :draggable="true"></l-marker>
+            <l-control :position="'topright'" class="custom-control-watermark">
+              AíServe &copy; Malek 2022
+            </l-control>
+            <l-circle :lat-lng="circle.center" :radius="circle.radius" />
+          </l-map>
+        </b-col>
+      </b-row>
+ -->
+      <b-row class="mt-2">
+        <b-col sm="12">
+          <label for="textarea-default">Observações</label>
+          <b-form-textarea
+            v-model="formData.note"
+            placeholder="Opcional"
+          ></b-form-textarea>
+        </b-col>
+      </b-row>
       <button class="mt-4 mb-2" :disabled="formSend" @click="saveCustomer">
         <b-spinner v-if="formSend" small type="grow" />
         Salvar
@@ -265,24 +383,40 @@ import {
 } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
+/* import { latLng } from 'leaflet';
+import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet'; */
 
 export default {
-  name: 'Add',
+  name: 'AddClienteOrdem',
   directives: { mask },
+  /* components: { LMap, LTileLayer, LControl, LCircle }, */
   mixins: [validationMixin],
 
   data: () => {
     return {
+      /* circle: {
+        center: latLng(-27.64337, -48.68869),
+        radius: 4500,
+      },
+      zoom: 18,
+      center: latLng(-27.64337, -48.68869),
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors', */
       file: null,
       files: null,
       reader: null,
       vm: null,
       formSend: false,
       formData: {
+        status: 'active',
         type: 'f',
         name: null,
         cnpj: null,
         cpf: null,
+        rg: null,
+        corporateName: null,
+        stateRegistration: null,
         phone: null,
         email: null,
         photo: null,
@@ -293,6 +427,7 @@ export default {
         state: null,
         number: null,
         complement: null,
+        note: null,
       },
       types: [
         {
@@ -312,17 +447,34 @@ export default {
       name: {
         required,
       },
+      corporateName: {
+        required: requiredIf(function () {
+          return this.formData.type === 'pj';
+        }),
+      },
       cnpj: {
         required: requiredIf(function () {
-          return this.type;
+          return this.formData.type === 'pj';
         }),
         minLength: minLength(18),
       },
+      stateRegistration: {
+        required: requiredIf(function () {
+          return this.formData.type === 'pj';
+        }),
+        minLength: minLength(11),
+      },
       cpf: {
         required: requiredIf(function () {
-          return this.type;
+          return this.formData.type === 'f';
         }),
         minLength: minLength(14),
+      },
+      rg: {
+        required: requiredIf(function () {
+          return this.formData.type === 'f';
+        }),
+        minLength: minLength(6),
       },
       phone: {
         required,
@@ -331,6 +483,13 @@ export default {
       email: {
         required,
         email,
+      },
+      cep: {
+        required,
+        minLength: minLength(9),
+      },
+      number: {
+        required,
       },
     },
   },
@@ -342,6 +501,12 @@ export default {
   },
 
   methods: {
+    /* modalShown() {
+      setTimeout(() => {
+        // mapObject is a property that is part of leaflet
+        this.$refs.myMap.mapObject.invalidateSize();
+      }, 100);
+    }, */
     async saveCustomer(_response) {
       this.$v.formData.$touch();
 

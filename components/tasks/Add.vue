@@ -197,7 +197,6 @@
         >
         </b-form-input>
       </b-form-group>
-      <pre>{{ services }} </pre>
       <label for="mapa">Localização do Cliente</label>
       <l-map
         ref="myMap"
@@ -208,7 +207,7 @@
         class="mb-4"
       >
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-        <l-marker :lat-lng="center"></l-marker>
+        <l-marker :lat-lng="center" :draggable="true"></l-marker>
         <l-control :position="'topright'" class="custom-control-watermark">
           AíServe &copy; Malek 2022
         </l-control>

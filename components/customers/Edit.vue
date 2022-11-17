@@ -5,6 +5,7 @@
     size="lg"
     hide-footer
     hide-header
+    @shown="modalShown"
   >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
@@ -108,7 +109,7 @@
       </b-row>
 
       <b-row>
-        <b-col cols="6">
+        <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
             <label for="corporateName"
               >Razão Social <span class="requerido">*</span></label
@@ -127,7 +128,7 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-        <b-col cols="6">
+        <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
             <label for="stateRegistration"
               >Inscrição Estadual <span class="requerido">*</span></label
@@ -306,6 +307,26 @@
         </b-col>
       </b-row>
 
+      <b-row>
+        <b-col cols="12">
+          <l-map
+            ref="myMap"
+            name="mapa"
+            style="height: 300px; border-radius: 8px"
+            :zoom="zoom"
+            :center="center"
+            class="mb-4"
+          >
+            <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+            <l-marker :lat-lng="center"></l-marker>
+            <l-control :position="'topright'" class="custom-control-watermark">
+              AíServe &copy; Malek 2022
+            </l-control>
+            <l-circle :lat-lng="circle.center" :radius="circle.radius" />
+          </l-map>
+        </b-col>
+      </b-row>
+
       <button class="mt-4 mb-2" :disabled="formSend" @click="edit">
         <b-spinner v-if="formSend" small type="grow" />
         Salvar
@@ -323,10 +344,12 @@ import {
 } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
+import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
 
 export default {
-  name: 'Edit',
+  name: 'EditClient',
   directives: { mask },
+  components: { LMap, LTileLayer, LControl, LCircle },
   mixins: [validationMixin],
   props: {
     clienteDaLista: {
@@ -337,9 +360,24 @@ export default {
       type: Number,
       default: null,
     },
+    coordinates: {
+      type: Object,
+      default: null,
+    },
   },
   data: () => {
     return {
+      circle: {
+        center: [1, 2],
+        radius: 4500,
+      },
+      lat: '',
+      long: '',
+      zoom: 18,
+      center: [1, 2],
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       file: null,
       files: null,
       reader: null,
@@ -440,8 +478,28 @@ export default {
     watching() {
       this.setDataFormWithClient();
     },
+    async coordinates() {
+      await this.getCordinates();
+    },
   },
   methods: {
+    getCordinates() {
+      if (this.coordinates != null) {
+        const coordinates = this.coordinates;
+        this.lat = coordinates.latitude;
+        this.long = coordinates.longitude;
+        console.log(this.lat, this.long);
+        this.center = [this.lat, this.long];
+      } else {
+        console.log('deu erro');
+      }
+    },
+    modalShown() {
+      setTimeout(() => {
+        // mapObject is a property that is part of leaflet
+        this.$refs.myMap.mapObject.invalidateSize();
+      }, 100);
+    },
     setDataFormWithClient() {
       this.formData.status = this.clienteDaLista.status;
       this.formData.name = this.clienteDaLista.name;

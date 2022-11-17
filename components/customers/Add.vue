@@ -106,7 +106,7 @@
       </b-row>
 
       <b-row>
-        <b-col cols="6">
+        <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
             <label for="corporateName"
               >Razão Social <span class="requerido">*</span></label
@@ -125,7 +125,7 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-        <b-col cols="6">
+        <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
             <label for="stateRegistration"
               >Inscrição Estadual <span class="requerido">*</span></label
@@ -252,7 +252,6 @@
               name="address"
               type="text"
               placeholder="Rua"
-              disabled
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -268,7 +267,6 @@
               name="district"
               type="text"
               placeholder="Bairro"
-              disabled
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -286,7 +284,6 @@
               name="city"
               type="text"
               placeholder="Cidade"
-              disabled
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -302,7 +299,6 @@
               name="state"
               type="text"
               placeholder="Estado"
-              disabled
             />
           </b-form-group>
         </b-col>
@@ -368,7 +364,7 @@ import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 
 export default {
-  name: 'Add',
+  name: 'AddClient',
   directives: { mask },
   mixins: [validationMixin],
 

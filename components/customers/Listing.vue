@@ -54,27 +54,32 @@
         <li
           v-for="customer in filteredList"
           :key="customer.id"
-          role="button"
-          class="card-cliente p-5 d-flex justify-content-between align-items-center py-4"
-          @click="showVer(customer)"
+          class="card-cliente p-4 d-flex flex-column justify-content-center"
         >
-          <p>#{{ customer.id }} {{ customer.name }}</p>
-          <div>
-            <img
-              src="~/assets/img/icones/edit-icon.svg"
-              role="button"
-              alt="botão para acessar o modal de edição de cliente"
-              @click="showEditar(customer)"
-            />
-
-            <img
-              src="~/assets/img/icones/delete-icon.svg"
-              role="button"
-              alt="botão para deletar cliente"
-              @click="showExcluir(customer)"
-            />
-          </div>
-          <Edit :cliente-da-lista="customer" :watching="id" />
+          <b-row>
+            <b-col cols="9" @click="showVer(customer)" role="button">
+              <p>#{{ customer.id }} {{ customer.name }}</p>
+            </b-col>
+            <b-col cols="3">
+              <img
+                src="~/assets/img/icones/edit-icon.svg"
+                role="button"
+                alt="botão para acessar o modal de edição de cliente"
+                @click="showEditar(customer)"
+              />
+              <img
+                src="~/assets/img/icones/delete-icon.svg"
+                role="button"
+                alt="botão para deletar cliente"
+                @click="showExcluir(customer)"
+              />
+            </b-col>
+          </b-row>
+          <Edit
+            :cliente-da-lista="customer"
+            :watching="id"
+            :coordinates="coordinates"
+          />
           <Viewing :cliente-da-lista="customer" :watching="id" />
         </li>
         <Delete :id="id" />
@@ -100,6 +105,7 @@ export default {
     return {
       selected: null,
       isFiltered: false,
+      coordinates: [],
       options: [
         {
           text: 'CNPJ',
@@ -140,12 +146,17 @@ export default {
       });
       this.clienteDaLista = customer;
     },
-    showEditar(customer) {
+    async showEditar(customer) {
       this.id = customer.id;
       this.$nextTick(function () {
         this.$bvModal.show(`update-client-${customer.id}`);
       });
       this.clienteDaLista = customer;
+      const { data } = await this.$axios.get(
+        `customers/get-coordinates/${this.clienteDaLista.id}`,
+      );
+      console.log(data);
+      this.coordinates = data;
     },
     showVer(customer) {
       this.id = customer.id;
@@ -182,13 +193,14 @@ section {
     overflow: auto;
 
     li {
-      display: grid;
-      grid-template-columns: 3fr 1fr;
+      /* display: grid; */
+      height: 8rem;
+      /* grid-template-columns: 3fr 1fr; */
 
-      span {
+      /* span {
         align-self: center;
         justify-self: end;
-      }
+      } */
     }
   }
 
