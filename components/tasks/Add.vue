@@ -54,7 +54,6 @@
           Selecione uma opção.
         </b-form-invalid-feedback>
       </b-form-group> -->
-
       <b-form-group>
         <label for="customer">Cliente <span class="requerido">*</span></label>
         <b-form-select
@@ -281,6 +280,7 @@ export default {
         note: null,
         photos: null,
         name_customer: null,
+        customer_id: null,
         template: null,
         services: null,
       },

@@ -78,7 +78,15 @@
       <b-button variant="primary" @click="getLocate"
         >Ver localização do cliente</b-button
       >
-
+      <div>
+        <b-button
+          variant="outline-primary"
+          class="mt-4"
+          @click="signatureActive = !signatureActive"
+          >Colher Assinatura</b-button
+        >
+        <signature v-if="signatureActive" />
+      </div>
       <h3 class="mt-4">Comentário:</h3>
       <b-form-group v-if="listComment === false">
         <b-form-textarea
@@ -111,6 +119,7 @@ import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { Icon } from 'leaflet';
 import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
+import Signature from '~/components/tasks/visits/Signature.vue';
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
@@ -119,8 +128,8 @@ Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 export default {
-  name: 'Viewing',
-  components: { LMap, LTileLayer, LControl, LCircle },
+  name: 'ViewingVisit',
+  components: { LMap, LTileLayer, LControl, LCircle, Signature },
   mixins: [validationMixin],
   props: {
     visitaItem: {
@@ -134,6 +143,7 @@ export default {
   },
   data() {
     return {
+      signatureActive: false,
       listComment: false,
       comment: {
         text: null,
@@ -196,8 +206,8 @@ export default {
           this.$data.comment,
         );
         this.listComment = true;
+        this.$bvModal.hide('view-visit-' + this.visitaItem.id);
       }
-      this.$bvModal.hide('view-visit-' + this.visitaItem.id);
     },
     onFileChange(e) {
       const file = e.target.files[0];

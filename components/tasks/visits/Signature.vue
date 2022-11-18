@@ -43,9 +43,9 @@ export default {
     save() {
       const _this = this;
       const png = _this.$refs.signature.save();
+      console.log(png);
       const jpeg = _this.$refs.signature.save('image/jpeg');
       const svg = _this.$refs.signature.save('image/svg+xml');
-      console.log(png);
       console.log(jpeg);
       console.log(svg);
     },
