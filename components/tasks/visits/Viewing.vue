@@ -30,6 +30,33 @@
       <p>{{ visitaItem.estimated_time }}</p>
       <h3 class="mt-4">Colaborador</h3>
       <p>{{ visitaItem.colaborator }}</p>
+
+      <h3 class="mt-4">Adicionar foto e descrição</h3>
+      <b-form-file
+        placeholder="Escolha uma foto ..."
+        drop-placeholder="Solte uma foto aqui ..."
+        @change="onFileChange"
+      ></b-form-file>
+
+      <b-form-input
+        v-model="newTitle_photo"
+        class="my-3"
+        type="text"
+        placeholder="Ex: Vazamento de ar em tubulação...."
+      />
+      <b-button variant="primary" @click="save()">Salvar</b-button>
+
+      <ul class="py-3">
+        <li
+          v-for="(photoItem, index) in listPhotos"
+          :key="photoItem.index"
+          @remove="photoItem.splice(index, 1)"
+        >
+          <p>{{ photoItem.title_photo }}</p>
+          <img :src="photoItem.photo" />
+        </li>
+      </ul>
+
       <h3 class="mt-4">Localização do Cliente</h3>
       <client-only>
         <l-map
@@ -131,6 +158,9 @@ export default {
           id: 1,
         },
       ],
+      urlImage: null,
+      newTitle_photo: '',
+      listPhotos: [],
     };
   },
   validations: {
@@ -169,6 +199,18 @@ export default {
       }
       this.$bvModal.hide('view-visit-' + this.visitaItem.id);
     },
+    onFileChange(e) {
+      const file = e.target.files[0];
+      this.urlImage = URL.createObjectURL(file);
+    },
+    save() {
+      this.listPhotos.push({
+        photo: this.urlImage,
+        title_photo: this.newTitle_photo,
+      });
+      this.urlImage = '';
+      this.newTitle_photo = '';
+    },
   },
 };
 </script>
@@ -200,6 +242,16 @@ export default {
   p {
     font-size: 1rem;
     color: var(--gray-60);
+  }
+  ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    li {
+      img {
+        width: 100%;
+      }
+    }
   }
 }
 </style>
