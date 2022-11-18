@@ -151,6 +151,7 @@ export default {
     },
 
     closeModal() {
+      this.signatureActive = false;
       this.$nextTick(function () {
         this.$bvModal.hide(`visitFinished-${this.visitId}`);
       });

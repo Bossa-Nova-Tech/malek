@@ -34,7 +34,7 @@
       <h3 class="mt-4">Duração média da tarefa</h3>
       <p>{{ ordem_item.estimated_time }}</p>
       <h3 class="mt-4">Data prevista para conclusão</h3>
-      <p>{{ ordem_item.end_date }}</p>
+      <p>{{ this.$dayjs(ordem_item.end_date).format('DD/MM/YYYY') }}</p>
       <h3 class="mt-4">Localização do Cliente</h3>
       <client-only>
         <l-map

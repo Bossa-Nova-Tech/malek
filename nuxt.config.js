@@ -192,6 +192,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/dayjs',
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/robots',
