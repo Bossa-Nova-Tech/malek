@@ -13,10 +13,10 @@
               >{{ zfill(hour) }}:{{ zfill(min) }}:{{ zfill(sec) }}</a
             >
             <h2 class="primary-80 pb-1">
-              # {{ visita.id }} {{ visita.services }}
+              # {{ visita.task_id }} {{ visita.services }}
             </h2>
             <p class="gray-40">
-              Quem irá atender: <strong>{{ visita.colaborator }}</strong>
+              Quem irá atender: <strong>{{ visita.user_id }}</strong>
             </p>
           </div>
         </div>
@@ -58,13 +58,16 @@
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
           <p class="pl-2">Cliente</p>
           <b-badge
+            v-if="visita.status === 'scheduled'"
+            variant="success"
             class="ml-2 px-2"
-            :class="{
-              green: visita.status === 'Agendada',
-              red: visita.status === 'Cancelada',
-              yellow: visita.status === 'Em andamento',
-            }"
-            ><small>{{ visita.status }}</small></b-badge
+            ><small>Agendada</small></b-badge
+          >
+          <b-badge
+            v-if="visita.status === 'start'"
+            variant="warning"
+            class="ml-2 px-2"
+            ><small>Em execução</small></b-badge
           >
         </div>
         <span class="gray-40">
@@ -109,18 +112,6 @@ export default {
     return {
       id: null,
       stop: false,
-
-      /* !!!!!!!!!!!!!!!!!!!!!!!!!!! */
-      /* Para conseguir fazer o comentário, comentatar o visitsData abaixo e descomentar o de cima ali nas props */
-
-      /* visitsData: [
-        {
-          colaborator: 'Vanessa Gonçalves',
-          date_of_visit: '02/06/2023',
-          services: 'Limpeza de equipamento',
-          status: 'Agendada',
-        },
-      ], */
       intervalList: [],
       start: true,
       sec: 0,
@@ -188,6 +179,10 @@ export default {
         )}`,
       );
       console.log(this.intervalList);
+    },
+
+    stopService(visita) {
+      console.log(visita);
     },
 
     clear() {

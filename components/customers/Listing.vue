@@ -40,9 +40,9 @@
         <b-col cols="2">
           <b-img
             v-b-tooltip.hover
-            role="button"
             title="Limpar filtro"
             src="~/assets/img/icones/delete-icon.svg"
+            role="button"
             @click="cleanFilter"
           />
         </b-col>
@@ -63,8 +63,8 @@
             <b-col cols="3">
               <img
                 src="~/assets/img/icones/edit-icon.svg"
-                role="button"
                 alt="botão para acessar o modal de edição de cliente"
+                role="button"
                 @click="showEditar(customer)"
               />
               <img

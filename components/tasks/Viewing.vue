@@ -14,7 +14,6 @@
         <h1 class="mt-4">
           Ordem de Serviço <span> {{ ordem_item.id }}</span>
         </h1>
-
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mt-3"
@@ -36,16 +35,6 @@
       <p>{{ ordem_item.estimated_time }}</p>
       <h3 class="mt-4">Data prevista para conclusão</h3>
       <p>{{ ordem_item.end_date }}</p>
-      <!-- Assinatura ficará em Visitas -->
-      <div>
-        <b-button
-          variant="outline-primary"
-          class="mt-4"
-          @click="signatureActive = !signatureActive"
-          >Colher Assinatura</b-button
-        >
-        <signature v-if="signatureActive" />
-      </div>
       <h3 class="mt-4">Localização do Cliente</h3>
       <client-only>
         <l-map
@@ -76,7 +65,6 @@ import 'leaflet/dist/leaflet.css';
 import { latLng, Icon } from 'leaflet';
 import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
 import Add from '~/components/tasks/visits/Add.vue';
-import Signature from '~/components/tasks/visits/Signature.vue';
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
@@ -86,7 +74,7 @@ Icon.Default.mergeOptions({
 });
 export default {
   name: 'Viewing',
-  components: { LMap, LTileLayer, LControl, LCircle, Add, Signature },
+  components: { LMap, LTileLayer, LControl, LCircle, Add },
   filters: {
     truncate(data) {
       const teste = data.split(' ');
@@ -106,7 +94,6 @@ export default {
   },
   data() {
     return {
-      signatureActive: false,
       circle: {
         center: latLng(-27.64337, -48.68869),
         radius: 300,
