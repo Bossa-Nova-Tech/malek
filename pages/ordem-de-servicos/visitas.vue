@@ -37,7 +37,7 @@ export default {
     PainelAside,
   },
   async asyncData({ $axios }) {
-    const visits = await $axios.get('tasks?visit');
+    const visits = await $axios.get('tasks-list/visit');
     const visitsData = visits.data;
     return { visitsData };
   },

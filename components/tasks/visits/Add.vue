@@ -42,29 +42,28 @@ export default {
       type: Object,
       default: null,
     },
+    usersName: {
+      type: Number,
+      default: null,
+    },
   },
   data() {
     return {
       visits: {
         date_visit: null,
-        user_name: this.ordem_item,
+        user_name: null,
         user_id: 1,
       },
-      colaborators: [
-        {
-          value: null,
-          text: 'Selecione',
-        },
-        {
-          value: 'vanessa',
-          text: 'Vanessa Gonçalves',
-        },
-        {
-          value: 'pedro',
-          text: 'Pedro Santos',
-        },
-      ],
+      colaborators: [],
     };
+  },
+  watch: {
+    async usersName() {
+      const user = await this.$axios.get('users');
+      const userData = user.data;
+      this.colaborators = userData.name;
+      console.log('custumer' + this.user_name);
+    },
   },
   methods: {
     async registerVisit(_response) {
