@@ -12,7 +12,7 @@
     <div class="view-modal mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4">
-          Visita da OS <span> {{ visitaItem.id }}</span>
+          Visita da OS <span> {{ visitaItem.task_id }}</span>
         </h1>
 
         <img
@@ -192,7 +192,7 @@ export default {
 
       if (!this.$v.comment.$invalid) {
         await this.$axios.post(
-          'tasks/comment/' + this.visitaItem.id,
+          'tasks/comment/' + this.visitaItem.task_id,
           this.$data.comment,
         );
         this.listComment = true;

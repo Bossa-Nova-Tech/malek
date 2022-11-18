@@ -64,10 +64,10 @@
           <l-circle :lat-lng="circle.center" :radius="circle.radius" />
         </l-map>
       </client-only>
-      <b-button variant="primary" @click="$bvModal.show('visitas')"
+      <b-button variant="primary" @click="modalVisitas"
         >Agendar Visita</b-button
       >
-      <Add :ordem_item="ordem_item" />
+      <Add :users-name="usersName" :ordem_item="ordem_item" />
     </div>
   </b-modal>
 </template>
@@ -117,6 +117,7 @@ export default {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       date_of_visit: null,
+      usersName: false,
     };
   },
 
@@ -126,6 +127,10 @@ export default {
         // mapObject is a property that is part of leaflet
         this.$refs.myMap.mapObject.invalidateSize();
       }, 100);
+    },
+    modalVisitas() {
+      this.usersName = true;
+      this.$bvModal.show('visitas');
     },
   },
 };
