@@ -57,7 +57,7 @@
           class="card-cliente p-4 d-flex flex-column justify-content-center"
         >
           <b-row>
-            <b-col cols="9" @click="showVer(customer)" role="button">
+            <b-col cols="9" role="button" @click="showVer(customer)">
               <p>#{{ customer.id }} {{ customer.name }}</p>
             </b-col>
             <b-col cols="3">

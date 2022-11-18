@@ -67,10 +67,7 @@
       <b-button variant="primary" @click="$bvModal.show('visitas')"
         >Agendar Visita</b-button
       >
-      <Add />
-      <ul>
-        <li v-for="(itemVisita, index) in visitsData" :key="index"></li>
-      </ul>
+      <Add :ordem_item="ordem_item" />
     </div>
   </b-modal>
 </template>
@@ -101,6 +98,11 @@ export default {
       type: Object,
       default: null,
     },
+  },
+  async asyncData({ $axios }) {
+    const visits = await $axios.get('tasks/visit');
+    const visitsData = visits.data;
+    return { visitsData };
   },
   data() {
     return {

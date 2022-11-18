@@ -95,10 +95,10 @@ export default {
   },
   mixins: [Vue2Filters.mixin],
   props: {
-    /* visitsData: {
+    visitsData: {
       type: Array,
       default: null,
-    }, */
+    },
     watching: {
       type: String,
       default: null,
@@ -113,14 +113,14 @@ export default {
       /* !!!!!!!!!!!!!!!!!!!!!!!!!!! */
       /* Para conseguir fazer o comentário, comentatar o visitsData abaixo e descomentar o de cima ali nas props */
 
-      visitsData: [
+      /* visitsData: [
         {
           colaborator: 'Vanessa Gonçalves',
           date_of_visit: '02/06/2023',
           services: 'Limpeza de equipamento',
           status: 'Agendada',
         },
-      ],
+      ], */
       intervalList: [],
       start: true,
       sec: 0,
