@@ -22,11 +22,17 @@
       <b-form-invalid-feedback> Selecione uma opção. </b-form-invalid-feedback>
     </b-form-group>
     <b-form-group label-for="colaborador" label="Colaborador">
-      <b-form-select
-        v-model="visits.user_name"
-        name="colaborador"
-        :options="colaborators"
-      >
+      <b-form-select v-model="visits.user_name" name="user">
+        <b-form-select-option :value="null" desabled
+          >Selecione</b-form-select-option
+        >
+        <b-form-select-option
+          v-for="user in colaborators"
+          :key="user.id"
+          :value="user.name"
+        >
+          {{ user.name }}
+        </b-form-select-option>
       </b-form-select>
     </b-form-group>
     <b-button variant="primary" @click.once="registerVisit"
@@ -43,8 +49,8 @@ export default {
       default: null,
     },
     usersName: {
-      type: Number,
-      default: null,
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -61,8 +67,9 @@ export default {
     async usersName() {
       const user = await this.$axios.get('users');
       const userData = user.data;
-      this.colaborators = userData.name;
-      console.log('custumer' + this.user_name);
+      console.log(userData);
+      this.colaborators = userData;
+      console.log('aaaaaa' + this.colaborators);
     },
   },
   methods: {
@@ -71,18 +78,8 @@ export default {
         await this.$axios
           .post('tasks/visit/' + this.ordem_item.id, this.$data.visits)
           .then((_res) => {
-            this.$refs.criar.hide();
+            this.$refs.visitas.hide();
             this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
-            this.formData = {
-              status: null,
-              need_signature: false,
-              estimated_time: null,
-              end_date: null,
-              note: null,
-              name_customer: null,
-              template: null,
-              services: null,
-            };
             /* this.$router.go(0); */
           });
         this.$nuxt.refresh().catch((_err) => {});
