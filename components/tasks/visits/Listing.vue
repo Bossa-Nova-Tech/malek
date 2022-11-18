@@ -9,9 +9,9 @@
       >
         <div class="d-flex pb-3" @click="showVer(visita)">
           <div class="ajuste">
-            <a class="timer"
+            <!-- <a class="timer"
               >{{ zfill(hour) }}:{{ zfill(min) }}:{{ zfill(sec) }}</a
-            >
+            > -->
             <h2 class="primary-80 pb-1">
               # {{ visita.task_id }} {{ visita.services }}
             </h2>
@@ -26,32 +26,7 @@
               :coordenadas-data="coordenadasData"
               :visita-item="visita"
             />
-            <img
-              v-if="start === false"
-              src="~/assets/img/icones/pause-icon.svg"
-              class="mr-3"
-              role="button"
-              width="22"
-              height="24"
-              @click="play"
-            />
-            <img
-              v-if="start === true"
-              src="~/assets/img/icones/play-icon.svg"
-              role="button"
-              class="mr-3"
-              width="22"
-              height="24"
-              @click="play"
-            />
-            <img
-              v-if="stop === true"
-              src="~/assets/img/icones/stop-icon.svg"
-              role="button"
-              width="22"
-              height="24"
-              @click="stopService(visita)"
-            />
+            <Timer :visit-id="visita.id" />
           </div>
         </div>
         <div class="d-flex align-items-center" @click="showVer(visita)">
@@ -80,10 +55,11 @@
 
 <script>
 import Vue2Filters from 'vue2-filters';
+import Timer from './Timer.vue';
 import Viewing from '~/components/tasks/visits/Viewing.vue';
 export default {
   name: 'Listing',
-  components: { Viewing },
+  components: { Viewing, Timer },
   filters: {
     truncate(data) {
       const search = 'pessoa f';
@@ -129,71 +105,6 @@ export default {
         this.$bvModal.show(`view-visit-${this.id}`);
       });
       this.visita_selecionada = visita;
-    },
-
-    zfill(number) {
-      return number.toString().padStart(2, 0);
-    },
-
-    play() {
-      if (this.timer === null) {
-        this.playing();
-        this.start = !this.start;
-        this.stop = !this.stop;
-        this.pause = !this.pause;
-        this.timer = setInterval(() => this.playing(), 1000);
-      } else {
-        clearInterval(this.timer);
-        this.timer = null;
-        this.start = true;
-        this.pausee();
-      }
-    },
-
-    /*  playService() {
-      if (this.start === true) {
-        this.startVisit();
-        this.start = !this.start;
-        this.stop = !this.stop;
-        this.pause = !this.pause;
-      } else {
-        this.start = true;
-      }
-    }, */
-
-    playing() {
-      this.sec++;
-      if (this.sec >= 59) {
-        this.sec = 0;
-        this.min++;
-      }
-      if (this.min >= 59) {
-        this.min = 0;
-        this.hour++;
-      }
-    },
-    pausee() {
-      this.intervalList.push(
-        `${this.zfill(this.hour)}:${this.zfill(this.min)}:${this.zfill(
-          this.sec,
-        )}`,
-      );
-      console.log(this.intervalList);
-    },
-
-    stopService(visita) {
-      console.log(visita);
-    },
-
-    clear() {
-      if (this.timer !== null) {
-        clearInterval(this.timer);
-        this.timer = null;
-      }
-      this.sec = 0;
-      this.min = 0;
-      this.hour = 0;
-      this.clearIntervalList();
     },
   },
 };

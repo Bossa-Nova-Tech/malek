@@ -78,15 +78,6 @@
       <b-button variant="primary" @click="getLocate"
         >Ver localização do cliente</b-button
       >
-      <div>
-        <b-button
-          variant="outline-primary"
-          class="mt-4"
-          @click="signatureActive = !signatureActive"
-          >Colher Assinatura</b-button
-        >
-        <signature v-if="signatureActive" />
-      </div>
       <h3 class="mt-4">Comentário:</h3>
       <b-form-group v-if="listComment === false">
         <b-form-textarea
@@ -119,7 +110,6 @@ import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { Icon } from 'leaflet';
 import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
-import Signature from '~/components/tasks/visits/Signature.vue';
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
@@ -129,7 +119,7 @@ Icon.Default.mergeOptions({
 });
 export default {
   name: 'ViewingVisit',
-  components: { LMap, LTileLayer, LControl, LCircle, Signature },
+  components: { LMap, LTileLayer, LControl, LCircle },
   mixins: [validationMixin],
   props: {
     visitaItem: {
