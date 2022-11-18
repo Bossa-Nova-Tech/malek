@@ -44,16 +44,22 @@
         type="text"
         placeholder="Ex: Vazamento de ar em tubulação...."
       />
-      <b-button variant="primary" @click="save()">Salvar</b-button>
+      <b-button variant="primary" @click="save()">Adicionar</b-button>
 
       <ul class="py-3">
         <li
           v-for="(photoItem, index) in listPhotos"
           :key="photoItem.index"
-          @remove="photoItem.splice(index, 1)"
+          @remove="listPhotos.splice(index, 1)"
         >
           <p>{{ photoItem.title_photo }}</p>
-          <img :src="photoItem.photo" />
+          <img
+            src="~/assets/img/icones/delete-icon.svg"
+            role="button"
+            class="trash"
+            @click="excluiFoto"
+          />
+          <img class="foto" :src="photoItem.photo" />
         </li>
       </ul>
 
@@ -211,6 +217,9 @@ export default {
       this.urlImage = '';
       this.newTitle_photo = '';
     },
+    excluiFoto(index) {
+      this.listPhotos.splice(index, 1);
+    },
   },
 };
 </script>
@@ -248,7 +257,13 @@ export default {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 15px;
     li {
-      img {
+      display: flex;
+      flex-direction: column;
+      .trash {
+        align-self: end;
+        width: fit-content;
+      }
+      .foto {
         width: 100%;
       }
     }
