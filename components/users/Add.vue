@@ -1,21 +1,22 @@
 <template>
   <b-modal
-    id="criar-cliente"
-    ref="costumerModal"
+    id="criar-usuario"
+    ref="userModal"
     size="lg"
     scrollable
     hide-footer
     hide-header
+    centered
     class="vh-100"
   >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
-        <h1 class="mt-4 mb-5">Criar Cliente</h1>
+        <h1 class="mt-4 mb-5">Criar Usuário</h1>
         <img
           src="~/assets/img/icones/X-icon.svg"
           role="button"
           class="mb-5 mt-3"
-          @click="$bvModal.hide('criar-cliente')"
+          @click.prevent="$bvModal.hide('criar-usuario')"
         />
       </div>
       <b-form-group class="mb-4">
@@ -170,7 +171,9 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </div>
+      </div>
 
+      <div class="grid">
         <div class="w-100 grid-2">
           <b-form-group class="mb-4">
             <label for="email">E-mail <span class="requerido">*</span></label>
@@ -224,6 +227,68 @@
       </div>
 
       <b-form-group class="mb-4">
+        <label for="company">Empresa</label>
+        <b-form-select
+          v-model="formData.company_id"
+          name="company"
+          placeholder="Empresa"
+          :class="{
+            'is-invalid': $v.formData.company_id.$error,
+          }"
+        >
+          <b-form-select-option :value="null" desabled
+            >Selecione</b-form-select-option
+          >
+          <b-form-select-option
+            v-for="customer in customersData"
+            :key="customer.id"
+            :value="customer.id"
+          >
+            {{ customer.name }}
+          </b-form-select-option>
+        </b-form-select>
+        <b-form-invalid-feedback>
+          Preencha o campo acima.
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group class="mb-4">
+        <label for="role">Função</label>
+        <b-form-select
+          v-model="formData.role"
+          :options="options"
+          name="role"
+          :class="{
+            'is-invalid': $v.formData.role.$error,
+          }"
+        >
+        </b-form-select>
+        <b-form-invalid-feedback>
+          Preencha o campo acima.
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group class="mb-4">
+        <label for="password">Senha</label>
+        <b-form-input
+          v-model="formData.password"
+          type="password"
+          name="password"
+          placeholder="Senha"
+          :class="{
+            'is-invalid': $v.formData.password.$error,
+          }"
+        />
+        <b-form-invalid-feedback>
+          {{
+            !$v.formData.password.minLength
+              ? 'Insira uma senha válida'
+              : 'Preencha o campo acima'
+          }}
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group class="mb-4">
         <label for="cep">CEP</label>
         <b-form-input
           v-model="formData.cep"
@@ -244,7 +309,7 @@
       </b-form-group>
 
       <b-row>
-        <b-col cols="6">
+        <b-col md="6" sm="12">
           <b-form-group class="mb-4">
             <label for="address">Endereço</label>
             <b-form-input
@@ -259,7 +324,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col cols="6">
+        <b-col md="6" sm="12">
           <b-form-group class="mb-4">
             <label for="district">Bairro</label>
             <b-form-input
@@ -276,7 +341,7 @@
       </b-row>
 
       <b-row>
-        <b-col cols="6">
+        <b-col md="6" sm="12">
           <b-form-group class="mb-4">
             <label for="city">Cidade</label>
             <b-form-input
@@ -291,7 +356,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col cols="6">
+        <b-col md="6" sm="12">
           <b-form-group class="mb-4">
             <label for="state">Estado</label>
             <b-form-input
@@ -305,7 +370,7 @@
       </b-row>
 
       <b-row>
-        <b-col cols="6">
+        <b-col md="6" sm="12">
           <b-form-group class="mb-4">
             <label for="number">Número </label>
             <b-form-input
@@ -323,7 +388,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col cols="6">
+        <b-col md="6" sm="12">
           <b-form-group class="mb-4">
             <label for="complement">Complemento</label>
             <b-form-input
@@ -345,7 +410,7 @@
           ></b-form-textarea>
         </b-col>
       </b-row>
-      <button class="mt-4 mb-2" :disabled="formSend" @click="saveCustomer">
+      <button class="mt-4 mb-2" :disabled="formSend" @click="saveUser">
         <b-spinner v-if="formSend" small type="grow" />
         Salvar
       </button>
@@ -364,9 +429,16 @@ import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 
 export default {
-  name: 'AddClient',
+  name: 'AddUser',
   directives: { mask },
   mixins: [validationMixin],
+
+  props: {
+    customersData: {
+      type: Array,
+      default: null,
+    },
+  },
 
   data: () => {
     return {
@@ -379,16 +451,15 @@ export default {
         status: 'active',
         type: 'f',
         name: null,
-        cnpj: null,
         cpf: null,
-        rg: null,
-        corporate_name: null,
-        state_registration: null,
+        role: null,
         phone: null,
         email: null,
         photo: null,
-        address: null,
+        password: null,
+        company_id: null,
         cep: null,
+        address: null,
         district: null,
         city: null,
         state: null,
@@ -396,6 +467,24 @@ export default {
         complement: null,
         note: null,
       },
+      options: [
+        {
+          value: 'null',
+          text: 'Selecione a função',
+        },
+        {
+          value: 'owner',
+          text: 'Proprietário',
+        },
+        {
+          value: 'administrator',
+          text: 'Administrador',
+        },
+        {
+          value: 'manager',
+          text: 'Gerente',
+        },
+      ],
       types: [
         {
           value: 'f',
@@ -451,6 +540,16 @@ export default {
         required,
         email,
       },
+      role: {
+        required,
+      },
+      password: {
+        required,
+        minLength: minLength(8),
+      },
+      company_id: {
+        required,
+      },
       cep: {
         required,
         minLength: minLength(9),
@@ -468,7 +567,7 @@ export default {
   },
 
   methods: {
-    async saveCustomer(_response) {
+    async saveUser(_response) {
       this.$v.formData.$touch();
 
       if (!this.$v.formData.$invalid) {
@@ -478,8 +577,7 @@ export default {
         try {
           this.formSend = false;
           this.$v.formData.$reset();
-          console.log('executou o clic');
-          this.$refs.costumerModal.hide();
+          this.$refs.userModal.hide();
 
           await this.$axios
             .post('customers', this.$data.formData)
@@ -487,20 +585,22 @@ export default {
               this.toast(
                 'success',
                 'Sucesso',
-                'Cliente adicionado com sucesso!',
+                'Usuário adicionado com sucesso!',
               );
               this.formData = {
                 status: 'active',
-                name: null,
                 type: null,
                 cnpj: null,
+                name: null,
                 cpf: null,
-                corporate_name: null,
-                state_registration: null,
-                rg: null,
                 phone: null,
                 email: null,
                 photo: null,
+                password: null,
+                company_id: null,
+                corporate_name: null,
+                state_registration: null,
+                rg: null,
                 cep: null,
                 address: null,
                 district: null,

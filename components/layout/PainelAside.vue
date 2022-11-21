@@ -136,7 +136,7 @@
       </li>
 
       <li>
-        <NuxtLink to="/colaboradores">
+        <NuxtLink to="/usuarios">
           <svg
             width="56"
             height="51"
@@ -151,11 +151,11 @@
               stroke-linecap="round"
               stroke-linejoin="round"
               :class="{
-                isActive: $route.name === 'colaboradores',
+                isActive: $route.name === 'usuarios',
               }"
             />
           </svg>
-          <p>Colaboradores</p>
+          <p>Usuários</p>
         </NuxtLink>
       </li>
       <li>
