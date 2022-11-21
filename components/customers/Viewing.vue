@@ -20,6 +20,11 @@
         />
       </div>
       <b-form-group>
+        <label>Status</label>
+        <p v-if="formData.status === 'active'">Ativo</p>
+        <p v-if="formData.status === 'inactive'">Inativo</p>
+      </b-form-group>
+      <b-form-group>
         <label>Nome</label>
         <b-form-input :value="formData.name" disabled class="bg-white" />
       </b-form-group>
@@ -183,6 +188,10 @@ export default {
       type: Number,
       default: null,
     },
+    coordinates: {
+      type: Object,
+      default: null,
+    },
   },
   data: () => {
     return {
@@ -227,8 +236,22 @@ export default {
     watching() {
       this.setDataFormWithClient();
     },
+    async coordinates() {
+      await this.getCordinates();
+    },
   },
   methods: {
+    getCordinates() {
+      if (this.coordinates != null) {
+        const coordinates = this.coordinates;
+        this.lat = coordinates.latitude;
+        this.long = coordinates.longitude;
+        console.log(this.lat, this.long);
+        this.center = [this.lat, this.long];
+      } else {
+        console.log('deu erro');
+      }
+    },
     setDataFormWithClient() {
       this.formData.status = this.clienteDaLista.status;
       this.formData.name = this.clienteDaLista.name;

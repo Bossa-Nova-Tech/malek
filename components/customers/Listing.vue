@@ -80,7 +80,11 @@
             :watching="id"
             :coordinates="coordinates"
           />
-          <Viewing :cliente-da-lista="customer" :watching="id" />
+          <Viewing
+            :cliente-da-lista="customer"
+            :watching="id"
+            :coordinates="coordinates"
+          />
         </li>
         <Delete :id="id" />
       </ul>
@@ -158,12 +162,17 @@ export default {
       console.log(data);
       this.coordinates = data;
     },
-    showVer(customer) {
+    async showVer(customer) {
       this.id = customer.id;
       this.$nextTick(function () {
         this.$bvModal.show(`view-client-${this.id}`);
       });
       this.clienteDaLista = customer;
+      const { data } = await this.$axios.get(
+        `customers/get-coordinates/${this.clienteDaLista.id}`,
+      );
+      console.log(data);
+      this.coordinates = data;
     },
     cleanFilter() {
       this.search = '';
