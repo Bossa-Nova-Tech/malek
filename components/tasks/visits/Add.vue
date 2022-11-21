@@ -21,6 +21,20 @@
       />
       <b-form-invalid-feedback> Selecione uma opção. </b-form-invalid-feedback>
     </b-form-group>
+    <b-form-group
+      class="mb-4"
+      label-for="horario-visita"
+      label="Horário da Visita"
+    >
+      <b-form-timepicker
+        v-model="visits.time_visit"
+        name="horario-visita"
+        v-bind="labels"
+        locale="pt-br"
+        placeholder="00:00"
+      />
+      <b-form-invalid-feedback> Selecione um horário. </b-form-invalid-feedback>
+    </b-form-group>
     <b-form-group label-for="colaborador" label="Colaborador">
       <b-form-select v-model="visits.user_name" name="user">
         <b-form-select-option :value="null" desabled
@@ -57,10 +71,16 @@ export default {
     return {
       visits: {
         date_visit: null,
+        time_visit: null,
         user_name: null,
         user_id: 1,
       },
       colaborators: [],
+      labels: {
+        labelSelected: 'Horário selecionado',
+        labelNoTimeSelected: 'Nenhum horário selecionado',
+        labelCloseButton: 'Fechar',
+      },
     };
   },
   watch: {
@@ -78,7 +98,7 @@ export default {
         await this.$axios
           .post('tasks/visit/' + this.ordem_item.id, this.$data.visits)
           .then((_res) => {
-            this.$refs.visitas.hide();
+            this.$root.$emit('bv::hide::modal', 'visitas');
             this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
             /* this.$router.go(0); */
           });
