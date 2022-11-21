@@ -18,13 +18,12 @@
           @click="$bvModal.hide('criar')"
         />
       </div>
-
       <b-form-group class="mb-4">
         <label for="service">Serviço <span class="requerido">*</span></label>
         <b-form-select
-          v-model="formData.services"
+          v-model="serviceSelected"
           name="service"
-          :class="{ 'is-invalid': $v.formData.services.$error }"
+          :class="{ 'is-invalid': $v.serviceSelected.$error }"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -32,7 +31,7 @@
           <b-form-select-option
             v-for="service in services"
             :key="service.id"
-            :value="service.name"
+            :value="service.id"
           >
             {{ service.name }}
           </b-form-select-option>
@@ -87,7 +86,6 @@
         </div>
         <AddOrdem />
       </b-form-group>
-
       <div class="grid">
         <div class="mb-4">
           <label for="estimated_time"
@@ -231,7 +229,7 @@ import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 import AddOrdem from '~/components/customers/AddOrdem.vue';
 export default {
-  name: 'Add',
+  name: 'AddOS',
   directives: { mask },
   components: { AddOrdem, LMap, LTileLayer, LControl, LCircle },
   filters: {
@@ -255,6 +253,7 @@ export default {
   },
   data() {
     return {
+      serviceSelected: null,
       circle: {
         center: latLng(-27.64337, -48.68869),
         radius: 4500,
@@ -282,18 +281,18 @@ export default {
         name_customer: null,
         customer_id: null,
         template: null,
-        services: null,
+        services: this.serviceSelected,
       },
     };
   },
 
   validations: {
     formData: {
-      services: { required },
       end_date: { required },
       name_customer: { required },
       estimated_time: { required },
     },
+    serviceSelected: { required },
   },
 
   watch: {
@@ -308,14 +307,21 @@ export default {
       const service = data;
       this.services = service;
     },
-    async estimated_time() {},
+    async serviceSelected() {
+      const { data } = await this.$axios.get(
+        `services/${this.serviceSelected}`,
+      );
+      this.formData.estimated_time = data.time_of_execution;
+    },
   },
+
   /* async mounted() {
     const { data } = await this.$axios.get('customers');
     const customer = data;
     console.log(customer);
     this.customers = customer;
   }, */
+
   methods: {
     modalShown() {
       setTimeout(() => {
