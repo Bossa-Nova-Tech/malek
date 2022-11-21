@@ -43,8 +43,8 @@
         <b-button
           variant="primary"
           role="button"
-          @click="signatureActive = !signatureActive"
           class="my-3"
+          @click="signatureActive = !signatureActive"
           >Sim</b-button
         >
         <div v-if="signatureActive" class="my-3">
@@ -54,8 +54,8 @@
         <b-button
           variant="outline-primary"
           role="button"
-          @click="closeModal"
           class="my-3"
+          @click="closeModal"
           >Não</b-button
         >
       </div>

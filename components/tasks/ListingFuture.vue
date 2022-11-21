@@ -88,6 +88,30 @@
         <div class="d-flex align-items-center" @click="showVer(itemOrdem)">
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
           <p class="pl-2">Colaborador</p>
+          <b-badge
+            v-if="itemOrdem.status === 'created'"
+            variant="success"
+            class="ml-3"
+            >Criada</b-badge
+          >
+          <b-badge
+            v-if="itemOrdem.status === 'start'"
+            variant="warning"
+            class="ml-3"
+            >Em andamento</b-badge
+          >
+          <b-badge
+            v-if="itemOrdem.status === 'canceled'"
+            variant="danger"
+            class="ml-3"
+            >Cancelada</b-badge
+          >
+          <b-badge
+            v-if="itemOrdem.status === 'finished'"
+            variant="info"
+            class="ml-3"
+            >Finalizada</b-badge
+          >
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
         <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" />
