@@ -1,22 +1,21 @@
-<!-- <template>
+<template>
   <b-modal
-    :id="'view-client-' + clienteDaLista.id"
-    :ref="'view-client-' + clienteDaLista.id"
+    :id="'view-user-' + userList.id"
+    :ref="'view-user-' + userList.id"
     size="lg"
     centered
     no-close-on-backdrop
     hide-footer
     hide-header
-    @shown="modalShown"
   >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
-        <h1 class="mt-4 mb-5">Visualizar Cliente</h1>
+        <h1 class="mt-4 mb-5">Visualizar Usuário</h1>
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
-          @click="$bvModal.hide('view-client-' + clienteDaLista.id)"
+          @click="$bvModal.hide('view-user-' + userList.id)"
         />
       </div>
       <b-form-group>
@@ -145,51 +144,20 @@
           </b-form-group>
         </b-col>
       </b-row>
-      <client-only>
-        <l-map
-          ref="myMap"
-          name="mapa"
-          style="height: 300px; border-radius: 8px"
-          :zoom="zoom"
-          :center="center"
-          class="mb-4"
-        >
-          <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-          <l-marker :draggable="true" :lat-lng="center"></l-marker>
-          <l-control :position="'topright'" class="custom-control-watermark">
-            AíServe &copy; Malek 2022
-          </l-control>
-          <l-circle :lat-lng="circle.center" :radius="circle.radius" />
-        </l-map>
-      </client-only>
     </div>
   </b-modal>
 </template>
 
 <script>
-import 'leaflet/dist/leaflet.css';
-import { latLng, Icon } from 'leaflet';
-import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
-delete Icon.Default.prototype._getIconUrl;
-Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-});
 export default {
   name: 'ViewClient',
-  components: { LMap, LTileLayer, LControl, LCircle },
   props: {
-    clienteDaLista: {
+    userList: {
       type: Object,
       default: null,
     },
     watching: {
       type: Number,
-      default: null,
-    },
-    coordinates: {
-      type: Object,
       default: null,
     },
   },
@@ -220,60 +188,30 @@ export default {
         number: null,
         complement: null,
       },
-      circle: {
-        center: latLng(-27.64337, -48.68869),
-        radius: 300,
-      },
-      zoom: 18,
-      center: latLng(-27.64337, -48.68869),
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      date_of_visit: null,
     };
   },
   watch: {
     watching() {
       this.setDataFormWithClient();
     },
-    async coordinates() {
-      await this.getCordinates();
-    },
   },
   methods: {
-    getCordinates() {
-      if (this.coordinates != null) {
-        const coordinates = this.coordinates;
-        this.lat = coordinates.latitude;
-        this.long = coordinates.longitude;
-        console.log(this.lat, this.long);
-        this.center = [this.lat, this.long];
-      } else {
-        console.log('deu erro');
-      }
-    },
     setDataFormWithClient() {
-      this.formData.status = this.clienteDaLista.status;
-      this.formData.name = this.clienteDaLista.name;
-      this.formData.type = this.clienteDaLista.type;
-      this.formData.cnpj = this.clienteDaLista.cnpj;
-      this.formData.cpf = this.clienteDaLista.cpf;
-      this.formData.rg = this.clienteDaLista.rg;
-      this.formData.phone = this.clienteDaLista.phone;
-      this.formData.email = this.clienteDaLista.email;
-      this.formData.address = this.clienteDaLista.address;
-      this.formData.cep = this.clienteDaLista.cep;
-      this.formData.district = this.clienteDaLista.district;
-      this.formData.city = this.clienteDaLista.city;
-      this.formData.state = this.clienteDaLista.state;
-      this.formData.number = this.clienteDaLista.number;
-      this.formData.complement = this.clienteDaLista.complement;
-    },
-    modalShown() {
-      setTimeout(() => {
-        // mapObject is a property that is part of leaflet
-        this.$refs.myMap.mapObject.invalidateSize();
-      }, 100);
+      this.formData.status = this.userList.status;
+      this.formData.name = this.userList.name;
+      this.formData.type = this.userList.type;
+      this.formData.cnpj = this.userList.cnpj;
+      this.formData.cpf = this.userList.cpf;
+      this.formData.rg = this.userList.rg;
+      this.formData.phone = this.userList.phone;
+      this.formData.email = this.userList.email;
+      this.formData.address = this.userList.address;
+      this.formData.cep = this.userList.cep;
+      this.formData.district = this.userList.district;
+      this.formData.city = this.userList.city;
+      this.formData.state = this.userList.state;
+      this.formData.number = this.userList.number;
+      this.formData.complement = this.userList.complement;
     },
   },
 };
@@ -306,4 +244,3 @@ input {
   }
 }
 </style>
- -->

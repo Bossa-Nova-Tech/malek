@@ -20,16 +20,16 @@
         <b-img
           src="~/assets/img/icones/criar-4.svg"
           role="button"
-          @click="$bvModal.show('criar-cliente')"
+          @click="$bvModal.show('criar-usuario')"
         />
       </div>
-      <button v-if="$screen.lg" @click="$bvModal.show('criar-cliente')">
+      <button v-if="$screen.lg" @click="$bvModal.show('criar-usuario')">
         Criar Usuário
       </button>
     </div>
     <b-container v-if="isFiltered">
       <b-row class="mx-0 p-2 border rounded mb-3">
-        <p class="mb-2">Selecione o filtro:</p>
+        <span class="h5 ml-3 mb-3">Filtre sua busca:</span>
         <b-col cols="10">
           <b-form-checkbox-group
             v-model="selected"
@@ -51,28 +51,32 @@
     <section class="rounded w-100">
       <h1 class="p-4">Usuários</h1>
       <ul>
-        <li class="card-cliente p-4 d-flex flex-column justify-content-center">
+        <li
+          v-for="user in filteredList"
+          :key="user.id"
+          class="card-cliente p-4 d-flex flex-column justify-content-center"
+        >
           <b-row>
-            <b-col cols="9" role="button" @click="showVer(customer)">
-              <p>#</p>
+            <b-col cols="9" role="button" @click="showVer(user)">
+              <p>{{ user.id }} {{ user.name }}</p>
             </b-col>
             <b-col cols="3">
               <img
                 src="~/assets/img/icones/edit-icon.svg"
                 alt="botão para acessar o modal de edição de cliente"
                 role="button"
-                @click="showEditar(customer)"
+                @click="showEditar(user)"
               />
               <img
                 src="~/assets/img/icones/delete-icon.svg"
                 role="button"
                 alt="botão para deletar cliente"
-                @click="showExcluir(customer)"
+                @click="showExcluir(user)"
               />
             </b-col>
           </b-row>
           <Edit />
-          <Viewing />
+          <Viewing :watching="id" :user-list="user" />
         </li>
         <Delete :id="id" />
       </ul>
@@ -80,19 +84,19 @@
   </div>
 </template>
 <script>
-import Delete from '~/components/customers/Delete.vue';
+import Delete from '~/components/users/Delete.vue';
 import Edit from '~/components/users/Edit.vue';
 import Viewing from '~/components/users/Viewing.vue';
 
 export default {
   name: 'Listing',
   components: { Delete, Edit, Viewing },
-  /* props: {
-    customersData: {
+  props: {
+    users: {
       type: Array,
       default: null,
     },
-  }, */
+  },
   data() {
     return {
       selected: null,
@@ -112,61 +116,54 @@ export default {
       search: '',
     };
   },
-  /*   computed: {
+  computed: {
     filteredList() {
-      let customers = this.customersData.filter((customer) => {
-        return customer.name.toLowerCase().match(this.search.toLowerCase());
+      let users = this.users.filter((user) => {
+        return (
+          user.name.toLowerCase().match(this.search.toLowerCase()) ||
+          user.id.toString().match(this.search)
+        );
       });
 
-      customers = customers.filter((customer) => {
+      users = users.filter((user) => {
         if (this.selected === null) {
-          return customer;
+          return user;
         }
 
-        return customer.type === this.selected;
+        return user.type === this.selected;
       });
 
-      return customers;
+      return users;
     },
-  }, */
+  },
 
-  /*   methods: {
-    showExcluir(customer) {
-      this.id = customer.id;
+  methods: {
+    showExcluir(user) {
+      this.id = user.id;
       this.$nextTick(function () {
         this.$bvModal.show(`excluir-${this.id}`);
       });
-      this.clienteDaLista = customer;
+      this.userList = user;
     },
-    async showEditar(customer) {
-      this.id = customer.id;
+    showEditar(user) {
+      this.id = user.id;
       this.$nextTick(function () {
-        this.$bvModal.show(`update-client-${customer.id}`);
+        this.$bvModal.show(`update-user-${this.id}`);
       });
-      this.clienteDaLista = customer;
-      const { data } = await this.$axios.get(
-        `customers/get-coordinates/${this.clienteDaLista.id}`,
-      );
-      console.log(data);
-      this.coordinates = data;
+      this.userList = user;
     },
-    async showVer(customer) {
-      this.id = customer.id;
+    showVer(user) {
+      this.id = user.id;
       this.$nextTick(function () {
-        this.$bvModal.show(`view-client-${this.id}`);
+        this.$bvModal.show(`view-user-${this.id}`);
       });
-      this.clienteDaLista = customer;
-      const { data } = await this.$axios.get(
-        `customers/get-coordinates/${this.clienteDaLista.id}`,
-      );
-      console.log(data);
-      this.coordinates = data;
+      this.userList = user;
     },
     cleanFilter() {
       this.search = '';
       this.selected = null;
     },
-  }, */
+  },
 };
 </script>
 <style lang="scss" scoped>

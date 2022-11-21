@@ -580,7 +580,7 @@ export default {
           this.$refs.userModal.hide();
 
           await this.$axios
-            .post('customers', this.$data.formData)
+            .post('users', this.$data.formData)
             .then((_res) => {
               this.toast(
                 'success',

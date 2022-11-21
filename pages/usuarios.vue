@@ -5,7 +5,7 @@
       <PainelAside v-if="$screen.lg" />
 
       <div class="d-flex justify-content-center ajuste-width">
-        <Listing />
+        <Listing :users="users" />
         <Add :customers-data="customersData" />
 
         <div v-if="!$screen.lg" class="footer">
@@ -32,13 +32,17 @@ export default {
     const customers = await $axios.get('customers');
     const customersData = customers.data;
     console.log('customers :: ', customers.data);
-    return { customersData };
+    const { data } = await $axios.get('users');
+    const users = data;
+    console.log('users :: ', users);
+    return { customersData, users };
   },
 
   data: () => {
     return {
       telaName: 'Usuários',
       customersData: [],
+      users: [],
     };
   },
 };
