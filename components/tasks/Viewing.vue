@@ -86,9 +86,13 @@ export default {
       type: Object,
       default: null,
     },
+    center: {
+      type: Array,
+      default: null,
+    },
   },
   async asyncData({ $axios }) {
-    const visits = await $axios.get('tasks/visit');
+    const visits = await $axios.get('tasks-list/visit');
     const visitsData = visits.data;
     return { visitsData };
   },
@@ -99,7 +103,6 @@ export default {
         radius: 300,
       },
       zoom: 18,
-      center: latLng(-27.64337, -48.68869),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',

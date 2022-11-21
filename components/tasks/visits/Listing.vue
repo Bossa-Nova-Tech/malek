@@ -22,10 +22,7 @@
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
-            <Viewing
-              :coordenadas-data="coordenadasData"
-              :visita-item="visita"
-            />
+            <Viewing :visita-item="visita" :task="tasksData" :center="center" />
             <Timer :visit-id="visita.id" />
           </div>
         </div>
@@ -89,6 +86,11 @@ export default {
       id: null,
       stop: false,
       intervalList: [],
+      tasksData: [],
+      coordenadas: [],
+      center: [1, 2],
+      latitude: null,
+      longitude: null,
       start: true,
       sec: 0,
       min: 0,
@@ -99,12 +101,21 @@ export default {
     };
   },
   methods: {
-    showVer(visita) {
+    async showVer(visita) {
       this.id = visita.id;
       this.$nextTick(function () {
         this.$bvModal.show(`view-visit-${this.id}`);
       });
       this.visita_selecionada = visita;
+      const tasks = await this.$axios.get('tasks/' + visita.task_id);
+      this.tasksData = tasks.data;
+      const coordenadas = await this.$axios.get(
+        'customers/get-coordinates/' + this.tasksData.customer_id,
+      );
+      this.coordenadas = coordenadas.data;
+      this.latitude = this.coordenadas.latitude;
+      this.longitude = this.coordenadas.longitude;
+      this.center = [this.latitude, this.longitude];
     },
   },
 };

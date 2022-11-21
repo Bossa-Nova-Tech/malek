@@ -23,13 +23,13 @@
         />
       </div>
       <h3>Tipo de serviço</h3>
-      <p>{{ visitaItem.services }}</p>
+      <p>{{ task.services }}</p>
       <h3 class="mt-4">Cliente</h3>
-      <p>{{ visitaItem.name_customer }}</p>
+      <p>{{ task.name_customer }}</p>
       <h3 class="mt-4">Duração média da tarefa</h3>
-      <p>{{ visitaItem.estimated_time }}</p>
+      <p>{{ task.estimated_time }}</p>
       <h3 class="mt-4">Colaborador</h3>
-      <p>{{ visitaItem.colaborator }}</p>
+      <p>{{ visitaItem.user_id }}</p>
 
       <h3 class="mt-4">Adicionar foto e descrição</h3>
       <b-form-file
@@ -81,9 +81,6 @@
           <l-circle :lat-lng="circle.center" :radius="circle.radius" />
         </l-map>
       </client-only>
-      <b-button variant="primary" @click="getLocate"
-        >Ver localização do cliente</b-button
-      >
       <h3 class="mt-4">Comentário:</h3>
       <b-form-group v-if="listComment === false">
         <b-form-textarea
@@ -108,6 +105,8 @@
       >
       <p v-if="listComment === true">{{ comment.text }}</p>
     </div>
+    <!--     <b-button @click="getLocate"></b-button>
+ -->
   </b-modal>
 </template>
 <script>
@@ -132,7 +131,11 @@ export default {
       type: Object,
       default: null,
     },
-    coordenadasData: {
+    task: {
+      type: Array,
+      default: null,
+    },
+    center: {
       type: Array,
       default: null,
     },
@@ -149,24 +152,18 @@ export default {
         radius: 300,
       },
       zoom: 18,
-      center: [1, 2],
       latitude: null,
       longitude: null,
       coordenadas: [],
+      customer_id: null,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      visitsData: [
-        {
-          colaborator: 'Vanessa Gonçalves',
-          date_of_visit: '02/06/2023',
-          services: 'Limpeza de equipamento',
-          id: 1,
-        },
-      ],
+      tasksData: [],
       urlImage: null,
       newTitle_photo: '',
       listPhotos: [],
+      visits: [],
     };
   },
   validations: {
@@ -176,17 +173,7 @@ export default {
       },
     },
   },
-
   methods: {
-    async getLocate() {
-      const coordenadas = await this.$axios.get(
-        'customers/get-coordinates/113',
-      );
-      this.coordenadas = coordenadas.data;
-      this.latitude = this.coordenadas.latitude;
-      this.longitude = this.coordenadas.longitude;
-      this.center = [this.latitude, this.longitude];
-    },
     modalShown() {
       setTimeout(() => {
         // mapObject is a property that is part of leaflet

@@ -1,5 +1,12 @@
 <template>
-  <b-modal id="visitas" centered hide-footer hide-header class="modal-backdrop">
+  <b-modal
+    id="visitas"
+    ref="visitas"
+    centered
+    hide-footer
+    hide-header
+    class="modal-backdrop"
+  >
     <div class="d-flex justify-content-end mb-3 p-2">
       <b-img
         src="~/assets/img/icones/icone-fechar.svg"

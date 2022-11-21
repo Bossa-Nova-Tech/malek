@@ -56,9 +56,9 @@
       <b-form-group>
         <label for="customer">Cliente <span class="requerido">*</span></label>
         <b-form-select
-          v-model="formData.name_customer"
+          v-model="customerSelected"
           name="customer"
-          :class="{ 'is-invalid': $v.formData.name_customer.$error }"
+          :class="{ 'is-invalid': $v.customerSelected.$error }"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -66,7 +66,7 @@
           <b-form-select-option
             v-for="customer in customers"
             :key="customer.id"
-            :value="customer.name + ' pessoa ' + customer.type"
+            :value="customer.id"
           >
             {{ customer.name }}
           </b-form-select-option>
@@ -194,22 +194,24 @@
         >
         </b-form-input>
       </b-form-group>
-      <label for="mapa">Localização do Cliente</label>
-      <l-map
-        ref="myMap"
-        name="mapa"
-        style="height: 300px; border-radius: 8px"
-        :zoom="zoom"
-        :center="center"
-        class="mb-4"
-      >
-        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-        <l-marker :lat-lng="center" :draggable="true"></l-marker>
-        <l-control :position="'topright'" class="custom-control-watermark">
-          AíServe &copy; Malek 2022
-        </l-control>
-        <l-circle :lat-lng="circle.center" :radius="circle.radius" />
-      </l-map>
+      <section v-if="lat !== null" id="mapa">
+        <label for="mapa">Localização do Cliente</label>
+        <l-map
+          ref="myMap"
+          name="mapa"
+          style="height: 300px; border-radius: 8px"
+          :zoom="zoom"
+          :center="center"
+          class="mb-4"
+        >
+          <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+          <l-marker :lat-lng="center" :draggable="true"></l-marker>
+          <l-control :position="'topright'" class="custom-control-watermark">
+            AíServe &copy; Malek 2022
+          </l-control>
+          <l-circle :lat-lng="circle.center" :radius="circle.radius" />
+        </l-map>
+      </section>
       <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click="register">
           <b-spinner v-if="formSend" small type="grow" />
@@ -221,7 +223,6 @@
 </template>
 
 <script>
-import { latLng } from 'leaflet';
 import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
 import Vue2Filters from 'vue2-filters';
 import { required } from 'vuelidate/lib/validators';
@@ -254,12 +255,15 @@ export default {
   data() {
     return {
       service_selected: null,
+      customerSelected: null,
       circle: {
-        center: latLng(-27.64337, -48.68869),
+        center: [1, 2],
         radius: 4500,
       },
       zoom: 18,
-      center: latLng(-27.64337, -48.68869),
+      center: [1, 2],
+      lat: null,
+      long: null,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -271,6 +275,7 @@ export default {
       services: [],
       formSend: false,
       ordem: null,
+      coordinates: [],
       estimated_time: null,
       formData: {
         status: null,
@@ -281,7 +286,7 @@ export default {
         name_customer: null,
         customer_id: null,
         template: null,
-        service_id: null,
+        services: this.serviceSelected,
       },
     };
   },
@@ -289,10 +294,9 @@ export default {
   validations: {
     formData: {
       end_date: { required },
-      name_customer: { required },
       estimated_time: { required },
     },
-    service_selected: { required },
+    serviceSelected: { required },
   },
 
   watch: {
@@ -307,11 +311,11 @@ export default {
       const service = data;
       this.services = service;
     },
-    async service_selected() {
-      this.formData.service_id = this.service_selected;
+    async serviceSelected() {
       const { data } = await this.$axios.get(
         `services/${this.service_selected}`,
       );
+      this.formData.services = data.name;
       this.formData.estimated_time = data.time_of_execution;
     },
   },

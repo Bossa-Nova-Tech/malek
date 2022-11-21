@@ -139,7 +139,7 @@
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
         <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" />
-        <Viewing :id="id" :ordem_item="itemOrdem" />
+        <Viewing :id="id" :ordem_item="itemOrdem" :center="center" />
       </li>
       <Delete :id="id" />
       <Finished :id="id" />
@@ -185,6 +185,10 @@ export default {
       selected: null,
       isFiltered: false,
       editar: false,
+      center: [],
+      coordinates: [],
+      lat: null,
+      long: null,
       id: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
       options: [
@@ -222,8 +226,15 @@ export default {
   },
 
   methods: {
-    showVer(itemOrdem) {
+    async showVer(itemOrdem) {
       this.id = itemOrdem.id;
+      const mapa = await this.$axios.get(
+        `customers/get-coordinates/${itemOrdem.customer_id}`,
+      );
+      this.coordinates = mapa.data;
+      this.lat = this.coordinates.latitude;
+      this.long = this.coordinates.longitude;
+      this.center = [this.lat, this.long];
       this.$nextTick(function () {
         this.$bvModal.show(`view-task-${this.id}`);
       });

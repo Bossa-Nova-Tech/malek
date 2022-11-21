@@ -9,7 +9,7 @@
             <!-- <ListingPast :tasks-data="tasksDataOverdue" /> -->
           </b-tab>
           <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing :visits-data="visitsData" />
+            <Listing :visits-data="visitsData" :tasks-data="tasksData" />
           </b-tab>
 
           <b-tab id="futuras" title="Futuras" class="mt-4">
@@ -39,7 +39,9 @@ export default {
   async asyncData({ $axios }) {
     const visits = await $axios.get('tasks-list/visit');
     const visitsData = visits.data;
-    return { visitsData };
+    const tasks = await $axios.get('tasks');
+    const tasksData = tasks.data;
+    return { visitsData, tasksData };
   },
 
   data: () => {

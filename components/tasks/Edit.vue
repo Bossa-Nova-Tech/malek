@@ -15,15 +15,15 @@
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
-          @click.once="$bvModal.hide(`update-task-${ordem_item.id}`)"
+          @click="$bvModal.hide(`update-task-${ordem_item.id}`)"
         />
       </div>
       <b-form-group class="mb-4">
         <label for="service">Serviço <span class="requerido">*</span></label>
         <b-form-select
-          v-model="formData.services_names"
+          v-model="serviceSelected"
           name="service"
-          :class="{ 'is-invalid': $v.formData.services_names.$error }"
+          :class="{ 'is-invalid': $v.serviceSelected.$error }"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -31,7 +31,7 @@
           <b-form-select-option
             v-for="service in services"
             :key="service.id"
-            :value="service.name"
+            :value="service.id"
           >
             {{ service.name }}
           </b-form-select-option>
@@ -41,13 +41,24 @@
           Selecione uma opção.
         </b-form-invalid-feedback>
       </b-form-group>
-
-      <b-form-group class="mb-4">
+      <!-- b-form-group class="mb-4">
+        <label for="services">Serviço <span class="requerido">*</span></label>
+        <b-form-select
+          v-model="formData.services"
+          name="services"
+          :options="optionsServices"
+          :class="{ 'is-invalid': $v.formData.services.$error }"
+        />
+        <b-form-invalid-feedback>
+          Selecione uma opção.
+        </b-form-invalid-feedback>
+      </b-form-group> -->
+      <b-form-group>
         <label for="customer">Cliente <span class="requerido">*</span></label>
         <b-form-select
-          v-model="formData.name_customer"
+          v-model="customerSelected"
           name="customer"
-          :class="{ 'is-invalid': $v.formData.name_customer.$error }"
+          :class="{ 'is-invalid': $v.customerSelected.$error }"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -55,7 +66,7 @@
           <b-form-select-option
             v-for="customer in customers"
             :key="customer.id"
-            :value="customer.name + ' pessoa ' + customer.type"
+            :value="customer.id"
           >
             {{ customer.name }}
           </b-form-select-option>
@@ -65,7 +76,6 @@
           Selecione uma opção.
         </b-form-invalid-feedback>
       </b-form-group>
-
       <div class="grid">
         <div class="mb-4">
           <label for="estimated_time"
@@ -100,6 +110,28 @@
           <label for="end_date"
             >Data prevista de conclusão <span class="requerido">*</span></label
           >
+          <!-- <b-input-group>
+            <b-form-input
+              v-model="formData.end_date"
+              placeholder="00/00/2022"
+            ></b-form-input>
+            <b-input-group-append>
+              <b-form-datepicker
+                type="date"
+                v-model="formData.end_date"
+                button-only
+                right
+                locale="br"
+                :date-format-options="{
+                  day: 'numeric',
+                  month: 'numeric',
+                  year: 'numeric',
+                }"
+                aria-controls="end
+                -date"
+              ></b-form-datepicker>
+            </b-input-group-append>
+          </b-input-group> -->
           <b-form-datepicker
             v-model="formData.end_date"
             name="end_date"
@@ -108,7 +140,7 @@
               month: 'numeric',
               day: 'numeric',
             }"
-            locale="pt"
+            locale="br"
             placeholder="00/00/2022"
             :class="{ 'is-invalid': $v.formData.end_date.$error }"
           />
@@ -118,18 +150,19 @@
         </b-form-group>
       </div>
       <BorderButton class="my-4">
-        <input
+        <b-form-file
           id="file"
-          type="file"
+          v-model="formData.photos"
           accept=".png, .jpg"
           class="d-flex"
+          plain
           @change="onFileChange"
         />
         <label for="file" class="text-center">Enviar Foto</label>
       </BorderButton>
       <div class="campo-foto d-flex align-self center justify-content-center">
         <div
-          v-if="formData.photo"
+          v-if="formData.photos"
           class="d-flex flex-column justify-content-center align-items-center"
         >
           <b-img
@@ -139,21 +172,38 @@
             @click="excluiFoto"
           />
 
-          <img :src="formData.photo" alt="" width="100" />
+          <img :src="formData.photos" alt="" width="100" />
         </div>
       </div>
-      {{ formData.photo }}
-      <b-form-group name="form-text" class="mb-4">
+      <b-form-group class="mb-4">
         <label for="note">Descrição da Ordem de Serviço</label>
-        <b-form-textarea
+        <b-form-input
           v-model="formData.note"
           name="note"
           placeholder="Esta tarefa consiste em..."
         >
-        </b-form-textarea>
+        </b-form-input>
       </b-form-group>
+      <section v-if="lat !== null" id="mapa">
+        <label for="mapa">Localização do Cliente</label>
+        <l-map
+          ref="myMap"
+          name="mapa"
+          style="height: 300px; border-radius: 8px"
+          :zoom="zoom"
+          :center="center"
+          class="mb-4"
+        >
+          <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+          <l-marker :lat-lng="center" :draggable="true"></l-marker>
+          <l-control :position="'topright'" class="custom-control-watermark">
+            AíServe &copy; Malek 2022
+          </l-control>
+          <l-circle :lat-lng="circle.center" :radius="circle.radius" />
+        </l-map>
+      </section>
       <div class="w-100 mb-4 col-12 px-0">
-        <button :disable="formSend" @click="edit">
+        <button :disable="formSend" @click="register">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>
@@ -191,49 +241,79 @@ export default {
 
   data() {
     return {
-      file: null,
+      serviceSelected: null,
+      customerSelected: null,
+      circle: {
+        center: [1, 2],
+        radius: 4500,
+      },
+      zoom: 18,
+      center: [1, 2],
+      lat: null,
+      long: null,
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       files: null,
       reader: null,
       vm: null,
+      format: 'DD-MM-YYYY',
       customers: [],
       services: [],
       formSend: false,
       ordem: null,
+      coordinates: [],
+      estimated_time: null,
       formData: {
         status: null,
         estimated_time: null,
         end_date: null,
         note: null,
-        photo: [],
+        photos: null,
         name_customer: null,
-        services_names: null,
+        customer_id: null,
+        template: null,
+        service_id: this.serviceSelected,
+        services: this.serviceSelected,
       },
     };
   },
 
   validations: {
     formData: {
-      services_names: { required },
       end_date: { required },
-      name_customer: { required },
       estimated_time: { required },
     },
+    customerSelected: { required },
+
+    serviceSelected: { required },
   },
   watch: {
     watching() {
       this.setDataFormWithTask();
     },
-    async clientes() {
-      const { data } = await this.$axios.get('customers');
-      const customer = data;
-      console.log(customer);
-      this.customers = customer;
+    async customerSelected() {
+      const { data } = await this.$axios.get(
+        `customers/${this.customerSelected}`,
+      );
+      this.formData.name_customer = data.name;
+      this.formData.customer_id = this.customerSelected;
+      console.log(data);
+      const mapa = await this.$axios.get(
+        `customers/get-coordinates/${this.customerSelected}`,
+      );
+      this.coordinates = mapa.data;
+      this.lat = this.coordinates.latitude;
+      this.long = this.coordinates.longitude;
+      this.center = [this.lat, this.long];
+      this.circle.center = [this.lat, this.long];
     },
-    async servicos() {
-      const { data } = await this.$axios.get('services');
-      const service = data;
-      this.services = service;
-      console.log('servicesn' + this.services);
+    async serviceSelected() {
+      const { data } = await this.$axios.get(
+        `services/${this.serviceSelected}`,
+      );
+      this.formData.services = data.name;
+      this.formData.estimated_time = data.time_of_execution;
     },
   },
 
@@ -246,7 +326,7 @@ export default {
       this.formData.photo = this.ordem_item.photo;
       this.formData.name_customer = this.ordem_item.name_customer;
       this.formData.template = this.ordem_item.template;
-      this.formData.services_names = this.ordem_item.services_names;
+      this.formData.services = this.ordem_item.services;
     },
     async edit(_response) {
       const ordem = await this.$parent.ordem_selecionada;
@@ -269,8 +349,6 @@ export default {
                 'bv::hide::modal',
                 `update-task-${this.ordem_item.id}`,
               );
-
-              // this.$refs.criar.hide();
 
               this.toast('success', 'Sucesso', 'Item editado com sucesso!');
               this.$nuxt.refresh();
