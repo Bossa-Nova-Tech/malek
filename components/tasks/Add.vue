@@ -159,7 +159,15 @@
           </b-form-invalid-feedback>
         </b-form-group>
       </div>
-      <BorderButton class="my-4">
+      <div class="d-flex">
+        <label for="file" class="text-center"
+          >Enviar Foto
+          <img
+            v-b-tooltip.hover.right="'A imagem será utilizada para'"
+            src="~/assets/img/icones/info.svg"
+        /></label>
+      </div>
+      <BorderButton class="mb-4">
         <b-form-file
           id="file"
           v-model="formData.photos"
@@ -168,7 +176,7 @@
           plain
           @change="onFileChange"
         />
-        <label for="file" class="text-center">Enviar Foto</label>
+        <label for="file" class="text-center">Clique aqui</label>
       </BorderButton>
       <div class="campo-foto d-flex align-self center justify-content-center">
         <div
@@ -286,7 +294,7 @@ export default {
         name_customer: null,
         customer_id: null,
         template: null,
-        services: this.serviceSelected,
+        services: this.service_selected,
       },
     };
   },
@@ -296,7 +304,8 @@ export default {
       end_date: { required },
       estimated_time: { required },
     },
-    serviceSelected: { required },
+    service_selected: { required },
+    customerSelected: { required },
   },
 
   watch: {

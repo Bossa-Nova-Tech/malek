@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1 class="p-4">Orçamento</h1>
+    <h1 class="p-4">Orçamentos</h1>
     <ul>
       <li
         v-for="budget in budgetsData"

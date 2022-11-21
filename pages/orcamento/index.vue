@@ -41,7 +41,7 @@ export default {
 
   data: () => {
     return {
-      telaName: 'Orçamento',
+      telaName: 'Orçamentos',
       budgetsData: [],
     };
   },

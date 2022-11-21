@@ -110,7 +110,7 @@
             />
           </svg>
 
-          <p>Cobrança</p>
+          <p>Cobranças</p>
         </NuxtLink>
       </li>
 
@@ -134,7 +134,7 @@
               }"
             />
           </svg>
-          <p>Orçamento</p>
+          <p>Orçamentos</p>
         </NuxtLink>
       </li>
 

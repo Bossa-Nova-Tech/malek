@@ -20,6 +20,7 @@
       class="footer caixa mx-auto d-flex align-items-center mt-2"
     >
       <b-button
+        variant="primary"
         class="d-flex justify-content-center align-items-center create m-0 border-0"
         @click="$bvModal.show('criar-proposta')"
         >Criar Proposta</b-button
@@ -47,7 +48,7 @@ export default {
 
   data: () => {
     return {
-      telaName: 'Proposta',
+      telaName: 'Propostas',
       proposalData: [],
     };
   },

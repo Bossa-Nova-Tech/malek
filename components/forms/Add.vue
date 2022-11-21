@@ -72,7 +72,6 @@
             :options="typeOfAnswer"
             class="d-flex flex-column"
           />
-          <pre>{{ formData.ask }}</pre>
           <b-form-group class="mb-4">
             <label for="required">A resposta é obrigatória?</label>
             <b-form-radio-group
