@@ -99,7 +99,7 @@ export default {
           .post('tasks/visit/' + this.ordem_item.id, this.$data.visits)
           .then((_res) => {
             this.$root.$emit('bv::hide::modal', 'visitas');
-            this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+            this.toast('success', 'Sucesso', 'Visita adicionada com sucesso!');
             /* this.$router.go(0); */
           });
         this.$nuxt.refresh().catch((_err) => {});

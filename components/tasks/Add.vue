@@ -21,9 +21,9 @@
       <b-form-group class="mb-4">
         <label for="service">Serviço <span class="requerido">*</span></label>
         <b-form-select
-          v-model="serviceSelected"
+          v-model="service_selected"
           name="service"
-          :class="{ 'is-invalid': $v.serviceSelected.$error }"
+          :class="{ 'is-invalid': $v.service_selected.$error }"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -253,7 +253,7 @@ export default {
   },
   data() {
     return {
-      serviceSelected: null,
+      service_selected: null,
       circle: {
         center: latLng(-27.64337, -48.68869),
         radius: 4500,
@@ -281,7 +281,7 @@ export default {
         name_customer: null,
         customer_id: null,
         template: null,
-        services: this.serviceSelected,
+        service_id: null,
       },
     };
   },
@@ -292,7 +292,7 @@ export default {
       name_customer: { required },
       estimated_time: { required },
     },
-    serviceSelected: { required },
+    service_selected: { required },
   },
 
   watch: {
@@ -307,9 +307,10 @@ export default {
       const service = data;
       this.services = service;
     },
-    async serviceSelected() {
+    async service_selected() {
+      this.formData.service_id = this.service_selected;
       const { data } = await this.$axios.get(
-        `services/${this.serviceSelected}`,
+        `services/${this.service_selected}`,
       );
       this.formData.estimated_time = data.time_of_execution;
     },
@@ -352,7 +353,7 @@ export default {
               note: null,
               name_customer: null,
               template: null,
-              services: null,
+              service_id: null,
             };
             /* this.$router.go(0); */
           });
