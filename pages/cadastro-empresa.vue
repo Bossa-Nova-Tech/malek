@@ -238,9 +238,14 @@
             :class="{
               'is-invalid': $v.formData.cep.$error,
             }"
+            @keyup="searchCep()"
           />
           <b-form-invalid-feedback>
-            Preencha o campo acima
+            {{
+              !$v.formData.cep.minLength
+                ? 'Insira um CEP válido'
+                : 'Preencha o campo acima'
+            }}
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -255,13 +260,11 @@
                 name="address"
                 type="text"
                 placeholder="Rua"
-                disabled
-              />
-              <!--
                 :class="{
                   'is-invalid': $v.formData.address.$error,
                 }"
-              -->
+              />
+
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -278,12 +281,11 @@
                 name="district"
                 type="text"
                 placeholder="-"
-                disabled
-              />
-              <!-- :class="{
+                :class="{
                   'is-invalid': $v.formData.district.$error,
                 }"
-              -->
+              />
+
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -300,13 +302,11 @@
                 name="city"
                 type="text"
                 placeholder="Cidade"
-                disabled
-              />
-              <!--
                 :class="{
                   'is-invalid': $v.formData.city.$error,
                 }"
-               -->
+              />
+
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -321,12 +321,11 @@
                 name="state"
                 type="text"
                 placeholder="Estado"
-                disabled
-              />
-              <!-- :class="{
+                :class="{
                   'is-invalid': $v.formData.state.$error,
                 }"
-              -->
+              />
+
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -698,6 +697,23 @@ export default {
         } catch (error) {
           console.log(error);
         }
+      }
+    },
+    searchCep() {
+      // eslint-disable-next-line eqeqeq
+      if (this.formData.cep.length == 9) {
+        this.$axios
+          .get(`https://viacep.com.br/ws/${this.formData.cep}/json/`)
+          .then(
+            (response) =>
+              (this.formData = {
+                address: response.data.logradouro,
+                district: response.data.bairro,
+                city: response.data.localidade,
+                state: response.data.uf,
+              }),
+          )
+          .catch((error) => console.log(error));
       }
     },
   },

@@ -6,8 +6,11 @@
         width="140"
         class="my-5 profile rounded-circle"
       />
-      <h4>Olá {{ $auth.user.name }},</h4>
-      <p class="pb-3">acompanhe as ordens de serviço hoje</p>
+      <div class="d-flex align-items-center justify-content-center mb-2">
+        <h4 class="mb-0">Olá {{ $auth.user.name }}</h4>
+        <config />
+      </div>
+      <p class="pb-3">Acompanhe as ordens de serviço hoje</p>
     </div>
 
     <ul>
@@ -196,7 +199,9 @@
 </template>
 
 <script>
+import Config from '../Config.vue';
 export default {
+  components: { Config },
   methods: {
     async logout() {
       await this.$auth.logout();
