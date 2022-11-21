@@ -238,7 +238,7 @@
             :class="{
               'is-invalid': $v.formData.cep.$error,
             }"
-            @keyup="searchCep()"
+            @keyup.prevent="searchCep()"
           />
           <b-form-invalid-feedback>
             {{
@@ -707,6 +707,7 @@ export default {
           .then(
             (response) =>
               (this.formData = {
+                cep: this.formData.cep,
                 address: response.data.logradouro,
                 district: response.data.bairro,
                 city: response.data.localidade,
