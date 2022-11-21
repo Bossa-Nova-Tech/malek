@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <b-modal
     :id="`excluir-${id}`"
     ref="excluir"
@@ -25,15 +25,15 @@ export default {
 
   methods: {
     async remove() {
-      const cliente = await this.$parent.clienteDaLista;
-      console.log(cliente);
+      const user = await this.$parent.userList;
+      console.log(user);
       try {
         await this.$axios
-          .delete('customers/' + cliente.id)
+          .delete('users/' + user.id)
           .then((_res) => {
             if (_res.data.result === 'success') {
-              console.log(cliente.id + ' excluido');
-              this.toast('success', 'Sucesso', 'Cliente excluído!');
+              console.log(user.id + ' excluido');
+              this.toast('success', 'Sucesso', 'Usuário excluído!');
               this.$refs.excluir.hide();
               this.$nuxt.refresh();
             } else {
@@ -52,4 +52,3 @@ export default {
   },
 };
 </script>
- -->

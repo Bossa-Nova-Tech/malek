@@ -1,24 +1,23 @@
-<!-- <template>
+<template>
   <b-modal
-    :id="'update-client-' + clienteDaLista.id"
-    :ref="'update-client-' + clienteDaLista.id"
+    :id="'update-user-' + userList.id"
+    :ref="'update-user-' + userList.id"
     size="lg"
     hide-footer
     hide-header
-    @shown="modalShown"
   >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
-        <h1 class="mt-4 mb-5">Editar Cliente</h1>
+        <h1 class="mt-4 mb-5">Editar Usuário</h1>
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
-          @click="$bvModal.hide('update-client-' + clienteDaLista.id)"
+          @click="$bvModal.hide('update-user-' + userList.id)"
         />
       </div>
       <b-form-group>
-        <label for="status">Status do cliente:</label>
+        <label for="status">Status do usuário:</label>
         <b-form-radio-group
           v-model="formData.status"
           name="status"
@@ -306,27 +305,6 @@
           </b-form-group>
         </b-col>
       </b-row>
-
-      <b-row>
-        <b-col cols="12">
-          <l-map
-            ref="myMap"
-            name="mapa"
-            style="height: 300px; border-radius: 8px"
-            :zoom="zoom"
-            :center="center"
-            class="mb-4"
-          >
-            <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-            <l-marker :lat-lng="center"></l-marker>
-            <l-control :position="'topright'" class="custom-control-watermark">
-              AíServe &copy; Malek 2022
-            </l-control>
-            <l-circle :lat-lng="circle.center" :radius="circle.radius" />
-          </l-map>
-        </b-col>
-      </b-row>
-
       <button class="mt-4 mb-2" :disabled="formSend" @click="edit">
         <b-spinner v-if="formSend" small type="grow" />
         Salvar
@@ -344,15 +322,13 @@ import {
 } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
-import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
 
 export default {
   name: 'EditClient',
   directives: { mask },
-  components: { LMap, LTileLayer, LControl, LCircle },
   mixins: [validationMixin],
   props: {
-    clienteDaLista: {
+    userList: {
       type: Object,
       default: null,
     },
@@ -367,17 +343,6 @@ export default {
   },
   data: () => {
     return {
-      circle: {
-        center: [1, 2],
-        radius: 4500,
-      },
-      lat: '',
-      long: '',
-      zoom: 18,
-      center: [1, 2],
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       file: null,
       files: null,
       reader: null,
@@ -476,50 +441,30 @@ export default {
   },
   watch: {
     watching() {
-      this.setDataFormWithClient();
-    },
-    async coordinates() {
-      await this.getCordinates();
+      this.setDataFormWithUser();
     },
   },
   methods: {
-    getCordinates() {
-      if (this.coordinates != null) {
-        const coordinates = this.coordinates;
-        this.lat = coordinates.latitude;
-        this.long = coordinates.longitude;
-        console.log(this.lat, this.long);
-        this.center = [this.lat, this.long];
-      } else {
-        console.log('deu erro');
-      }
-    },
-    modalShown() {
-      setTimeout(() => {
-        // mapObject is a property that is part of leaflet
-        this.$refs.myMap.mapObject.invalidateSize();
-      }, 100);
-    },
-    setDataFormWithClient() {
-      this.formData.status = this.clienteDaLista.status;
-      this.formData.name = this.clienteDaLista.name;
-      this.formData.type = this.clienteDaLista.type;
-      this.formData.cnpj = this.clienteDaLista.cnpj;
-      this.formData.cpf = this.clienteDaLista.cpf;
-      this.formData.rg = this.clienteDaLista.rg;
-      this.formData.phone = this.clienteDaLista.phone;
-      this.formData.email = this.clienteDaLista.email;
-      this.formData.address = this.clienteDaLista.address;
-      this.formData.cep = this.clienteDaLista.cep;
-      this.formData.district = this.clienteDaLista.district;
-      this.formData.city = this.clienteDaLista.city;
-      this.formData.state = this.clienteDaLista.state;
-      this.formData.number = this.clienteDaLista.number;
-      this.formData.complement = this.clienteDaLista.complement;
+    setDataFormWithUser() {
+      this.formData.status = this.userList.status;
+      this.formData.name = this.userList.name;
+      this.formData.type = this.userList.type;
+      this.formData.cnpj = this.userList.cnpj;
+      this.formData.cpf = this.userList.cpf;
+      this.formData.rg = this.userList.rg;
+      this.formData.phone = this.userList.phone;
+      this.formData.email = this.userList.email;
+      this.formData.address = this.userList.address;
+      this.formData.cep = this.userList.cep;
+      this.formData.district = this.userList.district;
+      this.formData.city = this.userList.city;
+      this.formData.state = this.userList.state;
+      this.formData.number = this.userList.number;
+      this.formData.complement = this.userList.complement;
     },
     async edit(_response) {
-      const cliente = await this.$parent.clienteDaLista;
-      console.log(cliente);
+      const user = await this.$parent.userList;
+      console.log(user);
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
@@ -531,17 +476,17 @@ export default {
           console.log('executou o clic');
 
           await this.$axios
-            .put(`customers/${cliente.id}`, this.$data.formData)
+            .put(`users/${user.id}`, this.$data.formData)
             .then((_res) => {
               console.log('sucesso');
               this.$root.$emit(
                 'bv::hide::modal',
-                `update-client-${this.clienteDaLista.id}`,
+                `update-user-${this.userList.id}`,
               );
 
               // this.$refs.criar.hide();
 
-              this.toast('success', 'Sucesso', 'Item editado com sucesso!');
+              this.toast('success', 'Sucesso', 'Usuário editado com sucesso!');
               this.$nuxt.refresh();
             })
             .catch((_err) => {});
@@ -586,4 +531,3 @@ export default {
   }
 }
 </style>
- -->

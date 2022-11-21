@@ -75,7 +75,7 @@
               />
             </b-col>
           </b-row>
-          <Edit />
+          <Edit :watching="id" :user-list="user" />
           <Viewing :watching="id" :user-list="user" />
         </li>
         <Delete :id="id" />
