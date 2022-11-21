@@ -1,35 +1,21 @@
 <template>
   <div>
-    <label for="title_photo">Adicionar foto e descrição</label>
-    <b-form-file
-      placeholder="Escolha uma foto ..."
-      drop-placeholder="Solte uma foto aqui ..."
-      @change="onFileChange"
-    ></b-form-file>
-
-    <b-form-group>
-      <b-form-input
-        id="title_photo"
-        v-model="newTitle_photo"
-        type="text"
-        placeholder="Ex: Vazamento de ar em tubulação...."
-      />
-    </b-form-group>
-
-    <b-button variant="primary" @click="save()">Salvar</b-button>
-
-    <ul class="d-flex">
-      <li
-        v-for="(photoItem, index) in listPhotos"
-        :key="photoItem.index"
-        @remove="photoItem.splice(index, 1)"
-      >
-        <p>{{ photoItem.title_photo }}</p>
-        <img :src="photoItem.photo" width="200" />
-      </li>
-    </ul>
-    <pre>{{ listPhotos }}</pre>
-    <pre>{{ urlImage }}</pre>
+    <div class="container">
+      <div class="column is-12">
+        <h3 class="title is-1">CEP</h3>
+        <hr />
+        <div v-if="cep" class="notification is-warning">
+          <pre>{{ data }}</pre>
+          <pre>{{ formdata }}</pre>
+        </div>
+        <input
+          v-model="cep"
+          type="text"
+          placeholder="digite o cep aqui"
+          @keyup="searchCep()"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,26 +23,35 @@
 export default {
   data: () => {
     return {
-      urlImage: null,
-      newTitle_photo: '',
-      listPhotos: [],
+      data: null,
+      cep: null,
+      formData: {
+        address: null,
+        district: null,
+        city: null,
+        state: null,
+        number: null,
+      },
     };
   },
   methods: {
-    onFileChange(e) {
-      const file = e.target.files[0];
-      this.urlImage = URL.createObjectURL(file);
-    },
-    save() {
-      this.listPhotos.push({
-        photo: this.urlImage,
-        title_photo: this.newTitle_photo,
-      });
-      this.urlImage = '';
-      this.newTitle_photo = '';
+    searchCep() {
+      // eslint-disable-next-line eqeqeq
+      if (this.cep.length == 8) {
+        this.$axios
+          .get(`https://viacep.com.br/ws/${this.cep}/json/`)
+          .then(
+            (response) =>
+              (this.formData = {
+                address: response.data.logradouro,
+                district: response.data.bairro,
+                city: response.data.localidade,
+                state: response.data.uf,
+              }),
+          )
+          .catch((error) => console.log(error));
+      }
     },
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
