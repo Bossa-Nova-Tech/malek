@@ -63,7 +63,7 @@
             >Selecione</b-form-select-option
           >
           <b-form-select-option
-            v-for="customer in customers"
+            v-for="customer in customersData"
             :key="customer.id"
             :value="customer.id"
           >
@@ -74,17 +74,17 @@
         <b-form-invalid-feedback>
           Selecione uma opção.
         </b-form-invalid-feedback>
-        <div class="d-flex pt-4 pb-2 align-items-center">
-          <h5 class="p-0">Cadastrar cliente</h5>
-          <b-img
-            src="~/assets/img/icones/criar-4.svg"
-            role="button"
-            class="pl-2"
-            @click="makeClient"
-          />
-        </div>
-        <AddOrdem />
       </b-form-group>
+      <div class="d-flex pt-2 pb-2 align-items-center">
+        <h5 class="p-0">Cadastrar cliente</h5>
+        <b-img
+          src="~/assets/img/icones/criar-4.svg"
+          role="button"
+          class="pl-2"
+          v-b-modal.criar-cliente
+        />
+      </div>
+      <AddOrdem />
       <div class="grid">
         <div class="mb-4">
           <label for="estimated_time"
@@ -249,8 +249,8 @@ export default {
   },
   mixins: [validationMixin, Vue2Filters.mixin],
   props: {
-    watching: {
-      type: Number,
+    customersData: {
+      type: Array,
       default: null,
     },
     watching2: {
@@ -277,7 +277,6 @@ export default {
       reader: null,
       vm: null,
       format: 'DD-MM-YYYY',
-      customers: [],
       services: [],
       formSend: false,
       ordem: null,
@@ -307,12 +306,6 @@ export default {
   },
 
   watch: {
-    async watching() {
-      const { data } = await this.$axios.get('customers');
-      const customer = data;
-      this.customers = customer;
-      console.log('custumer' + customer);
-    },
     async watching2() {
       const { data } = await this.$axios.get('services');
       const service = data;
@@ -351,11 +344,6 @@ export default {
   }, */
 
   methods: {
-    makeClient() {
-      this.$nextTick(() => {
-        this.$bvModal.show('criar-cliente');
-      });
-    },
     modalShown() {
       setTimeout(() => {
         // mapObject is a property that is part of leaflet

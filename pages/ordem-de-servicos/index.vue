@@ -32,7 +32,7 @@
           <b-tab id="futuras" title="Futuras" class="mt-4">
             <ListingFuture :tasks-data="tasksDataFuture" />
           </b-tab>
-          <Add :watching="chamarCliente" :watching2="chamarCliente" />
+          <Add :customers-data="customersData" :watching2="chamarCliente" />
 
           <div class="footer">
             <button class="" @click="criar">Criar Ordem de Serviço</button>
@@ -67,7 +67,9 @@ export default {
     const tasksDataOverdue = tasksOverdue.data;
     const tasksFuture = await $axios.get('tasks?status=future');
     const tasksDataFuture = tasksFuture.data;
-    return { tasksData, tasksDataOverdue, tasksDataFuture };
+    const customers = await $axios.get('customers');
+    const customersData = customers.data;
+    return { tasksData, tasksDataOverdue, tasksDataFuture, customersData };
   },
 
   data: () => {
