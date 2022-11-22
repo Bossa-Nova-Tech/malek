@@ -31,10 +31,39 @@
       </defs>
     </svg>
     <b-modal id="modal-1" hide-footer hide-header centered>
-      <div class="mx-4">
-        <div class="d-flex justify-content-between">
-          <h1 class="my-4">Configurações da conta</h1>
+      <div class="mx-3 my-3">
+        <div class="d-flex justify-content-between mb-3">
+          <h1>Configurações</h1>
+          <img
+            src="~/assets/img/icones/X-icon.svg"
+            role="button"
+            @click.prevent="$bvModal.hide('modal-1')"
+          />
         </div>
+        <small>
+          Faça as configurações de sua conta e também das ordens de serviçoes de
+          sua empresa.
+        </small>
+      </div>
+      <div
+        class="mx-3 d-flex justify-content-between"
+        @click="editAccount = !editAccount"
+      >
+        <h6 class="my-3 font-weight-bold">Conta</h6>
+        <img
+          v-if="editAccount"
+          src="~/assets/img/icones/arrow_up.svg"
+          alt=""
+          class="mx-1"
+        />
+        <img
+          v-else
+          src="~/assets/img/icones/arrow_down.svg"
+          alt=""
+          class="mx-1"
+        />
+      </div>
+      <div class="mx-4" v-if="editAccount">
         <label for="file">Logotipo</label>
         <BorderButton v-if="formData.photo === null" class="mb-4">
           <input
@@ -79,6 +108,63 @@
         </b-form-group>
         <b-button>Salvar</b-button>
       </div>
+      <div class="m-3 d-flex justify-content-between" @click="editOS = !editOS">
+        <h6 class="my-3 font-weight-bold">Ordem de serviço</h6>
+        <img
+          v-if="editOS"
+          src="~/assets/img/icones/arrow_up.svg"
+          alt=""
+          class="mx-1"
+        />
+        <img
+          v-else
+          src="~/assets/img/icones/arrow_down.svg"
+          alt=""
+          class="mx-1"
+        />
+      </div>
+      <div v-if="editOS" class="mx-4">
+        <b-row class="mb-3 align-items-center">
+          <b-col cols="8">
+            <label for="id" class="mb-0">Próximo número de OS</label>
+          </b-col>
+          <b-col cols="4">
+            <b-form-input
+              v-model="taskData.id"
+              name="id"
+              type="number"
+              placeholder="1"
+            />
+            <!-- :class="{
+              'is-invalid': $v.formData.name.$error,
+            }" -->
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
+          </b-col>
+        </b-row>
+        <b-row class="mb-3 align-items-center">
+          <b-col cols="7">
+            <label for="id" class="mb-0">Distância do cliente</label>
+          </b-col>
+          <b-col cols="5">
+            <b-input-group append="km">
+              <b-form-input
+                v-model="taskData.distancy"
+                name="id"
+                type="number"
+                placeholder="1"
+              />
+            </b-input-group>
+            <!-- :class="{
+              'is-invalid': $v.formData.name.$error,
+            }" -->
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
+          </b-col>
+        </b-row>
+      </div>
     </b-modal>
   </div>
 </template>
@@ -88,12 +174,18 @@ export default {
   data() {
     return {
       file: null,
+      editAccount: false,
+      editOS: false,
       files: null,
       reader: null,
       vm: null,
       formData: {
         photo: null,
         fantasy_name: null,
+      },
+      taskData: {
+        id: null,
+        distancy: null,
       },
     };
   },
