@@ -292,12 +292,13 @@
         <label for="cep">CEP</label>
         <b-form-input
           v-model="formData.cep"
-          v-mask="['#####-###']"
+          v-mask="['########']"
           name="cep"
           placeholder="000-00000"
           :class="{
             'is-invalid': $v.formData.cep.$error,
           }"
+          @keyup="searchCep()"
         />
         <b-form-invalid-feedback>
           {{
@@ -641,6 +642,28 @@ export default {
     },
     onFileSelected(event) {
       this.selectedFile = event.target.files[0];
+    },
+    searchCep() {
+      // eslint-disable-next-line eqeqeq
+      if (this.formData.cep.length == 8) {
+        this.$axios
+          .get(`https://viacep.com.br/ws/${this.formData.cep}/json/`)
+          .then(
+            (response) =>
+              (this.formData.address = response.data.logradouro)(
+                (this.formData.city = response.data.localidade),
+                (this.formData.state = response.data.uf),
+                (this.formData.cep = response.data.cep),
+                (this.formData.district = response.data.district),
+              ),
+            /* district: response.data.bairro,
+                city: response.data.localidade,
+                state: response.data.uf,
+                cep: response.data.cep,
+              } */
+          )
+          .catch((error) => console.log(error));
+      }
     },
   },
 };

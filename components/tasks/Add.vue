@@ -78,10 +78,10 @@
       <div class="d-flex pt-2 pb-2 align-items-center">
         <h5 class="p-0">Cadastrar cliente</h5>
         <b-img
+          v-b-modal.criar-cliente
           src="~/assets/img/icones/criar-4.svg"
           role="button"
           class="pl-2"
-          v-b-modal.criar-cliente
         />
       </div>
       <AddOrdem />
