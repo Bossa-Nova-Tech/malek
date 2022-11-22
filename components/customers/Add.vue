@@ -545,6 +545,7 @@ export default {
     searchCep() {
       // eslint-disable-next-line eqeqeq
       if (this.formData.cep.length == 8) {
+        this.formData.name.push(this.formData.name);
         this.$axios
           .get(`https://viacep.com.br/ws/${this.formData.cep}/json/`)
           .then(
@@ -555,6 +556,7 @@ export default {
                 city: response.data.localidade,
                 state: response.data.uf,
                 cep: response.data.cep,
+                name: this.formData.name,
               }),
           )
           .catch((error) => console.log(error));

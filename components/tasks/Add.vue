@@ -55,9 +55,9 @@
       <b-form-group>
         <label for="customer">Cliente <span class="requerido">*</span></label>
         <b-form-select
-          v-model="customerSelected"
+          v-model="customer_selected"
           name="customer"
-          :class="{ 'is-invalid': $v.customerSelected.$error }"
+          :class="{ 'is-invalid': $v.customer_selected.$error }"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -261,7 +261,7 @@ export default {
   data() {
     return {
       service_selected: null,
-      customerSelected: null,
+      customer_selected: null,
       circle: {
         center: [1, 2],
         radius: 4500,
@@ -303,7 +303,7 @@ export default {
       estimated_time: { required },
     },
     service_selected: { required },
-    customerSelected: { required },
+    customer_selected: { required },
   },
 
   watch: {
@@ -318,12 +318,28 @@ export default {
       const service = data;
       this.services = service;
     },
-    async serviceSelected() {
+    async service_selected() {
       const { data } = await this.$axios.get(
         `services/${this.service_selected}`,
       );
       this.formData.services = data.name;
       this.formData.estimated_time = data.time_of_execution;
+    },
+    async customer_selected() {
+      const { data } = await this.$axios.get(
+        `customers/${this.customer_selected}`,
+      );
+      this.formData.name_customer = data.name;
+      this.formData.customer_id = this.customer_selected;
+      console.log(data);
+      const mapa = await this.$axios.get(
+        `customers/get-coordinates/${this.customer_selected}`,
+      );
+      this.coordinates = mapa.data;
+      this.lat = this.coordinates.latitude;
+      this.long = this.coordinates.longitude;
+      this.center = [this.lat, this.long];
+      this.circle.center = [this.lat, this.long];
     },
   },
 

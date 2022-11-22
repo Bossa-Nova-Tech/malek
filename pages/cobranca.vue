@@ -8,7 +8,7 @@
         class="div-botao d-flex justify-content-center align-items-center"
       ></div>
       <div>
-        <div class="footer" v-show="false">
+        <div v-show="false" class="footer">
           <button>Gerar cobrança</button>
         </div>
       </div>

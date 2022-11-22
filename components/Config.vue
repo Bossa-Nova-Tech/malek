@@ -1,6 +1,7 @@
 <template>
   <div>
     <svg
+      v-b-modal.modal-1
       role="button"
       width="29"
       height="30"
@@ -8,7 +9,6 @@
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       class="ml-3"
-      v-b-modal.modal-1
     >
       <g clip-path="url(#clip0_918_22005)">
         <path
@@ -36,7 +36,7 @@
           <h1 class="my-4">Configurações da conta</h1>
         </div>
         <label for="file">Logotipo</label>
-        <BorderButton class="mb-4" v-if="formData.photo === null">
+        <BorderButton v-if="formData.photo === null" class="mb-4">
           <input
             id="file"
             type="file"
@@ -57,8 +57,8 @@
           <img
             src="~/assets/img/icones/delete-icon.svg"
             role="button"
-            @click="excluiFoto"
             class="ml-2"
+            @click="excluiFoto"
           />
         </div>
         <b-form-group>
