@@ -227,7 +227,6 @@
         <label for="cep">CEP</label>
         <b-form-input
           v-model="formData.cep"
-          v-mask="['#####-###']"
           name="cep"
           placeholder="000-0000"
           :class="{
@@ -545,7 +544,7 @@ export default {
     },
     searchCep() {
       // eslint-disable-next-line eqeqeq
-      if (this.formData.cep.length == 9) {
+      if (this.formData.cep.length == 8) {
         this.$axios
           .get(`https://viacep.com.br/ws/${this.formData.cep}/json/`)
           .then(
@@ -555,6 +554,7 @@ export default {
                 district: response.data.bairro,
                 city: response.data.localidade,
                 state: response.data.uf,
+                cep: response.data.cep,
               }),
           )
           .catch((error) => console.log(error));
