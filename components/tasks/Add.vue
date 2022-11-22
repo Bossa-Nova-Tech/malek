@@ -236,7 +236,7 @@ import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 import AddOrdem from '~/components/customers/AddOrdem.vue';
 export default {
-  name: 'AddOS',
+  name: 'Add',
   directives: { mask },
   components: { AddOrdem, LMap, LTileLayer, LControl, LCircle },
   filters: {

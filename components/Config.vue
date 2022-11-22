@@ -61,6 +61,23 @@
             class="ml-2"
           />
         </div>
+        <b-form-group>
+          <label>Nome Fantasia:</label>
+          <b-form-input v-model="$auth.user.fantasy_name"></b-form-input>
+        </b-form-group>
+        <b-form-group>
+          <label>Endereço:</label>
+          <b-form-input v-model="$auth.user.adress"></b-form-input>
+        </b-form-group>
+        <b-form-group>
+          <label>Email:</label>
+          <b-form-input v-model="$auth.user.email"></b-form-input>
+        </b-form-group>
+        <b-form-group>
+          <label>Site:</label>
+          <b-form-input v-model="$auth.user.site"></b-form-input>
+        </b-form-group>
+        <b-button>Salvar</b-button>
       </div>
     </b-modal>
   </div>
@@ -76,10 +93,10 @@ export default {
       vm: null,
       formData: {
         photo: null,
+        fantasy_name: null,
       },
     };
   },
-
   methods: {
     excluiFoto() {
       if (this.formData.photo) {

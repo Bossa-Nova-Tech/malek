@@ -3,7 +3,6 @@
     <PainelHeader v-if="$screen.lg" :tela="telaName" />
     <main class="p-0">
       <PainelAside />
-
       <div v-if="$screen.lg" class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto" align="center">
           <b-tab id="em-atraso" title="Em atraso" class="mt-4">
