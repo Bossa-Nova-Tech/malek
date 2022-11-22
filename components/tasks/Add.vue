@@ -337,7 +337,6 @@ export default {
   methods: {
     makeClient() {
       this.$nextTick(() => {
-        this.$bvModal.hide('criar');
         this.$bvModal.show('criar-cliente');
       });
     },
