@@ -63,7 +63,7 @@
           class="mx-1"
         />
       </div>
-      <div class="mx-4" v-if="editAccount">
+      <div v-if="editAccount" class="mx-4">
         <label for="file">Logotipo</label>
         <BorderButton v-if="formData.photo === null" class="mb-4">
           <input

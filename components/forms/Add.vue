@@ -40,8 +40,8 @@
       <b-card
         v-for="(ask, index) in formData.ask"
         :key="index"
+        :index="index"
         class="separador mb-3"
-        @remove="formData.ask.splice(ask.id, 1)"
       >
         <div class="d-flex justify-content-end">
           <b-img
@@ -279,14 +279,14 @@ export default {
   },
 
   methods: {
-    adicionarPergunta() {
+    adicionarPergunta(index) {
       this.formData.ask.push({
         text: null,
         type_of: null,
         answer_options: null,
         is_required: null,
       });
-      console.log(this.formData.ask);
+      console.log(index);
     },
     adicionarOpcaoDeResposta(index) {
       this.formData.ask[index].answer_options.push({ text: null });
