@@ -704,15 +704,13 @@ export default {
       if (this.formData.cep.length == 9) {
         this.$axios
           .get(`https://viacep.com.br/ws/${this.formData.cep}/json/`)
-          .then(
-            (response) =>
-              (this.formData = {
-                cep: this.formData.cep,
-                address: response.data.logradouro,
-                district: response.data.bairro,
-                city: response.data.localidade,
-                state: response.data.uf,
-              }),
+          .then((response) =>
+            (this.formData.address = response.data.logradouro)(
+              (this.formData.city = response.data.localidade),
+              (this.formData.state = response.data.uf),
+              (this.formData.cep = response.data.cep),
+              (this.formData.district = response.data.district),
+            ),
           )
           .catch((error) => console.log(error));
       }

@@ -545,19 +545,21 @@ export default {
     searchCep() {
       // eslint-disable-next-line eqeqeq
       if (this.formData.cep.length == 8) {
-        this.formData.name.push(this.formData.name);
         this.$axios
           .get(`https://viacep.com.br/ws/${this.formData.cep}/json/`)
           .then(
             (response) =>
-              (this.formData = {
-                address: response.data.logradouro,
-                district: response.data.bairro,
+              (this.formData.address = response.data.logradouro)(
+                (this.formData.city = response.data.localidade),
+                (this.formData.state = response.data.uf),
+                (this.formData.cep = response.data.cep),
+                (this.formData.district = response.data.district),
+              ),
+            /* district: response.data.bairro,
                 city: response.data.localidade,
                 state: response.data.uf,
                 cep: response.data.cep,
-                name: this.formData.name,
-              }),
+              } */
           )
           .catch((error) => console.log(error));
       }
