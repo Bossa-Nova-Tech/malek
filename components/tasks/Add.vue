@@ -10,7 +10,6 @@
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Criar Ordem de Serviço</h1>
-
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
@@ -81,7 +80,7 @@
             src="~/assets/img/icones/criar-4.svg"
             role="button"
             class="pl-2"
-            @click="$bvModal.show('criar-cliente')"
+            @click="makeClient"
           />
         </div>
         <AddOrdem />
@@ -159,13 +158,12 @@
           </b-form-invalid-feedback>
         </b-form-group>
       </div>
-      <div class="d-flex">
-        <label for="file" class="text-center"
-          >Enviar Foto
-          <img
-            v-b-tooltip.hover.right="'A imagem será utilizada para'"
-            src="~/assets/img/icones/info.svg"
-        /></label>
+      <div class="d-flex align-items-center mb-3">
+        <label for="file" class="text-center mb-0">Enviar Foto </label>
+        <img id="info-foto" src="~/assets/img/icones/info.svg" class="ml-3" />
+        <b-tooltip target="info-foto" placement="right" variant="primary">
+          <span>Foto opcional</span>
+        </b-tooltip>
       </div>
       <BorderButton class="mb-4">
         <b-form-file
@@ -337,6 +335,12 @@ export default {
   }, */
 
   methods: {
+    makeClient() {
+      this.$nextTick(() => {
+        this.$bvModal.hide('criar');
+        this.$bvModal.show('criar-cliente');
+      });
+    },
     modalShown() {
       setTimeout(() => {
         // mapObject is a property that is part of leaflet
