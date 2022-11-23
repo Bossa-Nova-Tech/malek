@@ -3,7 +3,7 @@
     <h1 class="p-4">Acontecendo hoje</h1>
     <ul>
       <li
-        v-for="(visita, index) in visitsData"
+        v-for="(visita, index) in filteredList"
         :key="index"
         class="card-servico p-4"
       >
@@ -117,6 +117,16 @@ export default {
       pause: false,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
     };
+  },
+  computed: {
+    filteredList() {
+      /* eslint-disable */
+      return this.visitsData.filter((t) => {
+        if (t.task != null) {
+          return t;
+        }
+      });
+    },
   },
   methods: {
     async showVer(visita) {

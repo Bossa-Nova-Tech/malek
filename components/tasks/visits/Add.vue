@@ -34,7 +34,7 @@
       label="Horário da Visita"
     >
       <b-form-timepicker
-        v-model="visits.time_visit"
+        v-model="visits.hour_visit"
         name="horario-visita"
         v-bind="labels"
         locale="pt-br"
@@ -78,7 +78,7 @@ export default {
     return {
       visits: {
         date_visit: null,
-        time_visit: null,
+        hour_visit: null,
         user_name: null,
         user_id: 1,
       },
