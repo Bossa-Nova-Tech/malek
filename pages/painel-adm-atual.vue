@@ -48,7 +48,6 @@ export default {
     PainelAside,
   },
   async asyncData({ $axios }) {
-    if (screen.lg) {
       const tasks = await $axios.get('tasks?status=today');
       const tasksData = tasks.data;
       console.log('tasks :: ', tasks.data);
@@ -59,7 +58,6 @@ export default {
       const tasksDataFuture = tasksFuture.data;
       console.log('tasks :: ', tasksFuture.data);
       return { tasksData, tasksDataOverdue, tasksDataFuture };
-    }
   },
 
   data: () => {

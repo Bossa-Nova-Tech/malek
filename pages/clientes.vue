@@ -4,15 +4,13 @@
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
 
-      <div class="d-flex justify-content-center ajuste-width">
-        <Listing :customers-data="customersData" />
-        <Add />
+      <Listing :customers-data="customersData" />
+      <Add />
 
-        <div v-if="!$screen.lg" class="footer">
-          <button class="" @click="$bvModal.show('criar-cliente')">
-            Criar Cliente
-          </button>
-        </div>
+      <div v-if="!$screen.lg" class="footer">
+        <button class="" @click="$bvModal.show('criar-cliente')">
+          Criar Cliente
+        </button>
       </div>
     </main>
   </div>

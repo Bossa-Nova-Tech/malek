@@ -3,16 +3,13 @@
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
+      <Listing :users="users" />
+      <Add :customers-data="customersData" />
 
-      <div class="d-flex justify-content-center ajuste-width">
-        <Listing :users="users" />
-        <Add :customers-data="customersData" />
-
-        <div v-if="!$screen.lg" class="footer">
-          <button class="" @click="$bvModal.show('criar-usuario')">
-            Criar Usuário
-          </button>
-        </div>
+      <div v-if="!$screen.lg" class="footer">
+        <button class="" @click="$bvModal.show('criar-usuario')">
+          Criar Usuário
+        </button>
       </div>
     </main>
   </div>
@@ -71,10 +68,10 @@ main {
 @media screen and (max-width: 991px) {
   main {
     grid-template-columns: 1fr;
-    .ajuste-width {
+    /* .ajuste-width {
       max-width: 33rem;
       margin-inline: 0rem;
-    }
+    } */
     .footer {
       width: 100%;
       height: 6rem;

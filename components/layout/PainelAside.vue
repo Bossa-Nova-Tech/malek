@@ -304,4 +304,41 @@ aside {
     }
   }
 }
+@media screen and (min-height: 1024px) {
+  aside {
+    padding-left: 0rem;
+
+    .profile {
+      background-color: #ffffff;
+    }
+
+    .header-mobile {
+      background: url(~/assets/img/bg-painel.png) no-repeat;
+      background-size: cover;
+      h4,
+      p {
+        color: var(--gray-10);
+      }
+    }
+
+    ul {
+      padding: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 25rem;
+      grid-template-columns: 1fr 1fr;
+      li {
+        background-color: var(--primary-20);
+        border-radius: 0.5rem;
+        margin: 1rem;
+      }
+      a {
+        display: grid;
+        justify-content: center;
+        justify-items: center;
+        padding: 40px;
+      }
+    }
+  }
+}
 </style>
