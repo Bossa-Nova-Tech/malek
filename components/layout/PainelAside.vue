@@ -323,20 +323,19 @@ aside {
 
     ul {
       padding: 20px;
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 25rem;
+      margin-inline: auto;
+      min-width: 500px;
       grid-template-columns: 1fr 1fr;
       li {
         background-color: var(--primary-20);
         border-radius: 0.5rem;
-        margin: 1rem;
+        margin: .5rem;
+        padding: 1rem;
       }
       a {
         display: grid;
         justify-content: center;
         justify-items: center;
-        padding: 40px;
       }
     }
   }
