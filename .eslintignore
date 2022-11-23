@@ -5,3 +5,5 @@ snapshots/*
 node_modules/*
 .github
 .nuxt
+components/*
+pages/*

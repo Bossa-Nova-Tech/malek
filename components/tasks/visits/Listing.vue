@@ -23,7 +23,7 @@
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
             <Viewing :visita-item="visita" :task="tasksData" :center="center" />
-            <Timer :visit-id="visita.id" />
+            <Timer :visit-id="visita.id" :start="visita.status" />
           </div>
         </div>
         <div class="d-flex align-items-center" @click="showVer(visita)">
@@ -145,6 +145,11 @@ export default {
       this.longitude = this.coordenadas.longitude;
       this.center = [this.latitude, this.longitude];
     },
+    /* activeTimer() {
+      if(this.start === true){
+        console.log('drop');
+      }
+    } */
   },
 };
 </script>

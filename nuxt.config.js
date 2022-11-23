@@ -132,6 +132,10 @@ export default {
         type: 'text/javascript',
         charset: 'utf-8',
       },
+      {
+        src: 'https://code.jquery.com/jquery-3.6.1.min.js',
+        type: 'text/javascript',
+      },
     ],
     noscript: [
       {

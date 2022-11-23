@@ -75,6 +75,10 @@ export default {
       type: Number,
       default: null,
     },
+    status: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -93,7 +97,7 @@ export default {
     zfill(number) {
       return number.toString().padStart(2, 0);
     },
-    play() {
+    async play() {
       if (this.timer === null) {
         this.playing();
         this.start = false;

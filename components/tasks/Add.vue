@@ -168,11 +168,12 @@
       <BorderButton class="mb-4">
         <b-form-file
           id="file"
+          ref="arquivo"
           v-model="formData.photos"
           accept=".png, .jpg"
           class="d-flex"
           plain
-          @change="onFileChange"
+          @change="foto_selecionada"
         />
         <label for="file" class="text-center">Clique aqui</label>
       </BorderButton>
@@ -188,7 +189,7 @@
             @click="excluiFoto"
           />
 
-          <img :src="formData.photos" alt="" width="100" />
+          <img :src="formData.photos.img" alt="" width="100" />
         </div>
       </div>
       <b-form-group class="mb-4">
@@ -276,6 +277,7 @@ export default {
       files: null,
       reader: null,
       vm: null,
+      fotos: [],
       format: 'DD-MM-YYYY',
       services: [],
       formSend: false,
@@ -287,7 +289,7 @@ export default {
         estimated_time: null,
         end_date: null,
         note: null,
-        photos: null,
+        photos: [],
         name_customer: null,
         customer_id: null,
         template: null,
@@ -390,12 +392,32 @@ export default {
         };
       }
     },
-    onFileChange(e) {
+    /* onFileChange(e) {
       this.files = e.target.files || e.dataTransfer.files;
       if (!this.files.length) return;
       this.createImage(this.files[0]);
+    }, */
+    addFoto() {
+      $(this.$refs.arquivo).trigger('click');
     },
-    createImage(file) {
+    foto_selecionada() {
+      const files = $(this.$refs.arquivo).prop('files');
+      if (files.lenght < 1) {
+        return false;
+      }
+      const foto = files[0];
+      const leitor = new FileReader();
+      leitor.onload = () => {
+        this.fotos.push({
+          img: leitor.result,
+          descricao: foto.name,
+        });
+        $(this.$refs.arquivo).val('');
+      };
+      leitor.readAsDataURL(foto);
+      this.formData.photos = this.fotos;
+    },
+    /* createImage(file) {
       this.reader = new FileReader();
       this.vm = this;
 
@@ -403,10 +425,7 @@ export default {
         this.vm.formData.photos = e.target.result;
       };
       this.reader.readAsDataURL(file);
-    },
-    onFileSelected(event) {
-      this.selectedFile = event.target.files[0];
-    },
+    }, */
   },
 };
 </script>
