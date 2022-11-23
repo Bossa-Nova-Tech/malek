@@ -165,16 +165,44 @@
           <span>Foto opcional</span>
         </b-tooltip>
       </div>
-      <BorderButton class="mb-4">
-        <b-form-file
+      <input
+          @change="foto_selecionada"
+          type="file"
+          ref="arquivo"
+          accept="image/*"
+          class="d-none"
+        />
+        <ul class="list-unstyled">
+          <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
+            <div class="d-flex align-items-start justify-content-between">
+              <b-img
+                :src="foto.image"
+                width="80"
+                height="80"
+                class="mb-2 rounded"
+              ></b-img>
+              <b-btn
+                @click="fotos.splice(index, 1)"
+                size="sm"
+                variant="link"
+                class="p-0"
+                >Apagar</b-btn
+              >
+            </div>
+            <h6>Descrição da foto:</h6>
+          </li>
+        </ul>
+      <BorderButton class="mb-4" @click.native="addFoto">
+        <!-- <b-form-file
           id="file"
           ref="arquivo"
-          v-model="formData.photos"
+          v-model="formData.photo.image"
           accept=".png, .jpg"
           class="d-flex"
           plain
-          @change="foto_selecionada"
-        />
+          @change="onFileChange"
+        /> -->
+
         <label for="file" class="text-center">Clique aqui</label>
       </BorderButton>
       <div class="campo-foto d-flex align-self center justify-content-center">
@@ -188,8 +216,6 @@
             class="ml-5 pl-5 pb-2"
             @click="excluiFoto"
           />
-
-          <img :src="formData.photos.img" alt="" width="100" />
         </div>
       </div>
       <b-form-group class="mb-4">
@@ -201,6 +227,7 @@
         >
         </b-form-input>
       </b-form-group>
+
       <section v-if="lat !== null" id="mapa">
         <label for="mapa">Localização do Cliente</label>
         <l-map
@@ -289,7 +316,12 @@ export default {
         estimated_time: null,
         end_date: null,
         note: null,
-        photos: [],
+        photos: [
+          {
+            image: null,
+            title: null,
+          },
+        ],
         name_customer: null,
         customer_id: null,
         template: null,
@@ -392,11 +424,11 @@ export default {
         };
       }
     },
-    /* onFileChange(e) {
+    onFileChange(e) {
       this.files = e.target.files || e.dataTransfer.files;
       if (!this.files.length) return;
       this.createImage(this.files[0]);
-    }, */
+    },
     addFoto() {
       $(this.$refs.arquivo).trigger('click');
     },
@@ -409,15 +441,15 @@ export default {
       const leitor = new FileReader();
       leitor.onload = () => {
         this.fotos.push({
-          img: leitor.result,
-          descricao: foto.name,
+          image: leitor.result,
+          title: foto.name,
         });
         $(this.$refs.arquivo).val('');
       };
       leitor.readAsDataURL(foto);
       this.formData.photos = this.fotos;
     },
-    /* createImage(file) {
+    createImage(file) {
       this.reader = new FileReader();
       this.vm = this;
 
@@ -425,7 +457,7 @@ export default {
         this.vm.formData.photos = e.target.result;
       };
       this.reader.readAsDataURL(file);
-    }, */
+    },
   },
 };
 </script>
