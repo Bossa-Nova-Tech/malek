@@ -26,10 +26,14 @@
       <p>{{ task.services }}</p>
       <h3 class="mt-4">Cliente</h3>
       <p>{{ task.name_customer }}</p>
+      <h3 class="mt-4">Data da Visita:</h3>
+      <p>{{ visitaItem.date_visit }}</p>
       <h3 class="mt-4">Duração média da tarefa</h3>
       <p>{{ task.estimated_time }}</p>
+      <h3 class="mt-4">Horário da Visita:</h3>
+      <p>{{ visitaItem.hour_visit }}</p>
       <h3 class="mt-4">Colaborador</h3>
-      <p>{{ visitaItem.user_id }}</p>
+      <p>{{ visitaItem.user.name }}</p>
 
       <h3 class="mt-4">Adicionar foto e descrição</h3>
       <b-form-file
