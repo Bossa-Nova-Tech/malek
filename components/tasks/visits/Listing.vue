@@ -41,6 +41,24 @@
             class="ml-2 px-2"
             ><small>Em execução</small></b-badge
           >
+          <b-badge
+            v-if="visita.status === 'canceled'"
+            variant="danger"
+            class="ml-2 px-2"
+            >Cancelada</b-badge
+          >
+          <b-badge
+            v-if="visita.status === 'finished'"
+            variant="info"
+            class="ml-2 px-2"
+            >Finalizada</b-badge
+          >
+          <b-badge
+            v-if="visita.status === 'pause'"
+            variant="warning"
+            class="ml-2 px-2"
+            >Em pausa</b-badge
+          >
         </div>
         <span class="gray-40">
           {{ visita.date_of_visit }}

@@ -130,6 +130,12 @@
             class="ml-3"
             >Finalizada</b-badge
           >
+          <b-badge
+            v-if="itemOrdem.status === 'pause'"
+            variant="warning"
+            class="ml-3"
+            >Em pausa</b-badge
+          >
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
         <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" />
