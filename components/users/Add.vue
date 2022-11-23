@@ -227,32 +227,6 @@
       </div>
 
       <b-form-group class="mb-4">
-        <label for="company">Empresa</label>
-        <b-form-select
-          v-model="formData.company_id"
-          name="company"
-          placeholder="Empresa"
-          :class="{
-            'is-invalid': $v.formData.company_id.$error,
-          }"
-        >
-          <b-form-select-option :value="null" desabled
-            >Selecione</b-form-select-option
-          >
-          <b-form-select-option
-            v-for="customer in customersData"
-            :key="customer.id"
-            :value="customer.id"
-          >
-            {{ customer.name }}
-          </b-form-select-option>
-        </b-form-select>
-        <b-form-invalid-feedback>
-          Preencha o campo acima.
-        </b-form-invalid-feedback>
-      </b-form-group>
-
-      <b-form-group class="mb-4">
         <label for="role">Função</label>
         <b-form-select
           v-model="formData.role"
@@ -265,26 +239,6 @@
         </b-form-select>
         <b-form-invalid-feedback>
           Preencha o campo acima.
-        </b-form-invalid-feedback>
-      </b-form-group>
-
-      <b-form-group class="mb-4">
-        <label for="password">Senha</label>
-        <b-form-input
-          v-model="formData.password"
-          type="password"
-          name="password"
-          placeholder="Senha"
-          :class="{
-            'is-invalid': $v.formData.password.$error,
-          }"
-        />
-        <b-form-invalid-feedback>
-          {{
-            !$v.formData.password.minLength
-              ? 'Insira uma senha válida'
-              : 'Preencha o campo acima'
-          }}
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -402,6 +356,26 @@
         </b-col>
       </b-row>
 
+      <b-form-group class="mb-4">
+        <label for="password">Senha</label>
+        <b-form-input
+          v-model="formData.password"
+          type="password"
+          name="password"
+          placeholder="Senha"
+          :class="{
+            'is-invalid': $v.formData.password.$error,
+          }"
+        />
+        <b-form-invalid-feedback>
+          {{
+            !$v.formData.password.minLength
+              ? 'Insira uma senha válida'
+              : 'Preencha o campo acima'
+          }}
+        </b-form-invalid-feedback>
+      </b-form-group>
+
       <b-row class="mt-2">
         <b-col sm="12">
           <label for="textarea-default">Observações</label>
@@ -454,14 +428,13 @@ export default {
         name: null,
         cpf: null,
         role: null,
+        district: null,
         phone: null,
         email: null,
         photo: null,
         password: null,
-        company_id: null,
         cep: null,
         address: null,
-        district: null,
         city: null,
         state: null,
         number: null,
@@ -548,14 +521,14 @@ export default {
         required,
         minLength: minLength(8),
       },
-      company_id: {
-        required,
-      },
       cep: {
         required,
-        minLength: minLength(9),
+        minLength: minLength(8),
       },
       number: {
+        required,
+      },
+      district: {
         required,
       },
     },
@@ -598,7 +571,6 @@ export default {
                 email: null,
                 photo: null,
                 password: null,
-                company_id: null,
                 corporate_name: null,
                 state_registration: null,
                 rg: null,
@@ -654,7 +626,7 @@ export default {
                 (this.formData.city = response.data.localidade),
                 (this.formData.state = response.data.uf),
                 (this.formData.cep = response.data.cep),
-                (this.formData.district = response.data.district),
+                (this.formData.district = response.data.bairro),
               ),
             /* district: response.data.bairro,
                 city: response.data.localidade,

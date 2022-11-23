@@ -490,8 +490,9 @@ export default {
                 'Cliente adicionado com sucesso!',
               );
               this.formData = {
-                status: 'active',
                 name: null,
+                email: null,
+                status: 'active',
                 type: null,
                 cnpj: null,
                 cpf: null,
@@ -499,7 +500,6 @@ export default {
                 state_registration: null,
                 rg: null,
                 phone: null,
-                email: null,
                 photo: null,
                 cep: null,
                 address: null,
