@@ -267,15 +267,12 @@ aside {
     fill: #ffc8aa;
   }
 }
-
 @media screen and (max-width: 991px) {
   aside {
     padding-left: 0rem;
-
     .profile {
       background-color: #ffffff;
     }
-
     .header-mobile {
       background: url(~/assets/img/bg-painel.png) no-repeat;
       background-size: cover;
@@ -284,7 +281,6 @@ aside {
         color: var(--gray-10);
       }
     }
-
     ul {
       padding: 20px;
       margin-left: auto;
@@ -307,11 +303,9 @@ aside {
 @media screen and (min-height: 1024px) and (max-width: 991px) {
   aside {
     padding-left: 0rem;
-
     .profile {
       background-color: #ffffff;
     }
-
     .header-mobile {
       background: url(~/assets/img/bg-painel.png) no-repeat;
       background-size: cover;
@@ -320,7 +314,6 @@ aside {
         color: var(--gray-10);
       }
     }
-
     ul {
       padding: 20px;
       margin-inline: auto;

@@ -26,8 +26,6 @@
       <p>{{ task.services }}</p>
       <h3 class="mt-4">Cliente</h3>
       <p>{{ task.name_customer }}</p>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       <h3 class="mt-4">Data da Visita:</h3>
       <p>{{ visitaItem.date_visit }}</p>
       <h3 class="mt-4">Duração média da tarefa</h3>
@@ -36,18 +34,6 @@
       <p>{{ visitaItem.hour_visit }}</p>
       <h3 class="mt-4">Colaborador</h3>
       <p>{{ visitaItem.user.name }}</p>
-=======
-      <h3 class="mt-4">Duração média da tarefa</h3>
-      <p>{{ task.estimated_time }}</p>
-      <h3 class="mt-4">Colaborador</h3>
-      <p>{{ visitaItem.user_id }}</p>
->>>>>>> Stashed changes
-=======
-      <h3 class="mt-4">Duração média da tarefa</h3>
-      <p>{{ task.estimated_time }}</p>
-      <h3 class="mt-4">Colaborador</h3>
-      <p>{{ visitaItem.user_id }}</p>
->>>>>>> Stashed changes
 
       <h3 class="mt-4">Adicionar foto e descrição</h3>
       <div class="d-flex align-items-center mb-3">
@@ -95,7 +81,6 @@
         drop-placeholder="Solte uma foto aqui ..."
         @change="onFileChange"
       ></b-form-file>
-
       <b-form-input
         v-model="newTitle_photo"
         class="my-3"
@@ -103,7 +88,6 @@
         placeholder="Ex: Vazamento de ar em tubulação...."
       />
       <b-button variant="primary" @click="save()">Adicionar</b-button>
-
       <ul class="py-3">
         <li
           v-for="(photoItem, index) in listPhotos"
@@ -141,7 +125,6 @@
             class="ml-5 pl-5 pb-2"
             @click="excluiFoto"
           />
-
           <img :src="formData.photo" alt="" width="100" />
        </div>
       </div> -->
@@ -188,8 +171,6 @@
       >
       <p v-if="listComment === true">{{ comment.text }}</p>
     </div>
-    <!--     <b-button @click="getLocate"></b-button>
- -->
   </b-modal>
 </template>
 <script>
@@ -198,7 +179,6 @@ import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { Icon } from 'leaflet';
 import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
-
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -242,34 +222,16 @@ export default {
       latitude: null,
       longitude: null,
       coordenadas: [],
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       fotos: [],
       photo: [],
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
       customer_id: null,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       tasksData: [],
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       /* urlImage: null,
       newTitle_photo: '', */
       /* listPhotos: [], */
-=======
-      urlImage: null,
-      newTitle_photo: '',
-      listPhotos: [],
->>>>>>> Stashed changes
-=======
-      urlImage: null,
-      newTitle_photo: '',
-      listPhotos: [],
->>>>>>> Stashed changes
       visits: [],
     };
   },
@@ -281,8 +243,6 @@ export default {
     },
   },
   methods: {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     async putPhoto() {
       try {
         await this.$axios
@@ -318,10 +278,6 @@ export default {
       leitor.readAsDataURL(foto);
       this.photo = this.fotos;
     },
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     modalShown() {
       setTimeout(() => {
         // mapObject is a property that is part of leaflet
@@ -330,7 +286,6 @@ export default {
     },
     async salvarComentario() {
       this.$v.comment.$touch();
-
       if (!this.$v.comment.$invalid) {
         await this.$axios.post(
           'tasks/comment/' + this.visitaItem.task_id,
@@ -359,12 +314,10 @@ export default {
 .view-modal {
   h1 {
     font-size: 1.4rem;
-
     span {
       color: var(--primary-80);
     }
   }
-
   .imprimir {
     border: 1px solid var(--primary-80);
     border-radius: 8px;
@@ -373,13 +326,11 @@ export default {
     font-size: 1rem;
     box-shadow: none;
   }
-
   h3 {
     font-size: 0.8rem;
     font-weight: bolder;
     color: var(--gray-60);
   }
-
   p {
     font-size: 1rem;
     color: var(--gray-60);
