@@ -171,11 +171,12 @@
           Para salvar, preencha o comentário.
         </b-form-invalid-feedback>
       </b-form-group>
-      <div @click="salvarComentario">
-        <b-button v-if="listComment === false" variant="primary"
-          >Salvar comentário <span>e Fotos</span></b-button
+        <b-button
+          v-if="listComment === false"
+          variant="primary"
+          @click="salvarComentario"
+          >Salvar</b-button
         >
-      </div>
       <p v-if="listComment === true">{{ comment.text }}</p>
     </div>
   </b-modal>
@@ -305,7 +306,7 @@ export default {
           .post('tasks/' + tasksData.id, this.$data.photo)
           .then((_res) => {
             this.$root.$emit('bv::hide::modal', 'visitas');
-            this.toast('success', 'Sucesso', 'Visita adicionada com sucesso!');
+            this.toast('success', 'Sucesso', 'Visita atualizada com sucesso!');
             /* this.$router.go( 0); */
           });
         this.$nuxt.refresh().catch((_err) => {});

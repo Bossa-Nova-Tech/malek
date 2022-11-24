@@ -24,7 +24,7 @@
           <div class="d-flex mb-2">
             <Viewing :visita-item="visita" :task="tasksData" :center="center" />
 
-            <Timer :visit-id="visita.id" :start="visita.status" />
+            <Timer :visit-id="visita.id" :status="visita.status" />
           </div>
         </div>
         <div class="d-flex align-items-center" @click="showVer(visita)">
