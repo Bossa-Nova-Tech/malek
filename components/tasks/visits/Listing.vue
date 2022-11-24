@@ -24,8 +24,11 @@
           <div class="d-flex mb-2">
             <Viewing :visita-item="visita" :task="tasksData" :center="center" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <Timer :visit-id="visita.id" :start="visita.status" />
 =======
+=======
+>>>>>>> Stashed changes
             <Timer :visit-id="visita.id" />
 >>>>>>> Stashed changes
           </div>

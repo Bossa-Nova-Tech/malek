@@ -27,6 +27,7 @@
       <h3 class="mt-4">Cliente</h3>
       <p>{{ task.name_customer }}</p>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <h3 class="mt-4">Data da Visita:</h3>
       <p>{{ visitaItem.date_visit }}</p>
       <h3 class="mt-4">Duração média da tarefa</h3>
@@ -35,6 +36,12 @@
       <p>{{ visitaItem.hour_visit }}</p>
       <h3 class="mt-4">Colaborador</h3>
       <p>{{ visitaItem.user.name }}</p>
+=======
+      <h3 class="mt-4">Duração média da tarefa</h3>
+      <p>{{ task.estimated_time }}</p>
+      <h3 class="mt-4">Colaborador</h3>
+      <p>{{ visitaItem.user_id }}</p>
+>>>>>>> Stashed changes
 =======
       <h3 class="mt-4">Duração média da tarefa</h3>
       <p>{{ task.estimated_time }}</p>
@@ -236,8 +243,11 @@ export default {
       longitude: null,
       coordenadas: [],
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       fotos: [],
       photo: [],
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
       customer_id: null,
@@ -246,9 +256,15 @@ export default {
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       tasksData: [],
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       /* urlImage: null,
       newTitle_photo: '', */
       /* listPhotos: [], */
+=======
+      urlImage: null,
+      newTitle_photo: '',
+      listPhotos: [],
+>>>>>>> Stashed changes
 =======
       urlImage: null,
       newTitle_photo: '',
@@ -265,6 +281,7 @@ export default {
     },
   },
   methods: {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     async putPhoto() {
       try {
@@ -301,6 +318,8 @@ export default {
       leitor.readAsDataURL(foto);
       this.photo = this.fotos;
     },
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     modalShown() {

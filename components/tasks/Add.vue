@@ -56,9 +56,15 @@
         <label for="customer">Cliente <span class="requerido">*</span></label>
         <b-form-select
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
           v-model="customer_selected"
           name="customer"
           :class="{ 'is-invalid': $v.customer_selected.$error }"
+=======
+          v-model="customerSelected"
+          name="customer"
+          :class="{ 'is-invalid': $v.customerSelected.$error }"
+>>>>>>> Stashed changes
 =======
           v-model="customerSelected"
           name="customer"
@@ -214,7 +220,10 @@
         </b-form-input>
       </b-form-group>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
       <section v-if="lat !== null" id="mapa">
@@ -283,6 +292,9 @@ export default {
 =======
       serviceSelected: null,
       customerSelected: null,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
       circle: {
         center: [1, 2],
@@ -320,8 +332,11 @@ export default {
         customer_id: null,
         template: null,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         services: this.service_selected,
 =======
+=======
+>>>>>>> Stashed changes
         service_id: this.serviceSelected,
         services: this.serviceSelected,
 >>>>>>> Stashed changes
@@ -335,9 +350,12 @@ export default {
       estimated_time: { required },
     },
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     service_selected: { required },
     customer_selected: { required },
 =======
+=======
+>>>>>>> Stashed changes
     customerSelected: { required },
 
     serviceSelected: { required },
@@ -351,7 +369,10 @@ export default {
       this.services = service;
     },
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     async service_selected() {
+=======
+    async customerSelected() {
 =======
     async customerSelected() {
       const { data } = await this.$axios.get(
@@ -372,8 +393,28 @@ export default {
     async serviceSelected() {
 >>>>>>> Stashed changes
       const { data } = await this.$axios.get(
+        `customers/${this.customerSelected}`,
+      );
+<<<<<<< Updated upstream
+      this.formData.name_customer = data.name;
+      this.formData.customer_id = this.customerSelected;
+      console.log(data);
+      const mapa = await this.$axios.get(
+        `customers/get-coordinates/${this.customerSelected}`,
+      );
+      this.coordinates = mapa.data;
+      this.lat = this.coordinates.latitude;
+      this.long = this.coordinates.longitude;
+      this.center = [this.lat, this.long];
+      this.circle.center = [this.lat, this.long];
+    },
+    async serviceSelected() {
+>>>>>>> Stashed changes
+      const { data } = await this.$axios.get(
         `services/${this.service_selected}`,
       );
+=======
+>>>>>>> Stashed changes
       this.formData.services = data.name;
       this.formData.estimated_time = data.time_of_execution;
     },
