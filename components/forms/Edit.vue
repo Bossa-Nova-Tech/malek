@@ -15,7 +15,7 @@
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
-          @click.once="$bvModal.hide('update-forms-' + formsSelecionado.id)"
+          @click.once="$bvModal.hide('update-forms-' + this.formsSelecionado.id)"
         />
       </div>
 

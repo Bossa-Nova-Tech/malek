@@ -88,7 +88,7 @@
       <div class="grid">
         <div class="mb-4">
           <label for="estimated_time"
-            >Duração média da tarefa <span class="requerido">*</span></label
+            >Tempo estimado para a execução da tarefa <span class="requerido">*</span></label
           >
           <b-input-group>
             <b-form-input
@@ -296,12 +296,7 @@ export default {
         estimated_time: null,
         end_date: null,
         note: null,
-        photo: [
-          {
-            image: null,
-            title: null,
-          },
-        ],
+        photo: [],
         name_customer: null,
         customer_id: null,
         template: null,

@@ -97,7 +97,7 @@ export default {
 
 <style lang="scss" scoped>
 section {
-  height: 25rem;
+  max-height: 25rem;
   background: var(--gray-10);
   box-shadow: 0px 4px 4px rgba(0, 71, 187, 0.06);
 
@@ -112,7 +112,7 @@ section {
   }
 
   ul {
-    height: 18.75rem;
+    max-height: 18.75rem;
     overflow: auto;
 
     li {

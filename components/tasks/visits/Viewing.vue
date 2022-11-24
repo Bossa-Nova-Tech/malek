@@ -156,7 +156,7 @@
         </l-map>
       </client-only>
       <h3 class="mt-4">Comentário:</h3>
-      <b-form-group v-if="listComment === false">
+      <b-form-group>
         <b-form-textarea
           id="user-comment"
           v-model="comment.text"
@@ -171,12 +171,7 @@
           Para salvar, preencha o comentário.
         </b-form-invalid-feedback>
       </b-form-group>
-        <b-button
-          v-if="listComment === false"
-          variant="primary"
-          @click="salvarComentario"
-          >Salvar</b-button
-        >
+      <b-button variant="primary" @click="salvarComentario">Salvar</b-button>
       <p v-if="listComment === true">{{ comment.text }}</p>
     </div>
   </b-modal>

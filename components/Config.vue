@@ -96,7 +96,7 @@
         </b-form-group>
         <b-form-group>
           <label>Endereço:</label>
-          <b-form-input v-model="$auth.user.adress"></b-form-input>
+          <b-form-input v-model="$auth.user.address"></b-form-input>
         </b-form-group>
         <b-form-group>
           <label>Email:</label>
@@ -164,6 +164,7 @@
             </b-form-invalid-feedback>
           </b-col>
         </b-row>
+        <div v-if="$auth.user.company_id">teste</div>
       </div>
     </b-modal>
   </b-container-fluid>
@@ -189,6 +190,7 @@ export default {
       },
     };
   },
+
   methods: {
     excluiFoto() {
       if (this.formData.photo) {

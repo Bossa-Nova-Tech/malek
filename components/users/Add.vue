@@ -87,7 +87,7 @@
 
       <b-row>
         <b-col cols="12">
-          <b-form-group v-if="formData.type == 'f'" class="mb-4">
+            <b-form-group v-if="formData.type == 'f'" class="mb-4">
             <label for="rg">RG <span class="requerido">*</span></label>
             <b-form-input
               v-model="formData.rg"
@@ -126,8 +126,8 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-        <b-col md="6" sm="12">
-          <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+        <!-- <b-col md="6" sm="12">
+          <b-form-group v-if="formData.role == 'pj'" class="mb-4">
             <label for="state_registration"
               >Inscrição Estadual <span class="requerido">*</span></label
             >
@@ -146,7 +146,7 @@
               }}
             </b-form-invalid-feedback>
           </b-form-group>
-        </b-col>
+        </b-col> -->
       </b-row>
 
       <div class="grid">
@@ -424,10 +424,10 @@ export default {
       formSend: false,
       formData: {
         status: 'active',
-        type: 'f',
+        role: 'maneger',
         name: null,
         cpf: null,
-        role: null,
+        type: 'f',
         district: null,
         phone: null,
         email: null,

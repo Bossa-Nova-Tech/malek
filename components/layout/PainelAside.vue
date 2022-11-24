@@ -322,7 +322,7 @@ aside {
       li {
         background-color: var(--primary-20);
         border-radius: 0.5rem;
-        margin: .5rem;
+        margin: 0.5rem;
         padding: 1rem;
       }
       a {
