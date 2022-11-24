@@ -304,7 +304,7 @@ aside {
     }
   }
 }
-@media screen and (min-height: 1024px) {
+@media screen and (min-height: 1024px) and (max-width: 991px) {
   aside {
     padding-left: 0rem;
 

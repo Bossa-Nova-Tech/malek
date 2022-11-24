@@ -166,58 +166,38 @@
         </b-tooltip>
       </div>
       <input
-          @change="foto_selecionada"
-          type="file"
-          ref="arquivo"
-          accept="image/*"
-          class="d-none"
-        />
-        <ul class="list-unstyled">
-          <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
-            <div class="d-flex align-items-start justify-content-between">
-              <b-img
-                :src="foto.image"
-                width="80"
-                height="80"
-                class="mb-2 rounded"
-              ></b-img>
-              <b-btn
-                @click="fotos.splice(index, 1)"
-                size="sm"
-                variant="link"
-                class="p-0"
-                >Apagar</b-btn
-              >
-            </div>
-            <h6>Descrição da foto:</h6>
-          </li>
-        </ul>
+        @change="foto_selecionada"
+        type="file"
+        ref="arquivo"
+        accept="image/*"
+        class="d-none"
+      />
+      <ul class="list-unstyled">
+        <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
+          <h6>Título da foto: </h6>
+          <b-form-input v-model="foto.title" placeholder="Título da foto:" class="my-3" />
+          <div class="d-flex align-items-start justify-content-between">
+            <b-img
+              :src="foto.image"
+              width="80"
+              height="80"
+              class="mb-2 rounded"
+            ></b-img>
+            <b-img
+              @click="fotos.splice(index, 1)"
+              size="sm"
+              src="~/assets/img/icones/delete-icon.svg"
+              variant="link"
+              class="p-0"
+              />
+          </div>
+          <h6>Descrição da foto:</h6>
+          <b-form-input v-model="foto.note" placeholder="Digite a descrição:" class="my-3" />
+        </li>
+      </ul>
       <BorderButton class="mb-4" @click.native="addFoto">
-        <!-- <b-form-file
-          id="file"
-          ref="arquivo"
-          v-model="formData.photo.image"
-          accept=".png, .jpg"
-          class="d-flex"
-          plain
-          @change="onFileChange"
-        /> -->
-
-        <label for="file" class="text-center">Clique aqui</label>
+        <label for="file" class="text-center">Selecionar foto</label>
       </BorderButton>
-      <div class="campo-foto d-flex align-self center justify-content-center">
-        <div
-          v-if="formData.photos"
-          class="d-flex flex-column justify-content-center align-items-center"
-        >
-          <b-img
-            src="~/assets/img/icones/delete-icon.svg"
-            role="button"
-            class="ml-5 pl-5 pb-2"
-            @click="excluiFoto"
-          />
-        </div>
-      </div>
       <b-form-group class="mb-4">
         <label for="note">Descrição da Ordem de Serviço</label>
         <b-form-input
@@ -316,7 +296,7 @@ export default {
         estimated_time: null,
         end_date: null,
         note: null,
-        photos: [
+        photo: [
           {
             image: null,
             title: null,
@@ -418,16 +398,11 @@ export default {
       }
     },
     excluiFoto() {
-      if (this.formData.photos) {
+      if (this.formData.photo) {
         this.formData = {
-          photos: null,
+          photo: null,
         };
       }
-    },
-    onFileChange(e) {
-      this.files = e.target.files || e.dataTransfer.files;
-      if (!this.files.length) return;
-      this.createImage(this.files[0]);
     },
     addFoto() {
       $(this.$refs.arquivo).trigger('click');
@@ -442,21 +417,13 @@ export default {
       leitor.onload = () => {
         this.fotos.push({
           image: leitor.result,
-          title: foto.name,
+          title: foto.title,
+          note: foto.note,
         });
         $(this.$refs.arquivo).val('');
       };
       leitor.readAsDataURL(foto);
-      this.formData.photos = this.fotos;
-    },
-    createImage(file) {
-      this.reader = new FileReader();
-      this.vm = this;
-
-      this.reader.onload = (e) => {
-        this.vm.formData.photos = e.target.result;
-      };
-      this.reader.readAsDataURL(file);
+      this.formData.photo = this.fotos;
     },
   },
 };

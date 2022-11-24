@@ -36,7 +36,47 @@
       <p>{{ visitaItem.user.name }}</p>
 
       <h3 class="mt-4">Adicionar foto e descrição</h3>
-      <b-form-file
+      <div class="d-flex align-items-center mb-3">
+        <label for="file" class="text-center mb-0">Enviar Foto </label>
+        <img id="info-foto" src="~/assets/img/icones/info.svg" class="ml-3" />
+        <b-tooltip target="info-foto" placement="right" variant="primary">
+          <span>Foto opcional</span>
+        </b-tooltip>
+      </div>
+      <input
+        @change="foto_selecionada"
+        type="file"
+        ref="arquivo"
+        accept="image/*"
+        class="d-none"
+      />
+      <ul class="list-unstyled">
+        <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
+          <h6>Título da foto: </h6>
+          <b-form-input v-model="foto.title" placeholder="Título da foto:" class="my-3" />
+          <div class="d-flex align-items-start justify-content-between">
+            <b-img
+              :src="foto.image"
+              width="80"
+              height="80"
+              class="mb-2 rounded"
+            ></b-img>
+            <b-img
+              @click="fotos.splice(index, 1)"
+              size="sm"
+              src="~/assets/img/icones/delete-icon.svg"
+              variant="link"
+              class="p-0"
+              />
+          </div>
+          <h6>Descrição da foto:</h6>
+          <b-form-input v-model="foto.note" placeholder="Digite a descrição:" class="my-3" />
+        </li>
+      </ul>
+      <BorderButton class="mb-4 selecionar" @click.native="addFoto">
+        Selecionar foto
+      </BorderButton>
+            <!-- <b-form-file
         placeholder="Escolha uma foto ..."
         drop-placeholder="Solte uma foto aqui ..."
         @change="onFileChange"
@@ -66,6 +106,31 @@
           <img class="foto" :src="photoItem.photo" />
         </li>
       </ul>
+            <BorderButton class="my-4">
+        <input
+          id="file"
+          type="file"
+          accept=".png, .jpg"
+          class="d-flex"
+          @change="onFileChange"
+        />
+        aaaa
+      </BorderButton>
+      <div class="campo-foto d-flex align-self center justify-content-center">
+        <div
+          v-if="formData.photo"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <b-img
+            src="~/assets/img/icones/delete-icon.svg"
+            role="button"
+            class="ml-5 pl-5 pb-2"
+            @click="excluiFoto"
+          />
+
+          <img :src="formData.photo" alt="" width="100" />
+       </div>
+      </div> -->
 
       <h3 class="mt-4">Localização do Cliente</h3>
       <client-only>
@@ -109,8 +174,6 @@
       >
       <p v-if="listComment === true">{{ comment.text }}</p>
     </div>
-    <!--     <b-button @click="getLocate"></b-button>
- -->
   </b-modal>
 </template>
 <script>
@@ -146,6 +209,10 @@ export default {
   },
   data() {
     return {
+      files: null,
+      reader: null,
+      vm: null,
+      fotos: [],
       signatureActive: false,
       listComment: false,
       comment: {
@@ -159,14 +226,16 @@ export default {
       latitude: null,
       longitude: null,
       coordenadas: [],
+      fotos: [],
+      photo: [],
       customer_id: null,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       tasksData: [],
-      urlImage: null,
-      newTitle_photo: '',
-      listPhotos: [],
+      /* urlImage: null,
+      newTitle_photo: '', */
+      /* listPhotos: [], */
       visits: [],
     };
   },
@@ -178,6 +247,41 @@ export default {
     },
   },
   methods: {
+    async putPhoto() {
+      try {
+        await this.$axios
+          .post('tasks/' + tasksData.id, this.$data.photo)
+          .then((_res) => {
+            this.$root.$emit('bv::hide::modal', 'visitas');
+            this.toast('success', 'Sucesso', 'Visita adicionada com sucesso!');
+            /* this.$router.go( 0); */
+          });
+        this.$nuxt.refresh().catch((_err) => {});
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    addFoto() {
+      $(this.$refs.arquivo).trigger('click');
+    },
+    foto_selecionada() {
+      const files = $(this.$refs.arquivo).prop('files');
+      if (files.lenght < 1) {
+        return false;
+      }
+      const foto = files[0];
+      const leitor = new FileReader();
+      leitor.onload = () => {
+        this.fotos.push({
+          image: leitor.result,
+          title: foto.title,
+          note: foto.note,
+        });
+        $(this.$refs.arquivo).val('');
+      };
+      leitor.readAsDataURL(foto);
+      this.photo = this.fotos;
+    },
     modalShown() {
       setTimeout(() => {
         // mapObject is a property that is part of leaflet
@@ -193,23 +297,20 @@ export default {
           this.$data.comment,
         );
         this.listComment = true;
+      }
+      try {
+        await this.$axios
+        .post('tasks/' + tasksData.id, this.$data.photo)
+        .then((_res) => {
+          this.$root.$emit('bv::hide::modal', 'visitas');
+          this.toast('success', 'Sucesso', 'Visita adicionada com sucesso!');
+          /* this.$router.go( 0); */
+        });
+        this.$nuxt.refresh().catch((_err) => {});
+      } catch (error) {
+        console.log(error);
         this.$bvModal.hide('view-visit-' + this.visitaItem.id);
       }
-    },
-    onFileChange(e) {
-      const file = e.target.files[0];
-      this.urlImage = URL.createObjectURL(file);
-    },
-    save() {
-      this.listPhotos.push({
-        photo: this.urlImage,
-        title_photo: this.newTitle_photo,
-      });
-      this.urlImage = '';
-      this.newTitle_photo = '';
-    },
-    excluiFoto(index) {
-      this.listPhotos.splice(index, 1);
     },
   },
 };
@@ -243,7 +344,7 @@ export default {
     font-size: 1rem;
     color: var(--gray-60);
   }
-  ul {
+  /* ul {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 15px;
@@ -253,11 +354,11 @@ export default {
       .trash {
         align-self: end;
         width: fit-content;
-      }
+      } */
       .foto {
         width: 100%;
       }
     }
-  }
-}
+  /* }
+} */
 </style>
