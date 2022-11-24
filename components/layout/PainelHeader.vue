@@ -11,7 +11,12 @@
             class="rounded-circle"
           />
           <div>
-            <h1>Olá {{ $auth.user.name }},</h1>
+            <div class="d-flex align-items-center justify-content-center">
+              <h1 class="mb-0">Olá {{ $auth.user.name }}</h1>
+              <config />
+            </div>
+            <!-- <h1>Olá {{ $auth.user.name }},</h1>
+            <config /> -->
             <p>Acompanhe por aqui o desempenho geral da sua empresa</p>
           </div>
         </div>
@@ -67,7 +72,6 @@ header {
         font-size: 34px;
         color: var(--gray-60);
         font-weight: 500;
-        padding-bottom: 10px;
       }
 
       p {

@@ -227,6 +227,10 @@ export default {
         });
       }
     },
+    cleanFilter() {
+      this.search = '';
+      this.selected = null;
+    },
   },
 };
 </script>

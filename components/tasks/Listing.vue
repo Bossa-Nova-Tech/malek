@@ -274,6 +274,10 @@ export default {
         this.ordem_selecionada = itemOrdem;
       }
     },
+    cleanFilter() {
+      this.search = '';
+      this.selected = null;
+    },
   },
 };
 </script>
