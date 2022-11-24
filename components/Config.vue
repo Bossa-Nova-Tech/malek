@@ -13,7 +13,7 @@
       <g clip-path="url(#clip0_918_22005)">
         <path
           d="M4.83325 25.875V17.4167M4.83325 12.5833V4.125M14.4999 25.875V15M14.4999 10.1667V4.125M24.1666 25.875V19.8333M24.1666 15V4.125M1.20825 17.4167H8.45825M10.8749 10.1667H18.1249M20.5416 19.8333H27.7916"
-          stroke="#ffffff"
+          stroke="#ff5a00"
           stroke-width="3"
           stroke-linecap="round"
           stroke-linejoin="round"
