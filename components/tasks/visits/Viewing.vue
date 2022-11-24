@@ -52,8 +52,12 @@
       />
       <ul class="list-unstyled">
         <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
-          <h6>Título da foto: </h6>
-          <b-form-input v-model="foto.title" placeholder="Título da foto:" class="my-3" />
+          <h6>Título da foto:</h6>
+          <b-form-input
+            v-model="foto.title"
+            placeholder="Título da foto:"
+            class="my-3"
+          />
           <div class="d-flex align-items-start justify-content-between">
             <b-img
               :src="foto.image"
@@ -67,16 +71,20 @@
               src="~/assets/img/icones/delete-icon.svg"
               variant="link"
               class="p-0"
-              />
+            />
           </div>
           <h6>Descrição da foto:</h6>
-          <b-form-input v-model="foto.note" placeholder="Digite a descrição:" class="my-3" />
+          <b-form-input
+            v-model="foto.note"
+            placeholder="Digite a descrição:"
+            class="my-3"
+          />
         </li>
       </ul>
       <BorderButton class="mb-4 selecionar" @click.native="addFoto">
         Selecionar foto
       </BorderButton>
-            <!-- <b-form-file
+      <!-- <b-form-file
         placeholder="Escolha uma foto ..."
         drop-placeholder="Solte uma foto aqui ..."
         @change="onFileChange"
@@ -163,12 +171,11 @@
           Para salvar, preencha o comentário.
         </b-form-invalid-feedback>
       </b-form-group>
-      <b-button
-        v-if="listComment === false"
-        variant="primary"
-        @click="salvarComentario"
-        >Salvar comentário</b-button
-      >
+      <div @click="salvarComentario">
+        <b-button v-if="listComment === false" variant="primary"
+          >Salvar comentário <span>e Fotos</span></b-button
+        >
+      </div>
       <p v-if="listComment === true">{{ comment.text }}</p>
     </div>
   </b-modal>
@@ -295,12 +302,12 @@ export default {
       }
       try {
         await this.$axios
-        .post('tasks/' + tasksData.id, this.$data.photo)
-        .then((_res) => {
-          this.$root.$emit('bv::hide::modal', 'visitas');
-          this.toast('success', 'Sucesso', 'Visita adicionada com sucesso!');
-          /* this.$router.go( 0); */
-        });
+          .post('tasks/' + tasksData.id, this.$data.photo)
+          .then((_res) => {
+            this.$root.$emit('bv::hide::modal', 'visitas');
+            this.toast('success', 'Sucesso', 'Visita adicionada com sucesso!');
+            /* this.$router.go( 0); */
+          });
         this.$nuxt.refresh().catch((_err) => {});
       } catch (error) {
         console.log(error);
@@ -346,10 +353,10 @@ export default {
         align-self: end;
         width: fit-content;
       } */
-      .foto {
-        width: 100%;
-      }
-    }
-  /* }
+  .foto {
+    width: 100%;
+  }
+}
+/* }
 } */
 </style>
