@@ -23,7 +23,11 @@
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
             <Viewing :visita-item="visita" :task="tasksData" :center="center" />
+<<<<<<< Updated upstream
             <Timer :visit-id="visita.id" :start="visita.status" />
+=======
+            <Timer :visit-id="visita.id" />
+>>>>>>> Stashed changes
           </div>
         </div>
         <div class="d-flex align-items-center" @click="showVer(visita)">
