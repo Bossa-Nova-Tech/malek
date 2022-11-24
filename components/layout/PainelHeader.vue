@@ -72,7 +72,6 @@ header {
         font-size: 34px;
         color: var(--gray-60);
         font-weight: 500;
-        padding-bottom: 10px;
       }
 
       p {
