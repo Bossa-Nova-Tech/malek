@@ -30,8 +30,19 @@ export default {
   components: {
     vueSignature,
   },
+  props: {
+    id: {
+      type: Number,
+      default: null,
+    },
+    timer: {
+      type:Number,
+      default: null,
+    }
+  },
   data() {
     return {
+      duration: null,
       option: {
         penColor: 'rgb(0, 0, 0)',
         backgroundColor: 'rgb(255,255,255)',
@@ -40,9 +51,13 @@ export default {
     };
   },
   methods: {
-    save() {
+    async save() {
       const _this = this;
       const png = _this.$refs.signature.save();
+      /* this.duration = this.timer;
+      console.log(this.duration);
+      await this.$axios
+            .put(`visit/${this.id}`, this.$data.duration) */
       console.log(png);
       const jpeg = _this.$refs.signature.save('image/jpeg');
       const svg = _this.$refs.signature.save('image/svg+xml');

@@ -89,6 +89,7 @@ export default {
       sec: 0,
       min: 0,
       hour: 0,
+      testTimer: null,
       timer: null,
       pause: false,
     };
@@ -142,6 +143,7 @@ export default {
           this.sec,
         )}`,
       );
+      this.testTimer = this.intervalList;
       this.$nextTick(function () {
         this.$bvModal.show(`visitFinished-${this.visitId}`);
       });
