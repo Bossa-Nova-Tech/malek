@@ -36,33 +36,41 @@ export default {
       default: null,
     },
     timer: {
-      type:Number,
+      type: String,
       default: null,
-    }
+    },
+    visita: {
+      type: Object,
+      default: null,
+    },
   },
   data() {
     return {
-      duration: null,
       option: {
         penColor: 'rgb(0, 0, 0)',
         backgroundColor: 'rgb(255,255,255)',
       },
       disabled: false,
+      signature: null,
+      formData: {
+        duration: null,
+        signature: null,
+        hour_visit: null,
+        date_visit: null,
+      },
     };
   },
   methods: {
     async save() {
       const _this = this;
-      const png = _this.$refs.signature.save();
+      this.formData.signature = _this.$refs.signature.save();
       /* this.duration = this.timer;
-      console.log(this.duration);
-      await this.$axios
-            .put(`visit/${this.id}`, this.$data.duration) */
-      console.log(png);
-      const jpeg = _this.$refs.signature.save('image/jpeg');
-      const svg = _this.$refs.signature.save('image/svg+xml');
-      console.log(jpeg);
-      console.log(svg);
+      console.log(this.duration); */
+      this.formData.duration = this.timer;
+      this.formData.date_visit = this.visita.date_visit;
+      this.formData.hour_visit = this.visita.hour_visit;
+      this.formData.user_id = this.visita.user_id;
+      await this.$axios.put(`tasks/visit/${this.id}`, this.$data.formData);
     },
     clear() {
       const _this = this;

@@ -23,7 +23,15 @@
       </div>
       <b-button
         size="sm"
-        class="imprimir d-flex justify-content-center align-items-center my-4 text-center font-weight-bolder"
+        class="
+          imprimir
+          d-flex
+          justify-content-center
+          align-items-center
+          my-4
+          text-center
+          font-weight-bolder
+        "
       >
         Imprimir OS<b-img src="~/assets/img/icones/resume-icon.svg" />
       </b-button>

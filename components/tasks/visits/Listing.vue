@@ -24,7 +24,7 @@
           <div class="d-flex mb-2">
             <Viewing :visita-item="visita" :task="tasksData" :center="center" />
 
-            <Timer :visit-id="visita.id" :status="visita.status" />
+            <Timer :visit-id="visita.id" :visita="visita" />
           </div>
         </div>
         <div class="d-flex align-items-center" @click="showVer(visita)">
@@ -37,7 +37,7 @@
             ><small>Agendada</small></b-badge
           >
           <b-badge
-            v-if="visita.status === 'start'"
+            v-if="visita.status === 'in_progress'"
             variant="warning"
             class="ml-2 px-2"
             ><small>Em execução</small></b-badge
@@ -129,6 +129,7 @@ export default {
       });
     },
   },
+
   methods: {
     async showVer(visita) {
       this.id = visita.id;

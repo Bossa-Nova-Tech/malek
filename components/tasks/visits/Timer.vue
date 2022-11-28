@@ -49,7 +49,7 @@
         >
         <div v-if="signatureActive" class="my-3">
           <h2>Colete a assinatura do cliente:</h2>
-          <signature />
+          <signature :timer="duration" :id="visitId" :visita="visita" />
         </div>
         <b-button
           variant="outline-primary"
@@ -75,9 +75,9 @@ export default {
       type: Number,
       default: null,
     },
-    status: {
-      type: Boolean,
-      default: true,
+    visita: {
+      type: Object,
+      default: null,
     },
   },
   data() {
@@ -89,9 +89,16 @@ export default {
       sec: 0,
       min: 0,
       hour: 0,
-      testTimer: null,
+      duration: null,
       timer: null,
       pause: false,
+      visit: {
+        status: 'scheduled',
+        duration: null,
+        date_visit: null,
+        hour_visit: null,
+        user_id: null,
+      }
     };
   },
   methods: {
@@ -104,7 +111,12 @@ export default {
         this.start = false;
         this.stop = true;
         this.pause = true;
+/*         temos que igualar dessa maneira pq na api estão como required */        this.visit.status = 'in_progress',
+        this.visit.user_id = this.visita.user_id;
+        this.visit.date_visit = this.visita.date_visit;
+        this.visit.hour_visit =this.visita.hour_visit;
         this.timer = setInterval(() => this.playing(), 1000);
+        await this.$axios.put(`tasks/visit/${this.visita.id}`, this.$data.visit);
       } else {
         clearInterval(this.timer);
         this.timer = null;
@@ -133,7 +145,7 @@ export default {
       console.log('timer paused');
     },
 
-    stopTimer() {
+    async stopTimer() {
       if (this.timer !== null) {
         clearInterval(this.timer);
         this.timer = null;
@@ -143,7 +155,9 @@ export default {
           this.sec,
         )}`,
       );
-      this.testTimer = this.intervalList;
+      this.duration = this.intervalList[0];
+      this.visit.status = 'finished'
+      await this.$axios.put(`tasks/visit/${this.visita.id}`, this.$data.visit);
       this.$nextTick(function () {
         this.$bvModal.show(`visitFinished-${this.visitId}`);
       });
