@@ -32,6 +32,7 @@
           text-center
           font-weight-bolder
         "
+        @click="imprimirOS"
       >
         Imprimir OS<b-img src="~/assets/img/icones/resume-icon.svg" />
       </b-button>
@@ -129,6 +130,12 @@ export default {
     modalVisitas() {
       this.usersName = true;
       this.$bvModal.show('visitas');
+    },
+    async imprimirOS() {
+      const link =
+        'https://api-malek-staging.sddg.com.br/api/v1/order-service/pdf/';
+      console.log(link);
+      window.open(`${link}${this.ordem_item.id}`);
     },
   },
 };

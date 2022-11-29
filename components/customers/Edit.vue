@@ -111,16 +111,16 @@
       <b-row>
         <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
-            <label for="corporateName"
+            <label for="corporate_name"
               >Razão Social <span class="requerido">*</span></label
             >
             <b-form-input
-              v-model="formData.corporateName"
-              name="corporateName"
+              v-model="formData.corporate_name"
+              name="corporate_name"
               type="text"
               placeholder="Empresa X"
               :class="{
-                'is-invalid': $v.formData.corporateName.$error,
+                'is-invalid': $v.formData.corporate_name.$error,
               }"
             />
             <b-form-invalid-feedback>
@@ -130,19 +130,19 @@
         </b-col>
         <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
-            <label for="stateRegistration"
+            <label for="state_registration"
               >Inscrição Estadual <span class="requerido">*</span></label
             >
             <b-form-input
-              v-model="formData.stateRegistration"
+              v-model="formData.state_registration"
               v-mask="['###.###.###']"
-              name="stateRegistration"
+              name="state_registration"
               placeholder="000.000.000"
-              :class="{ 'is-invalid': $v.formData.stateRegistration.$error }"
+              :class="{ 'is-invalid': $v.formData.state_registration.$error }"
             />
             <b-form-invalid-feedback>
               {{
-                !$v.formData.stateRegistration.minLength
+                !$v.formData.state_registration.minLength
                   ? 'Insira uma IE válida'
                   : 'Preencha o campo acima'
               }}
@@ -390,8 +390,8 @@ export default {
         cnpj: null,
         cpf: null,
         rg: null,
-        corporateName: null,
-        stateRegistration: null,
+        corporate_name: null,
+        state_registration: null,
         phone: null,
         email: null,
         photo: null,
@@ -431,7 +431,7 @@ export default {
       name: {
         required,
       },
-      corporateName: {
+      corporate_name: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
@@ -442,7 +442,7 @@ export default {
         }),
         minLength: minLength(18),
       },
-      stateRegistration: {
+      state_registration: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
@@ -501,6 +501,8 @@ export default {
       }, 100);
     },
     setDataFormWithClient() {
+      this.formData.state_registration = this.clienteDaLista.state_registration;
+      this.formData.corporate_name =this.clienteDaLista.corporate_name;
       this.formData.status = this.clienteDaLista.status;
       this.formData.name = this.clienteDaLista.name;
       this.formData.type = this.clienteDaLista.type;

@@ -55,7 +55,7 @@
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
             <label>Razão Social</label>
             <b-form-input
-              :value="formData.corporateName"
+              :value="formData.corporate_name"
               disabled
               class="bg-white"
             />
@@ -65,7 +65,7 @@
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
             <label>Inscrição Estadual</label>
             <b-form-input
-              :value="formData.stateRegistration"
+              :value="formData.state_registration"
               disabled
               class="bg-white"
             />
@@ -207,8 +207,8 @@ export default {
         cnpj: null,
         cpf: null,
         rg: null,
-        corporateName: null,
-        stateRegistration: null,
+        corporate_name: null,
+        state_registration: null,
         phone: null,
         email: null,
         photo: null,
@@ -268,6 +268,8 @@ export default {
       this.formData.state = this.clienteDaLista.state;
       this.formData.number = this.clienteDaLista.number;
       this.formData.complement = this.clienteDaLista.complement;
+      this.formData.state_registration = this.clienteDaLista.state_registration;
+      this.formData.corporate_name =this.clienteDaLista.corporate_name;
     },
     modalShown() {
       setTimeout(() => {
