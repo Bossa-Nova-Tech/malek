@@ -108,9 +108,10 @@ export default {
   data() {
     return {
       circle: {
-        center: latLng(-27.64337, -48.68869),
+        center: this.center,
         radius: 300,
       },
+      center: [1, 2],
       zoom: 18,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
