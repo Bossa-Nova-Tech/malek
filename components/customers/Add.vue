@@ -375,7 +375,6 @@ export default {
       vm: null,
       formSend: false,
       formData: {
-        status: 'active',
         type: 'f',
         name: null,
         cnpj: null,
@@ -491,7 +490,6 @@ export default {
               this.formData = {
                 name: null,
                 email: null,
-                status: 'active',
                 type: null,
                 cnpj: null,
                 cpf: null,

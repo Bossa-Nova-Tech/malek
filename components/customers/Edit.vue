@@ -18,11 +18,11 @@
         />
       </div>
       <b-form-group>
-        <label for="status">Status do cliente:</label>
+        <label for="active">Status do cliente:</label>
         <b-form-radio-group
-          v-model="formData.status"
-          name="status"
-          :options="status"
+          v-model="formData.active"
+          name="active"
+          :options="active"
           class="mb-3"
           value-field="value"
           text-field="text"
@@ -384,7 +384,7 @@ export default {
       vm: null,
       formSend: false,
       formData: {
-        status: null,
+        active: true,
         type: null,
         name: null,
         cnpj: null,
@@ -413,14 +413,14 @@ export default {
           html: '<span style="color:#5E5E5E;font-size:12px;">Pessoa jurídica</span>',
         },
       ],
-      status: [
+      active: [
         {
           text: 'Ativo',
-          value: 'active',
+          value: true,
         },
         {
           text: 'Inativo',
-          value: 'inactive',
+          value: false,
         },
       ],
     };
@@ -490,6 +490,7 @@ export default {
         this.long = coordinates.longitude;
         console.log(this.lat, this.long);
         this.center = [this.lat, this.long];
+        this.circle.center = this.center;
       } else {
         console.log('deu erro');
       }
@@ -502,8 +503,7 @@ export default {
     },
     setDataFormWithClient() {
       this.formData.state_registration = this.clienteDaLista.state_registration;
-      this.formData.corporate_name =this.clienteDaLista.corporate_name;
-      this.formData.status = this.clienteDaLista.status;
+      this.formData.corporate_name = this.clienteDaLista.corporate_name;
       this.formData.name = this.clienteDaLista.name;
       this.formData.type = this.clienteDaLista.type;
       this.formData.cnpj = this.clienteDaLista.cnpj;
@@ -518,6 +518,11 @@ export default {
       this.formData.state = this.clienteDaLista.state;
       this.formData.number = this.clienteDaLista.number;
       this.formData.complement = this.clienteDaLista.complement;
+      if (this.clienteDaLista.active === 1) {
+        this.formData.active = true;
+      } else {
+        this.formData.active = false;
+      }
     },
     async edit(_response) {
       const cliente = await this.$parent.clienteDaLista;

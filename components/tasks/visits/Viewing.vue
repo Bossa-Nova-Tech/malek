@@ -298,7 +298,7 @@ export default {
       }
       try {
         await this.$axios
-          .put('tasks/visit/' + this.visitaItem.id, this.$data.photo)
+          .post('tasks/visit/' + this.visitaItem.id, this.$data.photo)
           .then((_res) => {
             this.$root.$emit('bv::hide::modal', 'visitas');
             this.toast('success', 'Sucesso', 'Visita atualizada com sucesso!');

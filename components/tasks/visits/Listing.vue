@@ -146,6 +146,7 @@ export default {
       this.latitude = this.coordenadas.latitude;
       this.longitude = this.coordenadas.longitude;
       this.center = [this.latitude, this.longitude];
+      this.circle.center = this.center;
     },
     /* activeTimer() {
       if(this.start === true){

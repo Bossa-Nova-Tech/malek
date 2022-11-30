@@ -21,8 +21,8 @@
       </div>
       <b-form-group>
         <label>Status</label>
-        <p v-if="formData.status === 'active'">Ativo</p>
-        <p v-if="formData.status === 'inactive'">Inativo</p>
+        <p v-if="formData.active">Ativo</p>
+        <p v-if="!formData.active">Inativo</p>
       </b-form-group>
       <b-form-group>
         <label>Nome</label>
@@ -201,7 +201,7 @@ export default {
       vm: null,
       formSend: false,
       formData: {
-        status: null,
+        active: null,
         type: null,
         name: null,
         cnpj: null,
@@ -248,12 +248,17 @@ export default {
         this.long = coordinates.longitude;
         console.log(this.lat, this.long);
         this.center = [this.lat, this.long];
+        this.circle.center = this.center;
       } else {
         console.log('deu erro');
       }
     },
     setDataFormWithClient() {
-      this.formData.status = this.clienteDaLista.status;
+      if (this.clienteDaLista.active === 1) {
+        this.formData.active = true;
+      } else {
+        this.formData.active = false;
+      }
       this.formData.name = this.clienteDaLista.name;
       this.formData.type = this.clienteDaLista.type;
       this.formData.cnpj = this.clienteDaLista.cnpj;
@@ -269,7 +274,7 @@ export default {
       this.formData.number = this.clienteDaLista.number;
       this.formData.complement = this.clienteDaLista.complement;
       this.formData.state_registration = this.clienteDaLista.state_registration;
-      this.formData.corporate_name =this.clienteDaLista.corporate_name;
+      this.formData.corporate_name = this.clienteDaLista.corporate_name;
     },
     modalShown() {
       setTimeout(() => {
