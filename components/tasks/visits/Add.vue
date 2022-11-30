@@ -43,16 +43,16 @@
       <b-form-invalid-feedback> Selecione um horário. </b-form-invalid-feedback>
     </b-form-group>
     <b-form-group label-for="colaborador" label="Colaborador">
-      <b-form-select v-model="visits.user_name" name="user">
+      <b-form-select v-model="visits.user_id" name="user">
         <b-form-select-option :value="null" desabled
           >Selecione</b-form-select-option
         >
         <b-form-select-option
           v-for="user in colaborators"
           :key="user.id"
-          :value="user.name"
+          :value="user.id"
         >
-          {{ user.name }}
+          {{ user.name }} {{ user.id }}
         </b-form-select-option>
       </b-form-select>
     </b-form-group>
@@ -73,15 +73,19 @@ export default {
       type: Boolean,
       default: false,
     },
+    visitsData: {
+      type: Object,
+      default: null,
+    },
   },
   data() {
     return {
       visits: {
         date_visit: null,
         hour_visit: null,
-        user_name: null,
-        user_id: 1,
+        user_id: null,
       },
+
       colaborators: [],
       labels: {
         labelSelected: 'Horário selecionado',

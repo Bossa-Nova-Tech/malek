@@ -65,13 +65,13 @@
       <b-button variant="primary" @click="modalVisitas"
         >Agendar Visita</b-button
       >
-      <Add :users-name="usersName" :ordem_item="ordem_item" />
+      <Add :visitsData="visitsData" :users-name="usersName" :ordem_item="ordem_item" />
     </div>
   </b-modal>
 </template>
 <script>
 import 'leaflet/dist/leaflet.css';
-import { latLng, Icon } from 'leaflet';
+import { Icon } from 'leaflet';
 import { LMap, LTileLayer, LControl, LCircle } from 'vue2-leaflet';
 import Add from '~/components/tasks/visits/Add.vue';
 
@@ -103,15 +103,16 @@ export default {
   async asyncData({ $axios }) {
     const visits = await $axios.get('tasks-list/visit');
     const visitsData = visits.data;
-    return { visitsData };
+    const userVisits = visitsData.user;
+    return { visitsData, userVisits };
   },
   data() {
     return {
       circle: {
-        center: this.center,
+        center: [1, 2],
         radius: 300,
       },
-      center: [1, 2],
+      center: [1],
       zoom: 18,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
@@ -119,6 +120,11 @@ export default {
       date_of_visit: null,
       usersName: false,
     };
+  },
+  watch: {
+    center() {
+      this.circle.center = this.center;
+    },
   },
 
   methods: {
