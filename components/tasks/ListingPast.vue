@@ -235,7 +235,6 @@ export default {
       this.lat = this.coordinates.latitude;
       this.long = this.coordinates.longitude;
       this.center = [this.lat, this.long];
-      this.circle.center = this.center;
       this.$nextTick(function () {
         this.$bvModal.show(`view-task-${this.id}`);
       });

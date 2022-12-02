@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div>
-      <input id="file" type="file" accept=".png, .jpg" @change="onFileChange" />
-      <label for="file" class="text-center">Alterar Imagem</label>
-    </div>
+    aaaaaaaa
+    <b-card v-for="(ask, index) in formData.ask" :key="index">
+      <b-form-input v-model="ask.text" />
+      <b-form-radio-group v-model="ask.type_of" :options="typeOfAsk" />
+      <b-form-radio-group v-model="ask.is_required" :options="isReq" />
+    </b-card>
+    <b-button @click="adicionarPergunta">adicionar</b-button>
   </div>
 </template>
 
@@ -11,41 +14,54 @@
 export default {
   data: () => {
     return {
-      file: null,
-      files: null,
-      reader: null,
-      vm: null,
-      photo: '',
+      formData: {
+        ask: [
+          {
+            text: null,
+            type_of: null,
+          },
+        ],
+      },
+      typeOfAsk: [
+        {
+          value: null,
+          text: 'Selecione',
+        },
+        {
+          value: 'a',
+          text: 'a',
+        },
+        {
+          value: 'b',
+          text: 'b',
+        },
+        {
+          value: 'c',
+          text: 'c',
+        },
+      ],
+      isReq: [
+        {
+          value: 'sim',
+          text: 'Sim',
+        },
+        {
+          value: 'não',
+          text: 'não',
+        },
+      ],
     };
   },
   methods: {
-    onFileChange(e) {
-      this.files = e.target.files || e.dataTransfer.files;
-      if (!this.files.length) return;
-      this.createImage(this.files[0]);
-    },
-    createImage(file) {
-      this.reader = new FileReader();
-      this.vm = this;
-      this.reader.onload = (e) => {
-        this.vm.photo = e.target.result;
-      };
-      this.putPhoto();
-      this.reader.readAsDataURL(file);
-    },
-    async putPhoto() {
-      try {
-        await this.$axios
-          .post('tasks/visit/27', this.$data.photo)
-          .then((_res) => {
-            this.$root.$emit('bv::hide::modal', 'visitas');
-            this.toast('success', 'Sucesso', 'Visita adicionada com sucesso!');
-            /* this.$router.go( 0); */
-          });
-        this.$nuxt.refresh().catch((_err) => {});
-      } catch (error) {
-        console.log(error);
-      }
+    adicionarPergunta(index) {
+      this.formData.ask.push({
+        text: null,
+        type_of: null,
+        answer_options: null,
+        is_required: null,
+      });
+      console.log(index);
+      console.log(this.formData);
     },
   },
 };

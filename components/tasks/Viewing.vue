@@ -65,7 +65,11 @@
       <b-button variant="primary" @click="modalVisitas"
         >Agendar Visita</b-button
       >
-      <Add :visitsData="visitsData" :users-name="usersName" :ordem_item="ordem_item" />
+      <Add
+        :visitsData="visitsData"
+        :users-name="usersName"
+        :ordem_item="ordem_item"
+      />
     </div>
   </b-modal>
 </template>
@@ -112,7 +116,7 @@ export default {
         center: [1, 2],
         radius: 300,
       },
-      center: [1],
+      center: [1, 2],
       zoom: 18,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
@@ -139,6 +143,7 @@ export default {
       this.$bvModal.show('visitas');
     },
     async imprimirOS() {
+      await this.$axios.get(`order-service/pdf/${this.ordem_item.id}/`);
       const link =
         'https://api-malek-staging.sddg.com.br/api/v1/order-service/pdf/';
       console.log(link);
