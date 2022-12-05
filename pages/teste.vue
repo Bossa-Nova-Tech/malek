@@ -1,9 +1,27 @@
 <template>
   <div>
-    aaaaaaaa
     <b-card v-for="(ask, index) in formData.ask" :key="index">
-      <b-form-input v-model="ask.text" />
-      <b-form-radio-group v-model="ask.type_of" :options="typeOfAsk" />
+      <div class="d-flex justify-content-end">
+        <b-img
+          role="button"
+          src="~/assets/img/icones/delete-icon.svg"
+          @click.once="deletAsk(index)"
+        />
+      </div>
+      <b-form-group>
+        <label for="ask_text">Pergunta </label>
+        <b-form-input
+          name="ask_text"
+          v-model="ask.text"
+          placeholder="Qual é a sua pergunta?"
+        />
+      </b-form-group>
+      <label for="type_of_answer">Tipo de resposta</label>
+      <b-form-radio-group
+        v-model="ask.type_of"
+        :options="typeOfAnswer"
+        class="d-flex flex-column"
+      />
       <b-form-radio-group v-model="ask.is_required" :options="isReq" />
     </b-card>
     <b-button @click="adicionarPergunta">adicionar</b-button>
@@ -22,7 +40,7 @@ export default {
           },
         ],
       },
-      typeOfAsk: [
+      typeOfAnswer: [
         {
           value: null,
           text: 'Selecione',
@@ -52,6 +70,7 @@ export default {
       ],
     };
   },
+
   methods: {
     adicionarPergunta(index) {
       this.formData.ask.push({
@@ -61,7 +80,16 @@ export default {
         is_required: null,
       });
       console.log(index);
-      console.log(this.formData);
+    },
+    adicionarOpcaoDeResposta(index) {
+      this.formData.ask[index].answer_options.push({ text: null });
+      console.log(index);
+    },
+    deletAsk(index) {
+      this.formData.ask.splice(index, 1);
+    },
+    deletAnswer(index) {
+      this.formData.answer_options.splice(index, 1);
     },
   },
 };

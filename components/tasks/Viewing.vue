@@ -143,7 +143,7 @@ export default {
       this.$bvModal.show('visitas');
     },
     async imprimirOS() {
-      await this.$axios.get(`order-service/pdf/${this.ordem_item.id}/`);
+      await this.$axios.get(`order-service/pdf/${this.ordem_item.id}`);
       const link =
         'https://api-malek-staging.sddg.com.br/api/v1/order-service/pdf/';
       console.log(link);
