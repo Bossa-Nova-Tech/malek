@@ -85,22 +85,26 @@
         >
           <p class="answer mt-3 mb-2">Escreva as opções da resposta:</p>
           <b-form-group
-            v-for="(answer_options, index) in ask.answer_options"
-            :key="index"
+            v-for="(answer_options, i) in ask.answer_options"
+            :key="(answer_options.id, i)"
           >
-            <pre>{{ formData.ask }}</pre>
+            <!-- <pre>{{ ask.answer_options }}</pre> -->
             <div class="d-flex align-items-center">
               <b-form-input
+                v-model="answer_options.text"
+                placeholder="Opção de resposta"
+              ></b-form-input>
+              <!-- <b-form-input
                 v-model="ask.answer_options[index].text"
                 name="answer_options"
                 placeholder="Opção de resposta"
-              ></b-form-input>
+              ></b-form-input> -->
               <div class="pl-2">
                 <b-img
                   role="button"
                   fluid
                   src="~/assets/img/icones/delete-icon.svg"
-                  @click="deletAnswer(answer_options)"
+                  @click="handleDelete(i, index)"
                 />
               </div>
             </div>
@@ -129,7 +133,7 @@
 
       <b-button
         class="shadow-none mb-4 add_ask d-flex align-items-center"
-        @click="adicionarPergunta(index)"
+        @click="adicionarPergunta"
       >
         <svg
           width="26"
@@ -178,7 +182,7 @@ export default {
   data() {
     return {
       option: null,
-      counter: 0,
+      counter: 1,
       counter_answer: 0,
       formSend: false,
       formData: {
@@ -186,6 +190,7 @@ export default {
         display_at: null,
         ask: [
           {
+            id: 0,
             text: null,
             type_of: null,
             is_required: false,
@@ -272,6 +277,7 @@ export default {
   methods: {
     adicionarPergunta(index) {
       this.formData.ask.push({
+        id: 1,
         text: null,
         type_of: null,
         answer_options: [
@@ -281,7 +287,7 @@ export default {
         ],
         is_required: null,
       });
-      console.log(index, this.formData.ask.indexOf());
+      console.log(index);
     },
     adicionarOpcaoDeResposta(index) {
       this.formData.ask[index].answer_options.push({ text: null });
@@ -289,10 +295,28 @@ export default {
     },
     deletAsk(ask) {
       this.formData.ask.splice(this.formData.ask.indexOf(ask), 1);
+      console.log(this.formData.ask.indexOf(ask));
     },
-    deletAnswer(index) {
-      this.formData.ask[index].answer_options[index].splice(index, 1);
+    handleDelete(i, index) {
+      this.formData.ask[index].answer_options.splice(this.formData.ask[index].answer_options[i]);
+    } /* .answer_options.filter(
+          (answer_options) => answer_options.id !== id,
+        ), */,
+
+    /*  this.formData.ask[index].answer_options[id] = this.formData.ask[
+        index
+      ].answer_options.filter((answer_options) => answer_options.id !== id); */
+
+    deletAnswer(answer_options, ask) {
+      console.log(this.formData.ask.indexOf(answer_options));
+
+      this.formData.ask.splice(this.formData.ask.indexOf(answer_options), 1);
+      console.log('teste' + this.formData.ask.indexOf(answer_options));
     },
+    /* ask.answer_options.splice(index, 1); */
+    /* this.ask.answer_options.splice(index, 1); */
+    /*       this.formData.ask.answer_options.splice(this.formData.ask.answer_options.indexOf(answer_options), 1);
+     */
     async register(_response) {
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
