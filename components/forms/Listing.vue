@@ -40,7 +40,7 @@
             />
           </div>
         </div>
-        <Edit :forms-selecionado="formsLista" :watching="id" />
+        <Edit :formsSelecionado="formsLista" :watching="id" />
       </li>
       <Delete :id="id" />
     </ul>

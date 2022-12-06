@@ -86,7 +86,8 @@
           <p class="answer mt-3 mb-2">Escreva as opções da resposta:</p>
           <b-form-group
             v-for="(answer_options, i) in ask.answer_options"
-            :key="(answer_options.id, i)"
+            :key="i"
+            :index="i"
           >
             <!-- <pre>{{ ask.answer_options }}</pre> -->
             <div class="d-flex align-items-center">
@@ -112,7 +113,7 @@
 
           <b-button
             class="shadow-none my-3 add_ask d-flex align-items-center"
-            @click="adicionarOpcaoDeResposta(index)"
+            @click="adicionarOpcaoDeResposta(index, i)"
           >
             <svg
               width="26"
@@ -289,16 +290,18 @@ export default {
       });
       console.log(index);
     },
-    adicionarOpcaoDeResposta(index) {
+    adicionarOpcaoDeResposta(index, i) {
+      /* this.formData.ask[index].answer_options[i].push({ text: null }); */
       this.formData.ask[index].answer_options.push({ text: null });
-      console.log(index);
     },
     deletAsk(ask) {
       this.formData.ask.splice(this.formData.ask.indexOf(ask), 1);
       console.log(this.formData.ask.indexOf(ask));
     },
     handleDelete(i, index) {
-      this.formData.ask[index].answer_options.splice(this.formData.ask[index].answer_options[i]);
+      this.formData.ask[index].answer_options.splice(
+        this.formData.ask[index].answer_options[i],
+      );
     } /* .answer_options.filter(
           (answer_options) => answer_options.id !== id,
         ), */,

@@ -10,12 +10,11 @@
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Editar Formulário</h1>
-
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
-          @click.once="$bvModal.hide('update-forms-' + this.formsSelecionado.id)"
+          @click="$bvModal.hide(`update-forms-${formsSelecionado.id}`)"
         />
       </div>
 
@@ -296,11 +295,24 @@ export default {
 
   methods: {
     setDataFormWithService() {
+      this.formData.ask.type_of = this.formsSelecionado.fields.type;
       this.formData.forms_name = this.formsSelecionado.name;
       this.formData.display_at = this.formsSelecionado.event_show;
       this.formData.ask = this.formsSelecionado.fields;
+    } /* .forms_name = this.formsSelecionado.name;
+      this.formData.display_at = this.formsSelecionado.event_show;
+      this.formData.ask[
+        {
+          type_of,
+        }
+      ] =
+        this.formsSelecionado.fields[
+          {
+            type
+          }
+        ];
       this.formData.ask.answer_options = this.formsSelecionado.fields.options;
-    },
+    }, */,
     adicionarPergunta() {
       this.formData.ask.push({
         id: ++this.counter,
