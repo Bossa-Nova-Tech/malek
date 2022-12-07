@@ -19,26 +19,6 @@
           @click.prevent="$bvModal.hide('criar-usuario')"
         />
       </div>
-      <b-form-group class="mb-4">
-        <label v-if="formData.type == 'f'" for="name"
-          >Nome <span class="requerido">*</span></label
-        >
-        <label v-else for="name"
-          >Nome Fantasia <span class="requerido">*</span></label
-        >
-        <b-form-input
-          v-model="formData.name"
-          name="name"
-          type="text"
-          placeholder="João"
-          :class="{
-            'is-invalid': $v.formData.name.$error,
-          }"
-        />
-        <b-form-invalid-feedback>
-          Preencha o campo acima
-        </b-form-invalid-feedback>
-      </b-form-group>
 
       <b-form-group class="mb-4">
         <label for="pessoa"
@@ -85,9 +65,47 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+      <b-form-group class="mb-4">
+        <label v-if="formData.type == 'f'" for="name"
+          >Nome <span class="requerido">*</span></label
+        >
+        <label v-else for="name"
+          >Nome Fantasia <span class="requerido">*</span></label
+        >
+        <b-form-input
+          v-model="formData.name"
+          name="name"
+          type="text"
+          placeholder="João"
+          :class="{
+            'is-invalid': $v.formData.name.$error,
+          }"
+        />
+        <b-form-invalid-feedback>
+          Preencha o campo acima
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group v-if="formData.type == 'f'" class="mb-4">
+        <label for="last_name"
+          >Sobrenome <span class="requerido">*</span></label
+        >
+        <b-form-input
+          name="last_name"
+          v-model="formData.last_name"
+          placeholder="Silva"
+          :class="{
+            'is-invalid': $v.formData.name.$error,
+          }"
+        />
+        <b-form-invalid-feedback>
+          Preencha o campo acima
+        </b-form-invalid-feedback>
+      </b-form-group>
+
       <b-row>
         <b-col cols="12">
-            <b-form-group v-if="formData.type == 'f'" class="mb-4">
+          <b-form-group v-if="formData.type == 'f'" class="mb-4">
             <label for="rg">RG <span class="requerido">*</span></label>
             <b-form-input
               v-model="formData.rg"
@@ -106,7 +124,7 @@
         </b-col>
       </b-row>
 
-      <b-row>
+      <!-- <b-row>
         <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
             <label for="corporate_name"
@@ -126,8 +144,8 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-        <!-- <b-col md="6" sm="12">
-          <b-form-group v-if="formData.role == 'pj'" class="mb-4">
+        <b-col md="6" sm="12">
+          <b-form-group v-if="formData.type == 'pj'" class="mb-4">
             <label for="state_registration"
               >Inscrição Estadual <span class="requerido">*</span></label
             >
@@ -146,8 +164,8 @@
               }}
             </b-form-invalid-feedback>
           </b-form-group>
-        </b-col> -->
-      </b-row>
+        </b-col>
+      </b-row> -->
 
       <div class="grid">
         <div class="w-100 grid-1">
@@ -246,9 +264,8 @@
         <label for="cep">CEP</label>
         <b-form-input
           v-model="formData.cep"
-          v-mask="['########']"
           name="cep"
-          placeholder="000-00000"
+          placeholder="00000000"
           :class="{
             'is-invalid': $v.formData.cep.$error,
           }"
@@ -424,7 +441,8 @@ export default {
       formSend: false,
       formData: {
         status: 'active',
-        role: 'maneger',
+        last_name: null,
+        role: null,
         name: null,
         cpf: null,
         type: 'f',
@@ -447,8 +465,8 @@ export default {
           text: 'Selecione a função',
         },
         {
-          value: 'owner',
-          text: 'Proprietário',
+          value: 'employee',
+          text: 'Colaborador',
         },
         {
           value: 'administrator',
@@ -477,23 +495,28 @@ export default {
       name: {
         required,
       },
-      corporate_name: {
+      last_name: {
+        required: requiredIf(function () {
+          return this.formData.type === 'f';
+        }),
+      },
+      /* corporate_name: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
-      },
+      }, */
       cnpj: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
         minLength: minLength(18),
       },
-      state_registration: {
+      /* state_registration: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
         minLength: minLength(11),
-      },
+      }, */
       cpf: {
         required: requiredIf(function () {
           return this.formData.type === 'f';
@@ -582,6 +605,7 @@ export default {
                 number: null,
                 complement: null,
                 note: null,
+                role: null,
               };
               this.$nuxt.refresh();
             })

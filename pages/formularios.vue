@@ -39,9 +39,13 @@ export default {
     PainelAside,
   },
   async asyncData({ $axios }) {
-    const forms = await $axios.get('forms');
-    const formsData = forms.data;
-    return { formsData };
+    try {
+      const forms = await $axios.get('forms');
+      const formsData = forms.data;
+      return { formsData };
+    } catch (error) {
+      console.log(error);
+    }
   },
   data: () => {
     return {
