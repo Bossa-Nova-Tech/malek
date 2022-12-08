@@ -124,19 +124,19 @@
         </b-col>
       </b-row>
 
-      <!-- <b-row>
+      <b-row>
         <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
-            <label for="corporate_name"
+            <label for="social_reason"
               >Razão Social <span class="requerido">*</span></label
             >
             <b-form-input
-              v-model="formData.corporate_name"
-              name="corporate_name"
+              v-model="formData.social_reason"
+              name="social_reason"
               type="text"
               placeholder="Empresa X"
               :class="{
-                'is-invalid': $v.formData.corporate_name.$error,
+                'is-invalid': $v.formData.social_reason.$error,
               }"
             />
             <b-form-invalid-feedback>
@@ -165,7 +165,7 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-      </b-row> -->
+      </b-row>
 
       <div class="grid">
         <div class="w-100 grid-1">
@@ -465,7 +465,7 @@ export default {
           text: 'Selecione a função',
         },
         {
-          value: 'employee',
+          value: 'colaborator',
           text: 'Colaborador',
         },
         {
@@ -500,23 +500,23 @@ export default {
           return this.formData.type === 'f';
         }),
       },
-      /* corporate_name: {
+      social_reason: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
-      }, */
+      },
       cnpj: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
         minLength: minLength(18),
       },
-      /* state_registration: {
+      state_registration: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
         minLength: minLength(11),
-      }, */
+      },
       cpf: {
         required: requiredIf(function () {
           return this.formData.type === 'f';
@@ -594,7 +594,7 @@ export default {
                 email: null,
                 photo: null,
                 password: null,
-                corporate_name: null,
+                social_reason: null,
                 state_registration: null,
                 rg: null,
                 cep: null,

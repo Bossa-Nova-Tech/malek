@@ -594,7 +594,7 @@ export default {
         },
         {
           text: 'Colaborador',
-          value: 'employee',
+          value: 'colaborator',
         },
       ],
     };
@@ -686,7 +686,6 @@ export default {
     },
     async register(_response) {
       this.$v.$touch();
-
       if (!this.$v.$invalid) {
         // SIMULATION OF A DATA FETCHING REQUEST
 
@@ -695,7 +694,12 @@ export default {
 
         try {
           this.$v.$reset();
-
+          if (
+            this.formData.fantasy_name === null &&
+            this.formData.type === 'f'
+          ) {
+            this.formData.fantasy_name === '-';
+          }
           await this.$axios
             .post('companies', this.$data.formData)
             .then((_res) => {
