@@ -28,23 +28,26 @@ export default {
       const user = await this.$parent.userList;
       console.log(user);
       try {
-        await this.$axios
-          .delete('users/' + user.id)
-          .then((_res) => {
-            if (_res.data.result === 'success') {
-              console.log(user.id + ' excluido');
-              this.toast('success', 'Sucesso', 'Usuário excluído!');
-              this.$refs.excluir.hide();
-              this.$nuxt.refresh();
-            } else {
-              this.toast(
-                'danger',
-                'Erro',
-                'Problemas ao excluir. Entre em contato com o suporte',
-              );
-            }
-          })
-          .catch((_err) => {});
+        if (user.lenght > 1) {
+          await this.$axios
+
+            .delete('users/' + user.id)
+            .then((_res) => {
+              if (_res.data.result === 'success') {
+                console.log(user.id + ' excluido');
+                this.toast('success', 'Sucesso', 'Usuário excluído!');
+                this.$refs.excluir.hide();
+                this.$nuxt.refresh();
+              } else {
+                this.toast(
+                  'danger',
+                  'Erro',
+                  'Problemas ao excluir. Entre em contato com o suporte',
+                );
+              }
+            })
+            .catch((_err) => {});
+        }
       } catch (error) {
         console.log(error);
       }

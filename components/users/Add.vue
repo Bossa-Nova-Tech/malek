@@ -465,8 +465,8 @@ export default {
           text: 'Selecione a função',
         },
         {
-          value: 'colaborator',
-          text: 'Colaborador',
+          value: 'collaborator',
+          text: 'Técnico',
         },
         {
           value: 'administrator',
