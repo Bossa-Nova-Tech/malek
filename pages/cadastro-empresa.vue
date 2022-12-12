@@ -593,8 +593,8 @@ export default {
           value: 'manager',
         },
         {
-          text: 'Colaborador',
-          value: 'colaborator',
+          text: 'Técnico',
+          value: 'collaborator',
         },
       ],
     };
