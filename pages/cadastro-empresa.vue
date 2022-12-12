@@ -567,7 +567,7 @@ export default {
         number: null,
         complement: null,
         address: null,
-        photo: [],
+        photo: null,
         term: null,
       },
       types: [

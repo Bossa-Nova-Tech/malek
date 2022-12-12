@@ -2,8 +2,17 @@
   <aside>
     <div v-if="!$screen.lg" class="header-mobile text-center">
       <img
-        src="~/assets/img/bom-humor.png"
+        v-if="$auth.user.photo_url"
+        :src="$auth.user.photo_url"
         width="140"
+        height="140"
+        class="my-5 profile rounded-circle"
+      />
+      <img
+        v-else
+        :src="photo_url"
+        width="140"
+        height="140"
         class="my-5 profile rounded-circle"
       />
       <div class="d-flex align-items-center justify-content-center mb-2">
@@ -213,6 +222,18 @@
 import Config from '../Config.vue';
 export default {
   components: { Config },
+  data() {
+    return {
+      photo_url: null,
+    };
+  },
+  async mounted() {
+    const companie = await this.$axios.get(
+      'companies/' + this.$auth.user.company_id,
+    );
+    const companieData = companie.data.logo_url;
+    this.photo_url = companieData;
+  },
   methods: {
     async logout() {
       await this.$auth.logout();
