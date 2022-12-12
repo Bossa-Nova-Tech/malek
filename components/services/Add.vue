@@ -106,7 +106,7 @@ export default {
         status: null,
         time_of_execution: null,
         name: null,
-        company_id: 1,
+        company_id: null,
         need_signature: false,
         send_to_email: false,
         additional_form: false,
@@ -129,6 +129,7 @@ export default {
   }, */
   methods: {
     async register(_response) {
+      this.formData.company_id = this.$auth.user.company_id;
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
@@ -137,7 +138,7 @@ export default {
           this.formSend = false;
           this.$v.formData.$reset();
           console.log('executou o clic');
-
+          console.log(this.formData.company_id);
           await this.$axios
             .post('services', this.$data.formData)
             .then((_res) => {

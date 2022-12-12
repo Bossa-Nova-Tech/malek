@@ -47,6 +47,10 @@ export default {
               }
             })
             .catch((_err) => {});
+        } else {
+          alert(
+            'Você não pode excluir o único usuário do sistema, caso acontecesse você perderia o acesso.',
+          );
         }
       } catch (error) {
         console.log(error);

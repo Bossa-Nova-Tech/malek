@@ -88,7 +88,8 @@
       <div class="grid">
         <div class="mb-4">
           <label for="estimated_time"
-            >Tempo estimado para a execução da tarefa <span class="requerido">*</span></label
+            >Tempo estimado para a execução da tarefa
+            <span class="requerido">*</span></label
           >
           <b-input-group>
             <b-form-input
@@ -174,8 +175,12 @@
       />
       <ul class="list-unstyled">
         <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
-          <h6>Título da foto: </h6>
-          <b-form-input v-model="foto.title" placeholder="Título da foto:" class="my-3" />
+          <h6>Título da foto:</h6>
+          <b-form-input
+            v-model="foto.title"
+            placeholder="Título da foto:"
+            class="my-3"
+          />
           <div class="d-flex align-items-start justify-content-between">
             <b-img
               :src="foto.image"
@@ -189,10 +194,14 @@
               src="~/assets/img/icones/delete-icon.svg"
               variant="link"
               class="p-0"
-              />
+            />
           </div>
           <h6>Descrição da foto:</h6>
-          <b-form-input v-model="foto.note" placeholder="Digite a descrição:" class="my-3" />
+          <b-form-input
+            v-model="foto.note"
+            placeholder="Digite a descrição:"
+            class="my-3"
+          />
         </li>
       </ul>
       <BorderButton class="mb-4" @click.native="addFoto">
@@ -300,6 +309,7 @@ export default {
         name_customer: null,
         customer_id: null,
         template: null,
+        service_id: null,
         services: this.service_selected,
       },
     };
@@ -323,6 +333,7 @@ export default {
         `services/${this.service_selected}`,
       );
       this.formData.services = data.name;
+      this.formData.service_id = data.id;
       this.formData.estimated_time = data.time_of_execution;
     },
     async customer_selected() {

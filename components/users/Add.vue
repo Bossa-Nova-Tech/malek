@@ -110,6 +110,7 @@
             <b-form-input
               v-model="formData.rg"
               name="rg"
+              type="number"
               placeholder="00.000.000"
               :class="{ 'is-invalid': $v.formData.rg.$error }"
             />

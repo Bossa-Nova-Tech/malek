@@ -96,6 +96,7 @@
               <b-form-input
                 v-model="formData.rg"
                 name="rg"
+                type="number"
                 placeholder="00.000.000"
                 :class="{ 'is-invalid': $v.formData.rg.$error }"
               />
@@ -369,17 +370,17 @@
 
         <b-form-file
           id="file"
-          v-model="formData.colocarafoto"
+          v-model="formData.photo"
           accept="image/jpeg, image/png, image/jpg"
           plain
-          :class="{ 'is-invalid': $v.formData.colocarafoto.$error }"
+          :class="{ 'is-invalid': $v.formData.photo.$error }"
           @change="onFileChange"
         ></b-form-file>
         <b-form-feedback class="text-center h5">
-          Envio necessário. Clique abaixo para fazer o upload da sua logo.
+          Envio necessário. Clique abaixo para fazer o upload da sua photo.
         </b-form-feedback>
         <div class="campo-foto">
-          <label v-if="!formData.colocarafoto" for="file">
+          <label v-if="!formData.photo" for="file">
             <div
               class="
                 d-flex
@@ -389,7 +390,7 @@
               "
             >
               <b-img src="~/assets/img/icones/upload.svg" />
-              <p>Clique para enviar sua logo</p>
+              <p>Clique para enviar sua photo</p>
               <span>PNG, JPG (tamanho máximo X)</span>
             </div>
           </label>
@@ -404,7 +405,7 @@
               aria-describedby="helpBlock"
               @click="excluiFoto"
             />
-            <img :src="formData.colocarafoto" alt="" width="100" class="pb-5" />
+            <img :src="formData.photo" alt="" width="100" class="pb-5" />
           </div>
           <small id="helpBlock" class="form-text text-muted mt-n4 mb-4">
             A imagem carregada será utilizada como sua foto de perfil ao logar
@@ -566,7 +567,7 @@ export default {
         number: null,
         complement: null,
         address: null,
-        colocarafoto: null,
+        photo: [],
         term: null,
       },
       types: [
@@ -649,7 +650,7 @@ export default {
         }),
       },
       address: { required },
-      colocarafoto: { required },
+      photo: { required },
       term: {
         sameAs: sameAs(() => true),
       },
@@ -668,7 +669,7 @@ export default {
 
   methods: {
     excluiFoto() {
-      this.formData.colocarafoto = null;
+      this.formData.photo = null;
     },
 
     onFileChange(e) {
@@ -680,7 +681,7 @@ export default {
       this.reader = new FileReader();
       this.vm = this;
       this.reader.onload = (e) => {
-        this.vm.formData.colocarafoto = e.target.result;
+        this.vm.formData.photo = e.target.result;
       };
       this.reader.readAsDataURL(file);
     },

@@ -227,6 +227,11 @@ export default {
       coordenadas: [],
       fotos: [],
       photo: [],
+      visits: {
+        date_visit: null,
+        hour_visit: null,
+        user_id: null,
+      },
       customer_id: null,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
@@ -248,8 +253,14 @@ export default {
   methods: {
     async putPhoto() {
       try {
+        this.visits = {
+          date_visit: this.visitaItem.date_visit,
+          hour_visit: this.visitaItem.hour_visit,
+          user_id: this.visitaItem.user_id,
+          photo: this.photo,
+        };
         await this.$axios
-          .put('tasks/' + tasksData.id, this.$data.photo)
+          .put('visit/' + visitaItem.id, this.$data.visits)
           .then((_res) => {
             this.$root.$emit('bv::hide::modal', 'visitas');
             this.toast('success', 'Sucesso', 'Visita adicionada com sucesso!');
@@ -297,8 +308,14 @@ export default {
         this.listComment = true;
       }
       try {
+        this.visits = {
+          date_visit: this.visitaItem.date_visit,
+          hour_visit: this.visitaItem.hour_visit,
+          user_id: this.visitaItem.user_id,
+          photo: this.photo,
+        };
         await this.$axios
-          .post('tasks/visit/' + this.visitaItem.id, this.$data.photo)
+          .put('tasks/visit/' + this.visitaItem.id, this.$data.visits)
           .then((_res) => {
             this.$root.$emit('bv::hide::modal', 'visitas');
             this.toast('success', 'Sucesso', 'Visita atualizada com sucesso!');

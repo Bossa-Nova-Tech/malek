@@ -92,6 +92,7 @@
             <label for="rg">RG <span class="requerido">*</span></label>
             <b-form-input
               v-model="formData.rg"
+              type="number"
               name="rg"
               placeholder="00.000.000"
               :class="{ 'is-invalid': $v.formData.rg.$error }"
@@ -110,16 +111,16 @@
       <b-row>
         <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
-            <label for="corporateName"
+            <label for="social_reason"
               >Razão Social <span class="requerido">*</span></label
             >
             <b-form-input
-              v-model="formData.corporateName"
-              name="corporateName"
+              v-model="formData.social_reason"
+              name="social_reason"
               type="text"
               placeholder="Empresa X"
               :class="{
-                'is-invalid': $v.formData.corporateName.$error,
+                'is-invalid': $v.formData.social_reason.$error,
               }"
             />
             <b-form-invalid-feedback>
@@ -129,19 +130,19 @@
         </b-col>
         <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
-            <label for="stateRegistration"
+            <label for="state_registration"
               >Inscrição Estadual <span class="requerido">*</span></label
             >
             <b-form-input
-              v-model="formData.stateRegistration"
+              v-model="formData.state_registration"
               v-mask="['###.###.###']"
-              name="stateRegistration"
+              name="state_registration"
               placeholder="000.000.000"
-              :class="{ 'is-invalid': $v.formData.stateRegistration.$error }"
+              :class="{ 'is-invalid': $v.formData.state_registration.$error }"
             />
             <b-form-invalid-feedback>
               {{
-                !$v.formData.stateRegistration.minLength
+                !$v.formData.state_registration.minLength
                   ? 'Insira uma IE válida'
                   : 'Preencha o campo acima'
               }}
@@ -355,8 +356,8 @@ export default {
         cnpj: null,
         cpf: null,
         rg: null,
-        corporateName: null,
-        stateRegistration: null,
+        social_reason: null,
+        state_registration: null,
         phone: null,
         email: null,
         photo: null,
@@ -396,7 +397,7 @@ export default {
       name: {
         required,
       },
-      corporateName: {
+      social_reason: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
@@ -407,7 +408,7 @@ export default {
         }),
         minLength: minLength(18),
       },
-      stateRegistration: {
+      state_registration: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
@@ -461,6 +462,8 @@ export default {
       this.formData.state = this.userList.state;
       this.formData.number = this.userList.number;
       this.formData.complement = this.userList.complement;
+      this.formData.social_reason = this.userList.social_reason;
+      this.formData.state_registration =this.userList.state_registration;
     },
     async edit(_response) {
       const user = await this.$parent.userList;
