@@ -338,15 +338,17 @@ export default {
               'Formulário cadastrado com sucesso!',
             );
             this.formData = {
-              estimated_value: null,
-              description: null,
-              guarantee: null,
-              status: null,
-              need_signature: false,
-              time_of_execution: null,
               forms_name: null,
-              send_to_email: false,
-              company_id: 1,
+              display_at: null,
+              ask: [
+                {
+                  id: 0,
+                  text: null,
+                  type_of: null,
+                  is_required: false,
+                  answer_options: [{ text: null }],
+                },
+              ],
             };
             /* this.$router.go(0); */
           });
