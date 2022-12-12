@@ -28,7 +28,7 @@ export default {
       const user = await this.$parent.userList;
       console.log(user);
       try {
-        if (user.lenght > 1) {
+        if (user.id !== this.$auth.user.id) {
           await this.$axios
 
             .delete('users/' + user.id)
@@ -47,10 +47,8 @@ export default {
               }
             })
             .catch((_err) => {});
-        } else {
-          alert(
-            'Você não pode excluir o único usuário do sistema, caso acontecesse você perderia o acesso.',
-          );
+        }else {
+          alert ('Você não pode excluir o usuário principal do aplicativo.')
         }
       } catch (error) {
         console.log(error);
