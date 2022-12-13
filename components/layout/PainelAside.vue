@@ -202,8 +202,20 @@
       class="d-flex mt-5 align-items-center justify-content-between"
     >
       <div class="photo mr-2">
-        <b-img src="~/assets/img/icones/icone-perfil.svg"></b-img>
-        {{ $auth.user.photo }}
+        <img
+          v-if="$auth.user.photo_url"
+          :src="$auth.user.photo_url"
+          width="50"
+          height="50"
+          class="rounded-circle"
+        />
+        <img
+          v-else
+          :src="photo_url"
+          width="50"
+          height="50"
+          class="rounded-circle"
+        />
       </div>
       <div>
         <p class="name">{{ $auth.user.name }}</p>
@@ -228,11 +240,13 @@ export default {
     };
   },
   async mounted() {
-    const companie = await this.$axios.get(
-      'companies/' + this.$auth.user.company_id,
-    );
-    const companieData = companie.data.logo_url;
-    this.photo_url = companieData;
+    if (!this.$auth.user.photo_url) {
+      const companie = await this.$axios.get(
+        'companies/' + this.$auth.user.company_id,
+      );
+      const companieData = companie.data.logo_url;
+      this.photo_url = companieData;
+    }
   },
   methods: {
     async logout() {

@@ -87,7 +87,7 @@
         </div>
         <div class="d-flex align-items-center" @click="showVer(itemOrdem)">
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
-          <p class="pl-2">Colaborador</p>
+          <p class="pl-2">Técnico</p>
           <b-badge
             v-if="itemOrdem.status === 'created'"
             variant="success"

@@ -6,9 +6,18 @@
 
         <div class="titulo container">
           <img
-            src="~/assets/img/bom-humor.png"
+            v-if="$auth.user.photo_url"
+            :src="$auth.user.photo_url"
             width="140"
-            class="rounded-circle"
+            height="140"
+            class="profile rounded-circle"
+          />
+          <img
+            v-else
+            :src="photo_url"
+            width="140"
+            height="140"
+            class="my-5 profile rounded-circle"
           />
           <div>
             <div class="d-flex align-items-center justify-content-center">
@@ -36,11 +45,25 @@
 
 <script>
 export default {
+  data() {
+    return {
+      photo_url: null,
+    };
+  },
   props: {
     tela: {
       type: String,
       required: true,
     },
+  },
+  async mounted() {
+    if (!this.$auth.user.photo_url) {
+      const companie = await this.$axios.get(
+        'companies/' + this.$auth.user.company_id,
+      );
+      const companieData = companie.data.logo_url;
+      this.photo_url = companieData;
+    }
   },
 };
 </script>

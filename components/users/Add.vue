@@ -34,14 +34,13 @@
         >
         </b-form-radio-group>
         <b-form-input
-          v-if="formData.type == 'pj'"
+          v-if="formData.type === 'pj'"
           v-model="formData.cnpj"
           v-mask="['##.###.###/####-##']"
-          name="cnpj"
           placeholder="00.000.000/000-00"
           :class="{ 'is-invalid': $v.formData.cnpj.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.type == 'pj'">
+        <b-form-invalid-feedback v-if="formData.type === 'pj'">
           {{
             !$v.formData.cnpj.minLength
               ? 'Insira um CNPJ válido'
@@ -49,14 +48,14 @@
           }}
         </b-form-invalid-feedback>
         <b-form-input
-          v-if="formData.type == 'f'"
+          v-if="formData.type === 'f'"
           v-model="formData.cpf"
           v-mask="['###.###.###-##']"
           name="cpf"
           placeholder="000.000.000-00"
           :class="{ 'is-invalid': $v.formData.cpf.$error }"
         />
-        <b-form-invalid-feedback v-if="formData.type == 'f'">
+        <b-form-invalid-feedback v-if="formData.type === 'f'">
           {{
             !$v.formData.cpf.minLength
               ? 'Insira um CPF válido'
@@ -66,7 +65,7 @@
       </b-form-group>
 
       <b-form-group class="mb-4">
-        <label v-if="formData.type == 'f'" for="name"
+        <label v-if="formData.type === 'f'" for="name"
           >Nome <span class="requerido">*</span></label
         >
         <label v-else for="name"
@@ -86,7 +85,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-form-group v-if="formData.type == 'f'" class="mb-4">
+      <b-form-group v-if="formData.type === 'f'" class="mb-4">
         <label for="last_name"
           >Sobrenome <span class="requerido">*</span></label
         >
@@ -105,7 +104,7 @@
 
       <b-row>
         <b-col cols="12">
-          <b-form-group v-if="formData.type == 'f'" class="mb-4">
+          <b-form-group v-if="formData.type === 'f'" class="mb-4">
             <label for="rg">RG <span class="requerido">*</span></label>
             <b-form-input
               v-model="formData.rg"
@@ -127,7 +126,7 @@
 
       <b-row>
         <b-col md="6" sm="12">
-          <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+          <b-form-group v-if="formData.type === 'pj'" class="mb-4">
             <label for="social_reason"
               >Razão Social <span class="requerido">*</span></label
             >
@@ -146,7 +145,7 @@
           </b-form-group>
         </b-col>
         <b-col md="6" sm="12">
-          <b-form-group v-if="formData.type == 'pj'" class="mb-4">
+          <b-form-group v-if="formData.type === 'pj'" class="mb-4">
             <label for="state_registration"
               >Inscrição Estadual <span class="requerido">*</span></label
             >
@@ -155,15 +154,7 @@
               v-mask="['###.###.###']"
               name="state_registration"
               placeholder="000.000.000"
-              :class="{ 'is-invalid': $v.formData.state_registration.$error }"
             />
-            <b-form-invalid-feedback>
-              {{
-                !$v.formData.state_registration.minLength
-                  ? 'Insira uma IE válida'
-                  : 'Preencha o campo acima'
-              }}
-            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -224,7 +215,7 @@
           class="d-flex"
           @change="onFileChange"
         />
-        <label v-if="formData.type == 'f'" for="file" class="text-center"
+        <label v-if="formData.type === 'f'" for="file" class="text-center"
           >Enviar Foto</label
         >
         <label v-else for="file" class="text-center">Enviar Logotipo</label>
@@ -446,7 +437,11 @@ export default {
         role: null,
         name: null,
         cpf: null,
+        cnpj: null,
         type: 'f',
+        rg: null,
+        social_reason: null,
+        state_registration: null,
         district: null,
         phone: null,
         email: null,
@@ -512,12 +507,6 @@ export default {
         }),
         minLength: minLength(18),
       },
-      state_registration: {
-        required: requiredIf(function () {
-          return this.formData.type === 'pj';
-        }),
-        minLength: minLength(11),
-      },
       cpf: {
         required: requiredIf(function () {
           return this.formData.type === 'f';
@@ -576,7 +565,9 @@ export default {
           this.formSend = false;
           this.$v.formData.$reset();
           this.$refs.userModal.hide();
-
+          this.formData.cpf = '-';
+          this.formData.rg = '-';
+          this.formData.last_name = '-';
           await this.$axios
             .post('users', this.$data.formData)
             .then((_res) => {
