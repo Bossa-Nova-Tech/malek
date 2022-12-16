@@ -92,11 +92,11 @@
         </div>
         <b-form-group>
           <label>Nome Fantasia:</label>
-          <b-form-input v-model="$auth.user.fantasy_name"></b-form-input>
+          <b-form-input v-model="formData.name"></b-form-input>
         </b-form-group>
         <b-form-group>
           <label>Endereço:</label>
-          <b-form-input v-model="$auth.user.address"></b-form-input>
+          <b-form-input v-model="formData.address"></b-form-input>
         </b-form-group>
         <b-form-group>
           <label>Email:</label>
@@ -106,7 +106,7 @@
           <label>Site:</label>
           <b-form-input v-model="$auth.user.site"></b-form-input>
         </b-form-group>
-        <b-button>Salvar</b-button>
+        <b-button @click="attAccount">Salvar</b-button>
       </div>
       <div class="m-3 d-flex justify-content-between" @click="editOS = !editOS">
         <h6 class="my-3 font-weight-bold">Ordem de serviço</h6>
@@ -181,8 +181,12 @@ export default {
       reader: null,
       vm: null,
       formData: {
+        name: this.$auth.user.name,
+        last_name: this.$auth.user.last_name,
         photo: null,
-        fantasy_name: null,
+        address: this.$auth.user.address,
+        fantasy_name: this.$auth.user.fantasy_name,
+        email: this.$auth.user.email,
       },
       taskData: {
         id: null,
@@ -198,6 +202,12 @@ export default {
           photo: null,
         };
       }
+    },
+    async attAccount() {
+      await this.$axios.put('users/' + this.$auth.user.id, {
+        address: this.formData.address,
+        fantasy_name: this.formData.fantasy_name,
+      });
     },
     onFileChange(e) {
       this.files = e.target.files || e.dataTransfer.files;

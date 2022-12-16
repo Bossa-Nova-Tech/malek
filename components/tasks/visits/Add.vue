@@ -42,7 +42,7 @@
       />
       <b-form-invalid-feedback> Selecione um horário. </b-form-invalid-feedback>
     </b-form-group>
-    <b-form-group label-for="colaborador" label="Colaborador">
+    <b-form-group label-for="Técnico" label="Técnico">
       <b-form-select v-model="visits.user_id" name="user">
         <b-form-select-option :value="null" desabled
           >Selecione</b-form-select-option
