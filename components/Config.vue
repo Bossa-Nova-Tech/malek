@@ -1,5 +1,5 @@
 <template>
-  <b-container-fluid>
+  <div>
     <svg v-b-modal.modal-1 role="button" width="29" height="30" viewBox="0 0 29 30" fill="none"
       xmlns="http://www.w3.org/2000/svg" class="ml-3">
       <g clip-path="url(#clip0_918_22005)">
@@ -31,51 +31,94 @@
       </div>
       <div v-if="editAccount" class="mx-4">
         <label for="file">Logotipo</label>
-        <BorderButton v-if="formData.photo_url === null" class="mb-4">
-          <input id="file" type="file" accept=".png, .jpg" class="d-flex" @change="onFileChange" />
-          <label v-if="formData.type == 'f'" for="file" class="text-center">Enviar Foto</label>
-          <label v-else for="file" class="text-center">Enviar Logotipo</label>
-        </BorderButton>
-        <div v-if="photo_url" class="d-flex align-items-start justify-content-between">
-          <img :src="photo_url" alt="" width="200" />
-          <img src="~/assets/img/icones/delete-icon.svg" role="button" class="ml-2" @click="excluiFoto" />
+        <div v-if="!photo_url">
+          <BorderButton v-if="formData.photo === null" class="mb-4">
+            <input id="file" type="file" accept=".png, .jpg" class="d-flex" @change="onFileChange" />
+            <label v-if="formData.type == 'f'" for="file" class="text-center">Enviar Foto</label>
+            <label v-else for="file" class="text-center">Enviar Logotipo</label>
+          </BorderButton>
+          <div v-if="formData.photo" class="d-flex align-items-start justify-content-between">
+            <img :src="formData.photo" alt="" width="200" />
+            <img src="~/assets/img/icones/delete-icon.svg" role="button" class="ml-2" @click="excluiFoto" />
+          </div>
         </div>
-        <b-form-group>
-          <label>Nome Fantasia:</label>
-          <b-form-input v-model="formData.name"></b-form-input>
-        </b-form-group>
-        <b-form-group>
-          <label>CEP:</label>
-          <b-form-input v-model="cep"></b-form-input>
-        </b-form-group>
-        <b-form-group>
-          <label>Endereço:</label>
-          <b-form-input v-model="address"></b-form-input>
-        </b-form-group>
-        <b-form-group>
-          <label>Número:</label>
-          <b-form-input v-model="number"></b-form-input>
-        </b-form-group>
-        <b-form-group>
-          <label>Bairro:</label>
-          <b-form-input v-model="district"></b-form-input>
-        </b-form-group>
-        <b-form-group>
-          <label>Cidade:</label>
-          <b-form-input v-model="city"></b-form-input>
-        </b-form-group>
-        <b-form-group>
-          <label>Estado:</label>
-          <b-form-input v-model="state"></b-form-input>
-        </b-form-group>
-        <b-form-group>
-          <label>Email:</label>
-          <b-form-input v-model="$auth.user.email"></b-form-input>
-        </b-form-group>
-        <b-form-group>
-          <label>Site:</label>
-          <b-form-input v-model="$auth.user.site"></b-form-input>
-        </b-form-group>
+
+        <div v-if="!$auth.user.address">
+          <b-form-group>
+            <label>Nome Fantasia:</label>
+            <b-form-input v-model="formData.name"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>CEP:</label>
+            <b-form-input v-model="cep"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Endereço:</label>
+            <b-form-input v-model="address"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Número:</label>
+            <b-form-input v-model="number"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Bairro:</label>
+            <b-form-input v-model="district"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Cidade:</label>
+            <b-form-input v-model="city"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Estado:</label>
+            <b-form-input v-model="state"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Email:</label>
+            <b-form-input v-model="formData.email"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Site:</label>
+            <b-form-input v-model="site"></b-form-input>
+          </b-form-group>
+        </div>
+        <div v-else>
+          <b-form-group>
+            <label>Nome Fantasia:</label>
+            <b-form-input v-model="$auth.user.name"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>CEP:</label>
+            <b-form-input v-model="$auth.user.cep"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Endereço:</label>
+            <b-form-input v-model="$auth.user.address"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Número:</label>
+            <b-form-input v-model="$auth.user.number"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Bairro:</label>
+            <b-form-input v-model="$auth.user.district"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Cidade:</label>
+            <b-form-input v-model="$auth.user.city"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Estado:</label>
+            <b-form-input v-model="$auth.user.state"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Email:</label>
+            <b-form-input v-model="$auth.user.email"></b-form-input>
+          </b-form-group>
+          <b-form-group>
+            <label>Site:</label>
+            <b-form-input v-model="$auth.user.site"></b-form-input>
+          </b-form-group>
+        </div>
         <b-button @click="attAccount">Salvar</b-button>
       </div>
       <div class="m-3 d-flex justify-content-between" @click="editOS = !editOS">
@@ -113,10 +156,11 @@
               Preencha o campo acima
             </b-form-invalid-feedback>
           </b-col>
+          {{ formData }}
         </b-row>
       </div>
     </b-modal>
-  </b-container-fluid>
+  </div>
 </template>
 
 <script>
@@ -133,7 +177,8 @@ export default {
         name: this.$auth.user.name,
         last_name: this.$auth.user.last_name,
         photo_url: this.$auth.user.photo_url,
-        fantasy_name: this.$auth.user.fantasy_name,
+        photo: this.$auth.user.photo,
+        social_reason: this.$auth.user.social_reason,
         email: this.$auth.user.email,
         phone: this.$auth.user.phone,
         city: this.$auth.user.city,
@@ -144,7 +189,14 @@ export default {
         district: this.$auth.user.district,
         social_reason: this.$auth.user.social_reason,
         state_registration: this.state_registration,
-
+        note: this.$auth.user.note,
+        cpf: this.$auth.user.cpf,
+        cnpj: this.$auth.user.cnpj,
+        role: this.$auth.user.role,
+        cep: this.$auth.user.cep,
+        complement: this.$auth.user.complement,
+        rg: this.$auth.user.rg,
+        company_id: this.$auth.user.company_id
       },
       taskData: {
         id: null,
@@ -184,34 +236,84 @@ export default {
     phone: {
       type: Number,
       default: null,
+    },
+    state_registration: {
+      type: Number,
+      default: null,
+    },
+    social_reason: {
+      type: String,
+      default: null,
+    },
+    note: {
+      type: String,
+      default: null,
+    },
+    complement: {
+      type: String,
+      default: null,
+    },
+    email: {
+      type: String,
+      default: null,
     }
   },
 
   methods: {
     excluiFoto() {
-      if (this.photo_url) {
-        this.photo_url = null;
+      if (this.formData.photo) {
+        this.formData = {
+          photo: null,
+          photo_url: null
+        }
       }
     },
     async attAccount() {
-      this.formData.address = this.address;
-      this.formData.district = this.district;
-      this.formData.number = this.number;
-      this.formData.cpf = this.$auth.user.cpf;
-      this.formData.cnpj = this.$auth.user.cnpj;
-      this.formData.name = this.$auth.user.name;
-      this.formData.last_name = this.$auth.user.last_name;
-      this.formData.role = this.$auth.user.role;
-      this.formData.photo_url = this.photo_url;
-      this.formData.note = this.$auth.user.note;
-      this.formData.social_reason = this.$auth.user.social_reason;
-      this.formData.state_registration = this.$auth.$user.state_registration;
-      if (!this.$auth.user.phone) {
-        this.formData.phone = this.phone;
-      } else {
+      if (this.$auth.user.address) {
+        this.formData.name = this.$auth.user.name;
+        this.formData.last_name = this.$auth.user.last_name;
+        this.formData.cpf = this.$auth.user.cpf;
+        this.formData.cnpj = this.$auth.user.cnpj;
+        this.formData.email = this.$auth.user.email;
+        this.formData.company_id = this.$auth.user.company_id;
+        this.formData.role = this.$auth.user.role;
         this.formData.phone = this.$auth.user.phone;
-      }
+        this.formData.photo_url = this.$auth.user.photo_url;
+        this.formData.photo = this.$auth.user.photo;
+        this.formData.city = this.$auth.user.city;
+        this.formData.state = this.$auth.user.state;
+        this.formData.district = this.$auth.user.district;
+        this.formData.number = this.$auth.user.number;
+        this.formData.note = this.$auth.user.note;
+        this.formData.cep = this.$auth.user.cep;
+        this.formData.complement = this.$auth.user.complement;
+        this.formData.rg = this.$auth.user.rg;
+        this.formData.social_reason = this.$auth.user.social_reason;
+        this.formData.state_registration = this.$auth.user.state_registration;
 
+      } else {
+        this.formData.name = this.name;
+        this.formData.last_name = this.last_name;
+        this.formData.cpf = this.cpf;
+        this.formData.cnpj = this.cnpj;
+        this.formData.email = this.email;
+        this.formData.company_id = this.company_id;
+        this.formData.role = this.role;
+        this.formData.phone = this.phone;
+        this.formData.photo_url = this.photo_url;
+        this.formData.city = this.city;
+        this.formData.state = this.state;
+        this.formData.district = this.district;
+        this.formData.number = this.number;
+        this.formData.note = this.note;
+        this.formData.cep = this.cep;
+        this.formData.complement = this.complement;
+        this.formData.rg = this.rg;
+        this.formData.social_reason = this.social_reason;
+        this.formData.state_registration = this.state_registration;
+        console.log(this.formData);
+        debugger;
+      }
       await this.$axios.put('users/' + this.$auth.user.id, this.$data.formData)
     },
     onFileChange(e) {
@@ -224,7 +326,7 @@ export default {
       this.vm = this;
 
       this.reader.onload = (e) => {
-        this.vm.photo_url = e.target.result;
+        this.vm.formData.photo = e.target.result;
       };
       this.reader.readAsDataURL(file);
     },

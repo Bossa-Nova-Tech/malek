@@ -19,8 +19,8 @@
     <b-form-group label-for="Técnico" label="Técnico">
       <b-form-select v-model="visits.user_id" name="user">
         <b-form-select-option :value="null" desabled>Selecione</b-form-select-option>
-        <b-form-select-option v-for="user in colaborators" :key="user.id" :value="user.id">
-          {{ user.name }} {{ user.id }}
+        <b-form-select-option v-for="useer in colaborators" :key="useer.id" :value="useer.id">
+          {{ useer.name }} {{ useer.id }}
         </b-form-select-option>
       </b-form-select>
     </b-form-group>
@@ -47,7 +47,6 @@ export default {
   },
   data() {
     return {
-      user_iid: this.formData.user_id,
       visits: {
         date_visit: null,
         hour_visit: null,

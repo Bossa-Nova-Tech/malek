@@ -12,7 +12,9 @@
             <div class="d-flex align-items-center justify-content-center">
               <h1 class="mb-0">Olá {{ $auth.user.name }}</h1>
               <config :address="address" :photo_url="photo_url" :state="state" :number="number" :city="city"
-                :district="district" :cep="cep" :phone="phone" />
+                :district="district" :cep="cep" :fantasy_name="fantasy_name" :social_reason="social_reason" :cpf="cpf"
+                :cnpj="cnpj" :complement="complement" :phone="phone" :email="email"
+                :state_registration="state_registration" />
             </div>
             <!-- <h1>Olá {{ $auth.user.name }},</h1>
             <config /> -->
@@ -45,6 +47,15 @@ export default {
       cep: null,
       state: null,
       phone: null,
+      complement: null,
+      email: null,
+      fantasy_name: null,
+      cnpj: null,
+      cpf: null,
+      state_registration: null,
+      social_reason: null,
+      email: null,
+      complement: null,
     };
   },
   props: {
@@ -63,11 +74,17 @@ export default {
       if (!this.$auth.user.address) {
         this.address = companiesData.address;
       }
+      if (!this.$auth.user.email) {
+        this.email = companiesData.email;
+      }
       if (!this.$auth.user.district) {
         this.district = companiesData.district;
       }
       if (!this.$auth.user.number) {
         this.number = companiesData.number;
+      }
+      if (!this.$auth.user.complement) {
+        this.complement = companiesData.complement;
       }
       if (!this.$auth.user.state) {
         this.state = companiesData.state;
@@ -78,9 +95,15 @@ export default {
       if (!this.$auth.user.cep) {
         this.cep = companiesData.cep;
       }
-      if (!this.$auth.user.phone) {
-        this.phone = companiesData.phone;
+      if (!this.$auth.user.cpf) {
+        this.cpf = companiesData.cpf;
       }
+      if (!this.$auth.user.cnpj) {
+        this.cnpj = companiesData.cnpj;
+      }
+      this.state_registration = this.$auth.user.state_registration;
+      this.social_reason = this.$auth.user.social_reason;
+
     }
   },
 };
