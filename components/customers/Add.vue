@@ -391,6 +391,10 @@ export default {
         };
       }
     },
+    excluiFoto() {
+      this.formData.photo = null;
+    },
+
     onFileChange(e) {
       this.files = e.target.files || e.dataTransfer.files;
       if (!this.files.length) return;
@@ -399,14 +403,10 @@ export default {
     createImage(file) {
       this.reader = new FileReader();
       this.vm = this;
-
       this.reader.onload = (e) => {
         this.vm.formData.photo = e.target.result;
       };
       this.reader.readAsDataURL(file);
-    },
-    onFileSelected(event) {
-      this.selectedFile = event.target.files[0];
     },
     searchCep() {
       // eslint-disable-next-line eqeqeq

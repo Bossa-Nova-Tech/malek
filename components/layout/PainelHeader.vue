@@ -5,24 +5,14 @@
         <div class="bg-separado"></div>
 
         <div class="titulo container">
-          <img
-            v-if="$auth.user.photo_url"
-            :src="$auth.user.photo_url"
-            width="140"
-            height="140"
-            class="profile rounded-circle"
-          />
-          <img
-            v-else
-            :src="photo_url"
-            width="140"
-            height="140"
-            class="my-5 profile rounded-circle"
-          />
+          <img v-if="$auth.user.photo_url" :src="$auth.user.photo_url" width="140" height="140"
+            class="profile rounded-circle" />
+          <img v-else :src="photo_url" width="140" height="140" class="my-5 profile rounded-circle" />
           <div>
             <div class="d-flex align-items-center justify-content-center">
               <h1 class="mb-0">Olá {{ $auth.user.name }}</h1>
-              <config />
+              <config :address="address" :photo_url="photo_url" :state="state" :number="number" :city="city"
+                :district="district" :cep="cep" :phone="phone" />
             </div>
             <!-- <h1>Olá {{ $auth.user.name }},</h1>
             <config /> -->
@@ -48,6 +38,13 @@ export default {
   data() {
     return {
       photo_url: null,
+      address: null,
+      number: null,
+      district: null,
+      city: null,
+      cep: null,
+      state: null,
+      phone: null,
     };
   },
   props: {
@@ -61,8 +58,29 @@ export default {
       const companie = await this.$axios.get(
         'companies/' + this.$auth.user.company_id,
       );
-      const companieData = companie.data.logo_url;
-      this.photo_url = companieData;
+      const companiesData = companie.data;
+      this.photo_url = companiesData.logo_url;
+      if (!this.$auth.user.address) {
+        this.address = companiesData.address;
+      }
+      if (!this.$auth.user.district) {
+        this.district = companiesData.district;
+      }
+      if (!this.$auth.user.number) {
+        this.number = companiesData.number;
+      }
+      if (!this.$auth.user.state) {
+        this.state = companiesData.state;
+      }
+      if (!this.$auth.user.city) {
+        this.city = companiesData.city;
+      }
+      if (!this.$auth.user.cep) {
+        this.cep = companiesData.cep;
+      }
+      if (!this.$auth.user.phone) {
+        this.phone = companiesData.phone;
+      }
     }
   },
 };
@@ -71,6 +89,7 @@ export default {
 <style lang="scss" scoped>
 header {
   padding-bottom: 3.125rem;
+
   .bg-separado {
     height: 6.25rem;
     background-image: url(~/assets/img/top-painel.png);
@@ -91,6 +110,7 @@ header {
 
     div {
       padding-bottom: 30px;
+
       h1 {
         font-size: 34px;
         color: var(--gray-60);
@@ -104,11 +124,9 @@ header {
   }
 
   .mobile {
-    background: radial-gradient(
-      106.17% 238.89% at 2.47% 100%,
-      #ff762b 63.54%,
-      #f4af2f 100%
-    );
+    background: radial-gradient(106.17% 238.89% at 2.47% 100%,
+        #ff762b 63.54%,
+        #f4af2f 100%);
     margin-bottom: 1.25rem;
 
     h1 {

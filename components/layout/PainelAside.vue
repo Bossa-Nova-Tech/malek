@@ -17,7 +17,8 @@
       />
       <div class="d-flex align-items-center justify-content-center mb-2">
         <h4 class="mb-0">Olá {{ $auth.user.name }}</h4>
-        <config />
+        <config :address="address" :photo_url="photo_url" :state="state" :number="number" :city="city"
+                :district="district" :cep="cep" />
       </div>
       <p class="pb-3">Acompanhe as ordens de serviço hoje</p>
     </div>
@@ -237,6 +238,13 @@ export default {
   data() {
     return {
       photo_url: null,
+      address: null,
+      number: null,
+      district: null,
+      city: null,
+      cep: null,
+      state: null,
+      phone: null,
     };
   },
   async mounted() {
@@ -244,8 +252,26 @@ export default {
       const companie = await this.$axios.get(
         'companies/' + this.$auth.user.company_id,
       );
-      const companieData = companie.data.logo_url;
-      this.photo_url = companieData;
+      const companiesData = companie.data;
+      this.photo_url = companiesData.logo_url;
+      if (!this.$auth.user.address) {
+        this.address = companiesData.address;
+      }
+      if (!this.$auth.user.district) {
+        this.district = companiesData.district;
+      }
+      if (!this.$auth.user.number) {
+        this.number = companiesData.number;
+      }
+      if (!this.$auth.user.state) {
+        this.state = companiesData.state;
+      }
+      if (!this.$auth.user.city) {
+        this.city = companiesData.city;
+      }
+      if (!this.$auth.user.cep) {
+        this.cep = companiesData.cep;
+      }
     }
   },
   methods: {
