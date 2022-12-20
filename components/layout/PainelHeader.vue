@@ -5,16 +5,42 @@
         <div class="bg-separado"></div>
 
         <div class="titulo container">
-          <img v-if="$auth.user.photo_url" :src="$auth.user.photo_url" width="140" height="140"
-            class="profile rounded-circle" />
-          <img v-else :src="photo_url" width="140" height="140" class="my-5 profile rounded-circle" />
+          <img
+            v-if="$auth.user.photo_url"
+            :src="$auth.user.photo_url"
+            width="140"
+            height="140"
+            class="profile rounded-circle"
+          />
+          <img
+            v-else
+            :src="photo_url"
+            width="140"
+            height="140"
+            class="my-5 profile rounded-circle"
+          />
           <div>
             <div class="d-flex align-items-center justify-content-center">
               <h1 class="mb-0">Olá {{ $auth.user.name }}</h1>
-              <config :address="address" :photo_url="photo_url" :state="state" :number="number" :city="city"
-                :district="district" :cep="cep" :fantasy_name="fantasy_name" :social_reason="social_reason" :cpf="cpf"
-                :cnpj="cnpj" :complement="complement" :phone="phone" :email="email"
-                :state_registration="state_registration" />
+              <config
+                :address="address"
+                :photo_url="photo_url"
+                :photo="photo"
+                :state="state"
+                :number="number"
+                :city="city"
+                :district="district"
+                :cep="cep"
+                :fantasy_name="fantasy_name"
+                :social_reason="social_reason"
+                :cpf="cpf"
+                :cnpj="cnpj"
+                :complement="complement"
+                :phone="phone"
+                :email="email"
+                :password="password"
+                :state_registration="state_registration"
+              />
             </div>
             <!-- <h1>Olá {{ $auth.user.name }},</h1>
             <config /> -->
@@ -56,6 +82,8 @@ export default {
       social_reason: null,
       email: null,
       complement: null,
+      photo: null,
+      password: null,
     };
   },
   props: {
@@ -74,11 +102,14 @@ export default {
       if (!this.$auth.user.address) {
         this.address = companiesData.address;
       }
-      if (!this.$auth.user.email) {
-        this.email = companiesData.email;
+      this.email = this.$auth.user.email;
+      if (!this.$auth.user.password) {
+        this.password = companiesData.password;
       }
       if (!this.$auth.user.district) {
         this.district = companiesData.district;
+      } else {
+        this.district = this.$auth.user.district;
       }
       if (!this.$auth.user.number) {
         this.number = companiesData.number;
@@ -88,6 +119,9 @@ export default {
       }
       if (!this.$auth.user.state) {
         this.state = companiesData.state;
+      }
+      if (!this.$auth.user.photo) {
+        this.photo = companiesData.logo;
       }
       if (!this.$auth.user.city) {
         this.city = companiesData.city;
@@ -101,9 +135,11 @@ export default {
       if (!this.$auth.user.cnpj) {
         this.cnpj = companiesData.cnpj;
       }
+      if (!this.$auth.user.phone) {
+        this.phone = companiesData.phone;
+      }
       this.state_registration = this.$auth.user.state_registration;
       this.social_reason = this.$auth.user.social_reason;
-
     }
   },
 };
@@ -147,9 +183,11 @@ header {
   }
 
   .mobile {
-    background: radial-gradient(106.17% 238.89% at 2.47% 100%,
-        #ff762b 63.54%,
-        #f4af2f 100%);
+    background: radial-gradient(
+      106.17% 238.89% at 2.47% 100%,
+      #ff762b 63.54%,
+      #f4af2f 100%
+    );
     margin-bottom: 1.25rem;
 
     h1 {
