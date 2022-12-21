@@ -29,10 +29,10 @@
       </b-form-group>
 
       <b-form-group class="mb-4">
-        <label v-if="formData.type == 'pj'">CNPJ</label>
+        <label v-if="formData.cpf == '-'">CNPJ</label>
         <label v-else>CPF</label>
         <b-form-input
-          v-if="formData.type == 'pj'"
+          v-if="formData.cpf === '-'"
           :value="formData.cnpj"
           disabled
           class="bg-white"

@@ -110,8 +110,8 @@
         </div>
       </div>
 
-      <div class="grid">
-        <div class="w-100 grid-2">
+      <div>
+        <div class="w-100">
           <b-form-group class="mb-4">
             <label for="email">E-mail <span class="requerido">*</span></label>
             <b-form-input v-model="formData.email" name="email" type="email" placeholder="email@gmail.com" :class="{
@@ -419,9 +419,11 @@ export default {
           this.formSend = false;
           this.$v.formData.$reset();
           this.$refs.userModal.hide();
-          this.formData.cpf = '-';
-          this.formData.rg = '-';
-          this.formData.last_name = '-';
+          if (this.formData.type === 'pj') {
+            this.formData.cpf = '-';
+            this.formData.rg = '-';
+            this.formData.last_name = '-';
+          }
           await this.$axios
             .post('users', this.$data.formData)
             .then((_res) => {
@@ -508,10 +510,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
+
 
 .requerido {
   color: var(--red-50);
@@ -521,9 +520,6 @@ export default {
   margin-right: 15px;
 }
 
-.grid-2 {
-  margin-left: 15px;
-}
 
 @media screen and (max-width: 992px) {
   .grid-1 {

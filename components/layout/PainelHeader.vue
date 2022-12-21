@@ -32,6 +32,7 @@
                 :district="district"
                 :cep="cep"
                 :fantasy_name="fantasy_name"
+                :name="name"
                 :social_reason="social_reason"
                 :cpf="cpf"
                 :cnpj="cnpj"
@@ -105,11 +106,19 @@ export default {
       this.email = this.$auth.user.email;
       if (!this.$auth.user.password) {
         this.password = companiesData.password;
+      } else {
+        this.password = this.$auth.user.password;
       }
       if (!this.$auth.user.district) {
         this.district = companiesData.district;
       } else {
         this.district = this.$auth.user.district;
+      }
+      if (!this.$auth.user.photo) {
+        this.photo = companiesData.logo;
+      }
+      if (companiesData.fantasy_name) {
+        this.fantasy_name = companiesData.fantasy_name
       }
       if (!this.$auth.user.number) {
         this.number = companiesData.number;
@@ -120,9 +129,6 @@ export default {
       if (!this.$auth.user.state) {
         this.state = companiesData.state;
       }
-      if (!this.$auth.user.photo) {
-        this.photo = companiesData.logo;
-      }
       if (!this.$auth.user.city) {
         this.city = companiesData.city;
       }
@@ -131,6 +137,10 @@ export default {
       }
       if (!this.$auth.user.cpf) {
         this.cpf = companiesData.cpf;
+      }
+      this.name = this.$auth.user.name;
+      if (!this.$auth.user.photo) {
+        this.photo = companiesData.photo;
       }
       if (!this.$auth.user.cnpj) {
         this.cnpj = companiesData.cnpj;

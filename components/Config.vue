@@ -94,9 +94,13 @@
         </div>
 
         <div v-if="!$auth.user.address">
-          <b-form-group>
-            <label>Nome Fantasia:</label>
+          <b-form-group v-if="!fantasy_name">
+            <label>Nome:</label>
             <b-form-input v-model="name"></b-form-input>
+          </b-form-group>
+          <b-form-group v-else>
+            <label>Nome Fantasia:</label>
+            <b-form-input v-model="fantasy_name"></b-form-input>
           </b-form-group>
           <b-form-group>
             <label>CEP:</label>
@@ -133,7 +137,7 @@
         </div>
         <div v-else>
           <b-form-group>
-            <label>Nome Fantasia:</label>
+            <label>Nome:</label>
             <b-form-input v-model="$auth.user.name"></b-form-input>
           </b-form-group>
           <b-form-group>
@@ -169,7 +173,7 @@
             <b-form-input v-model="$auth.user.site"></b-form-input>
           </b-form-group>
         </div>
-        <b-button @click="attAccount">Salvar</b-button>
+        <b-button variant="primary" @click="attAccount">Salvar</b-button>
       </div>
       <div class="m-3 d-flex justify-content-between" @click="editOS = !editOS">
         <h6 class="my-3 font-weight-bold">Ordem de serviço</h6>
@@ -226,7 +230,6 @@
               Preencha o campo acima
             </b-form-invalid-feedback>
           </b-col>
-          {{ formData }}
         </b-row>
       </div>
     </b-modal>
@@ -278,6 +281,18 @@ export default {
     address: {
       type: String,
       default: null,
+    },
+    name: {
+      type: String,
+      default: null,
+    },
+    last_name: {
+      type: String,
+      default: null,
+    },
+    fantasy_name: {
+      type: String,
+      default: null
     },
     photo_url: {
       type: String,

@@ -2,42 +2,27 @@
   <section class="rounded">
     <h1 class="p-4">Serviços cadastrados</h1>
     <ul>
-      <li
-        v-for="(servicoLista, index) in servicesData"
-        :key="index"
-        class="card-servico p-4"
-      >
+      <li v-for="(servicoLista, index) in servicesData" :key="index" class="card-servico p-4">
         <div class="d-flex pb-3">
           <p v-if="$screen.lg" class="gray-40">
-            Serviço #{{ servicoLista.id }}
+            Serviço
           </p>
           <div class="ajuste">
             <h2 v-if="$screen.lg" class="primary-80 pb-1">
               {{ servicoLista.name }}
             </h2>
             <h2 v-if="!$screen.lg" class="primary-80">
-              #{{ servicoLista.id }} {{ servicoLista.name }}
+              {{ servicoLista.name }}
             </h2>
           </div>
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
-            <img
-              src="~/assets/img/icones/edit-icon.svg"
-              role="button"
-              class="mr-3"
-              width="22"
-              height="24"
-              @click="showEditar(servicoLista)"
-            />
+            <img src="~/assets/img/icones/edit-icon.svg" role="button" class="mr-3" width="22" height="24"
+              @click="showEditar(servicoLista)" />
 
-            <img
-              src="~/assets/img/icones/delete-icon.svg"
-              role="button"
-              width="22"
-              height="24"
-              @click="showExcluir(servicoLista)"
-            />
+            <img src="~/assets/img/icones/delete-icon.svg" role="button" width="22" height="24"
+              @click="showExcluir(servicoLista)" />
           </div>
         </div>
         <Edit :servico-selecionado="servicoLista" :watching="id" />
@@ -97,7 +82,7 @@ export default {
 
 <style lang="scss" scoped>
 section {
-  max-height: 25rem;
+  height: 70vh;
   background: var(--gray-10);
   box-shadow: 0px 4px 4px rgba(0, 71, 187, 0.06);
 
@@ -112,7 +97,6 @@ section {
   }
 
   ul {
-    max-height: 18.75rem;
     overflow: auto;
 
     li {
@@ -137,10 +121,11 @@ section {
 
 @media screen and (max-width: 991px) {
   section {
-    height: 70vh;
+    height: 65vh;
 
     ul {
       height: 50vh;
+
       li {
         .ajuste {
           padding-left: 0rem;

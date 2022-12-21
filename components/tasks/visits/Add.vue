@@ -24,7 +24,6 @@
         </b-form-select-option>
       </b-form-select>
     </b-form-group>
-   <!--  {{ user_iid }} -->
     <b-button variant="primary" @click.once="registerVisit">Registrar Visita</b-button>
   </b-modal>
 </template>
