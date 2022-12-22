@@ -127,7 +127,11 @@ export default {
           this.formSend = false;
 
           if (this.$auth.$state.loggedIn) {
+            if (!this.$screen.lg) {
             window.$nuxt.$router.push('/painel-adm-atual');
+          }else{
+            window.$nuxt.$router.push('ordem-de-servicos');
+          }
           }
         } catch (error) {
           console.log(error);

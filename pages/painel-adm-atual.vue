@@ -3,7 +3,7 @@
     <PainelHeader v-if="$screen.lg" :tela="telaName" />
     <main class="p-0">
       <PainelAside />
-      <div v-if="$screen.lg" class="d-flex justify-content-center">
+      <!-- <div v-if="$screen.lg" class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto" align="center">
           <b-tab id="em-atraso" title="Em atraso" class="mt-4">
             <ListingPast :tasks-data="tasksDataOverdue" />
@@ -25,7 +25,7 @@
             </button>
           </div>
         </b-tabs>
-      </div>
+      </div> -->
     </main>
   </div>
 </template>
@@ -33,28 +33,19 @@
 <script>
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 import PainelAside from '~/components/layout/PainelAside.vue';
-import Add from '~/components/tasks/Add.vue';
+/* import Add from '~/components/tasks/Add.vue';
 import Listing from '~/components/tasks/Listing.vue';
 import ListingPast from '~/components/tasks/ListingPast.vue';
-import ListingFuture from '~/components/tasks/ListingFuture.vue';
+import ListingFuture from '~/components/tasks/ListingFuture.vue'; */
 
 export default {
   components: {
-    Add,
+    /* Add,
     Listing,
     ListingPast,
-    ListingFuture,
+    ListingFuture, */
     PainelHeader,
     PainelAside,
-  },
-  async asyncData({ $axios }) {
-      const tasks = await $axios.get('tasks?status=today');
-      const tasksData = tasks.data;
-      const tasksOverdue = await $axios.get('tasks?status=overdue');
-      const tasksDataOverdue = tasksOverdue.data;
-      const tasksFuture = await $axios.get('tasks?status=future');
-      const tasksDataFuture = tasksFuture.data;
-      return { tasksData, tasksDataOverdue, tasksDataFuture };
   },
 
   data: () => {
@@ -63,7 +54,6 @@ export default {
       tasksData: [],
     };
   },
-
   head() {
     return {
       title: `Painel | ${process.env.title}`,
