@@ -28,6 +28,7 @@
               class="mr-3"
               width="22"
               height="24"
+              alt="icone de edição"
               @click="showEditar(formsLista)"
             />
 
@@ -36,6 +37,7 @@
               role="button"
               width="22"
               height="24"
+              alt="icone de deletar"
               @click="showExcluir(formsLista)"
             />
           </div>

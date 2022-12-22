@@ -2,7 +2,7 @@
   <header>
     <b-container class="d-flex align-items-center">
       <NuxtLink to="/painel-adm-atual">
-        <img src="~/assets/img/icones/seta-voltar.svg" alt="" />
+        <img src="~/assets/img/icones/seta-voltar.svg" alt="seta de voltar" />
       </NuxtLink>
       <h1><slot></slot></h1>
     </b-container>

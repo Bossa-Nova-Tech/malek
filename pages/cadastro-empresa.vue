@@ -257,15 +257,15 @@
                 justify-content-center
                 align-items-center
               ">
-              <b-img src="~/assets/img/icones/upload.svg" />
-              <p>Clique para enviar sua photo</p>
+              <b-img rel="preload" alt="upload da foto" src="~/assets/img/icones/upload.svg" />
+              <p>Clique para enviar sua foto</p>
               <span>PNG, JPG (tamanho máximo X)</span>
             </div>
           </label>
           <div v-else class="d-flex flex-column justify-content-center align-items-center">
-            <b-img src="~/assets/img/icones/delete-icon.svg" role="button" class="ml-5 pl-5 pb-2"
+            <b-img rel="preload" src="~/assets/img/icones/delete-icon.svg" role="button" alt="icone de deletar" class="ml-5 pl-5 pb-2"
               aria-describedby="helpBlock" @click="excluiFoto" />
-            <img :src="formData.photo" alt="" width="100" class="pb-5" />
+            <img rel="preload" :src="formData.photo" alt="" width="100" class="pb-5" />
           </div>
           <small id="helpBlock" class="form-text text-muted mt-n4 mb-4">
             A imagem carregada será utilizada como sua foto de perfil ao logar

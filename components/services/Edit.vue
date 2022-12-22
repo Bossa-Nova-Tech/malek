@@ -13,6 +13,7 @@
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
+          alt="icone para fechar"
           role="button"
           @click="$bvModal.hide('update-service-' + servicoSelecionado.id)"
         />

@@ -82,6 +82,7 @@
               class="mr-3"
               role="button"
               width="22"
+              alt="icone para concluir"
               height="24"
               @click="showConcluir(itemOrdem)"
             />
@@ -90,6 +91,7 @@
               role="button"
               class="mr-3"
               width="22"
+              alt="icone para editar"
               height="24"
               @click="showEditar(itemOrdem)"
             />
@@ -98,6 +100,7 @@
               src="~/assets/img/icones/delete-icon.svg"
               role="button"
               width="22"
+              alt="icone para deletar"
               height="24"
               @click="showExcluir(itemOrdem)"
             />

@@ -18,10 +18,10 @@
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
-            <img src="~/assets/img/icones/edit-icon.svg" role="button" class="mr-3" width="22" height="24"
+            <img src="~/assets/img/icones/edit-icon.svg" alt="icone para editar" role="button" class="mr-3" width="22" height="24"
               @click="showEditar(servicoLista)" />
 
-            <img src="~/assets/img/icones/delete-icon.svg" role="button" width="22" height="24"
+            <img src="~/assets/img/icones/delete-icon.svg" alt="icone para deletar" role="button" width="22" height="24"
               @click="showExcluir(servicoLista)" />
           </div>
         </div>

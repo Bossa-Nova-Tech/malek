@@ -18,6 +18,7 @@
           src="~/assets/img/icones/X-icon.svg"
           class="mt-3"
           role="button"
+          alt="icone de fechar"
           @click.once="$bvModal.hide(`view-task-${ordem_item.id}`)"
         />
       </div>

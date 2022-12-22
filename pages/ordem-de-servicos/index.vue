@@ -3,21 +3,11 @@
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
-      <div
-        v-if="!$screen.lg"
-        class="div-botao w-50 container justify-content-between d-flex align-items-center"
-      >
+      <div v-if="!$screen.lg" class="div-botao w-50 container justify-content-between d-flex align-items-center">
         <div>
-          <b-img
-            src="~/assets/img/icones/criar-4.svg"
-            role="button"
-            class="botao-criar"
-            @click="criar"
-          />
+          <b-img rel="preload" alt="botão para criar nova ordem de serviço" src="~/assets/img/icones/criar-4.svg" role="button" class="botao-criar" @click="criar" />
         </div>
-        <b-button variant="primary" to="ordem-de-servicos/visitas"
-          >Visitas</b-button
-        >
+        <b-button variant="primary" to="ordem-de-servicos/visitas">Visitas</b-button>
       </div>
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto position-relative" align="center">
@@ -113,17 +103,21 @@ main {
   .btn {
     max-width: 6rem;
   }
+
   main {
     grid-template-columns: 1fr;
+
     .div-botao {
       margin-top: -4rem !important;
       justify-self: end;
       height: 5rem;
       filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.22));
     }
+
     .botao-criar {
       animation: criar 1.5s ease-in-out;
     }
+
     @keyframes criar {
       0% {
         scale: 0;
@@ -132,6 +126,7 @@ main {
       50% {
         scale: 1.2;
       }
+
       100% {
         transform: rotate(1deg);
         scale: 1;
@@ -147,10 +142,12 @@ main {
       bottom: 0;
       box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
     }
+
     .icone-criar {
       margin-top: -40px;
       animation: criar 1.5s ease-in-out;
     }
+
     @keyframes criar {
       0% {
         scale: 0;
@@ -159,6 +156,7 @@ main {
       50% {
         scale: 1.2;
       }
+
       100% {
         transform: rotate(1deg);
         scale: 1;

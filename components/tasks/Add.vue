@@ -102,7 +102,7 @@
       </div>
       <div class="d-flex align-items-center mb-3">
         <label for="file" class="text-center mb-0">Enviar Foto </label>
-        <img id="info-foto" src="~/assets/img/icones/info.svg" class="ml-3" />
+        <img id="info-foto" src="~/assets/img/icones/info.svg" alt="informações" class="ml-3" />
         <b-tooltip target="info-foto" placement="right" variant="primary">
           <span>Foto opcional</span>
         </b-tooltip>

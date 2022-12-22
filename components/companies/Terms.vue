@@ -4,7 +4,7 @@
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4">Termos de Uso e Política de Privacidade</h1>
-        <img src="~/assets/img/icones/X-icon.svg" role="button" class="mb-5 mt-3"
+        <img src="~/assets/img/icones/X-icon.svg" alt="icone para fechar" role="button" class="mb-5 mt-3"
           @click.prevent="$bvModal.hide('termos')" />
       </div>
     </div>

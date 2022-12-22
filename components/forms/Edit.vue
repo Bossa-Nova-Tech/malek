@@ -110,6 +110,7 @@
                 <b-img
                   role="button"
                   fluid
+                  alt="deletar icone"
                   src="~/assets/img/icones/delete-icon.svg"
                   @click="handleDelete(i, index)"
                 />

@@ -1,9 +1,9 @@
 <template>
   <aside>
     <div v-if="!$screen.lg" class="header-mobile text-center">
-      <img v-if="$auth.user.photo_url" :src="$auth.user.photo_url" width="140" height="140"
+      <img v-if="$auth.user.photo_url" alt="foto" :src="$auth.user.photo_url" width="140" height="140"
         class="my-5 profile rounded-circle" />
-      <img v-if="photo_url" :src="photo_url" width="140" height="140" class="my-5 profile rounded-circle" />
+      <img v-if="photo_url" :src="photo_url" width="140" height="140" alt="foto" class="my-5 profile rounded-circle" />
       <b-img v-else width="140" height="140" class="my-5 profile rounded-circle"></b-img>
       <div class="d-flex align-items-center justify-content-center mb-2">
         <h4 class="mb-0">Olá {{ $auth.user.name }}</h4>

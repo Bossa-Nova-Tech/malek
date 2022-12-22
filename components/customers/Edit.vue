@@ -14,6 +14,7 @@
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
+          alt="icone de fechar"
           @click="$bvModal.hide('update-client-' + clienteDaLista.id)"
         />
       </div>

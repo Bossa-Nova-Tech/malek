@@ -3,16 +3,8 @@
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
-      <div
-        v-if="!$screen.lg"
-        class="div-botao d-flex justify-content-center align-items-center"
-      >
-        <b-img
-          src="~/assets/img/icones/criar-4.svg"
-          role="button"
-          class="botao-criar"
-          @click="criar"
-        />
+      <div v-if="!$screen.lg" class="div-botao d-flex justify-content-center align-items-center">
+        <b-img rel="preload" src="~/assets/img/icones/criar-4.svg" role="button" class="botao-criar" @click="criar" />
       </div>
       <div>
         <Listing :watching="telaName" :services-data="servicesData" />
@@ -82,6 +74,7 @@ main {
 @media screen and (max-width: 991px) {
   main {
     grid-template-columns: 1fr;
+
     .div-botao {
       margin-top: -4rem !important;
       width: 80px;
@@ -90,6 +83,7 @@ main {
       filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.22));
       animation: criar 1.5s ease-in-out;
     }
+
     @keyframes criar {
       0% {
         scale: 0;
@@ -98,6 +92,7 @@ main {
       50% {
         scale: 1.2;
       }
+
       100% {
         transform: rotate(1deg);
         scale: 1;
@@ -112,10 +107,12 @@ main {
       position: inherit;
       box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.05);
     }
+
     .icone-criar {
       margin-top: -40px;
       animation: criar 1.5s ease-in-out;
     }
+
     @keyframes criar {
       0% {
         scale: 0;
@@ -124,6 +121,7 @@ main {
       50% {
         scale: 1.2;
       }
+
       100% {
         transform: rotate(1deg);
         scale: 1;

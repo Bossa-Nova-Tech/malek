@@ -10,8 +10,10 @@
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Criar / Editar Cliente</h1>
         <img
+          rel="preload"
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3 x-icon"
+          alt="icone de criar orçamento"
           @click="$bvModal.hide('criar-orcamento')"
         />
       </div>

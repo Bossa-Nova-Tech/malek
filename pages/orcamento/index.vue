@@ -6,7 +6,7 @@
       <section>
         <div v-if="!$screen.lg" class="d-flex align-items-center mb-5">
           <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
-          <img class="ml-3" src="~/assets/img/icones/sliders.svg" />
+          <img rel="preload" class="ml-3" src="~/assets/img/icones/sliders.svg" />
         </div>
         <div v-else class="d-flex align-items-center mb-5">
           <button class="mr-4">Exportar</button>

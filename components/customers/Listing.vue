@@ -9,6 +9,7 @@
       <img
         ref="dropdown"
         role="button"
+        alt="icone de drop"
         src="~/assets/img/icones/sliders.svg"
         class="mx-2"
         @click="isFiltered = !isFiltered"

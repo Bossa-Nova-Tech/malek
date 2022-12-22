@@ -14,6 +14,7 @@
         <img
           src="~/assets/img/icones/X-icon.svg"
           role="button"
+          alt="icone para fechar"
           class="mb-5 mt-3"
           @click="$bvModal.hide('criar-cliente')"
         />
@@ -215,6 +216,7 @@
           <b-img
             src="~/assets/img/icones/delete-icon.svg"
             role="button"
+            alt="icone de deletar"
             class="ml-5 pl-5 pb-2"
             @click="excluiFoto"
           />

@@ -7,6 +7,7 @@
         class="mr-3"
         role="button"
         width="22"
+        alt="icone para pausar"
         height="24"
         @click="play"
       />
@@ -15,6 +16,7 @@
         src="~/assets/img/icones/play-icon.svg"
         role="button"
         class="mr-3"
+        alt="icone para dar inicio"
         width="22"
         height="24"
         @click="play"
@@ -23,6 +25,7 @@
         v-if="stop === true"
         src="~/assets/img/icones/stop-icon.svg"
         role="button"
+        alt="icone para finalizar"
         width="22"
         height="24"
         @click="stopTimer"

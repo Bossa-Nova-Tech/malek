@@ -18,6 +18,7 @@
         <img
           src="~/assets/img/icones/X-icon.svg"
           class="mt-3"
+          alt="icone para fechar"
           role="button"
           @click.once="$bvModal.hide(`view-visit-${visitaItem.id}`)"
         />

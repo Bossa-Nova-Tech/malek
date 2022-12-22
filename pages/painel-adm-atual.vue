@@ -3,29 +3,6 @@
     <PainelHeader v-if="$screen.lg" :tela="telaName" />
     <main class="p-0">
       <PainelAside />
-      <!-- <div v-if="$screen.lg" class="d-flex justify-content-center">
-        <b-tabs pills class="mx-auto" align="center">
-          <b-tab id="em-atraso" title="Em atraso" class="mt-4">
-            <ListingPast :tasks-data="tasksDataOverdue" />
-          </b-tab>
-
-          <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing :tasks-data="tasksData" />
-          </b-tab>
-
-          <b-tab id="futuras" title="Futuras" class="mt-4">
-            <ListingFuture :tasks-data="tasksDataFuture" />
-          </b-tab>
-
-          <Add />
-
-          <div class="footer">
-            <button class="" @click="$bvModal.show('criar')">
-              Criar Ordem de Serviço
-            </button>
-          </div>
-        </b-tabs>
-      </div> -->
     </main>
   </div>
 </template>
@@ -33,17 +10,9 @@
 <script>
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 import PainelAside from '~/components/layout/PainelAside.vue';
-/* import Add from '~/components/tasks/Add.vue';
-import Listing from '~/components/tasks/Listing.vue';
-import ListingPast from '~/components/tasks/ListingPast.vue';
-import ListingFuture from '~/components/tasks/ListingFuture.vue'; */
 
 export default {
   components: {
-    /* Add,
-    Listing,
-    ListingPast,
-    ListingFuture, */
     PainelHeader,
     PainelAside,
   },

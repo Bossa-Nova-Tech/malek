@@ -10,8 +10,10 @@
       <template #modal-header>
         <div v-if="!$screen.md">
           <b-img
+            rel="preload"
             src="~/assets/img/icones/seta-voltar-azul.svg"
             class="mt-5 ml-3 mb-4"
+            alt="seta para voltar"
             @click="$bvModal.hide('visualizar')"
           ></b-img>
           <h1 class="mt-2 ml-3">Visualizar Orçamento</h1>

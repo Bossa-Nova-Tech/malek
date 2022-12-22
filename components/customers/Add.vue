@@ -3,7 +3,7 @@
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Criar Cliente</h1>
-        <img src="~/assets/img/icones/X-icon.svg" role="button" class="mb-5 mt-3"
+        <img rel="preload" src="~/assets/img/icones/X-icon.svg" role="button" class="mb-5 mt-3"
           @click="$bvModal.hide('criar-cliente')" />
       </div>
       <b-form-group class="mb-4">
@@ -131,7 +131,7 @@
         <div v-if="formData.photo" class="d-flex flex-column justify-content-center align-items-center">
           <b-img src="~/assets/img/icones/delete-icon.svg" role="button" class="ml-5 pl-5 pb-2" @click="excluiFoto" />
 
-          <img :src="formData.photo" alt="" width="100" />
+          <img rel="preload" :src="formData.photo" alt="foto" width="100" />
         </div>
       </div>
 

@@ -18,7 +18,7 @@
 
               <img
                 src="~/assets/img/icones/delete-icon.svg"
-                alt=""
+                alt="icone de deletar"
                 @click="showModal(budget)"
               />
             </div>

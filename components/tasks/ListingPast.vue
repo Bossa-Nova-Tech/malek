@@ -8,7 +8,7 @@
         <img
           role="button"
           src="~/assets/img/icones/sliders.svg"
-          alt="Icon filters"
+          alt="Icone filtro"
           @click="isFiltered = !isFiltered"
         />
       </b-col>
@@ -87,6 +87,7 @@
               src="~/assets/img/icones/icone-concluir.svg"
               class="mr-3"
               role="button"
+              alt="icone para concluir"
               width="22"
               height="24"
               @click="showConcluir(itemOrdem)"
@@ -96,6 +97,7 @@
               role="button"
               class="mr-3"
               width="22"
+              alt="icone para editar"
               height="24"
               @click="showEditar(itemOrdem)"
             />
@@ -103,6 +105,7 @@
             <img
               src="~/assets/img/icones/delete-icon.svg"
               role="button"
+              alt="icone para deletar"
               width="22"
               height="24"
               @click="showExcluir(itemOrdem)"

@@ -6,7 +6,7 @@
       <section>
         <div class="d-flex align-items-center mb-5">
           <b-form-input type="text" placeholder="Pesquisar"></b-form-input>
-          <img class="ml-3" src="~/assets/img/icones/sliders.svg" />
+          <img rel="preload" class="ml-3" alt="" src="~/assets/img/icones/sliders.svg" />
           <button v-if="$screen.lg" @click="$bvModal.show('criar-proposta')">
             Criar Proposta
           </button>

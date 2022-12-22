@@ -4,7 +4,7 @@
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Visualizar Cliente</h1>
-        <img src="~/assets/img/icones/X-icon.svg" class="mb-5 mt-3" role="button"
+        <img src="~/assets/img/icones/X-icon.svg" alt="icone de fechar" class="mb-5 mt-3" role="button"
           @click="$bvModal.hide('view-client-' + clienteDaLista.id)" />
       </div>
       <div class="d-flex align-items-center justify-content-center">

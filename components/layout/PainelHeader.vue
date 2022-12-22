@@ -9,6 +9,7 @@
             v-if="$auth.user.photo_url"
             :src="$auth.user.photo_url"
             width="140"
+            alt="foto"
             height="140"
             class="profile rounded-circle"
           />
@@ -16,6 +17,7 @@
             v-if="photo_url"
             :src="photo_url"
             width="140"
+            alt="foto"
             height="140"
             class="my-5 profile rounded-circle"
           />
@@ -53,7 +55,7 @@
       <div v-else class="mobile">
         <b-container class="d-flex align-items-center">
           <NuxtLink to="/painel-adm-atual">
-            <img src="~/assets/img/icones/seta-voltar.svg" />
+            <img alt="seta para voltar" src="~/assets/img/icones/seta-voltar.svg" />
           </NuxtLink>
           <h1>{{ tela }}</h1>
         </b-container>

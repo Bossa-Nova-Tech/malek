@@ -15,6 +15,7 @@
           src="~/assets/img/icones/X-icon.svg"
           class="mb-5 mt-3"
           role="button"
+          alt="icone para fechar"
           @click="$bvModal.hide(`update-task-${ordem_item.id}`)"
         />
       </div>
@@ -172,7 +173,7 @@
             @click="excluiFoto"
           />
 
-          <img :src="formData.photos" alt="" width="100" />
+          <img :src="formData.photos" alt="foto" width="100" />
         </div>
       </div>
       <b-form-group class="mb-4">
