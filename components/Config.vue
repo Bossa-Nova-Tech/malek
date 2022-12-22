@@ -303,11 +303,11 @@ export default {
       default: null,
     },
     cep: {
-      type: Number,
+      type: String,
       default: null,
     },
     number: {
-      type: Number,
+      type: String,
       default: null,
     },
     city: {
@@ -323,7 +323,7 @@ export default {
       default: null,
     },
     phone: {
-      type: Number,
+      type: String,
       default: null,
     },
     state_registration: {
@@ -351,7 +351,7 @@ export default {
       default: null,
     },
     cnpj: {
-      type: Number,
+      type: String,
       default: null,
     },
   },

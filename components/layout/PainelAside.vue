@@ -3,7 +3,8 @@
     <div v-if="!$screen.lg" class="header-mobile text-center">
       <img v-if="$auth.user.photo_url" :src="$auth.user.photo_url" width="140" height="140"
         class="my-5 profile rounded-circle" />
-      <img v-else :src="photo_url" width="140" height="140" class="my-5 profile rounded-circle" />
+      <img v-if="photo_url" :src="photo_url" width="140" height="140" class="my-5 profile rounded-circle" />
+      <b-img v-else width="140" height="140" class="my-5 profile rounded-circle"></b-img>
       <div class="d-flex align-items-center justify-content-center mb-2">
         <h4 class="mb-0">Olá {{ $auth.user.name }}</h4>
         <config :address="address" :photo_url="photo_url" :state="state" :number="number" :city="city"
@@ -119,7 +120,8 @@
     <div v-if="$screen.lg" class="d-flex mt-5 align-items-center justify-content-between">
       <div class="photo mr-2">
         <img v-if="$auth.user.photo_url" :src="$auth.user.photo_url" width="50" height="50" class="rounded-circle" />
-        <img v-else :src="photo_url" width="50" height="50" class="rounded-circle" />
+        <img v-if="photo_url" :src="photo_url" width="50" height="50" class="rounded-circle" />
+        <img v-else width="50" height="50" class="rounded-circle" />
       </div>
       <div>
         <p class="name">{{ $auth.user.name }}</p>
@@ -137,6 +139,7 @@ export default {
   data() {
     return {
       photo_url: null,
+      photo: null,
       address: null,
       number: null,
       district: null,
@@ -219,6 +222,7 @@ export default {
   methods: {
     async logout() {
       await this.$auth.logout();
+      this.$router.push('/')
     },
   },
 };

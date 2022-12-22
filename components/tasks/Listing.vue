@@ -245,11 +245,7 @@ export default {
         this.$bvModal.show(`view-task-${this.id}`);
       });
       this.ordem_selecionada = itemOrdem;
-      /* const { data } = await this.$axios.get(
-        `customers/get-coordinates/${this.clienteDaLista.id}`,
-      );
-      console.log(data);
-      this.coordinates = data; */
+
     },
     showConcluir(itemOrdem) {
       this.id = itemOrdem.id;

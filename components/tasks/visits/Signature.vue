@@ -81,7 +81,7 @@ export default {
             /* this.$router.go( 0); */
           });
         this.$nuxt.refresh().catch((_err) => { });
-        this.$refs['visitFinished'].hide()
+        this.$bvModal.hide(`visitFinished-${this.visita.id}`);
       } catch (error) {
         console.log(error);
       }

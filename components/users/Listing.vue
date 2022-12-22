@@ -31,7 +31,7 @@
           <div>
             <b-row class="align-items-center">
               <b-col cols="9" role="button" @click="showVer(user)">
-                <div class="d-flex align-items-center mb-3"><b-img :src="user.photo_url" class="foto-usuario" />
+                <div class="d-flex align-items-center"><b-img v-if="user.photo_url" :src="user.photo_url" class="foto-usuario" />
                   <div class="pl-3">
                     <p>{{ user.name }}</p>
                     <p>{{ user.city }}</p>

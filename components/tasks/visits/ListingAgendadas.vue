@@ -123,7 +123,7 @@ export default {
     filteredList() {
       /* eslint-disable */
       return this.visitsData.filter((t) => {
-        if (t.task != null && t.status == 'in_progress') {
+        if (t.task != null && t.status == 'scheduled') {
           return t;
         }
       });

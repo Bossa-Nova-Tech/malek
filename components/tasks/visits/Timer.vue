@@ -30,7 +30,7 @@
     </div>
     <b-modal
       :id="'visitFinished-' + visitId"
-      :ref="'visitFinished'"
+      ref="visitFinished"
       centered
       hide-footer
       hide-header
@@ -49,7 +49,7 @@
         >
         <div v-if="signatureActive" class="my-3">
           <h2>Colete a assinatura do cliente:</h2>
-          <signature :timer="duration" :id="visitId" :visita="visita" />
+          <signature :timer="duration" :id="visitId" :visita="visita" ref="visitFinished" />
         </div>
         <b-button
           variant="outline-primary"

@@ -13,7 +13,7 @@
             class="profile rounded-circle"
           />
           <img
-            v-else
+            v-if="photo_url"
             :src="photo_url"
             width="140"
             height="140"

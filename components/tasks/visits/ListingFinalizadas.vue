@@ -13,7 +13,7 @@
               >{{ zfill(hour) }}:{{ zfill(min) }}:{{ zfill(sec) }}</a
             > -->
             <h2 class="primary-80 pb-1">
-              # {{ visita.task_id }} {{ visita.services }}
+              Ordem de Serviço {{ visita.task_id }}
             </h2>
             <p class="gray-40">
               Quem irá atender: <strong>{{ visita.user_id }}</strong>
@@ -24,7 +24,6 @@
           <div class="d-flex mb-2">
             <Viewing :visita-item="visita" :task="tasksData" :center="center" />
 
-            <Timer :visit-id="visita.id" :visita="visita" />
           </div>
         </div>
         <div class="d-flex align-items-center" @click="showVer(visita)">
@@ -123,7 +122,7 @@ export default {
     filteredList() {
       /* eslint-disable */
       return this.visitsData.filter((t) => {
-        if (t.task != null && t.status == 'in_progress') {
+        if (t.task != null && t.status == 'finished') {
           return t;
         }
       });

@@ -28,10 +28,8 @@ export default {
   async asyncData({ $axios }) {
     const customers = await $axios.get('customers');
     const customersData = customers.data;
-    console.log('customers :: ', customers.data);
     const { data } = await $axios.get('users');
     const users = data;
-    console.log('users :: ', users);
     return { customersData, users };
   },
 

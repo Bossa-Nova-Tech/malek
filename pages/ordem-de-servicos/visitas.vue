@@ -6,14 +6,14 @@
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto position-relative" align="center">
           <b-tab id="em-atraso" title="Em atraso" class="mt-4">
-            <!-- <ListingPast :tasks-data="tasksDataOverdue" /> -->
+            <ListingAgendadas :visits-data="visitsData"/>
           </b-tab>
           <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing :visits-data="visitsData" :tasks-data="tasksData" />
+            <Listing :visits-data="visitsData"  />
           </b-tab>
 
           <b-tab id="futuras" title="Futuras" class="mt-4">
-            <!-- <ListingFuture /> -->
+            <ListingFinalizadas :visits-data="visitsData" />
           </b-tab>
         </b-tabs>
       </div>
@@ -25,23 +25,24 @@
 import PainelHeader from '~/components/layout/PainelHeader.vue';
 import PainelAside from '~/components/layout/PainelAside.vue';
 import Listing from '~/components/tasks/visits/Listing.vue';
+import ListingAgendadas from '~/components/tasks/visits/ListingAgendadas.vue';
+import ListingFinalizadas from '~/components/tasks/visits/ListingFinalizadas.vue';
+
 /* import ListingFuture from '~/components/tasks/visits/ListingFuture.vue';
 import ListingPast from '~/components/tasks/visits/ListingPast.vue'; */
 
 export default {
   components: {
     Listing,
-    /* ListingFuture,
-    ListingPast, */
+    ListingFinalizadas,
+    ListingAgendadas,
     PainelHeader,
     PainelAside,
   },
   async asyncData({ $axios }) {
     const visits = await $axios.get('tasks-list/visit');
     const visitsData = visits.data;
-    const tasks = await $axios.get('tasks');
-    const tasksData = tasks.data;
-    return { visitsData, tasksData };
+    return { visitsData };
   },
 
   data: () => {

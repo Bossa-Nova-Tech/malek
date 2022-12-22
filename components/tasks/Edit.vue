@@ -21,9 +21,9 @@
       <b-form-group class="mb-4">
         <label for="service">Serviço <span class="requerido">*</span></label>
         <b-form-select
-          v-model="serviceSelected"
+          v-model="service_selected"
           name="service"
-          :class="{ 'is-invalid': $v.serviceSelected.$error }"
+          :class="{ 'is-invalid': $v.service_selected.$error }"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
@@ -56,15 +56,15 @@
       <b-form-group>
         <label for="customer">Cliente <span class="requerido">*</span></label>
         <b-form-select
-          v-model="customerSelected"
+          v-model="customer_selected"
           name="customer"
-          :class="{ 'is-invalid': $v.customerSelected.$error }"
+          :class="{ 'is-invalid': $v.customer_selected.$error }"
         >
           <b-form-select-option :value="null" desabled
             >Selecione</b-form-select-option
           >
           <b-form-select-option
-            v-for="customer in customers"
+            v-for="customer in customersData"
             :key="customer.id"
             :value="customer.id"
           >
@@ -203,7 +203,7 @@
         </l-map>
       </section>
       <div class="w-100 mb-4 col-12 px-0">
-        <button :disable="formSend" @click="register">
+        <button :disable="formSend" @click="edit">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>
@@ -241,8 +241,8 @@ export default {
 
   data() {
     return {
-      serviceSelected: null,
-      customerSelected: null,
+      service_selected: null,
+      customer_selected: null,
       circle: {
         center: [1, 2],
         radius: 4500,
@@ -273,8 +273,8 @@ export default {
         name_customer: null,
         customer_id: null,
         template: null,
-        service_id: this.serviceSelected,
-        services: this.serviceSelected,
+        service_id: this.service_selected,
+        services: this.service_selected,
       },
     };
   },
@@ -284,36 +284,37 @@ export default {
       end_date: { required },
       estimated_time: { required },
     },
-    customerSelected: { required },
+    customer_selected: { required },
 
-    serviceSelected: { required },
+    service_selected: { required },
   },
   watch: {
     watching() {
       this.setDataFormWithTask();
     },
-    async customerSelected() {
+    async service_selected() {
       const { data } = await this.$axios.get(
-        `customers/${this.customerSelected}`,
+        `services/${this.service_selected}`,
+      );
+      this.formData.services = data.name;
+      this.formData.service_id = data.id;
+      this.formData.estimated_time = data.time_of_execution;
+    },
+    async customer_selected() {
+      const { data } = await this.$axios.get(
+        `customers/${this.customer_selected}`,
       );
       this.formData.name_customer = data.name;
-      this.formData.customer_id = this.customerSelected;
+      this.formData.customer_id = this.customer_selected;
       console.log(data);
       const mapa = await this.$axios.get(
-        `customers/get-coordinates/${this.customerSelected}`,
+        `customers/get-coordinates/${this.customer_selected}`,
       );
       this.coordinates = mapa.data;
       this.lat = this.coordinates.latitude;
       this.long = this.coordinates.longitude;
       this.center = [this.lat, this.long];
       this.circle.center = this.center;
-    },
-    async serviceSelected() {
-      const { data } = await this.$axios.get(
-        `services/${this.serviceSelected}`,
-      );
-      this.formData.services = data.name;
-      this.formData.estimated_time = data.time_of_execution;
     },
   },
 
