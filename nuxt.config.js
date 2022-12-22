@@ -155,7 +155,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/scss/index.scss',
-    'element-ui/lib/theme-chalk/index.css',
+    /* 'element-ui/lib/theme-chalk/index.css', */
     'leaflet/dist/leaflet.css',
   ],
 
@@ -165,7 +165,6 @@ export default {
     '@/plugins/element-ui',
     '~plugins/vue-the-mask.js',
     { src: '~/plugins/vue-screen.client.js', mode: 'client' },
-    '~plugins/teste.js',
     '~plugins/axios.js',
     { src: '~plugins/leaflet.js', ssr: false },
   ],

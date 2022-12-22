@@ -1,9 +1,8 @@
-<template>
+<!-- <template>
   <div class="d-flex flex-column">
     <TheHeader> Ordem de Serviço </TheHeader>
     <main class="d-flex caixa mx-auto mb-5">
       <b-tabs pills class="mx-auto caixa" align="center">
-        <!-- início da tab HOJE -->
         <b-tab title="Hoje" active>
           <section
             v-for="(ordem, index) in tasksData"
@@ -24,13 +23,10 @@
                   <span class="pl-3">{{ ordem.name }}</span>
                 </div>
                 <div>
-                  <!-- <span class="porcentagem primary-80">
-                    {{ ordem.performance }}</span
-                  > -->
+
                   <span class="tempo gray-40">{{ ordem.estimated_time }} </span>
                 </div>
               </div>
-              <!-- modal-editar -->
               <b-modal
                 v-if="formEditing === index"
                 id="modal-1"
@@ -206,7 +202,6 @@
               @click="showModal = true"
               >Criar Ordem de Serviço</b-button
             >
-            <!-- tela modal-criar-ordemservico -->
             <b-modal
               id="modal"
               ref="modal"
@@ -313,11 +308,9 @@
                 </div>
               </template>
             </b-modal>
-            <!-- final tela modal-criar-ordemservico -->
           </div>
         </b-tab>
         <b-tab>
-          <!-- início da tab Relatório -->
           <template #title> Relatório </template>
           <b-card class="box-shadow border-0 mt-2 mb-1">
             <h2 class="mb-4">Em andamento</h2>
@@ -326,9 +319,6 @@
                 <div v-for="(ordem, index) in ordens" :key="index" class="mr-4">
                   <p>{{ ordem.name }}</p>
                   <p class="lugar">{{ ordem.name_customer }}</p>
-                  <!-- <span class="font-weight-bolder">{{
-                    ordem.performance
-                  }}</span> -->
                   <span class="horas">{{ ordem.estimated_time }}</span>
                 </div>
               </div>
@@ -357,9 +347,7 @@ import { mask } from 'vue-the-mask';
 import { Flicking } from '@egjs/vue-flicking';
 import TheHeader from '~/components/layout/TheHeader.vue';
 import Graphic from '~/components/Graphic.vue';
-// import BorderButton from '~/components/BorderButton.vue';
 export default {
-  // components: { Flicking, TheHeader, Graphic, BorderButton },
   components: { Flicking, TheHeader, Graphic },
   directives: { mask },
   mixins: [validationMixin],
@@ -537,7 +525,6 @@ export default {
       }
     },
     async remove(index, ordem) {
-      // this.ordens.splice(index, 1);
       console.log('index :: ', index);
       console.log('ordem :: ', ordem);
 
@@ -655,3 +642,5 @@ main {
   }
 }
 </style>
+
+ -->

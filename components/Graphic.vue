@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <Doughnut
     :chart-options="chartOptions"
     :chart-data="chartData"
@@ -10,7 +10,6 @@
     :width="width"
     :height="height"
   />
-  <!--estilizar para deixar igual ao protótipo-->
 </template>
 
 <script>
@@ -81,3 +80,5 @@ export default {
   },
 };
 </script>
+
+ -->

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <Bar :chart-data="chartData" />
 </template>
 
@@ -50,3 +50,4 @@ export default {
   },
 };
 </script>
+ -->
