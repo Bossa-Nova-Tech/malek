@@ -34,7 +34,7 @@ export default {
     title: 'AíServe',
     description: 'DESCRIPTION',
     htmlAttrs: {
-      lang: 'pt_br',
+      lang: 'pt-br',
     },
     meta: [
       { charset: 'utf-8' },
