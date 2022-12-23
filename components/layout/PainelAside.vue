@@ -120,10 +120,10 @@
     <div v-if="$screen.lg" class="d-flex mt-5 align-items-center justify-content-between">
       <div class="photo mr-2">
         <img v-if="$auth.user.photo_url" :src="$auth.user.photo_url" width="50" height="50" class="rounded-circle" />
-        <img v-if="photo_url" :src="photo_url" width="50" height="50" class="rounded-circle" />
         <img v-else width="50" height="50" class="rounded-circle" />
+        <img v-if="photo_url" :src="photo_url" width="50" height="50" class="rounded-circle" />
       </div>
-      <div>
+      <div class="mx-2">
         <p class="name">{{ $auth.user.name }}</p>
         <p class="email">{{ $auth.user.email }}</p>
       </div>

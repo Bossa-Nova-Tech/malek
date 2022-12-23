@@ -5,7 +5,8 @@
       <PainelAside v-if="$screen.lg" />
       <div v-if="!$screen.lg" class="div-botao w-50 container justify-content-between d-flex align-items-center">
         <div>
-          <b-img rel="preload" alt="botão para criar nova ordem de serviço" src="~/assets/img/icones/criar-4.svg" role="button" class="botao-criar" @click="criar" />
+          <b-img rel="preload" alt="botão para criar nova ordem de serviço" src="~/assets/img/icones/criar-4.svg"
+            role="button" class="botao-criar" @click="criar" />
         </div>
         <b-button variant="primary" to="ordem-de-servicos/visitas">Visitas</b-button>
       </div>
@@ -42,6 +43,7 @@ import ListingPast from '~/components/tasks/ListingPast.vue';
 import ListingFuture from '~/components/tasks/ListingFuture.vue';
 
 export default {
+  layout: 'auth',
   components: {
     Add,
     Listing,

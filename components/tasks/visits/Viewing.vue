@@ -1,27 +1,14 @@
 <template>
-  <b-modal
-    :id="'view-visit-' + visitaItem.id"
-    :ref="'view-visit'"
-    size="lg"
-    centered
-    no-close-on-backdrop
-    hide-header
-    hide-footer
-    @shown="modalShown"
-  >
+  <b-modal :id="'view-visit-' + visitaItem.id" :ref="'view-visit'" size="lg" centered no-close-on-backdrop hide-header
+    hide-footer @shown="modalShown">
     <div class="view-modal mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4">
           Visita da OS <span> {{ visitaItem.task_id }}</span>
         </h1>
 
-        <img
-          src="~/assets/img/icones/X-icon.svg"
-          class="mt-3"
-          alt="icone para fechar"
-          role="button"
-          @click.once="$bvModal.hide(`view-visit-${visitaItem.id}`)"
-        />
+        <img src="~/assets/img/icones/X-icon.svg" class="mt-3" alt="icone para fechar" role="button"
+          @click.once="$bvModal.hide(`view-visit-${visitaItem.id}`)" />
       </div>
       <h3>Tipo de serviço</h3>
       <p>{{ task.services }}</p>
@@ -41,45 +28,23 @@
         <label for="file" class="text-center mb-0">Enviar Foto </label>
         <img id="info-foto" src="~/assets/img/icones/info.svg" class="ml-3" />
         <b-tooltip target="info-foto" placement="right" variant="primary">
+          <pre>{{ visitaItem.photo }}</pre>
           <span>Foto opcional</span>
         </b-tooltip>
       </div>
-      <input
-        @change="foto_selecionada"
-        type="file"
-        ref="arquivo"
-        accept="image/*"
-        class="d-none"
-      />
+      <input @change="foto_selecionada" type="file" ref="arquivo" accept="image/*" class="d-none" />
+      <b-img width="200px" height="200px" />
       <ul class="list-unstyled">
         <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
           <h6>Título da foto:</h6>
-          <b-form-input
-            v-model="foto.title"
-            placeholder="Título da foto:"
-            class="my-3"
-          />
+          <b-form-input v-model="foto.title" placeholder="Título da foto:" class="my-3" />
           <div class="d-flex align-items-start justify-content-between">
-            <b-img
-              :src="foto.image"
-              width="80"
-              height="80"
-              class="mb-2 rounded"
-            ></b-img>
-            <b-img
-              @click="fotos.splice(index, 1)"
-              size="sm"
-              src="~/assets/img/icones/delete-icon.svg"
-              variant="link"
-              class="p-0"
-            />
+            <b-img :src="foto.image" width="80" height="80" class="mb-2 rounded"></b-img>
+            <b-img @click="fotos.splice(index, 1)" size="sm" src="~/assets/img/icones/delete-icon.svg" variant="link"
+              class="p-0" />
           </div>
           <h6>Descrição da foto:</h6>
-          <b-form-input
-            v-model="foto.note"
-            placeholder="Digite a descrição:"
-            class="my-3"
-          />
+          <b-form-input v-model="foto.note" placeholder="Digite a descrição:" class="my-3" />
         </li>
       </ul>
       <BorderButton class="mb-4 selecionar" @click.native="addFoto">
@@ -140,14 +105,8 @@
 
       <h3 class="mt-4">Localização do Cliente</h3>
       <client-only>
-        <l-map
-          ref="myMap"
-          name="mapa"
-          style="height: 300px; border-radius: 8px"
-          :zoom="zoom"
-          :center="center"
-          class="mb-4"
-        >
+        <l-map ref="myMap" name="mapa" style="height: 300px; border-radius: 8px" :zoom="zoom" :center="center"
+          class="mb-4">
           <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
           <l-marker :lat-lng="center"></l-marker>
           <l-control :position="'topright'" class="custom-control-watermark">
@@ -158,16 +117,10 @@
       </client-only>
       <h3 class="mt-4">Comentário:</h3>
       <b-form-group>
-        <b-form-textarea
-          id="user-comment"
-          v-model="comment.text"
-          placeholder="Digite o comentário..."
-          rows="3"
-          max-rows="6"
-          :class="{
+        <b-form-textarea id="user-comment" v-model="comment.text" placeholder="Digite o comentário..." rows="3"
+          max-rows="6" :class="{
             'is-invalid': $v.comment.text.$error,
-          }"
-        ></b-form-textarea>
+          }"></b-form-textarea>
         <b-form-invalid-feedback>
           Para salvar, preencha o comentário.
         </b-form-invalid-feedback>
@@ -267,7 +220,7 @@ export default {
             this.toast('success', 'Sucesso', 'Visita adicionada com sucesso!');
             /* this.$router.go( 0); */
           });
-        this.$nuxt.refresh().catch((_err) => {});
+        this.$nuxt.refresh().catch((_err) => { });
       } catch (error) {
         console.log(error);
       }
@@ -322,7 +275,7 @@ export default {
             this.toast('success', 'Sucesso', 'Visita atualizada com sucesso!');
             /* this.$router.go( 0); */
           });
-        this.$nuxt.refresh().catch((_err) => {});
+        this.$nuxt.refresh().catch((_err) => { });
       } catch (error) {
         console.log(error);
         this.$bvModal.hide('view-visit-' + this.visitaItem.id);
@@ -335,10 +288,12 @@ export default {
 .view-modal {
   h1 {
     font-size: 1.4rem;
+
     span {
       color: var(--primary-80);
     }
   }
+
   .imprimir {
     border: 1px solid var(--primary-80);
     border-radius: 8px;
@@ -347,15 +302,18 @@ export default {
     font-size: 1rem;
     box-shadow: none;
   }
+
   h3 {
     font-size: 0.8rem;
     font-weight: bolder;
     color: var(--gray-60);
   }
+
   p {
     font-size: 1rem;
     color: var(--gray-60);
   }
+
   /* ul {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -371,6 +329,7 @@ export default {
     width: 100%;
   }
 }
+
 /* }
 } */
 </style>

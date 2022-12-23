@@ -32,7 +32,7 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'AíServe',
-    description: 'DESCRIPTION',
+    description: 'AíServe',
     htmlAttrs: {
       lang: 'pt-br',
     },
@@ -132,10 +132,10 @@ export default {
         type: 'text/javascript',
         charset: 'utf-8',
       },
-      /* {
+      {
         src: 'https://code.jquery.com/jquery-3.6.1.min.js',
         type: 'text/javascript',
-      }, */
+      },
     ],
     noscript: [
       {

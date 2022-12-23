@@ -2,11 +2,7 @@
   <section class="rounded">
     <h1 class="p-4">Formulários cadastrados</h1>
     <ul>
-      <li
-        v-for="(formsLista, index) in formsData"
-        :key="index"
-        class="card-forms p-4"
-      >
+      <li v-for="(formsLista, index) in formsData" :key="index" class="card-forms p-4">
         <div class="d-flex pb-3">
           <p v-if="$screen.lg" class="gray-40">
             Formulário #{{ formsLista.id }}
@@ -22,24 +18,11 @@
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
-            <img
-              src="~/assets/img/icones/edit-icon.svg"
-              role="button"
-              class="mr-3"
-              width="22"
-              height="24"
-              alt="icone de edição"
-              @click="showEditar(formsLista)"
-            />
+            <img src="~/assets/img/icones/edit-icon.svg" role="button" class="mr-3" width="22" height="24"
+              alt="icone de edição" @click="showEditar(formsLista)" />
 
-            <img
-              src="~/assets/img/icones/delete-icon.svg"
-              role="button"
-              width="22"
-              height="24"
-              alt="icone de deletar"
-              @click="showExcluir(formsLista)"
-            />
+            <img src="~/assets/img/icones/delete-icon.svg" role="button" width="22" height="24" alt="icone de deletar"
+              @click="showExcluir(formsLista)" />
           </div>
         </div>
         <Edit :formsSelecionado="formsLista" :watching="id" />
@@ -143,6 +126,7 @@ section {
 
     ul {
       height: 50vh;
+
       li {
         .ajuste {
           padding-left: 0rem;

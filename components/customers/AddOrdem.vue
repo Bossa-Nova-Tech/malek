@@ -555,7 +555,7 @@ export default {
                 (this.formData.city = response.data.localidade),
                 (this.formData.state = response.data.uf),
                 (this.formData.cep = response.data.cep),
-                (this.formData.district = response.data.district),
+                (this.formData.district = response.data.bairro),
               ),
             /* district: response.data.bairro,
                 city: response.data.localidade,
