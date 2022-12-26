@@ -67,7 +67,6 @@
         >Agendar Visita</b-button
       >
       <Add
-        :visitsData="visitsData"
         :users-name="usersName"
         :ordem_item="ordem_item"
       />
@@ -102,14 +101,8 @@ export default {
     },
     center: {
       type: Array,
-      default: null,
+      default: [1, 2],
     },
-  },
-  async asyncData({ $axios }) {
-    const visits = await $axios.get('tasks-list/visit');
-    const visitsData = visits.data;
-    const userVisits = visitsData.user;
-    return { visitsData, userVisits };
   },
   data() {
     return {
@@ -117,7 +110,6 @@ export default {
         center: [1, 2],
         radius: 300,
       },
-      center: [1, 2],
       zoom: 18,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:

@@ -39,10 +39,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    visitsData: {
-      type: Object,
-      default: null,
-    },
   },
   data() {
     return {

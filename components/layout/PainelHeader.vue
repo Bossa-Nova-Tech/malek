@@ -5,45 +5,17 @@
         <div class="bg-separado"></div>
 
         <div class="titulo container">
-          <img
-            v-if="$auth.user.photo_url"
-            :src="$auth.user.photo_url"
-            width="140"
-            alt="foto"
-            height="140"
-            class="profile rounded-circle"
-          />
-          <img
-            v-if="photo_url"
-            :src="photo_url"
-            width="140"
-            alt="foto"
-            height="140"
-            class="my-5 profile rounded-circle"
-          />
+          <img v-if="$auth.user.photo_url" :src="$auth.user.photo_url" width="140" alt="foto" height="140"
+            class="profile rounded-circle" />
+          <img v-if="photo_url" :src="photo_url" width="140" alt="foto" height="140"
+            class="my-5 profile rounded-circle" />
           <div>
-            <div class="d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center mb-3">
               <h1 class="mb-0">Olá {{ $auth.user.name }}</h1>
-              <config
-                :address="address"
-                :photo_url="photo_url"
-                :photo="photo"
-                :state="state"
-                :number="number"
-                :city="city"
-                :district="district"
-                :cep="cep"
-                :fantasy_name="fantasy_name"
-                :name="name"
-                :social_reason="social_reason"
-                :cpf="cpf"
-                :cnpj="cnpj"
-                :complement="complement"
-                :phone="phone"
-                :email="email"
-                :password="password"
-                :state_registration="state_registration"
-              />
+              <config :address="address" :photo_url="photo_url" :photo="photo" :state="state" :number="number"
+                :city="city" :district="district" :cep="cep" :fantasy_name="fantasy_name" :name="name"
+                :social_reason="social_reason" :cpf="cpf" :cnpj="cnpj" :complement="complement" :phone="phone"
+                :email="email" :password="password" :state_registration="state_registration" />
             </div>
             <!-- <h1>Olá {{ $auth.user.name }},</h1>
             <config /> -->
@@ -86,13 +58,14 @@ export default {
       email: null,
       complement: null,
       photo: null,
+      name: null,
       password: null,
     };
   },
   props: {
     tela: {
       type: String,
-      required: true,
+      default: null,
     },
   },
   async mounted() {
@@ -180,8 +153,6 @@ header {
     }
 
     div {
-      padding-bottom: 30px;
-
       h1 {
         font-size: 34px;
         color: var(--gray-60);
@@ -195,11 +166,9 @@ header {
   }
 
   .mobile {
-    background: radial-gradient(
-      106.17% 238.89% at 2.47% 100%,
-      #ff762b 63.54%,
-      #f4af2f 100%
-    );
+    background: radial-gradient(106.17% 238.89% at 2.47% 100%,
+        #ff762b 63.54%,
+        #f4af2f 100%);
     margin-bottom: 1.25rem;
 
     h1 {

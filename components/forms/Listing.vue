@@ -2,18 +2,14 @@
   <section class="rounded">
     <h1 class="p-4">Formulários cadastrados</h1>
     <ul>
-      <li v-for="(formsLista, index) in formsData" :key="index" class="card-forms p-4">
-        <div class="d-flex pb-3">
-          <p v-if="$screen.lg" class="gray-40">
-            Formulário #{{ formsLista.id }}
-          </p>
-          <div class="ajuste">
-            <h2 v-if="$screen.lg" class="primary-80 pb-1">
+      <li v-for="(formsLista, index) in formsData" :key="index"
+        class="card-forms p-4 d-flex align-items-center justify-content-between">
+        <div>
+          <div>
+            <h2 class="primary-80">
               {{ formsLista.name }}
             </h2>
-            <h2 v-if="!$screen.lg" class="primary-80">
-              #{{ formsLista.id }} {{ formsLista.name }}
-            </h2>
+            <p class="gray-40">{{ formsLista.event_show }}</p>
           </div>
         </div>
         <div class="d-flex flex-column align-items-end">

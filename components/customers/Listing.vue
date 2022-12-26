@@ -41,7 +41,7 @@
               </div>
 
             </b-col>
-            <b-col cols="3">
+            <b-col cols="3 d-flex justify-content-end">
               <img src="~/assets/img/icones/edit-icon.svg" alt="botão para acessar o modal de edição de cliente"
                 role="button" @click="showEditar(customer)" />
               <img src="~/assets/img/icones/delete-icon.svg" role="button" alt="botão para deletar cliente"
@@ -148,7 +148,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 section {
-  height: 25rem;
+  height: 35rem;
   background: var(--gray-10);
   box-shadow: 0px 4px 4px rgba(0, 71, 187, 0.06);
 
@@ -163,7 +163,7 @@ section {
   }
 
   ul {
-    height: 18.75rem;
+    height: 80%;
     overflow: auto;
 
     li {

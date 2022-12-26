@@ -12,22 +12,24 @@
       </div>
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto position-relative" align="center">
+          <b-button v-if="$screen.lg" variant="primary" to="ordem-de-servicos/visitas"
+            class="d-flex justify-content-center w-50 mt-4 mx-auto">Visitas</b-button>
           <b-tab id="em-atraso" title="Em atraso" class="mt-4">
-            <ListingPast :tasks-data="tasksDataOverdue" />
+            <ListingPast :tasks-data="tasksDataOverdue" :customersData="customersData" />
           </b-tab>
 
           <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing :watching="telaName" :tasks-data="tasksData" />
+            <Listing :watching="telaName" :tasks-data="tasksData" :customersData="customersData" />
           </b-tab>
 
           <b-tab id="futuras" title="Futuras" class="mt-4">
-            <ListingFuture :tasks-data="tasksDataFuture" />
-          </b-tab>
-          <Add :customers-data="customersData" :watching2="chamarCliente" />
+            <ListingFuture :tasks-data="tasksDataFuture" :customersData="customersData" />
+            </b-tab>
+            <Add :customers-data=" customersData" :watching2="chamarCliente" />
 
-          <div class="footer">
-            <button class="" @click="criar">Criar Ordem de Serviço</button>
-          </div>
+            <div class="footer">
+              <button class="" @click="criar">Criar Ordem de Serviço</button>
+            </div>
         </b-tabs>
       </div>
     </main>

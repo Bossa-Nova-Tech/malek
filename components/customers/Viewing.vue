@@ -154,7 +154,7 @@ export default {
       default: null,
     },
     coordinates: {
-      type: Object,
+      type: Array | Object,
       default: null,
     },
   },

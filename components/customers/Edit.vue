@@ -128,7 +128,8 @@
       </BorderButton>
       <div class="campo-foto d-flex align-self center justify-content-center">
         <img v-if="clienteDaLista.photo_url" :src="clienteDaLista.photo_url" alt="foto" width="100" />
-        <b-img v-if="clienteDaLista.photo_url" src="~/assets/img/icones/delete-icon.svg" role="button" class="ml-5 pl-5 pb-2" @click="excluiFoto" />
+        <b-img v-if="clienteDaLista.photo_url" src="~/assets/img/icones/delete-icon.svg" role="button"
+          class="ml-5 pl-5 pb-2" @click="excluiFoto" />
         <div v-if="formData.photo" class="d-flex flex-column justify-content-center align-items-center">
           <b-img src="~/assets/img/icones/delete-icon.svg" role="button" class="ml-5 pl-5 pb-2" @click="excluiFoto" />
           <img :src="formData.photo" alt="foto" width="100" />
@@ -250,7 +251,7 @@ export default {
       default: null,
     },
     coordinates: {
-      type: Object,
+      type: Array | Object,
       default: null,
     },
   },

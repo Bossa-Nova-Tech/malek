@@ -141,7 +141,7 @@
           >
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
-        <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" />
+        <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" :customersData="customersData" />
         <Viewing :id="id" :ordem_item="itemOrdem" :center="center" />
       </li>
       <Delete :id="id" />
@@ -179,6 +179,10 @@ export default {
       type: Array,
       default: null,
     },
+    customersData: {
+      type: Object | Array,
+      default: null,
+    }
   },
 
   data() {

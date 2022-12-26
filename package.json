@@ -22,6 +22,7 @@
     "@netsells/nuxt-hotjar": "^0.1.3",
     "@nuxtjs/auth-next": "5.0.0-1648802546.c9880dc",
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/composition-api": "^0.33.1",
     "@nuxtjs/dayjs": "^1.4.1",
     "bootstrap": "^4.6.1",
     "bootstrap-vue": "^2.21.2",

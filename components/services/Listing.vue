@@ -3,12 +3,12 @@
     <h1 class="p-4">Serviços cadastrados</h1>
     <ul>
       <li v-for="(servicoLista, index) in servicesData" :key="index" class="card-servico p-4">
-        <div class="d-flex pb-3">
+        <div class="d-flex align-items-center">
           <p v-if="$screen.lg" class="gray-40">
             Serviço
           </p>
           <div class="ajuste">
-            <h2 v-if="$screen.lg" class="primary-80 pb-1">
+            <h2 v-if="$screen.lg" class="primary-80">
               {{ servicoLista.name }}
             </h2>
             <h2 v-if="!$screen.lg" class="primary-80">

@@ -174,7 +174,7 @@ export default {
   mixins: [validationMixin, Vue2Filters.mixin],
   props: {
     customersData: {
-      type: Array,
+      type: Array | Object,
       default: null,
     },
     watching2: {
