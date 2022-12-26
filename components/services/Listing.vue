@@ -1,6 +1,8 @@
 <template>
   <section class="rounded">
-    <h1 class="p-4">Serviços cadastrados</h1>
+    <div class="d-flex align-items-center mb-2">
+      <h1 class="p-4 w-75">Serviços cadastrados</h1>
+    </div>
     <ul>
       <li v-for="(servicoLista, index) in servicesData" :key="index" class="card-servico p-4">
         <div class="d-flex align-items-center">
@@ -18,8 +20,8 @@
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
-            <img src="~/assets/img/icones/edit-icon.svg" alt="icone para editar" role="button" class="mr-3" width="22" height="24"
-              @click="showEditar(servicoLista)" />
+            <img src="~/assets/img/icones/edit-icon.svg" alt="icone para editar" role="button" class="mr-3" width="22"
+              height="24" @click="showEditar(servicoLista)" />
 
             <img src="~/assets/img/icones/delete-icon.svg" alt="icone para deletar" role="button" width="22" height="24"
               @click="showExcluir(servicoLista)" />
@@ -29,16 +31,18 @@
       </li>
       <Delete :id="id" />
     </ul>
+    <Add />
   </section>
 </template>
 
 <script>
+import Add from '~/components/services/Add.vue';
 import Edit from './Edit.vue';
 import Delete from '~/components/services/Delete.vue';
 
 export default {
   name: 'Listing',
-  components: { Delete, Edit },
+  components: { Delete, Edit, Add },
   props: {
     servicesData: {
       type: Array,
@@ -82,7 +86,7 @@ export default {
 
 <style lang="scss" scoped>
 section {
-  height: 70vh;
+  height: 35rem;
   background: var(--gray-10);
   box-shadow: 0px 4px 4px rgba(0, 71, 187, 0.06);
 
