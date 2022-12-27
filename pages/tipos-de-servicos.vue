@@ -9,7 +9,7 @@
       <div>
         <Listing :watching="telaName" :services-data="servicesData" />
         <Add />
-        <div class="footer mx-4">
+        <div class="footer">
           <button @click="criar">Criar Serviço</button>
         </div>
       </div>

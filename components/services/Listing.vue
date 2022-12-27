@@ -1,7 +1,7 @@
 <template>
   <section class="rounded">
     <div class="d-flex align-items-center mb-2">
-      <h1 class="p-4 w-75">Serviços cadastrados</h1>
+      <h1 class="p-4">Serviços cadastrados</h1>
     </div>
     <ul>
       <li v-for="(servicoLista, index) in servicesData" :key="index" class="card-servico p-4">

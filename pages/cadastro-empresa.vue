@@ -10,8 +10,8 @@
             <b-form-group class="mb-4">
               <label for="name">Nome <span class="requerido">*</span></label>
               <b-form-input v-model="formData.name" name="name" type="text" placeholder="João" :class="{
-                'is-invalid': $v.formData.name.$error,
-              }" />
+  'is-invalid': $v.formData.name.$error,
+}" />
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -22,8 +22,8 @@
             <b-form-group class="mb-4">
               <label for="last_name">Sobrenome <span class="requerido">*</span></label>
               <b-form-input v-model="formData.last_name" name="last_name" type="text" placeholder="Souza" :class="{
-                'is-invalid': $v.formData.last_name.$error,
-              }" />
+  'is-invalid': $v.formData.last_name.$error,
+}" />
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -38,19 +38,19 @@
             placeholder="00.000.000/000-00" :class="{ 'is-invalid': $v.formData.cnpj.$error }" />
           <b-form-invalid-feedback v-if="formData.type == 'pj'">
             {{
-                !$v.formData.cnpj.minLength
-                  ? 'Insira um CNPJ válido'
-                  : 'Preencha o campo acima'
-            }}
+    !$v.formData.cnpj.minLength
+      ? 'Insira um CNPJ válido'
+      : 'Preencha o campo acima'
+}}
           </b-form-invalid-feedback>
           <b-form-input v-if="formData.type == 'f'" v-model="formData.cpf" v-mask="['###.###.###-##']" name="cpf"
             placeholder="000.000.000-00" :class="{ 'is-invalid': $v.formData.cpf.$error }" />
           <b-form-invalid-feedback v-if="formData.type == 'f'">
             {{
-                !$v.formData.cpf.minLength
-                  ? 'Insira um CPF válido'
-                  : 'Preencha o campo acima'
-            }}
+    !$v.formData.cpf.minLength
+      ? 'Insira um CPF válido'
+      : 'Preencha o campo acima'
+}}
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -62,10 +62,10 @@
                 :class="{ 'is-invalid': $v.formData.rg.$error }" />
               <b-form-invalid-feedback>
                 {{
-                    !$v.formData.rg.minLength
-                      ? 'Insira um RG válido'
-                      : 'Preencha o campo acima'
-                }}
+    !$v.formData.rg.minLength
+      ? 'Insira um RG válido'
+      : 'Preencha o campo acima'
+}}
               </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
@@ -77,8 +77,8 @@
               <label for="corporate_name">Razão Social <span class="requerido">*</span></label>
               <b-form-input v-model="formData.corporate_name" name="corporate_name" type="text" placeholder="Empresa X"
                 :class="{
-                  'is-invalid': $v.formData.corporate_name.$error,
-                }" />
+  'is-invalid': $v.formData.corporate_name.$error,
+}" />
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -91,10 +91,10 @@
                 placeholder="000.000.000" :class="{ 'is-invalid': $v.formData.state_registration.$error }" />
               <b-form-invalid-feedback>
                 {{
-                    !$v.formData.state_registration.minLength
-                      ? 'Insira uma IE válida'
-                      : 'Preencha o campo acima'
-                }}
+    !$v.formData.state_registration.minLength
+      ? 'Insira uma IE válida'
+      : 'Preencha o campo acima'
+}}
               </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
@@ -126,14 +126,14 @@
         <b-form-group class="mb-4">
           <label for="email">E-mail <span class="requerido">*</span></label>
           <b-form-input v-model="formData.email" name="email" type="email" placeholder="email@gmail.com" :class="{
-            'is-invalid': $v.formData.email.$error,
-          }" />
+  'is-invalid': $v.formData.email.$error,
+}" />
           <b-form-invalid-feedback>
             {{
-                !$v.formData.email.email
-                  ? 'Insira um e-mail válido'
-                  : 'Preencha o campo acima'
-            }}
+    !$v.formData.email.email
+      ? 'Insira um e-mail válido'
+      : 'Preencha o campo acima'
+}}
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -141,28 +141,28 @@
           <label for="phone">Telefone <span class="requerido">*</span></label>
           <b-form-input v-model="formData.phone" v-mask="['(##) ####-####', '(##) #####-####']" name="phone"
             placeholder="(00) 0 0000-0000" :class="{
-              'is-invalid': $v.formData.phone.$error,
-            }" />
+  'is-invalid': $v.formData.phone.$error,
+}" />
           <b-form-invalid-feedback>
             {{
-                !$v.formData.phone.minLength
-                  ? 'Insira um telefone válido'
-                  : 'Preencha o campo acima'
-            }}
+    !$v.formData.phone.minLength
+      ? 'Insira um telefone válido'
+      : 'Preencha o campo acima'
+}}
           </b-form-invalid-feedback>
         </b-form-group>
 
         <b-form-group class="mb-4">
           <label for="cep">CEP <span class="requerido">*</span></label>
           <b-form-input v-model="formData.cep" v-mask="['########']" name="cep" placeholder="00000-000" :class="{
-            'is-invalid': $v.formData.cep.$error,
-          }" @keyup.prevent="searchCep()" />
+  'is-invalid': $v.formData.cep.$error,
+}" @keyup.prevent="searchCep()" />
           <b-form-invalid-feedback>
             {{
-                !$v.formData.cep.minLength
-                  ? 'Insira um CEP válido'
-                  : 'Preencha o campo acima'
-            }}
+    !$v.formData.cep.minLength
+      ? 'Insira um CEP válido'
+      : 'Preencha o campo acima'
+}}
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -171,8 +171,8 @@
             <b-form-group class="mb-4">
               <label for="address">Endereço <span class="requerido">*</span></label>
               <b-form-input v-model="formData.address" name="address" type="text" placeholder="Rua" :class="{
-                'is-invalid': $v.formData.address.$error,
-              }" />
+  'is-invalid': $v.formData.address.$error,
+}" />
 
               <b-form-invalid-feedback>
                 Preencha o campo acima
@@ -184,8 +184,8 @@
             <b-form-group class="mb-4">
               <label for="district">Bairro <span class="requerido">*</span></label>
               <b-form-input v-model="formData.district" name="district" type="text" placeholder="-" :class="{
-                'is-invalid': $v.formData.district.$error,
-              }" />
+  'is-invalid': $v.formData.district.$error,
+}" />
 
               <b-form-invalid-feedback>
                 Preencha o campo acima
@@ -199,8 +199,8 @@
             <b-form-group class="mb-4">
               <label for="city">Cidade <span class="requerido">*</span></label>
               <b-form-input v-model="formData.city" name="city" type="text" placeholder="Cidade" :class="{
-                'is-invalid': $v.formData.city.$error,
-              }" />
+  'is-invalid': $v.formData.city.$error,
+}" />
 
               <b-form-invalid-feedback>
                 Preencha o campo acima
@@ -212,8 +212,8 @@
             <b-form-group class="mb-4">
               <label for="state">Estado <span class="requerido">*</span></label>
               <b-form-input v-model="formData.state" name="state" type="text" placeholder="Estado" :class="{
-                'is-invalid': $v.formData.state.$error,
-              }" />
+  'is-invalid': $v.formData.state.$error,
+}" />
 
               <b-form-invalid-feedback>
                 Preencha o campo acima
@@ -227,8 +227,8 @@
             <b-form-group class="mb-4">
               <label for="number">Número <span class="requerido">*</span></label>
               <b-form-input v-model="formData.number" name="number" type="number" placeholder="000" :class="{
-                'is-invalid': $v.formData.number.$error,
-              }" />
+  'is-invalid': $v.formData.number.$error,
+}" />
               <b-form-invalid-feedback>
                 Preencha o campo acima
               </b-form-invalid-feedback>
@@ -263,8 +263,8 @@
             </div>
           </label>
           <div v-else class="d-flex flex-column justify-content-center align-items-center">
-            <b-img rel="preload" src="~/assets/img/icones/delete-icon.svg" role="button" alt="icone de deletar" class="ml-5 pl-5 pb-2"
-              aria-describedby="helpBlock" @click="excluiFoto" />
+            <b-img rel="preload" src="~/assets/img/icones/delete-icon.svg" role="button" alt="icone de deletar"
+              class="ml-5 pl-5 pb-2" aria-describedby="helpBlock" @click="excluiFoto" />
             <img rel="preload" :src="formData.photo" alt="" width="100" class="pb-5" />
           </div>
           <small id="helpBlock" class="form-text text-muted mt-n4 mb-4">
@@ -279,14 +279,14 @@
               <label for="password">Senha <span class="requerido">*</span></label>
               <b-form-input v-model="$v.formData.password.$model" name="password" type="password" placeholder="********"
                 aria-describedby="helpPassword" :class="{
-                  'is-invalid': $v.formData.password.$error,
-                }" />
+  'is-invalid': $v.formData.password.$error,
+}" />
               <b-form-invalid-feedback>
                 {{
-                    !$v.formData.password.minLength
-                      ? 'No mínimo 8 caracteres'
-                      : 'Insira uma senha'
-                }}
+    !$v.formData.password.minLength
+      ? 'No mínimo 8 caracteres'
+      : 'Insira uma senha'
+}}
               </b-form-invalid-feedback>
             </b-form-group>
             <small id="helpPassword" class="form-text text-muted mt-n4 mb-4">
@@ -299,14 +299,14 @@
               <label for="confirm_password">Confirmar Senha <span class="requerido">*</span></label>
               <b-form-input v-model="$v.formData.confirm_password.$model" name="confirm_password" type="password"
                 placeholder="********" :class="{
-                  'is-invalid': $v.formData.confirm_password.$error,
-                }" />
+  'is-invalid': $v.formData.confirm_password.$error,
+}" />
               <b-form-invalid-feedback>
                 {{
-                    !$v.formData.confirm_password.sameAsPassword
-                      ? 'Senhas diferentes'
-                      : 'Insira uma senha'
-                }}
+    !$v.formData.confirm_password.sameAsPassword
+      ? 'Senhas diferentes'
+      : 'Insira uma senha'
+}}
               </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
@@ -324,8 +324,8 @@
           </b-row>
           <b-form-checkbox v-model="formData.term" name="term" :value="true" :unchecked-value="false" class="mt-2"
             :class="{
-              'is-invalid': $v.formData.term.$error,
-            }">
+  'is-invalid': $v.formData.term.$error,
+}">
             Li e Concordo
           </b-form-checkbox>
           <b-form-invalid-feedback> Campo obrigatório </b-form-invalid-feedback>
@@ -345,7 +345,7 @@
         <div class="d-flex flex-column align-items-center">
           <img src="~/assets/img/icones/email-icon.svg" alt="" class="py-4" />
           <h3 class="text-center">Cadastro realizado com sucesso!</h3>
-          <NuxtLink to="/">Clique aqui para realizar o login</NuxtLink>
+          <NuxtLink to="/login">Clique aqui para realizar o login</NuxtLink>
         </div>
       </b-modal>
     </div>
@@ -484,7 +484,7 @@ export default {
       },
       address: { required },
       photo: { required },
-      term: {required},
+      term: { required },
     },
   },
   head() {
@@ -495,7 +495,6 @@ export default {
 
   mounted() {
     console.log('teste no cadastro::', this.$nameTeste);
-    console.log('teste no função::', this.$showName('Pedro Santos'));
   },
 
   methods: {

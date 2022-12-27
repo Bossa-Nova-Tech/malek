@@ -8,7 +8,7 @@
         </h1>
 
         <img src="~/assets/img/icones/X-icon.svg" class="mt-3" alt="icone para fechar" role="button"
-          @click.once="$bvModal.hide(`view-visit-${visitaItem.id}`)" />
+          @click="salvarFoto" />
       </div>
       <h3>Tipo de serviço</h3>
       <p>{{ task.services }}</p>
@@ -33,7 +33,6 @@
         </b-tooltip>
       </div>
       <input @change="foto_selecionada" type="file" ref="arquivo" accept="image/*" class="d-none" />
-      <b-img width="200px" height="200px" />
       <ul class="list-unstyled">
         <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
           <h6>Título da foto:</h6>
@@ -152,7 +151,7 @@ export default {
       default: null,
     },
     task: {
-      type: Array,
+      type: Array | Object,
       default: null,
     },
     center: {
@@ -205,26 +204,7 @@ export default {
     },
   },
   methods: {
-    async putPhoto() {
-      try {
-        this.visits = {
-          date_visit: this.visitaItem.date_visit,
-          hour_visit: this.visitaItem.hour_visit,
-          user_id: this.visitaItem.user_id,
-          photo: this.photo,
-        };
-        await this.$axios
-          .put('visit/' + visitaItem.id, this.$data.visits)
-          .then((_res) => {
-            this.$root.$emit('bv::hide::modal', 'visitas');
-            this.toast('success', 'Sucesso', 'Visita adicionada com sucesso!');
-            /* this.$router.go( 0); */
-          });
-        this.$nuxt.refresh().catch((_err) => { });
-      } catch (error) {
-        console.log(error);
-      }
-    },
+
     addFoto() {
       $(this.$refs.arquivo).trigger('click');
     },
@@ -260,24 +240,32 @@ export default {
           this.$data.comment,
         );
         this.listComment = true;
+        await this.salvarFoto();
+        this.$bvModal.hide('view-visit-' + this.visitaItem.id);
       }
-      try {
-        this.visits = {
-          date_visit: this.visitaItem.date_visit,
-          hour_visit: this.visitaItem.hour_visit,
-          user_id: this.visitaItem.user_id,
-          photo: this.photo,
-        };
-        await this.$axios
-          .put('tasks/visit/' + this.visitaItem.id, this.$data.visits)
-          .then((_res) => {
-            this.$root.$emit('bv::hide::modal', 'visitas');
-            this.toast('success', 'Sucesso', 'Visita atualizada com sucesso!');
-            /* this.$router.go( 0); */
-          });
-        this.$nuxt.refresh().catch((_err) => { });
-      } catch (error) {
-        console.log(error);
+    },
+    async salvarFoto() {
+      if (this.fotos) {
+        try {
+          this.visits = {
+            date_visit: this.visitaItem.date_visit,
+            hour_visit: this.visitaItem.hour_visit,
+            user_id: this.visitaItem.user_id,
+            photo: this.photo,
+          };
+          await this.$axios
+            .put('tasks/visit/' + this.visitaItem.id, this.$data.visits)
+            .then((_res) => {
+              this.$root.$emit('bv::hide::modal', 'visitas');
+              this.toast('success', 'Sucesso', 'Visita atualizada com sucesso!');
+              /* this.$router.go( 0); */
+            });
+          this.$bvModal.hide('view-visit-' + this.visitaItem.id);
+          this.$nuxt.refresh().catch((_err) => { });
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
         this.$bvModal.hide('view-visit-' + this.visitaItem.id);
       }
     },

@@ -2,27 +2,27 @@
   <b-container>
     <main class="row justify-content-center align-items-center min-vh-100">
       <b-form class="col col-lg-6">
-        <img alt="logo" class="row mx-auto" src="~/assets/img/V1.webp" width="200px" height="200px"/>
+        <img class="row mx-auto" alt="logo" src="~/assets/img/V1.webp" width="200px" height="200px" />
 
         <b-form-group class="mb-3">
           <label for="email">E-mail ou CPF / CNPJ</label>
           <b-form-input v-model="formData.email" name="email" type="email" placeholder="email@gmail.com" :class="{
-            'is-invalid': $v.formData.email.$error,
-          }" />
+  'is-invalid': $v.formData.email.$error,
+}" />
           <b-form-invalid-feedback>
             {{
-                !$v.formData.email.email
-                  ? 'Insira um e-mail válido'
-                  : 'Preencha o campo acima'
-            }}
+    !$v.formData.email.email
+      ? 'Insira um e-mail válido'
+      : 'Preencha o campo acima'
+}}
           </b-form-invalid-feedback>
         </b-form-group>
 
         <b-form-group class="mb-3">
           <label for="password">Senha</label>
           <b-form-input v-model="formData.password" name="password" type="password" placeholder="******" :class="{
-            'is-invalid': $v.formData.password.$error,
-          }" />
+  'is-invalid': $v.formData.password.$error,
+}" />
           <b-form-invalid-feedback>
             Preencha o campo acima
           </b-form-invalid-feedback>
@@ -59,10 +59,11 @@ export default {
 
   data: () => {
     return {
+      onboarding: true,
       formSend: false,
       formData: {
-        email: 'admin@admin.com',
-        password: 'admin@123',
+        email: null,
+        password: null,
         checked: false,
       },
     };
@@ -93,7 +94,16 @@ export default {
       },
     },
   },
+  mounted() {
+    localStorage.onboarding = this.onboarding;
 
+    if (localStorage.password) {
+      this.formData.password = localStorage.password;
+    }
+    if (localStorage.email) {
+      this.formData.email = localStorage.email;
+    }
+  },
   methods: {
     async login() {
       this.$v.$touch();
@@ -115,6 +125,10 @@ export default {
             } else {
               window.$nuxt.$router.push('/ordem-de-servicos');
             }
+          }
+          if (this.formData.checked) {
+            localStorage.email = this.formData.email;
+            localStorage.password = this.formData.password;
           }
         } catch (error) {
           console.log(error);
