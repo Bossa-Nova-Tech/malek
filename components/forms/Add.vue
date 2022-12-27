@@ -279,7 +279,6 @@ export default {
   methods: {
     adicionarPergunta(index) {
       this.formData.ask.push({
-        id: 1,
         text: null,
         type_of: null,
         answer_options: [
