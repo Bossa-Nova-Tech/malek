@@ -16,7 +16,7 @@
               # {{ visita.task_id }} {{ visita.services }}
             </h2>
             <p class="gray-40">
-              Quem irá atender: <strong>{{ visita.user_id }}</strong>
+              Quem irá atender: <strong>{{ visita.user.name }}</strong>
             </p>
           </div>
         </div>
