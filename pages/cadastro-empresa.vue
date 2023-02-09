@@ -245,10 +245,10 @@
         </b-row>
 
         <b-form-file id="file" v-model="formData.photo" accept="image/jpeg, image/png, image/jpg" plain
-          :class="{ 'is-invalid': $v.formData.photo.$error }" @change="onFileChange"></b-form-file>
-        <b-form-feedback class="text-center h5">
+           @change="onFileChange"></b-form-file>
+        <!-- <b-form-feedback class="text-center h5">
           Envio necessário. Clique abaixo para fazer o upload da sua photo.
-        </b-form-feedback>
+        </b-form-feedback> -->
         <div class="campo-foto">
           <label v-if="!formData.photo" for="file">
             <div class="
@@ -483,7 +483,6 @@ export default {
         }),
       },
       address: { required },
-      photo: { required },
       term: { required },
     },
   },
