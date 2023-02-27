@@ -1,6 +1,6 @@
 <template>
   <section class="rounded">
-    <h1 class="p-4">Acontecendo hoje</h1>
+    <h1 class="p-4">Agendadas</h1>
     <ul>
       <li
         v-for="(visita, index) in filteredList"
@@ -29,7 +29,7 @@
         </div>
         <div class="d-flex align-items-center" @click="showVer(visita)">
           <b-img :src="photo_perfil.photo" alt="foto de perfil" />
-          <p class="pl-2">Cliente</p>
+          <p class="pl-2">{{ visita.task.name_customer }}</p>
           <b-badge
             v-if="visita.status === 'scheduled'"
             variant="success"

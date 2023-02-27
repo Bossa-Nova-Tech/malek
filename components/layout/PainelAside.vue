@@ -8,10 +8,7 @@
         class="my-5 profile rounded-circle"></b-img>
       <div class="d-flex align-items-center justify-content-center mb-2">
         <h4 class="mb-0">Olá {{ $auth.user.name }}</h4>
-        <config :address="address" :photo_url="photo_url" :state="state" :number="number" :city="city"
-          :district="district" :cep="cep" :fantasy_name="fantasy_name" :social_reason="social_reason" :cpf="cpf"
-          :cnpj="cnpj" :complement="complement" :phone="phone" :email="email" :state_registration="state_registration"
-          :photo="photo" :passwor="password" :name="name" />
+        <config :companies-data="companiesData" />
       </div>
       <p class="pb-3">Acompanhe as ordens de serviço hoje</p>
     </div>
@@ -160,6 +157,7 @@ export default {
       password: null,
       complement: null,
       name: null,
+      companiesData: [],
     };
   },
   async mounted() {
@@ -168,6 +166,7 @@ export default {
         'companies/' + this.$auth.user.company_id,
       );
       const companiesData = companie.data;
+      this.companiesData = companiesData;
       this.photo_url = companiesData.logo_url;
       if (!this.$auth.user.address) {
         this.address = companiesData.address;

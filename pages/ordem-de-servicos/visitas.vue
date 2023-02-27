@@ -5,15 +5,24 @@
       <PainelAside v-if="$screen.lg" />
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto position-relative" align="center">
-          <b-tab id="em-atraso" title="Em atraso" class="mt-4">
-            <ListingAgendadas :visits-data="visitsData"/>
+          <b-tab id="em-atraso" title="Agendadas" class="mt-4">
+            <ListingAgendadas
+              :visits-data="visitsData"
+              :customers-data="customersData"
+            />
           </b-tab>
-          <b-tab id="hoje" title="Hoje" active class="mt-4">
-            <Listing :visits-data="visitsData"  />
+          <b-tab id="hoje" title="Em atendimento" active class="mt-4">
+            <Listing
+              :visits-data="visitsData"
+              :customers-data="customersData"
+            />
           </b-tab>
 
-          <b-tab id="futuras" title="Futuras" class="mt-4">
-            <ListingFinalizadas :visits-data="visitsData" />
+          <b-tab id="futuras" title="Finalizadas" class="mt-4">
+            <ListingFinalizadas
+              :visits-data="visitsData"
+              :customers-data="customersData"
+            />
           </b-tab>
         </b-tabs>
       </div>

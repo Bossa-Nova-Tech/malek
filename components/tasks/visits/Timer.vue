@@ -114,7 +114,8 @@ export default {
         this.start = false;
         this.stop = true;
         this.pause = true;
-/*         temos que igualar dessa maneira pq na api estão como required */        this.visit.status = 'in_progress',
+/*         temos que igualar dessa maneira pq na api estão como required */
+        this.visit.status = 'in_progress',
         this.visit.user_id = this.visita.user_id;
         this.visit.date_visit = this.visita.date_visit;
         this.visit.hour_visit =this.visita.hour_visit;

@@ -17,7 +17,7 @@
       <b-row v-if="isFiltered" class="mx-auto border p-2 py-4 rounded">
         <b-col cols="12">
           <span class="h5">Filtre sua busca:</span>
-          <p class="mb-2 mt-3">Nome/Número OS:</p>
+          <p class="mb-2 mt-3">Nome do cliente ou Número OS:</p>
           <b-form-input
             v-model="search"
             size="sm"
@@ -121,6 +121,7 @@
             class="ml-3"
             >Em andamento</b-badge
           >
+
           <b-badge
             v-if="itemOrdem.status === 'canceled'"
             variant="danger"

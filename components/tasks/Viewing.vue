@@ -138,7 +138,7 @@ export default {
     async imprimirOS() {
       await this.$axios.get(`order-service/pdf/${this.ordem_item.id}`);
       const link =
-        'https://api-malek-staging.sddg.com.br/api/v1/order-service/pdf/';
+        'https://malek.lunarcode.com.br/api/v1/order-service/pdf/';
       console.log(link);
       window.open(`${link}${this.ordem_item.id}`);
     },
