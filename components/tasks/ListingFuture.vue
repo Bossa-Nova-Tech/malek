@@ -9,20 +9,29 @@
           role="button"
           src="~/assets/img/icones/sliders.svg"
           alt="Icone filtro"
-          @click="isFiltered = !isFiltered"
+          v-b-modal.filtro-3
         />
       </b-col>
     </div>
-    <b-container class="my-2">
-      <b-row v-if="isFiltered" class="mx-auto border p-2 py-4 rounded">
+    <b-modal id="filtro-3">
+      <b-row class="mx-auto border p-2 py-4 rounded">
         <b-col cols="12">
           <span class="h5">Filtre sua busca:</span>
-          <p class="mb-2 mt-3">Nome/Número OS:</p>
+          <p class="mb-2 mt-3">Nome do cliente ou Número OS:</p>
           <b-form-input
             v-model="search"
             size="sm"
             placeholder="Digite sua busca"
           ></b-form-input>
+        </b-col>
+        <b-col cols="12" class="mt-2">
+          <p class="mb-2">Status:</p>
+          <b-form-checkbox-group
+            v-model="selected"
+            :options="options"
+            size="sm"
+            :unchecked-value="null"
+          ></b-form-checkbox-group>
         </b-col>
         <b-col cols="12" class="mt-2">
           <!-- <p class="mb-2">Data OS:</p>
@@ -43,6 +52,8 @@
           >
         </b-col>
       </b-row>
+    </b-modal>
+    <b-container class="my-2">
     </b-container>
     <ul>
       <li
