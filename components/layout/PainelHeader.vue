@@ -3,23 +3,18 @@
     <header>
       <div v-if="$screen.lg">
         <div class="bg-separado"></div>
-
         <div class="titulo container">
           <img v-if="$auth.user.photo_url" :src="$auth.user.photo_url" width="140" alt="foto" height="140"
             class="profile rounded-circle" />
-          <img v-if="photo_url" :src="photo_url" width="140" alt="foto" height="140"
-            class="my-5 profile rounded-circle" />
-          <div>
+            <div>
             <div class="d-flex align-items-center mb-3">
               <h1 class="mb-0">Olá {{ $auth.user.name }}</h1>
-              <config :address="address" :photo_url="photo_url" :photo="photo" :state="state" :number="number"
-                :city="city" :district="district" :cep="cep" :fantasy_name="fantasy_name" :name="name"
-                :social_reason="social_reason" :cpf="cpf" :cnpj="cnpj" :complement="complement" :phone="phone"
-                :email="email" :password="password" :state_registration="state_registration" />
+              <config :companiesData="companiesData" />
             </div>
             <!-- <h1>Olá {{ $auth.user.name }},</h1>
             <config /> -->
             <p>Acompanhe por aqui o desempenho geral da sua empresa</p>
+
           </div>
         </div>
       </div>
@@ -40,6 +35,7 @@
 export default {
   data() {
     return {
+      companiesData: [],
       photo_url: null,
       address: null,
       number: null,
@@ -69,63 +65,12 @@ export default {
     },
   },
   async mounted() {
-    if (!this.$auth.user.photo_url) {
       const companie = await this.$axios.get(
-        'companies/' + this.$auth.user.company_id,
+        'companies/' +  this.$auth.user.company_id,
       );
-      const companiesData = companie.data;
-      this.photo_url = companiesData.logo_url;
-      if (!this.$auth.user.address) {
-        this.address = companiesData.address;
-      }
-      this.email = this.$auth.user.email;
-      if (!this.$auth.user.password) {
-        this.password = companiesData.password;
-      } else {
-        this.password = this.$auth.user.password;
-      }
-      if (!this.$auth.user.district) {
-        this.district = companiesData.district;
-      } else {
-        this.district = this.$auth.user.district;
-      }
-      if (!this.$auth.user.photo) {
-        this.photo = companiesData.logo;
-      }
-      if (companiesData.fantasy_name) {
-        this.fantasy_name = companiesData.fantasy_name
-      }
-      if (!this.$auth.user.number) {
-        this.number = companiesData.number;
-      }
-      if (!this.$auth.user.complement) {
-        this.complement = companiesData.complement;
-      }
-      if (!this.$auth.user.state) {
-        this.state = companiesData.state;
-      }
-      if (!this.$auth.user.city) {
-        this.city = companiesData.city;
-      }
-      if (!this.$auth.user.cep) {
-        this.cep = companiesData.cep;
-      }
-      if (!this.$auth.user.cpf) {
-        this.cpf = companiesData.cpf;
-      }
-      this.name = this.$auth.user.name;
-      if (!this.$auth.user.photo) {
-        this.photo = companiesData.photo;
-      }
-      if (!this.$auth.user.cnpj) {
-        this.cnpj = companiesData.cnpj;
-      }
-      if (!this.$auth.user.phone) {
-        this.phone = companiesData.phone;
-      }
-      this.state_registration = this.$auth.user.state_registration;
-      this.social_reason = this.$auth.user.social_reason;
-    }
+
+      this.companiesData = companie.data;
+      console.log('dados da empres: ' + this.companiesData);
   },
 };
 </script>

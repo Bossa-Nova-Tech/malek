@@ -33,6 +33,7 @@
     <b-modal id="modal-1" hide-footer hide-header centered>
       <div class="d-flex justify-content-between mb-3">
         <h1>Configurações</h1>
+
         <img
           src="~/assets/img/icones/X-icon.svg"
           role="button"
@@ -62,7 +63,7 @@
         />
       </div>
       <div v-if="editAccount" class="mx-3 my-3">
-        <b-img :src="companiesData.logo_url" />
+        <b-img v-if="companiesData.logo" :src="companiesData.logo_url" />
         <h3>Configurações do usuário</h3>
         <b-form-group class="my-2">
           <label for="nome">Nome</label>
@@ -78,12 +79,7 @@
           <label for="email">Email</label>
           <b-form-input name="email" v-model="user_email"> </b-form-input>
         </b-form-group>
-        <div
-          v-if="
-            this.$auth.user.role === 'administrator' &&
-            this.$auth.user.status === 'active'
-          "
-        >
+        <div v-if="this.$auth.user.role === 'administrator'">
           <h3>Configurações da empresa</h3>
           <b-form-group class="my-2">
             <label for="nome_fantasia">Nome Fantasia</label>
@@ -325,6 +321,7 @@ export default {
       this.companieFormData.name = this.userFormData.name;
       this.companieFormData.last_name = this.userFormData.last_name;
       this.companieFormData.logo_url = this.companiesData.logo_url;
+      this.companieFormData.logo = this.companiesData.logo;
       this.companieFormData.cpf = this.companiesData.cpf;
       this.companieFormData.cnpj = this.companiesData.cnpj;
       this.companieFormData.cep = this.companiesData.cep;

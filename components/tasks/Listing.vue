@@ -9,12 +9,12 @@
           role="button"
           src="~/assets/img/icones/sliders.svg"
           alt="Icon filters"
-          @click="isFiltered = !isFiltered"
+          v-b-modal.filtro
         />
       </b-col>
     </div>
-    <b-container class="my-2">
-      <b-row v-if="isFiltered" class="mx-auto border p-2 py-4 rounded">
+    <b-modal id="filtro">
+      <b-row class="mx-auto border p-2 py-4 rounded">
         <b-col cols="12">
           <span class="h5">Filtre sua busca:</span>
           <p class="mb-2 mt-3">Nome do cliente ou Número OS:</p>
@@ -52,7 +52,8 @@
           >
         </b-col>
       </b-row>
-    </b-container>
+    </b-modal>
+    <b-container class="my-2"> </b-container>
     <ul>
       <li
         v-for="(itemOrdem, index) in filteredList"
@@ -142,7 +143,12 @@
           >
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
-        <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" :customersData="customersData" />
+        <Edit
+          :ordem_item="itemOrdem"
+          :watching="id"
+          :clientes="id"
+          :customersData="customersData"
+        />
         <Viewing :id="id" :ordem_item="itemOrdem" :center="center" />
       </li>
       <Delete :id="id" />
@@ -186,7 +192,7 @@ export default {
     customersData: {
       type: Object | Array,
       default: null,
-    }
+    },
   },
 
   data() {
@@ -253,7 +259,6 @@ export default {
         this.$bvModal.show(`view-task-${this.id}`);
       });
       this.ordem_selecionada = itemOrdem;
-
     },
     showConcluir(itemOrdem) {
       this.id = itemOrdem.id;

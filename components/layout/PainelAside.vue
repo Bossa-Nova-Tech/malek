@@ -10,6 +10,7 @@
         <h4 class="mb-0">Olá {{ $auth.user.name }}</h4>
         <config :companies-data="companiesData" />
       </div>
+      
       <p class="pb-3">Acompanhe as ordens de serviço hoje</p>
     </div>
 
@@ -161,64 +162,12 @@ export default {
     };
   },
   async mounted() {
-    if (!this.$auth.user.photo_url) {
+
       const companie = await this.$axios.get(
         'companies/' + this.$auth.user.company_id,
       );
-      const companiesData = companie.data;
-      this.companiesData = companiesData;
-      this.photo_url = companiesData.logo_url;
-      if (!this.$auth.user.address) {
-        this.address = companiesData.address;
-      }
-      this.email = this.$auth.user.email;
-      if (!this.$auth.user.password) {
-        this.password = companiesData.password;
-      } else {
-        this.password = this.$auth.user.password;
-      }
-      if (!this.$auth.user.district) {
-        this.district = companiesData.district;
-      } else {
-        this.district = this.$auth.user.district;
-      }
-      if (!this.$auth.user.photo) {
-        this.photo = companiesData.logo;
-      }
-      if (companiesData.fantasy_name) {
-        this.fantasy_name = companiesData.fantasy_name
-      }
-      if (!this.$auth.user.number) {
-        this.number = companiesData.number;
-      }
-      if (!this.$auth.user.complement) {
-        this.complement = companiesData.complement;
-      }
-      if (!this.$auth.user.state) {
-        this.state = companiesData.state;
-      }
-      if (!this.$auth.user.city) {
-        this.city = companiesData.city;
-      }
-      if (!this.$auth.user.cep) {
-        this.cep = companiesData.cep;
-      }
-      if (!this.$auth.user.cpf) {
-        this.cpf = companiesData.cpf;
-      }
-      this.name = this.$auth.user.name;
-      if (!this.$auth.user.photo) {
-        this.photo = companiesData.photo;
-      }
-      if (!this.$auth.user.cnpj) {
-        this.cnpj = companiesData.cnpj;
-      }
-      if (!this.$auth.user.phone) {
-        this.phone = companiesData.phone;
-      }
-      this.state_registration = this.$auth.user.state_registration;
-      this.social_reason = this.$auth.user.social_reason;
-    }
+      this.companiesData = companie.data;
+
   },
   methods: {
     async logout() {
