@@ -63,80 +63,92 @@
         />
       </div>
       <div v-if="editAccount" class="mx-3 my-3">
-        <b-img v-if="companiesData.logo" :src="companiesData.logo_url" />
-        <h3>Configurações do usuário</h3>
+        <b-img
+          v-if="companiesData.data.logo"
+          :src="companiesData.data.logo_url"
+        />
+        <!-- <h3>Configurações do usuário</h3>
         <b-form-group class="my-2">
           <label for="nome">Nome</label>
-          <b-form-input name="nome" v-model="user_name"> </b-form-input>
+          <b-form-input v-model="user_name"> </b-form-input>
+          {{ user_name }}
+          {{ userFormData.name }}
         </b-form-group>
         <b-form-group class="my-2">
           <label for="sobrenome">Sobrenome</label>
           <b-form-input name="sobrenome" v-model="user_last_name">
           </b-form-input>
         </b-form-group>
-        <pre>{{ user_last_name }}</pre>
         <b-form-group class="my-2">
           <label for="email">Email</label>
           <b-form-input name="email" v-model="user_email"> </b-form-input>
-        </b-form-group>
+        </b-form-group> -->
         <div v-if="this.$auth.user.role === 'administrator'">
           <h3>Configurações da empresa</h3>
           <b-form-group class="my-2">
             <label for="nome_fantasia">Nome Fantasia</label>
             <b-form-input
               name="nome_fantasia"
-              v-model="companiesData.fantasy_name"
+              v-model="companiesData.data.fantasy_name"
             >
             </b-form-input>
           </b-form-group>
-          <b-form-group class="my-2">
+          <!-- <b-form-group class="my-2">
             <label for="site">Site</label>
-            <b-form-input name="site" v-model="companiesData.site">
+            <b-form-input name="site" v-model="companiesData.data.site">
+            </b-form-input>
+          </b-form-group> -->
+          <b-form-group class="my-2">
+            <label for="site">Email</label>
+            <b-form-input name="site" v-model="companiesData.data.email">
             </b-form-input>
           </b-form-group>
-          <b-form-group v-if="companiesData.cnpj" class="my-2">
-            <label for="cnpj">CNPJ</label>
-            <b-form-input name="cnpj" v-model="companiesData.cnpj">
+          <b-form-group
+            v-if="companiesData.data.cpfCnpj.length > 14"
+            class="my-2"
+          >
+            <label for="cpfCnpj">CNPJ</label>
+            <b-form-input name="cpfCnpj" v-model="companiesData.data.cpfCnpj">
             </b-form-input>
           </b-form-group>
           <b-form-group v-else class="my-2">
-            <label for="cpf">CPF</label>
-            <b-form-input name="cpf" v-model="companiesData.cpf">
+            <label for="cpfCnpj">CPF</label>
+            <b-form-input name="cpfCnpj" v-model="companiesData.data.cpfCnpj">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="cep">CEP</label>
-            <b-form-input name="cep" v-model="companiesData.cep">
+            <b-form-input name="cep" v-model="companiesData.data.cep">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="cidade">Cidade</label>
-            <b-form-input name="cidade" v-model="companiesData.city">
+            <b-form-input name="cidade" v-model="companiesData.data.city">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="estado">Estado</label>
-            <b-form-input name="estado" v-model="companiesData.state">
+            <b-form-input name="estado" v-model="companiesData.data.state">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="endereco">Endereço</label>
-            <b-form-input name="endereco" v-model="companiesData.address">
+            <b-form-input name="endereco" v-model="companiesData.data.address">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="numero">Número</label>
-            <b-form-input name="numero" v-model="companiesData.number">
+            <b-form-input name="numero" v-model="companiesData.data.number">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="bairro">Bairro</label>
-            <b-form-input name="bairro" v-model="companiesData.district">
+            <b-form-input name="bairro" v-model="companiesData.data.district">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="telefone">Telefone</label>
-            <b-form-input name="telefone" v-model="companiesData.phone">
+            <b-form-input name="telefone" v-model="companiesData.data.phone">
             </b-form-input>
           </b-form-group>
         </div>
@@ -216,72 +228,35 @@ export default {
       user_name: this.$auth.user.name,
       user_last_name: this.$auth.user.last_name,
       user_email: this.$auth.user.email,
-      user_site: this.$auth.user.site,
-      user_cep: this.$auth.user.cep,
-      user_cpf: this.$auth.user.cpf,
-      user_cnpj: this.$auth.user.cnpj,
-      user_status: this.$auth.user.status,
-      user_company_id: this.$auth.user.company_id,
-      user_role: this.$auth.user.role,
-      user_phone: this.$auth.user.phone,
-      user_address: this.$auth.user.address,
-      user_district: this.$auth.user.district,
-      user_note: this.$auth.user.note,
-      user_city: this.$auth.user.city,
-      user_number: this.$auth.user.number,
-      user_complement: this.$auth.user.complement,
-      user_rg: this.$auth.user.rg,
-      user_state_registration: this.$auth.user.state_registration,
-      user_social_reason: this.$auth.user.social_reason,
       userFormData: {
-        last_name: null,
-        name: null,
-        email: null,
-        site: null,
-        status: null,
-        cpf: null,
-        cnpj: null,
-        company_id: null,
-        role: null,
-        phone: null,
-        address: null,
-        complement: null,
-        city: null,
-        note: null,
-        number: null,
-        district: null,
-        rg: null,
-        social_reason: null,
-        state_registration: null,
+        name: '',
+        last_name: '',
+        email: '',
       },
       companieFormData: {
-        email: null,
-        site: null,
-        fantasy_name: null,
-        name: null,
-        last_name: null,
-        cnpj: null,
-        cpf: null,
-        logo_url: null,
+        email: '',
+        site: '',
+        fantasy_name: '',
+        cpfCnpjCnpj: '',
         logo: null,
-        phone: null,
-        ddd: null,
-        cep: null,
-        address: null,
-        district: null,
-        state: null,
-        complement: null,
+        phone: '',
+        ddd: '',
+        cep: '',
+        address: '',
+        district: '',
+        state: '',
+        complement: '',
       },
       taskData: {
-        id: null,
-        distancy: null,
+        id: '',
+        distancy: '',
       },
     };
   },
   props: {
     companiesData: {
       type: Array | Object,
-      default: null,
+      default: '',
     },
   },
 
@@ -295,51 +270,43 @@ export default {
       }
     },
     async attAccount() {
-      this.userFormData.name = this.user_name;
+      /* this.userFormData.name = this.user_name;
       this.userFormData.last_name = this.user_last_name;
-      this.userFormData.email = this.user_email;
-      this.userFormData.site = this.user_site;
-      this.userFormData.cpf = this.user_cpf;
-      this.userFormData.cnpj = this.user_cnpj;
-      this.userFormData.company_id = this.user_company_id;
-      this.userFormData.note = this.user_note;
-      this.userFormData.role = this.user_role;
-      this.userFormData.phone = this.user_phone;
-      this.userFormData.address = this.user_address;
-      this.userFormData.city = this.user_city;
-      this.userFormData.district = this.user_district;
-      this.userFormData.number = this.user_number;
-      this.userFormData.rg = this.user_rg;
-      this.userFormData.cep = this.user_cep;
-      this.userFormData.status = this.user_status;
-      this.userFormData.state_registration = this.user_state_registration;
-      this.userFormData.social_reason = this.user_social_reason;
-      this.companieFormData.site = this.companiesData.site;
-      this.companieFormData.password = this.$auth.user.password;
-      this.companieFormData.fantasy_name = this.companiesData.fantasy_name;
-      this.companieFormData.email = this.companiesData.email;
-      this.companieFormData.name = this.userFormData.name;
-      this.companieFormData.last_name = this.userFormData.last_name;
-      this.companieFormData.logo_url = this.companiesData.logo_url;
-      this.companieFormData.logo = this.companiesData.logo;
-      this.companieFormData.cpf = this.companiesData.cpf;
-      this.companieFormData.cnpj = this.companiesData.cnpj;
-      this.companieFormData.cep = this.companiesData.cep;
-      this.companieFormData.city = this.companiesData.city;
-      this.companieFormData.state = this.companiesData.state;
-      this.companieFormData.district = this.companiesData.district;
-      this.companieFormData.number = this.companiesData.number;
-      this.companieFormData.complement = this.companiesData.complement;
-      this.companieFormData.address = this.companiesData.address;
-
-      await this.$axios.put(
+      this.userFormData.email = this.user_email; */
+      /*       this.companieFormData.site = this.companiesData.data.site;
+       */
+      this.companieFormData.fantasy_name = this.companiesData.data.fantasy_name;
+      this.companieFormData.email = this.companiesData.data.email;
+      /*       this.companieFormData.logo_url = this.companiesData.data.logo_url;
+       */ this.companieFormData.logo = this.companiesData.data.logo;
+      this.companieFormData.cpfCnpj = this.companiesData.data.cpfCnpj;
+      this.companieFormData.cep = this.companiesData.data.cep;
+      this.companieFormData.city = this.companiesData.data.city;
+      this.companieFormData.state = this.companiesData.data.state;
+      this.companieFormData.district = this.companiesData.data.district;
+      this.companieFormData.number = this.companiesData.data.number;
+      this.companieFormData.complement = this.companiesData.data.complement;
+      this.companieFormData.address = this.companiesData.data.address;
+      this.companieFormData.phone = this.companiesData.data.phone;
+      /* await this.$axios.put(
         'users/' + this.$auth.user.id,
-        this.$data.userFormData,
-      );
-      await this.$axios.put(
-        'companies/' + this.companiesData.id,
-        this.$data.companieFormData,
-      );
+        this.userFormData,
+      ); */
+
+      this.formSend = true;
+      await this.$axios
+        .put('companies/'+ this.companiesData.data.id, this.companieFormData)
+        .then((_res) => {
+          this.toast('success', 'Sucesso', 'Empresa editada com sucesso!');
+        })
+        .catch((_err) =>
+          this.toast('warning', 'Warning', 'Erro ao editar empresa!'),
+        )
+        .finally(() => {
+          this.formSend = false;
+          this.$bvModal.hide('modal-1');
+          this.$nuxt.refresh();
+        });
     },
     onFileChange(e) {
       this.files = e.target.files || e.dataTransfer.files;

@@ -29,15 +29,9 @@
       </b-form-group>
 
       <b-form-group class="mb-4">
-        <label v-if="formData.cpf == '-'">CNPJ</label>
+        <label v-if="this.$auth.user.cpfCnpj.length > 14">CNPJ</label>
         <label v-else>CPF</label>
-        <b-form-input
-          v-if="formData.cpf === '-'"
-          :value="formData.cnpj"
-          disabled
-          class="bg-white"
-        />
-        <b-form-input v-else :value="formData.cpf" disabled class="bg-white" />
+        <b-form-input :value="formData.cpfCnpj" disabled class="bg-white" />
       </b-form-group>
 
       <b-row>
@@ -172,8 +166,7 @@ export default {
         status: null,
         type: null,
         name: null,
-        cnpj: null,
-        cpf: null,
+        cpfCnpj: null,
         rg: null,
         corporateName: null,
         stateRegistration: null,
@@ -200,8 +193,7 @@ export default {
       this.formData.status = this.userList.status;
       this.formData.name = this.userList.name;
       this.formData.type = this.userList.type;
-      this.formData.cnpj = this.userList.cnpj;
-      this.formData.cpf = this.userList.cpf;
+      this.formData.cpfCnpj = this.userList.cpfCnpj;
       this.formData.rg = this.userList.rg;
       this.formData.phone = this.userList.phone;
       this.formData.email = this.userList.email;

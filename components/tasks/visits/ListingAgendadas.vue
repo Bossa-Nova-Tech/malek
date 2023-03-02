@@ -105,12 +105,16 @@ export default {
       id: null,
       stop: false,
       intervalList: [],
-      tasksData: [],
+      tasksData: {
+        status: 'start',
+      },
+
       coordenadas: [],
       center: [1, 2],
       latitude: null,
       longitude: null,
       start: true,
+      status: null,
       sec: 0,
       min: 0,
       hour: 0,
@@ -139,6 +143,8 @@ export default {
       this.visita_selecionada = visita;
       const tasks = await this.$axios.get('tasks/' + visita.task_id);
       this.tasksData = tasks.data;
+      const x = $axios.put('tasks/' + this.visitsData.task.id, this.tasksData.status);
+      console.log(x);
       const coordenadas = await this.$axios.get(
         'customers/get-coordinates/' + this.tasksData.customer_id,
       );
