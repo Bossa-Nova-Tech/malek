@@ -4,8 +4,8 @@
       <div v-if="$screen.lg">
         <div class="bg-separado"></div>
         <div class="titulo container">
-          <img v-if="$auth.user.photo_url" :src="$auth.user.photo_url" width="140" alt="foto" height="140"
-            class="profile rounded-circle" />
+         <!--  <img v-if="this.formData.logo_url" :src="companiesData.data.logo_url" width="140" alt="foto" height="140"
+            class="profile rounded-circle" /> -->
             <div>
             <div class="d-flex align-items-center mb-3">
               <h1 class="mb-0">Olá {{ $auth.user.name }}</h1>
@@ -70,7 +70,6 @@ export default {
       );
 
       this.companiesData = companie.data;
-      console.log('dados da empres: ' + this.companiesData);
   },
 };
 </script>

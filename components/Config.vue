@@ -44,7 +44,8 @@
         Faça as configurações de sua conta e também das ordens de serviçoes de
         sua empresa.
       </small>
-      <div
+<!--       <b-img :src="companiesData.data.logo_url" />
+ -->      <div
         class="mx-3 d-flex justify-content-between"
         @click="editAccount = !editAccount"
       >
@@ -63,10 +64,60 @@
         />
       </div>
       <div v-if="editAccount" class="mx-3 my-3">
-        <b-img
+        <!-- <b-img
           v-if="companiesData.data.logo"
           :src="companiesData.data.logo_url"
         />
+        <b-form-file
+          id="file"
+          v-model="companiesData.data.logo"
+          accept="image/jpeg, image/png, image/jpg"
+          plain
+          @change="onFileChange"
+        ></b-form-file> -->
+        <!-- <b-form-feedback class="text-center h5">
+          Envio necessário. Clique abaixo para fazer o upload da sua photo.
+        </b-form-feedback> -->
+        <!-- <div class="campo-foto">
+          <label v-if="!companiesData.data.logo" for="file">
+            <div
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
+              <b-img
+                rel="preload"
+                alt="upload da foto"
+                src="~/assets/img/icones/upload.svg"
+              />
+              <p>Clique para enviar sua foto</p>
+              <span>PNG, JPG (tamanho máximo X)</span>
+            </div>
+          </label>
+          <div
+            v-else
+            class="d-flex flex-column justify-content-center align-items-center"
+          >
+            <b-img
+              rel="preload"
+              src="~/assets/img/icones/delete-icon.svg"
+              role="button"
+              alt="icone de deletar"
+              class="ml-5 pl-5 pb-2"
+              aria-describedby="helpBlock"
+              @click="excluiFoto"
+            />
+            <img
+              rel="preload"
+              :src="companieFormData.logo"
+              alt=""
+              width="100"
+              class="pb-5"
+            />
+          </div>
+          <small id="helpBlock" class="form-text text-muted mt-n4 mb-4">
+            A imagem carregada será utilizada como sua foto de perfil ao logar
+            em sua conta.
+          </small>
+        </div> -->
         <!-- <h3>Configurações do usuário</h3>
         <b-form-group class="my-2">
           <label for="nome">Nome</label>
@@ -219,12 +270,13 @@
 export default {
   data() {
     return {
+      foto: null,
       file: null,
-      editAccount: false,
-      editOS: false,
       files: null,
       reader: null,
       vm: null,
+      editAccount: false,
+      editOS: false,
       user_name: this.$auth.user.name,
       user_last_name: this.$auth.user.last_name,
       user_email: this.$auth.user.email,
@@ -262,12 +314,21 @@ export default {
 
   methods: {
     excluiFoto() {
-      if (this.formData.photo) {
-        this.formData = {
-          photo: null,
-          photo_url: null,
-        };
-      }
+      this.companiesData.logo = null;
+    },
+
+    onFileChange(e) {
+      this.files = e.target.files || e.dataTransfer.files;
+      if (!this.files.length) return;
+      this.createImage(this.files[0]);
+    },
+    createImage(file) {
+      this.reader = new FileReader();
+      this.vm = this;
+      this.reader.onload = (e) => {
+        this.vm.companiesData.data.logo = e.target.result;
+      };
+      this.reader.readAsDataURL(file);
     },
     async attAccount() {
       /* this.userFormData.name = this.user_name;
@@ -277,8 +338,9 @@ export default {
        */
       this.companieFormData.fantasy_name = this.companiesData.data.fantasy_name;
       this.companieFormData.email = this.companiesData.data.email;
-      /*       this.companieFormData.logo_url = this.companiesData.data.logo_url;
-       */ this.companieFormData.logo = this.companiesData.data.logo;
+      this.companieFormData.logo = this.companiesData.data.logo;
+      this.companieFormData.logo_url = this.companiesData.data.logo_url;
+      this.companieFormData.logo = this.companiesData.data.logo;
       this.companieFormData.cpfCnpj = this.companiesData.data.cpfCnpj;
       this.companieFormData.cep = this.companiesData.data.cep;
       this.companieFormData.city = this.companiesData.data.city;
@@ -295,7 +357,7 @@ export default {
 
       this.formSend = true;
       await this.$axios
-        .put('companies/'+ this.companiesData.data.id, this.companieFormData)
+        .put('companies/' + this.companiesData.data.id, this.companieFormData)
         .then((_res) => {
           this.toast('success', 'Sucesso', 'Empresa editada com sucesso!');
         })
@@ -307,23 +369,6 @@ export default {
           this.$bvModal.hide('modal-1');
           this.$nuxt.refresh();
         });
-    },
-    onFileChange(e) {
-      this.files = e.target.files || e.dataTransfer.files;
-      if (!this.files.length) return;
-      this.createImage(this.files[0]);
-    },
-    createImage(file) {
-      this.reader = new FileReader();
-      this.vm = this;
-
-      this.reader.onload = (e) => {
-        this.vm.formData.photo = e.target.result;
-      };
-      this.reader.readAsDataURL(file);
-    },
-    onFileSelected(event) {
-      this.selectedFile = event.target.files[0];
     },
   },
 };

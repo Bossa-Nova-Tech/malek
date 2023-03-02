@@ -23,20 +23,20 @@
         <label for="pessoa">Pessoa física ou jurídica?<span class="requerido">*</span></label>
         <b-form-radio-group v-model="formData.type" :options="types" plain size="sm" class="mb-2">
         </b-form-radio-group>
-        <b-form-input v-if="formData.type == 'pj'" v-model="formData.cnpj" v-mask="['##.###.###/####-##']" value="cnpj"
-          placeholder="00.000.000/000-00" :class="{ 'is-invalid': $v.formData.cnpj.$error }" />
+        <b-form-input v-if="formData.type == 'pj'" v-model="formData.cpfCnpj" v-mask="['##.###.###/####-##']" value="cnpj"
+          placeholder="00.000.000/000-00" :class="{ 'is-invalid': $v.formData.cpfCnpj.$error }" />
         <b-form-invalid-feedback v-if="formData.type == 'pj'">
           {{
-              !$v.formData.cnpj.minLength
+              !$v.formData.cpfCnpj.minLength
                 ? 'Insira um CNPJ válido'
                 : 'Preencha o campo acima'
           }}
         </b-form-invalid-feedback>
-        <b-form-input v-if="formData.type == 'f'" v-model="formData.cpf" v-mask="['###.###.###-##']" value="cpf"
-          placeholder="000.000.000-00" :class="{ 'is-invalid': $v.formData.cpf.$error }" />
+        <b-form-input v-if="formData.type == 'f'" v-model="formData.cpfCnpj" v-mask="['###.###.###-##']" value="cpf"
+          placeholder="000.000.000-00" :class="{ 'is-invalid': $v.formData.cpfCnpj.$error }" />
         <b-form-invalid-feedback v-if="formData.type == 'f'">
           {{
-              !$v.formData.cpf.minLength
+              !$v.formData.cpfCnpj.minLength
                 ? 'Insira um CPF válido'
                 : 'Preencha o campo acima'
           }}
@@ -250,24 +250,24 @@ export default {
       vm: null,
       formSend: false,
       formData: {
-        status: null,
-        type: null,
-        name: null,
-        cnpj: null,
-        cpf: null,
-        rg: null,
-        social_reason: null,
-        state_registration: null,
-        phone: null,
-        email: null,
-        photo: null,
-        address: null,
-        cep: null,
-        district: null,
-        city: null,
-        state: null,
-        number: null,
-        complement: null,
+        status: '',
+        type: '',
+        name: '',
+        cpfCnpj: '',
+        company_id:null,
+        rg: '',
+        social_reason: '',
+        state_registration: '',
+        phone: '',
+        email: '',
+        photo: '',
+        address: '',
+        cep: '',
+        district: '',
+        city: '',
+        state: '',
+        number: '',
+        complement: '',
       },
       types: [
         {
@@ -302,7 +302,7 @@ export default {
           return this.formData.type === 'pj';
         }),
       },
-      cnpj: {
+      cpfCnpj: {
         required: requiredIf(function () {
           return this.formData.type === 'pj';
         }),
@@ -314,7 +314,7 @@ export default {
         }),
         minLength: minLength(11),
       },
-      cpf: {
+      cpfCnpj: {
         required: requiredIf(function () {
           return this.formData.type === 'f';
         }),
@@ -349,13 +349,13 @@ export default {
     setDataFormWithUser() {
       this.formData.status = this.userList.status;
       this.formData.name = this.userList.name;
+      this.formData.company_id = this.userList.company_id;
       if (this.userList.cnpj) {
         this.formData.type = 'pj';
       } else {
         this.formData.type = 'f'
       }
-      this.formData.cnpj = this.userList.cnpj;
-      this.formData.cpf = this.userList.cpf;
+      this.formData.cpfCnpj = this.userList.cpfCnpj;
       this.formData.rg = this.userList.rg;
       this.formData.phone = this.userList.phone;
       this.formData.email = this.userList.email;
