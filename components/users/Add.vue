@@ -385,11 +385,11 @@
         </b-form-invalid-feedback>
       </b-form-group>
       <b-form-group class="mb-4">
-        <label for="password">Senha</label>
+        <label for="password-confirmation">Confirmação de senha</label>
         <b-form-input
           v-model="formData.password_confirmation"
           type="password"
-          name="password"
+          name="password-confirmation"
           placeholder="Senha"
         />
       </b-form-group>
@@ -442,27 +442,28 @@ export default {
       formSend: false,
       formData: {
         status: 'active',
-        last_name: null,
-        role: null,
-        name: null,
+        last_name: '',
+        role: '',
+        name:'',
         password_confirmation: '',
-        cpfCnpj: null,
+        cpfCnpj: '',
         type: 'f',
-        rg: null,
-        social_reason: null,
-        state_registration: null,
+        company_id:null,
+        rg: '',
+        social_reason: '',
+        state_registration: '',
         district: null,
-        phone: null,
-        email: null,
+        phone:'',
+        email: '',
         photo: null,
-        password: null,
-        cep: null,
-        address: null,
-        city: null,
-        state: null,
-        number: null,
-        complement: null,
-        note: null,
+        password: '',
+        cep: '',
+        address: '',
+        city: '',
+        state: '',
+        number: '',
+        complement:'',
+        note: '',
       },
       options: [
         {
@@ -570,6 +571,7 @@ export default {
         this.formSend = true;
         console.log(this.formData);
         this.$v.formData.$reset();
+        this.formData.company_id = this.$auth.user.company_id;
         await this.$axios
           .post('users', this.$data.formData)
           .then((_res) => {

@@ -3,7 +3,7 @@
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
-      <Listing :users="users" />
+      <Listing :users="users.data" />
       <Add :customers-data="customersData" />
 
       <div v-if="!$screen.lg" class="footer">
@@ -30,6 +30,7 @@ export default {
     const customersData = customers.data;
     const { data } = await $axios.get('users');
     const users = data;
+    console.log(users.data + 'xxx')
     return { customersData, users };
   },
 

@@ -119,7 +119,7 @@ export default {
 
           this.formSend = false;
 
-          if (this.$auth.$state.loggedIn) {
+          if (this.$auth.user.company_id && this.$auth.$state.loggedIn) {
             if (!this.$screen.lg) {
               window.$nuxt.$router.push('/painel-adm-atual');
             } else {
