@@ -1,26 +1,14 @@
 <template>
   <aside>
     <div v-if="!$screen.lg" class="header-mobile text-center">
-      <!-- <img
+      <img
         alt="foto"
         :src="companiesData.logo_url"
         width="140"
         height="140"
         class="my-5 profile rounded-circle"
-      /> -->
-      <img
-        :src="$auth.user.photo_url"
-        width="140"
-        height="140"
-        alt="foto"
-        class="my-5 profile rounded-circle"
       />
-      <b-img
-        v-if="!photo_url && !$auth.user.photo_url"
-        width="140"
-        height="140"
-        class="my-5 profile rounded-circle"
-      ></b-img>
+
       <div class="d-flex align-items-center justify-content-center mb-2">
         <h4 class="mb-0">Olá {{ $auth.user.name }}</h4>
 
@@ -211,8 +199,8 @@
     >
       <div class="photo mr-2">
         <img
-          v-if="$auth.user.email === email"
-          :src="photo_url"
+          v-if="companiesData.logo_url"
+          :src="companiesData.logo_url"
           width="50"
           height="50"
           class="rounded-circle"
@@ -220,13 +208,6 @@
         <img
           v-else
           :src="$auth.user.photo_url"
-          width="50"
-          height="50"
-          class="rounded-circle"
-        />
-        <img
-          v-if="!photo_url && !$auth.user.photo_url"
-          :src="photo_url"
           width="50"
           height="50"
           class="rounded-circle"
