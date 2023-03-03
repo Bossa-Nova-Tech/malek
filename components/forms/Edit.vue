@@ -215,7 +215,11 @@ export default {
             name: '',
             type: '',
             is_required: false,
-            options: [{ name: '' }],
+            options: [
+              {
+                name: '',
+              },
+            ],
           },
         ],
       },
