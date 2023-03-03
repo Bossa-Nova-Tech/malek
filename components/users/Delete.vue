@@ -31,7 +31,7 @@ export default {
         if (user.id !== this.$auth.user.id) {
           await this.$axios
 
-            .delete('users/' + user.id)
+            .delete('users/' + user.id, { company_id: $auth.user.company_id })
             .then((_res) => {
               if (_res.data.result === 'success') {
                 console.log(user.id + ' excluido');
@@ -47,8 +47,8 @@ export default {
               }
             })
             .catch((_err) => {});
-        }else {
-          alert ('Você não pode excluir o usuário principal do aplicativo.')
+        } else {
+          alert('Você não pode excluir o usuário principal do aplicativo.');
         }
       } catch (error) {
         console.log(error);

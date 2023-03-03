@@ -29,7 +29,7 @@
       </b-form-group>
 
       <b-form-group class="mb-4">
-        <label v-if="this.$auth.user.cpfCnpj.length > 14">CNPJ</label>
+        <label v-if="userList.cpfCnpj.length > 14">CNPJ</label>
         <label v-else>CPF</label>
         <b-form-input :value="formData.cpfCnpj" disabled class="bg-white" />
       </b-form-group>
