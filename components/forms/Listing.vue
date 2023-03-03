@@ -2,8 +2,11 @@
   <section class="rounded">
     <h1 class="p-4">Formulários cadastrados</h1>
     <ul>
-      <li v-for="(formsLista, index) in formsData" :key="index"
-        class="card-forms p-4 d-flex align-items-center justify-content-between">
+      <li
+        v-for="(formsLista, index) in this.formsData.data"
+        :key="index"
+        class="card-forms p-4 d-flex align-items-center justify-content-between"
+      >
         <div>
           <div>
             <h2 class="primary-80">
@@ -14,14 +17,31 @@
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
-            <img src="~/assets/img/icones/edit-icon.svg" role="button" class="mr-3" width="22" height="24"
-              alt="icone de edição" @click="showEditar(formsLista)" />
+            <img
+              src="~/assets/img/icones/edit-icon.svg"
+              role="button"
+              class="mr-3"
+              width="22"
+              height="24"
+              alt="icone de edição"
+              @click="showEditar(formsLista)"
+            />
 
-            <img src="~/assets/img/icones/delete-icon.svg" role="button" width="22" height="24" alt="icone de deletar"
-              @click="showExcluir(formsLista)" />
+            <img
+              src="~/assets/img/icones/delete-icon.svg"
+              role="button"
+              width="22"
+              height="24"
+              alt="icone de deletar"
+              @click="showExcluir(formsLista)"
+            />
           </div>
         </div>
-        <Edit :formsSelecionado="formsLista" :watching="id" />
+        <Edit
+          :formsSelecionado="formsLista"
+          :watching="id"
+          :formsFields="formsLista.fields"
+        />
       </li>
       <Delete :id="id" />
     </ul>
@@ -37,7 +57,7 @@ export default {
   components: { Delete, Edit },
   props: {
     formsData: {
-      type: Array,
+      type: Array | Object,
       default: null,
     },
     watching: {
@@ -70,6 +90,7 @@ export default {
           this.$bvModal.show(`update-forms-${formsLista.id}`);
         });
         this.formsSelecionado = formsLista;
+        this.formsFields = formsLista.fields;
       }
     },
   },

@@ -8,7 +8,7 @@
           class="botao-criar" @click="criar" />
       </div>
       <div>
-        <Listing :watching="telaName" :forms-data="formsData" />
+        <Listing :watching="telaName" :formsData="formsData" />
         <Add />
         <div class="footer">
           <button @click="criar">Criar Formulário</button>

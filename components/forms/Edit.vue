@@ -1,18 +1,33 @@
 <template>
-  <b-modal :id="'update-forms-' + formsSelecionado.id" :ref="'update-forms-' + formsSelecionado.id" size="lg"
-    hide-header hide-footer class="form-modal">
+  <b-modal
+    :id="'update-forms-' + this.formsSelecionado.id"
+    :ref="'update-forms-' + this.formsSelecionado.id"
+    size="lg"
+    hide-header
+    hide-footer
+    class="form-modal"
+  >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Criar Formulário</h1>
 
-        <img src="~/assets/img/icones/X-icon.svg" class="mb-5 mt-3" alt="icone de fechar" role="button"
-          @click.once="$bvModal.hide('update-forms-' + formsSelecionado.id)" />
+        <img
+          src="~/assets/img/icones/X-icon.svg"
+          class="mb-5 mt-3"
+          alt="icone de fechar"
+          role="button"
+          @click.once="$bvModal.hide('update-forms-' + formsSelecionado.id)"
+        />
       </div>
 
       <b-form-group class="mb-4">
         <label for="name">Descrição</label>
-        <b-form-input v-model="formData.forms_name" name="name" placeholder="Nome do formulário"
-          :class="{ 'is-invalid': $v.formData.forms_name.$error }">
+        <b-form-input
+          v-model="formData.name"
+          name="name"
+          placeholder="Nome do formulário"
+          :class="{ 'is-invalid': $v.formData.name.$error }"
+        >
         </b-form-input>
       </b-form-group>
       <b-form-invalid-feedback>
@@ -20,80 +35,138 @@
       </b-form-invalid-feedback>
 
       <b-form-group class="mb-4">
-        <label for="display_at">Exibir durante a(o)</label>
-        <b-form-select v-model="formData.display_at" name="display_at" :options="displayOptions"
-          :class="{ 'is-invalid': $v.formData.display_at.$error }">
+        <label for="event_show">Exibir durante a(o)</label>
+        <b-form-select
+          v-model="formData.event_show"
+          name="event_show"
+          :options="displayOptions"
+          :class="{ 'is-invalid': $v.formData.event_show.$error }"
+        >
         </b-form-select>
       </b-form-group>
-
-      <pre>{{ formData.ask }}</pre>
-      <b-card v-for="(ask, index) in formData.ask" :key="index" class="separador mb-3">
+      <b-card
+        v-for="(fields, index) in formData.fields"
+        :key="index"
+        class="separador mb-3"
+      >
         <div class="d-flex justify-content-end">
-          <b-img role="button" src="~/assets/img/icones/delete-icon.svg" @click="deletAsk(ask)" />
+          <b-img
+            role="button"
+            src="~/assets/img/icones/delete-icon.svg"
+            @click="deletAsk(fields)"
+          />
         </div>
         <b-form-group class="mb-4">
           <label for="ask_text">Pergunta </label>
-          <b-form-input v-model="ask.text" name="ask_text" type="text" placeholder="Qual é a sua pergunta?" />
+          <b-form-input
+            v-model="fields.name"
+            name="ask_text"
+            type="text"
+            placeholder="Qual é a sua pergunta?"
+          />
           <b-form-invalid-feedback>
             Preencha o campo acima
           </b-form-invalid-feedback>
         </b-form-group>
         <b-form-group class="mb-4">
           <label>Tipo de resposta</label>
-          <b-form-radio-group v-model="ask.type_of" :options="typeOfAnswer" class="d-flex flex-column" />
+          <b-form-radio-group
+            v-model="fields.type"
+            :options="typeOfAnswer"
+            class="d-flex flex-column"
+          />
         </b-form-group>
         <b-form-group class="mb-4">
           <label for="required">A resposta é obrigatória?</label>
-          <b-form-radio-group v-model="ask.is_required" :options="isRequired" />
+          <b-form-radio-group
+            v-model="fields.is_required"
+            :options="isRequired"
+          />
           <b-form-invalid-feedback>
             Preencha o campo acima
           </b-form-invalid-feedback>
         </b-form-group>
-        <div v-if="
-  ask.type_of === 'Checkbox' ||
-  ask.type_of === 'Selecionar' ||
-  ask.type_of === 'Alternativas(radio)'
-">
+        <div
+          v-if="
+            fields.type === 'Checkbox' ||
+            fields.type === 'Selecionar' ||
+            fields.type === 'Alternativas(radio)'
+          "
+        >
           <p class="answer mt-3 mb-2">Escreva as opções da resposta:</p>
-          <b-form-group v-for="(answer_options, i) in ask.answer_options" :key="i" :index="i">
-            <!-- <pre>{{ ask.answer_options }}</pre> -->
+          <b-form-group
+            v-for="(options, i) in fields.options"
+            :key="i"
+            :index="i"
+          >
+            <!-- <pre>{{ ask.options }}</pre> -->
             <div class="d-flex align-items-center">
-              <b-form-input v-model="answer_options.text" placeholder="Opção de resposta"></b-form-input>
+              <b-form-input
+                v-model="options.name"
+                placeholder="Opção de resposta"
+              ></b-form-input>
               <!-- <b-form-input
-                v-model="ask.answer_options[index].text"
-                name="answer_options"
+                v-model="ask.options[index].text"
+                name="options"
                 placeholder="Opção de resposta"
               ></b-form-input> -->
               <div class="pl-2">
-                <b-img role="button" fluid src="~/assets/img/icones/delete-icon.svg" @click="handleDelete(i, index)" />
+                <b-img
+                  role="button"
+                  fluid
+                  src="~/assets/img/icones/delete-icon.svg"
+                  @click="handleDelete(i, index)"
+                />
               </div>
             </div>
           </b-form-group>
 
-          <b-button class="shadow-none my-3 add_ask d-flex align-items-center"
-            @click="adicionarOpcaoDeResposta(index, i)">
-            <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <b-button
+            class="shadow-none my-3 add_ask d-flex align-items-center"
+            @click="adicionarOpcaoDeResposta(index, i)"
+          >
+            <svg
+              width="26"
+              height="25"
+              viewBox="0 0 26 25"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M12.5393 0C15.0116 0 17.4283 0.733112 19.4839 2.10663C21.5395 3.48015 23.1417 5.43238 24.0878 7.71646C25.0339 10.0005 25.2814 12.5139 24.7991 14.9386C24.3168 17.3634 23.1263 19.5907 21.3781 21.3388C19.63 23.087 17.4027 24.2775 14.9779 24.7598C12.5532 25.2421 10.0398 24.9946 7.75576 24.0485C5.47169 23.1024 3.51945 21.5002 2.14594 19.4446C0.772418 17.389 0.0393066 14.9723 0.0393066 12.5C0.0430396 9.18594 1.3612 6.00868 3.70459 3.66529C6.04799 1.32189 9.22524 0.00373305 12.5393 0ZM12.5393 22.2222C14.4622 22.2222 16.3419 21.652 17.9407 20.5837C19.5395 19.5154 20.7856 17.997 21.5215 16.2205C22.2573 14.444 22.4498 12.4892 22.0747 10.6033C21.6996 8.71736 20.7736 6.98503 19.414 5.62535C18.0543 4.26567 16.3219 3.33972 14.436 2.96459C12.5501 2.58945 10.5953 2.78199 8.81877 3.51784C7.04227 4.25369 5.52386 5.49981 4.45557 7.09862C3.38728 8.69743 2.81708 10.5771 2.81708 12.5C2.82001 15.0776 3.84526 17.5488 5.66789 19.3714C7.49053 21.194 9.96171 22.2193 12.5393 22.2222V22.2222ZM6.52079 12.5C6.5208 12.8684 6.66713 13.2216 6.92759 13.4821C7.18806 13.7425 7.54132 13.8889 7.90968 13.8889H11.1504V17.1296C11.1504 17.498 11.2967 17.8513 11.5572 18.1117C11.8177 18.3722 12.1709 18.5185 12.5393 18.5185C12.9077 18.5185 13.2609 18.3722 13.5214 18.1117C13.7819 17.8513 13.9282 17.498 13.9282 17.1296V13.8889H17.1689C17.5373 13.8889 17.8906 13.7426 18.151 13.4821C18.4115 13.2216 18.5578 12.8684 18.5578 12.5C18.5578 12.1316 18.4115 11.7784 18.151 11.5179C17.8906 11.2574 17.5373 11.1111 17.1689 11.1111H13.9282V7.87037C13.9282 7.50201 13.7819 7.14874 13.5214 6.88828C13.2609 6.62781 12.9077 6.48148 12.5393 6.48148C12.1709 6.48148 11.8177 6.62781 11.5572 6.88828C11.2967 7.14874 11.1504 7.50201 11.1504 7.87037V11.1111H7.90968C7.54132 11.1111 7.18806 11.2574 6.92759 11.5179C6.66713 11.7784 6.5208 12.1316 6.52079 12.5Z"
-                fill="#FF5A00" />
+                fill="#FF5A00"
+              />
             </svg>
             <h3 class="p-0 m-0 ml-2">Adicionar opção</h3>
           </b-button>
         </div>
       </b-card>
 
-      <b-button class="shadow-none mb-4 add_ask d-flex align-items-center" @click="adicionarPergunta">
-        <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <b-button
+        class="shadow-none mb-4 add_ask d-flex align-items-center"
+        @click="adicionarPergunta"
+      >
+        <svg
+          width="26"
+          height="25"
+          viewBox="0 0 26 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             d="M12.5393 0C15.0116 0 17.4283 0.733112 19.4839 2.10663C21.5395 3.48015 23.1417 5.43238 24.0878 7.71646C25.0339 10.0005 25.2814 12.5139 24.7991 14.9386C24.3168 17.3634 23.1263 19.5907 21.3781 21.3388C19.63 23.087 17.4027 24.2775 14.9779 24.7598C12.5532 25.2421 10.0398 24.9946 7.75576 24.0485C5.47169 23.1024 3.51945 21.5002 2.14594 19.4446C0.772418 17.389 0.0393066 14.9723 0.0393066 12.5C0.0430396 9.18594 1.3612 6.00868 3.70459 3.66529C6.04799 1.32189 9.22524 0.00373305 12.5393 0ZM12.5393 22.2222C14.4622 22.2222 16.3419 21.652 17.9407 20.5837C19.5395 19.5154 20.7856 17.997 21.5215 16.2205C22.2573 14.444 22.4498 12.4892 22.0747 10.6033C21.6996 8.71736 20.7736 6.98503 19.414 5.62535C18.0543 4.26567 16.3219 3.33972 14.436 2.96459C12.5501 2.58945 10.5953 2.78199 8.81877 3.51784C7.04227 4.25369 5.52386 5.49981 4.45557 7.09862C3.38728 8.69743 2.81708 10.5771 2.81708 12.5C2.82001 15.0776 3.84526 17.5488 5.66789 19.3714C7.49053 21.194 9.96171 22.2193 12.5393 22.2222V22.2222ZM6.52079 12.5C6.5208 12.8684 6.66713 13.2216 6.92759 13.4821C7.18806 13.7425 7.54132 13.8889 7.90968 13.8889H11.1504V17.1296C11.1504 17.498 11.2967 17.8513 11.5572 18.1117C11.8177 18.3722 12.1709 18.5185 12.5393 18.5185C12.9077 18.5185 13.2609 18.3722 13.5214 18.1117C13.7819 17.8513 13.9282 17.498 13.9282 17.1296V13.8889H17.1689C17.5373 13.8889 17.8906 13.7426 18.151 13.4821C18.4115 13.2216 18.5578 12.8684 18.5578 12.5C18.5578 12.1316 18.4115 11.7784 18.151 11.5179C17.8906 11.2574 17.5373 11.1111 17.1689 11.1111H13.9282V7.87037C13.9282 7.50201 13.7819 7.14874 13.5214 6.88828C13.2609 6.62781 12.9077 6.48148 12.5393 6.48148C12.1709 6.48148 11.8177 6.62781 11.5572 6.88828C11.2967 7.14874 11.1504 7.50201 11.1504 7.87037V11.1111H7.90968C7.54132 11.1111 7.18806 11.2574 6.92759 11.5179C6.66713 11.7784 6.5208 12.1316 6.52079 12.5Z"
-            fill="#FF5A00" />
+            fill="#FF5A00"
+          />
         </svg>
         <h3 class="p-0 m-0 ml-2">Adicionar Perguntas</h3>
       </b-button>
-      <b-form-checkbox v-model="formData.is_required" class="checkbox mb-4 d-flex align-items-center">Este formulário é
-        obrigatório</b-form-checkbox>
+      <b-form-checkbox
+        v-model="formData.is_required"
+        class="checkbox mb-4 d-flex align-items-center"
+        >Este formulário é obrigatório</b-form-checkbox
+      >
       <div class="w-100 mb-4 col-12 px-0">
-        <button :disable="formSend" @click.once="register">
+        <button :disable="formSend" @click.once="edit">
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>
@@ -112,30 +185,37 @@ export default {
   mixins: [validationMixin],
   props: {
     formsSelecionado: {
-      type: Object,
+      type: Object | Array,
       default: null,
     },
     watching: {
       type: Number,
       default: null,
     },
+    formsFields: {
+      type: Object | Array,
+      default: null,
+    },
   },
   data() {
     return {
       i: 0,
+      j: 0,
       option: null,
       counter: 1,
       counter_answer: 0,
       formSend: false,
       formData: {
-        forms_name: null,
-        display_at: null,
-        ask: [
+        name: '',
+        event_show: '',
+        is_required: false,
+        fields: [
           {
-            text: null,
-            type_of: null,
+            company_id: this.$auth.user.company_id,
+            name: '',
+            type: '',
             is_required: false,
-            answer_options: [{ text: null }],
+            options: [{ name: '' }],
           },
         ],
       },
@@ -210,8 +290,8 @@ export default {
 
   validations: {
     formData: {
-      display_at: { required },
-      forms_name: { required },
+      event_show: { required },
+      name: { required },
     },
   },
 
@@ -223,42 +303,45 @@ export default {
 
   methods: {
     setDataFormWithService() {
-      this.formData.ask.type_of = this.formsSelecionado.fields.type;
-      this.formData.forms_name = this.formsSelecionado.name;
-      this.formData.display_at = this.formsSelecionado.event_show;
-      /*       this.formData.ask[0].text = this.formsSelecionado.fields[0].name;
-       */
-      console.log(this.formsSelecionado.fields.lenght)
-      if (this.formsSelecionado.fields.lenght > 1) {
-
-        for (var i = 0; i = this.formsSelecionado.fields.lenght; i++) {
-          return this.formData.ask[i].text = this.formsSelecionado.fields[i].name;
+      this.formData.event_show = this.formsSelecionado.event_show;
+      if (this.formsSelecionado.is_required == 1) {
+        this.formData.is_required = true;
+      } else {
+        this.formData.is_required = false;
+      }
+      console.log(this.formsSelecionado.event_show);
+      this.formData.name = this.formsSelecionado.name;
+      for (this.j; this.j < this.formsFields.length; this.j++) {
+        if (this.formsSelecionado.id) {
+          this.formData.fields[this.j].name = this.formsFields[this.j].name;
+          this.formData.fields[this.j].type = this.formsFields[this.j].type;
+          if (this.formsFields[this.j].is_required == 1) {
+            this.formData.fields[this.j].is_required = true;
+          } else {
+            this.formData.fields[this.j].is_required = false;
+          }
+          this.formData.fields[this.j].options =
+            this.formsFields[this.j].options;
+          for (
+            this.i;
+            this.i < this.formsFields[this.j].options.length;
+            this.i++
+          ) {
+            this.formData.fields[this.j].options[this.i].name =
+              this.formsFields[this.j].options[this.i].name;
+            break;
+          }
+          break;
         }
       }
     },
-    /* for (this.i; this.i = 0; this.i--)
-      return this.formData.ask[this.i].text = this.formsSelecionado.fields[this.i].name;
-  } */ /* .forms_name = this.formsSelecionado.name;
-          this.formData.display_at = this.formsSelecionado.event_show;
-          this.formData.ask[
-            {
-              type_of,
-            }
-          ] =
-            this.formsSelecionado.fields[
-              {
-                type
-              }
-            ];
-          this.formData.ask.answer_options = this.formsSelecionado.fields.options;
-        }, */
     adicionarPergunta(index) {
-      this.formData.ask.push({
-        text: null,
+      this.formData.fields.push({
+        name: null,
         type_of: null,
-        answer_options: [
+        options: [
           {
-            text: null,
+            name: null,
           },
         ],
         is_required: null,
@@ -266,35 +349,33 @@ export default {
       console.log(index);
     },
     adicionarOpcaoDeResposta(index, i) {
-      /* this.formData.ask[index].answer_options[i].push({ text: null }); */
-      this.formData.ask[index].answer_options.push({ text: null });
+      /* this.formData.fields[index].options[i].push({ text: null }); */
+      this.formData.fields[index].options.push({ name: null });
     },
-    deletAsk(ask) {
-      this.formData.ask.splice(this.formData.ask.indexOf(ask), 1);
-      console.log(this.formData.ask.indexOf(ask));
+    deletAsk(fields) {
+      this.formData.fields.splice(this.formData.fields.indexOf(fields), 1);
+      console.log(this.formData.fields.indexOf(fields));
     },
     handleDelete(i, index) {
-      this.formData.ask[index].answer_options.splice(
-        this.formData.ask[index].answer_options[i],
+      this.formData.fields[index].options.splice(
+        this.formData.fields[index].options[i],
       );
-    } /* .answer_options.filter(
-          (answer_options) => answer_options.id !== id,
+    } /* .options.filter(
+          (options) => options.id !== id,
         ), */,
 
-    /*  this.formData.ask[index].answer_options[id] = this.formData.ask[
+    /*  this.formData.fields[index].options[id] = this.formData.fields[
         index
-      ].answer_options.filter((answer_options) => answer_options.id !== id); */
+      ].options.filter((options) => options.id !== id); */
 
-    deletAnswer(answer_options, ask) {
-      console.log(this.formData.ask.indexOf(answer_options));
+    deletAnswer(options, fields) {
+      console.log(this.formData.fields.indexOf(options));
 
-      this.formData.ask.splice(this.formData.ask.indexOf(answer_options), 1);
-      console.log('teste' + this.formData.ask.indexOf(answer_options));
+      this.formData.fields.splice(this.formData.fields.indexOf(options), 1);
+      console.log('teste' + this.formData.fields.indexOf(options));
     },
 
     async edit(_response) {
-      const forms = await this.$parent.formsSelecionado;
-      console.log(forms);
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
@@ -306,7 +387,7 @@ export default {
           console.log('executou o clic');
 
           await this.$axios
-            .put(`services/${forms.id}`, this.$data.formData)
+            .put(`forms/${this.formsSelecionado.id}`, this.$data.formData)
             .then((_res) => {
               console.log('sucesso');
               this.$root.$emit(
@@ -319,7 +400,7 @@ export default {
               this.toast('success', 'Sucesso', 'Serviço editado com sucesso!');
               this.$nuxt.refresh();
             })
-            .catch((_err) => { });
+            .catch((_err) => {});
         } catch (error) {
           console.log(error, 'sadasda');
         }

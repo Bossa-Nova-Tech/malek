@@ -16,10 +16,10 @@
       <b-form-group class="mb-4">
         <label for="name">Descrição</label>
         <b-form-input
-          v-model="formData.forms_name"
+          v-model="formData.name"
           name="name"
           placeholder="Nome do formulário"
-          :class="{ 'is-invalid': $v.formData.forms_name.$error }"
+          :class="{ 'is-invalid': $v.formData.name.$error }"
         >
         </b-form-input>
       </b-form-group>
@@ -28,18 +28,18 @@
       </b-form-invalid-feedback>
 
       <b-form-group class="mb-4">
-        <label for="display_at">Exibir durante a(o)</label>
+        <label for="event_show">Exibir durante a(o)</label>
         <b-form-select
-          v-model="formData.display_at"
-          name="display_at"
+          v-model="formData.event_show"
+          name="event_show"
           :options="displayOptions"
-          :class="{ 'is-invalid': $v.formData.display_at.$error }"
+          :class="{ 'is-invalid': $v.formData.event_show.$error }"
         >
         </b-form-select>
       </b-form-group>
 
       <b-card
-        v-for="(ask, index) in formData.ask"
+        v-for="(fields, index) in formData.fields"
         :key="index"
         class="separador mb-3"
       >
@@ -47,13 +47,13 @@
           <b-img
             role="button"
             src="~/assets/img/icones/delete-icon.svg"
-            @click="deletAsk(ask)"
+            @click="deletAsk(fields)"
           />
         </div>
         <b-form-group class="mb-4">
           <label for="ask_text">Pergunta </label>
           <b-form-input
-            v-model="ask.text"
+            v-model="fields.name"
             name="ask_text"
             type="text"
             placeholder="Qual é a sua pergunta?"
@@ -65,40 +65,40 @@
         <b-form-group class="mb-4">
           <label>Tipo de resposta</label>
           <b-form-radio-group
-            v-model="ask.type_of"
+            v-model="fields.type"
             :options="typeOfAnswer"
             class="d-flex flex-column"
           />
         </b-form-group>
         <b-form-group class="mb-4">
           <label for="required">A resposta é obrigatória?</label>
-          <b-form-radio-group v-model="ask.is_required" :options="isRequired" />
+          <b-form-radio-group v-model="fields.is_required" :options="isRequired" />
           <b-form-invalid-feedback>
             Preencha o campo acima
           </b-form-invalid-feedback>
         </b-form-group>
         <div
           v-if="
-            ask.type_of === 'Checkbox' ||
-            ask.type_of === 'Selecionar' ||
-            ask.type_of === 'Alternativas(radio)'
+            fields.type === 'Checkbox' ||
+            fields.type === 'Selecionar' ||
+            fields.type === 'Alternativas(radio)'
           "
         >
           <p class="answer mt-3 mb-2">Escreva as opções da resposta:</p>
           <b-form-group
-            v-for="(answer_options, i) in ask.answer_options"
+            v-for="(options, i) in fields.options"
             :key="i"
             :index="i"
           >
-            <!-- <pre>{{ ask.answer_options }}</pre> -->
+            <!-- <pre>{{ ask.options }}</pre> -->
             <div class="d-flex align-items-center">
               <b-form-input
-                v-model="answer_options.text"
+                v-model="options.text"
                 placeholder="Opção de resposta"
               ></b-form-input>
               <!-- <b-form-input
-                v-model="ask.answer_options[index].text"
-                name="answer_options"
+                v-model="ask.options[index].text"
+                name="options"
                 placeholder="Opção de resposta"
               ></b-form-input> -->
               <div class="pl-2">
@@ -183,20 +183,20 @@ export default {
   },
   data() {
     return {
-      option: null,
+      option: '',
       counter: 1,
       counter_answer: 0,
       formSend: false,
       formData: {
-        forms_name: null,
-        display_at: null,
-        ask: [
+        name: '',
+        event_show: '',
+        is_required: false,
+        fields: [
           {
-            id: 0,
-            text: null,
-            type_of: null,
+            name: '',
+            type: '',
             is_required: false,
-            answer_options: [{ text: null }],
+            options: [{ name: '' }],
           },
         ],
       },
@@ -271,17 +271,17 @@ export default {
 
   validations: {
     formData: {
-      display_at: { required },
-      forms_name: { required },
+      event_show: { required },
+      name: { required },
     },
   },
 
   methods: {
     adicionarPergunta(index) {
-      this.formData.ask.push({
+      this.formData.fields.push({
         text: null,
         type_of: null,
-        answer_options: [
+        options: [
           {
             text: null,
           },
@@ -291,34 +291,34 @@ export default {
       console.log(index);
     },
     adicionarOpcaoDeResposta(index, i) {
-      /* this.formData.ask[index].answer_options[i].push({ text: null }); */
-      this.formData.ask[index].answer_options.push({ text: null });
+      /* this.formData.fields[index].options[i].push({ text: null }); */
+      this.formData.fields[index].options.push({ text: null });
     },
-    deletAsk(ask) {
-      this.formData.ask.splice(this.formData.ask.indexOf(ask), 1);
-      console.log(this.formData.ask.indexOf(ask));
+    deletAsk(fields) {
+      this.formData.fields.splice(this.formData.fields.indexOf(fields), 1);
+      console.log(this.formData.fields.indexOf(fields));
     },
     handleDelete(i, index) {
-      this.formData.ask[index].answer_options.splice(
-        this.formData.ask[index].answer_options[i],
+      this.formData.fields[index].options.splice(
+        this.formData.fields[index].options[i],
       );
-    } /* .answer_options.filter(
-          (answer_options) => answer_options.id !== id,
+    } /* .options.filter(
+          (options) => options.id !== id,
         ), */,
 
-    /*  this.formData.ask[index].answer_options[id] = this.formData.ask[
+    /*  this.formData.fields[index].options[id] = this.formData.fields[
         index
-      ].answer_options.filter((answer_options) => answer_options.id !== id); */
+      ].options.filter((options) => options.id !== id); */
 
-    deletAnswer(answer_options, ask) {
-      console.log(this.formData.ask.indexOf(answer_options));
+    deletAnswer(options, ask) {
+      console.log(this.formData.fields.indexOf(options));
 
-      this.formData.ask.splice(this.formData.ask.indexOf(answer_options), 1);
-      console.log('teste' + this.formData.ask.indexOf(answer_options));
+      this.formData.fields.splice(this.formData.fields.indexOf(options), 1);
+      console.log('teste' + this.formData.fields.indexOf(options));
     },
-    /* ask.answer_options.splice(index, 1); */
-    /* this.ask.answer_options.splice(index, 1); */
-    /*       this.formData.ask.answer_options.splice(this.formData.ask.answer_options.indexOf(answer_options), 1);
+    /* ask.options.splice(index, 1); */
+    /* this.ask.options.splice(index, 1); */
+    /*       this.formData.fields.options.splice(this.formData.fields.options.indexOf(options), 1);
      */
     async register(_response) {
       this.$v.formData.$touch();
@@ -338,15 +338,14 @@ export default {
               'Formulário cadastrado com sucesso!',
             );
             this.formData = {
-              forms_name: null,
-              display_at: null,
-              ask: [
+              name: null,
+              event_show: null,
+              fields: [
                 {
-                  id: 0,
-                  text: null,
+                  name: null,
                   type_of: null,
                   is_required: false,
-                  answer_options: [{ text: null }],
+                  options: [{ name: null }],
                 },
               ],
             };

@@ -145,11 +145,11 @@
             >
             </b-form-input>
           </b-form-group>
-          <!-- <b-form-group class="my-2">
+          <b-form-group class="my-2">
             <label for="site">Site</label>
             <b-form-input name="site" v-model="companiesData.site">
             </b-form-input>
-          </b-form-group> -->
+          </b-form-group>
 
           <b-form-group class="my-2">
             <label for="site">Email</label>
@@ -345,6 +345,7 @@ export default {
       this.companieFormData.fantasy_name = this.companiesData.fantasy_name;
       this.companieFormData.email = this.companiesData.email;
       this.companieFormData.logo = this.companiesData.logo;
+      this.companieFormData.site = this.companiesData.site;
       this.companieFormData.cpfCnpj = this.companiesData.cpfCnpj;
       this.companieFormData.cep = this.companiesData.cep;
       this.companieFormData.city = this.companiesData.city;
