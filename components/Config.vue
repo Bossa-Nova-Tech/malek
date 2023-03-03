@@ -74,134 +74,68 @@
         />
       </div>
       <div v-if="editAccount" class="mx-3 my-3">
-        <!-- <b-img
-          v-if="companiesData.logo"
-          :src="companiesData.logo_url"
-        />
-        <b-form-file
-          id="file"
-          v-model="companiesData.logo"
-          accept="image/jpeg, image/png, image/jpg"
-          plain
-          @change="onFileChange"
-        ></b-form-file> -->
-        <!-- <b-form-feedback class="text-center h5">
-          Envio necessário. Clique abaixo para fazer o upload da sua photo.
-        </b-form-feedback> -->
-        <!-- <div class="campo-foto">
-          <label v-if="!companiesData.logo" for="file">
-            <div
-              class="d-flex flex-column justify-content-center align-items-center"
-            >
-              <b-img
-                rel="preload"
-                alt="upload da foto"
-                src="~/assets/img/icones/upload.svg"
-              />
-              <p>Clique para enviar sua foto</p>
-              <span>PNG, JPG (tamanho máximo X)</span>
-            </div>
-          </label>
-          <div
-            v-else
-            class="d-flex flex-column justify-content-center align-items-center"
-          >
-            <b-img
-              rel="preload"
-              src="~/assets/img/icones/delete-icon.svg"
-              role="button"
-              alt="icone de deletar"
-              class="ml-5 pl-5 pb-2"
-              aria-describedby="helpBlock"
-              @click="excluiFoto"
-            />
-            <img
-              rel="preload"
-              :src="companieFormData.logo"
-              alt=""
-              width="100"
-              class="pb-5"
-            />
-          </div>
-          <small id="helpBlock" class="form-text text-muted mt-n4 mb-4">
-            A imagem carregada será utilizada como sua foto de perfil ao logar
-            em sua conta.
-          </small>
-        </div> -->
-        <!-- <h3>Configurações do usuário</h3>
-        <b-form-group class="my-2">
-          <label for="nome">Nome</label>
-          <b-form-input v-model="user_name"> </b-form-input>
-          {{ user_name }}
-          {{ userFormData.name }}
-        </b-form-group>
-        <b-form-group class="my-2">
-          <label for="sobrenome">Sobrenome</label>
-          <b-form-input name="sobrenome" v-model="user_last_name">
-          </b-form-input>
-        </b-form-group>
-        <b-form-group class="my-2">
-          <label for="email">Email</label>
-          <b-form-input name="email" v-model="user_email"> </b-form-input>
-        </b-form-group> -->
         <div v-if="this.$auth.user.role === 'administrator'">
           <h3>Configurações da empresa</h3>
-          <b-form-file
-            id="file"
-            v-model="companiesData.logo"
-            accept="image/jpeg, image/png, image/jpg"
-            plain
-            @change="onFileChange"
-          ></b-form-file>
-          <!-- <b-form-feedback class="text-center h5">
-          Envio necessário. Clique abaixo para fazer o upload da sua logo.
-        </b-form-feedback> -->
-          <div class="campo-foto d-flex justify-content-center flex-column">
-            <label v-if="companiesData.logo === null" for="file">
+          <b-button v-if="!mudarLogo" variant="primary" @click="changeLogo()">
+            Mudar logo
+          </b-button>
+          <div v-if="mudarLogo">
+
+            <b-form-file
+              id="file"
+              v-model="companiesData.logo"
+              accept="image/jpeg, image/png, image/jpg"
+              plain
+              @change="onFileChange"
+            ></b-form-file>
+
+            <div class="campo-foto d-flex justify-content-center flex-column">
+              <label v-if="companiesData.logo === null" for="file">
+                <div
+                  class="d-flex flex-column justify-content-center align-items-center"
+                >
+                  <b-img
+                    rel="preload"
+                    alt="upload da foto"
+                    src="~/assets/img/icones/upload.svg"
+                  />
+                  <p>Clique para enviar sua foto</p>
+                  <span>PNG, JPG (tamanho máximo X)</span>
+                </div>
+              </label>
               <div
+                v-else
                 class="d-flex flex-column justify-content-center align-items-center"
               >
                 <b-img
                   rel="preload"
-                  alt="upload da foto"
-                  src="~/assets/img/icones/upload.svg"
+                  src="~/assets/img/icones/delete-icon.svg"
+                  role="button"
+                  alt="icone de deletar"
+                  class="ml-5 pl-5 pb-2"
+                  aria-describedby="helpBlock"
+                  @click="excluiFoto"
                 />
-                <p>Clique para enviar sua foto</p>
-                <span>PNG, JPG (tamanho máximo X)</span>
+                <img
+                  v-if="companiesData.logo_url !== null"
+                  :src="companiesData.logo_url"
+                  alt=""
+                  width="100"
+                  class="pb-5"
+                />
+                <img
+                  v-else
+                  :src="companiesData.logo"
+                  alt=""
+                  width="100"
+                  class="pb-5"
+                />
               </div>
-            </label>
-            <div
-              v-else
-              class="d-flex flex-column justify-content-center align-items-center"
-            >
-              <b-img
-                rel="preload"
-                src="~/assets/img/icones/delete-icon.svg"
-                role="button"
-                alt="icone de deletar"
-                class="ml-5 pl-5 pb-2"
-                aria-describedby="helpBlock"
-                @click="excluiFoto"
-              />
-              <img
-                v-if="companiesData.logo_url !== null"
-                :src="companiesData.logo_url"
-                alt=""
-                width="100"
-                class="pb-5"
-              />
-              <img
-                v-else
-                :src="companiesData.logo"
-                alt=""
-                width="100"
-                class="pb-5"
-              />
+              <small id="helpBlock" class="form-text text-muted mt-4 mb-4">
+                A imagem carregada será utilizada como sua foto de perfil ao logar
+                em sua conta.
+              </small>
             </div>
-            <small id="helpBlock" class="form-text text-muted mt-4 mb-4">
-              A imagem carregada será utilizada como sua foto de perfil ao logar
-              em sua conta.
-            </small>
           </div>
           <b-form-group class="my-2">
             <label for="nome_fantasia">Nome Fantasia</label>
@@ -335,6 +269,7 @@
 export default {
   data() {
     return {
+      mudarLogo: false,
       file: null,
       files: null,
       reader: null,
@@ -377,6 +312,11 @@ export default {
   },
 
   methods: {
+    changeLogo(){
+      this.companiesData.logo = null;
+      this.companiesData.logo_url = null;
+      this.mudarLogo = !this.mudarLogo;
+    },
     excluiFoto() {
       if (this.companiesData.logo_url !== null) {
         this.companiesData.logo_url = null;
