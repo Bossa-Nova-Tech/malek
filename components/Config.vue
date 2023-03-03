@@ -40,12 +40,22 @@
           @click.prevent="$bvModal.hide('modal-1')"
         />
       </div>
+      <div
+        class="w-25 h-25 d-flex justify-content-center align-items-center rounded m-auto"
+      >
+        <b-img
+          v-if="companiesData.logo !== null"
+          :src="companiesData.logo_url"
+          class="w-100"
+        ></b-img>
+      </div>
       <small>
         Faça as configurações de sua conta e também das ordens de serviçoes de
         sua empresa.
       </small>
-<!--       <b-img :src="companiesData.data.logo_url" />
- -->      <div
+      <!--       <b-img :src="companiesData.logo_url" />
+ -->
+      <div
         class="mx-3 d-flex justify-content-between"
         @click="editAccount = !editAccount"
       >
@@ -65,12 +75,12 @@
       </div>
       <div v-if="editAccount" class="mx-3 my-3">
         <!-- <b-img
-          v-if="companiesData.data.logo"
-          :src="companiesData.data.logo_url"
+          v-if="companiesData.logo"
+          :src="companiesData.logo_url"
         />
         <b-form-file
           id="file"
-          v-model="companiesData.data.logo"
+          v-model="companiesData.logo"
           accept="image/jpeg, image/png, image/jpg"
           plain
           @change="onFileChange"
@@ -79,7 +89,7 @@
           Envio necessário. Clique abaixo para fazer o upload da sua photo.
         </b-form-feedback> -->
         <!-- <div class="campo-foto">
-          <label v-if="!companiesData.data.logo" for="file">
+          <label v-if="!companiesData.logo" for="file">
             <div
               class="d-flex flex-column justify-content-center align-items-center"
             >
@@ -136,70 +146,125 @@
         </b-form-group> -->
         <div v-if="this.$auth.user.role === 'administrator'">
           <h3>Configurações da empresa</h3>
+          <b-form-file
+            id="file"
+            v-model="companiesData.logo"
+            accept="image/jpeg, image/png, image/jpg"
+            plain
+            @change="onFileChange"
+          ></b-form-file>
+          <!-- <b-form-feedback class="text-center h5">
+          Envio necessário. Clique abaixo para fazer o upload da sua logo.
+        </b-form-feedback> -->
+          <div class="campo-foto d-flex justify-content-center flex-column">
+            <label v-if="companiesData.logo === null" for="file">
+              <div
+                class="d-flex flex-column justify-content-center align-items-center"
+              >
+                <b-img
+                  rel="preload"
+                  alt="upload da foto"
+                  src="~/assets/img/icones/upload.svg"
+                />
+                <p>Clique para enviar sua foto</p>
+                <span>PNG, JPG (tamanho máximo X)</span>
+              </div>
+            </label>
+            <div
+              v-else
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
+              <b-img
+                rel="preload"
+                src="~/assets/img/icones/delete-icon.svg"
+                role="button"
+                alt="icone de deletar"
+                class="ml-5 pl-5 pb-2"
+                aria-describedby="helpBlock"
+                @click="excluiFoto"
+              />
+              <img
+                v-if="companiesData.logo_url !== null"
+                :src="companiesData.logo_url"
+                alt=""
+                width="100"
+                class="pb-5"
+              />
+              <img
+                v-else
+                :src="companiesData.logo"
+                alt=""
+                width="100"
+                class="pb-5"
+              />
+            </div>
+            <small id="helpBlock" class="form-text text-muted mt-4 mb-4">
+              A imagem carregada será utilizada como sua foto de perfil ao logar
+              em sua conta.
+            </small>
+          </div>
           <b-form-group class="my-2">
             <label for="nome_fantasia">Nome Fantasia</label>
             <b-form-input
               name="nome_fantasia"
-              v-model="companiesData.data.fantasy_name"
+              v-model="companiesData.fantasy_name"
             >
             </b-form-input>
           </b-form-group>
           <!-- <b-form-group class="my-2">
             <label for="site">Site</label>
-            <b-form-input name="site" v-model="companiesData.data.site">
+            <b-form-input name="site" v-model="companiesData.site">
             </b-form-input>
           </b-form-group> -->
+
           <b-form-group class="my-2">
             <label for="site">Email</label>
-            <b-form-input name="site" v-model="companiesData.data.email">
+            <b-form-input name="site" v-model="companiesData.email">
             </b-form-input>
           </b-form-group>
-          <b-form-group
-            v-if="companiesData.data.cpfCnpj.length > 14"
-            class="my-2"
-          >
+          <b-form-group v-if="companiesData.cpfCnpj.length > 14" class="my-2">
             <label for="cpfCnpj">CNPJ</label>
-            <b-form-input name="cpfCnpj" v-model="companiesData.data.cpfCnpj">
+            <b-form-input name="cpfCnpj" v-model="companiesData.cpfCnpj">
             </b-form-input>
           </b-form-group>
           <b-form-group v-else class="my-2">
             <label for="cpfCnpj">CPF</label>
-            <b-form-input name="cpfCnpj" v-model="companiesData.data.cpfCnpj">
+            <b-form-input name="cpfCnpj" v-model="companiesData.cpfCnpj">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="cep">CEP</label>
-            <b-form-input name="cep" v-model="companiesData.data.cep">
+            <b-form-input name="cep" v-model="companiesData.cep">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="cidade">Cidade</label>
-            <b-form-input name="cidade" v-model="companiesData.data.city">
+            <b-form-input name="cidade" v-model="companiesData.city">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="estado">Estado</label>
-            <b-form-input name="estado" v-model="companiesData.data.state">
+            <b-form-input name="estado" v-model="companiesData.state">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="endereco">Endereço</label>
-            <b-form-input name="endereco" v-model="companiesData.data.address">
+            <b-form-input name="endereco" v-model="companiesData.address">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="numero">Número</label>
-            <b-form-input name="numero" v-model="companiesData.data.number">
+            <b-form-input name="numero" v-model="companiesData.number">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="bairro">Bairro</label>
-            <b-form-input name="bairro" v-model="companiesData.data.district">
+            <b-form-input name="bairro" v-model="companiesData.district">
             </b-form-input>
           </b-form-group>
           <b-form-group class="my-2">
             <label for="telefone">Telefone</label>
-            <b-form-input name="telefone" v-model="companiesData.data.phone">
+            <b-form-input name="telefone" v-model="companiesData.phone">
             </b-form-input>
           </b-form-group>
         </div>
@@ -270,7 +335,6 @@
 export default {
   data() {
     return {
-      foto: null,
       file: null,
       files: null,
       reader: null,
@@ -289,7 +353,7 @@ export default {
         email: '',
         site: '',
         fantasy_name: '',
-        cpfCnpjCnpj: '',
+        cpfCnpj: '',
         logo: null,
         phone: '',
         ddd: '',
@@ -314,7 +378,9 @@ export default {
 
   methods: {
     excluiFoto() {
-      this.companiesData.logo = null;
+      if (this.companiesData.logo_url !== null) {
+        this.companiesData.logo_url = null;
+      } else this.companiesData.logo = null;
     },
 
     onFileChange(e) {
@@ -326,7 +392,7 @@ export default {
       this.reader = new FileReader();
       this.vm = this;
       this.reader.onload = (e) => {
-        this.vm.companiesData.data.logo = e.target.result;
+        this.vm.companiesData.logo = e.target.result;
       };
       this.reader.readAsDataURL(file);
     },
@@ -334,22 +400,20 @@ export default {
       /* this.userFormData.name = this.user_name;
       this.userFormData.last_name = this.user_last_name;
       this.userFormData.email = this.user_email; */
-      /*       this.companieFormData.site = this.companiesData.data.site;
+      /*       this.companieFormData.site = this.companiesData.site;
        */
-      this.companieFormData.fantasy_name = this.companiesData.data.fantasy_name;
-      this.companieFormData.email = this.companiesData.data.email;
-      this.companieFormData.logo = this.companiesData.data.logo;
-      this.companieFormData.logo_url = this.companiesData.data.logo_url;
-      this.companieFormData.logo = this.companiesData.data.logo;
-      this.companieFormData.cpfCnpj = this.companiesData.data.cpfCnpj;
-      this.companieFormData.cep = this.companiesData.data.cep;
-      this.companieFormData.city = this.companiesData.data.city;
-      this.companieFormData.state = this.companiesData.data.state;
-      this.companieFormData.district = this.companiesData.data.district;
-      this.companieFormData.number = this.companiesData.data.number;
-      this.companieFormData.complement = this.companiesData.data.complement;
-      this.companieFormData.address = this.companiesData.data.address;
-      this.companieFormData.phone = this.companiesData.data.phone;
+      this.companieFormData.fantasy_name = this.companiesData.fantasy_name;
+      this.companieFormData.email = this.companiesData.email;
+      this.companieFormData.logo = this.companiesData.logo;
+      this.companieFormData.cpfCnpj = this.companiesData.cpfCnpj;
+      this.companieFormData.cep = this.companiesData.cep;
+      this.companieFormData.city = this.companiesData.city;
+      this.companieFormData.state = this.companiesData.state;
+      this.companieFormData.district = this.companiesData.district;
+      this.companieFormData.number = this.companiesData.number;
+      this.companieFormData.complement = this.companiesData.complement;
+      this.companieFormData.address = this.companiesData.address;
+      this.companieFormData.phone = this.companiesData.phone;
       /* await this.$axios.put(
         'users/' + this.$auth.user.id,
         this.userFormData,
@@ -357,7 +421,7 @@ export default {
 
       this.formSend = true;
       await this.$axios
-        .put('companies/' + this.companiesData.data.id, this.companieFormData)
+        .put('companies/' + this.companiesData.id, this.companieFormData)
         .then((_res) => {
           this.toast('success', 'Sucesso', 'Empresa editada com sucesso!');
         })

@@ -370,16 +370,16 @@
 
         <b-form-file
           id="file"
-          v-model="formData.photo"
+          v-model="formData.logo"
           accept="image/jpeg, image/png, image/jpg"
           plain
           @change="onFileChange"
         ></b-form-file>
         <!-- <b-form-feedback class="text-center h5">
-          Envio necessário. Clique abaixo para fazer o upload da sua photo.
+          Envio necessário. Clique abaixo para fazer o upload da sua logo.
         </b-form-feedback> -->
         <div class="campo-foto">
-          <label v-if="!formData.photo" for="file">
+          <label v-if="!formData.logo" for="file">
             <div
               class="d-flex flex-column justify-content-center align-items-center"
             >
@@ -407,7 +407,7 @@
             />
             <img
               rel="preload"
-              :src="formData.photo"
+              :src="formData.logo"
               alt=""
               width="100"
               class="pb-5"
@@ -576,7 +576,7 @@ export default {
         number: null,
         complement: null,
         address: null,
-        photo: null,
+        logo: null,
         term: null,
       },
       types: [
@@ -678,7 +678,7 @@ export default {
 
   methods: {
     excluiFoto() {
-      this.formData.photo = null;
+      this.formData.logo = null;
     },
 
     onFileChange(e) {
@@ -690,7 +690,7 @@ export default {
       this.reader = new FileReader();
       this.vm = this;
       this.reader.onload = (e) => {
-        this.vm.formData.photo = e.target.result;
+        this.vm.formData.logo = e.target.result;
       };
       this.reader.readAsDataURL(file);
     },
