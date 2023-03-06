@@ -102,7 +102,7 @@
             <!-- <pre>{{ ask.options }}</pre> -->
             <div class="d-flex align-items-center">
               <b-form-input
-                v-model="options.text"
+                v-model="options.name"
                 placeholder="Opção de resposta"
               ></b-form-input>
               <!-- <b-form-input
@@ -218,7 +218,7 @@ export default {
             is_required: false,
             options: [
               {
-                text: '',
+                name: '',
               },
             ],
           },
@@ -331,7 +331,7 @@ export default {
           this.i < this.formsFields[this.j].options.length;
           this.i++
         ) {
-          this.formData.fields[this.j].options[this.i].text =
+          this.formData.fields[this.j].options[this.i].name =
             this.formsFields[this.j].options[this.i].name;
         }
       }
@@ -343,7 +343,7 @@ export default {
         is_required: null,
         options: [
           {
-            text: null,
+            name: null,
           },
         ],
       });
@@ -351,7 +351,7 @@ export default {
     },
     adicionarOpcaoDeResposta(index, i) {
       /* this.formData.fields[index].options[i].push({ name: null }); */
-      this.formData.fields[index].options.push({ text: null });
+      this.formData.fields[index].options.push({ name: null });
     },
     deletAsk(fields) {
       this.formData.fields.splice(this.formData.fields.indexOf(fields), 1);
