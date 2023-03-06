@@ -196,7 +196,7 @@ export default {
             name: '',
             type: '',
             is_required: false,
-            options: [{ name: '' }],
+            options: [{ text: '' }],
           },
         ],
       },
@@ -279,19 +279,19 @@ export default {
   methods: {
     adicionarPergunta(index) {
       this.formData.fields.push({
-        text: null,
-        type_of: null,
+        name: null,
+        type: null,
+        is_required: null,
         options: [
           {
             text: null,
           },
         ],
-        is_required: null,
       });
       console.log(index);
     },
     adicionarOpcaoDeResposta(index, i) {
-      /* this.formData.fields[index].options[i].push({ text: null }); */
+      /* this.formData.fields[index].options[i].push({ name: null }); */
       this.formData.fields[index].options.push({ text: null });
     },
     deletAsk(fields) {
@@ -339,13 +339,14 @@ export default {
             );
             this.formData = {
               name: null,
+              is_required:false,
               event_show: null,
               fields: [
                 {
                   name: null,
-                  type_of: null,
+                  type: null,
                   is_required: false,
-                  options: [{ name: null }],
+                  options: [{ text: null }],
                 },
               ],
             };

@@ -102,7 +102,7 @@
             <!-- <pre>{{ ask.options }}</pre> -->
             <div class="d-flex align-items-center">
               <b-form-input
-                v-model="options.name"
+                v-model="options.text"
                 placeholder="Opção de resposta"
               ></b-form-input>
               <!-- <b-form-input
@@ -170,6 +170,7 @@
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>
+
       </div>
     </div>
   </b-modal>
@@ -217,7 +218,7 @@ export default {
             is_required: false,
             options: [
               {
-                name: '',
+                text: '',
               },
             ],
           },
@@ -313,48 +314,44 @@ export default {
       } else {
         this.formData.is_required = false;
       }
-      console.log(this.formsSelecionado.event_show);
       this.formData.name = this.formsSelecionado.name;
-      for (this.j; this.j < this.formsFields.length; this.j++) {
-        if (this.formsSelecionado.id) {
-          this.formData.fields[this.j].name = this.formsFields[this.j].name;
-          this.formData.fields[this.j].type = this.formsFields[this.j].type;
-          if (this.formsFields[this.j].is_required == 1) {
-            this.formData.fields[this.j].is_required = true;
-          } else {
-            this.formData.fields[this.j].is_required = false;
-          }
-          this.formData.fields[this.j].options =
-            this.formsFields[this.j].options;
-          for (
-            this.i;
-            this.i < this.formsFields[this.j].options.length;
-            this.i++
-          ) {
-            this.formData.fields[this.j].options[this.i].name =
-              this.formsFields[this.j].options[this.i].name;
-            break;
-          }
-          break;
+      this.formData.fields = this.formsFields;
+      for (this.j = 0; this.j < this.formsFields.length; this.j++) {
+        this.formData.fields.length = this.formsFields.length;
+        this.formData.fields[this.j].name = this.formsFields[this.j].name;
+        this.formData.fields[this.j].type = this.formsFields[this.j].type;
+        if (this.formsFields[this.j].is_required == 1) {
+          this.formData.fields[this.j].is_required = true;
+        } else {
+          this.formData.fields[this.j].is_required = false;
+        }
+        this.formData.fields[this.j].options = this.formsFields[this.j].options;
+        for (
+          this.i;
+          this.i < this.formsFields[this.j].options.length;
+          this.i++
+        ) {
+          this.formData.fields[this.j].options[this.i].text =
+            this.formsFields[this.j].options[this.i].name;
         }
       }
     },
     adicionarPergunta(index) {
       this.formData.fields.push({
         name: null,
-        type_of: null,
+        type: null,
+        is_required: null,
         options: [
           {
-            name: null,
+            text: null,
           },
         ],
-        is_required: null,
       });
       console.log(index);
     },
     adicionarOpcaoDeResposta(index, i) {
-      /* this.formData.fields[index].options[i].push({ text: null }); */
-      this.formData.fields[index].options.push({ name: null });
+      /* this.formData.fields[index].options[i].push({ name: null }); */
+      this.formData.fields[index].options.push({ text: null });
     },
     deletAsk(fields) {
       this.formData.fields.splice(this.formData.fields.indexOf(fields), 1);
@@ -378,7 +375,6 @@ export default {
       this.formData.fields.splice(this.formData.fields.indexOf(options), 1);
       console.log('teste' + this.formData.fields.indexOf(options));
     },
-
     async edit(_response) {
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
