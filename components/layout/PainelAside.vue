@@ -2,8 +2,17 @@
   <aside>
     <div v-if="!$screen.lg" class="header-mobile text-center">
       <img
+        v-if="$auth.user.role === 'administrator'"
         alt="foto"
         :src="companiesData.logo_url"
+        width="140"
+        height="140"
+        class="my-5 profile rounded-circle"
+      />
+      <img
+        v-else
+        alt="foto"
+        :src="$auth.user.photo_url"
         width="140"
         height="140"
         class="my-5 profile rounded-circle"
@@ -199,7 +208,7 @@
     >
       <div class="photo mr-2">
         <img
-          v-if="companiesData.logo_url"
+          v-if="companiesData.logo_url && $auth.user.role === 'administrator'"
           :src="companiesData.logo_url"
           width="50"
           height="50"

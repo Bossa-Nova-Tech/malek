@@ -13,7 +13,7 @@
             class="profile rounded-circle"
           />
           <img
-            v-if="companiesData.logo_url"
+            v-if="companiesData.logo_url && $auth.user.role === 'administrator'"
             :src="companiesData.logo_url"
             width="140"
             alt="foto"
@@ -87,7 +87,6 @@ export default {
 
     this.companiesData = companie.data;
     this.companiesData = this.companiesData.data;
-
   },
 };
 </script>

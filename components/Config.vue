@@ -44,8 +44,16 @@
         class="w-25 h-25 d-flex justify-content-center align-items-center rounded m-auto"
       >
         <b-img
-          v-if="companiesData.logo !== null"
+          v-if="
+            companiesData.logo !== null &&
+            this.$auth.user.role === 'administrator'
+          "
           :src="companiesData.logo_url"
+          class="w-100"
+        ></b-img>
+        <b-img
+          v-if="user_photo !== null && this.$auth.user.role !== 'administrator'"
+          :src="user_photo_url"
           class="w-100"
         ></b-img>
       </div>
@@ -74,13 +82,112 @@
         />
       </div>
       <div v-if="editAccount" class="mx-3 my-3">
-        <div v-if="this.$auth.user.role === 'administrator'">
+        <div v-if="this.$auth.user.role !== 'administrator'">
+          <b-button v-if="!mudarLogo" variant="primary" @click="changeLogo()">
+            Mudar foto de perfil
+          </b-button>
+          <div v-if="mudarLogo">
+            <b-form-file
+              id="file"
+              v-model="user_photo"
+              accept="image/jpeg, image/png, image/jpg"
+              plain
+              @change="onFileChange"
+            ></b-form-file>
+
+            <div class="campo-foto d-flex justify-content-center flex-column">
+              <label v-if="user_photo === null" for="file">
+                <div
+                  class="d-flex flex-column justify-content-center align-items-center"
+                >
+                  <b-img
+                    rel="preload"
+                    alt="upload da foto"
+                    src="~/assets/img/icones/upload.svg"
+                  />
+                  <p>Clique para enviar sua foto</p>
+                  <span>PNG, JPG (tamanho máximo X)</span>
+                </div>
+              </label>
+              <div
+                v-else
+                class="d-flex flex-column justify-content-center align-items-center"
+              >
+                <b-img
+                  rel="preload"
+                  src="~/assets/img/icones/delete-icon.svg"
+                  role="button"
+                  alt="icone de deletar"
+                  class="ml-5 pl-5 pb-2"
+                  aria-describedby="helpBlock"
+                  @click="excluiFoto"
+                />
+                <img
+                  v-if="user_photo_url !== null"
+                  :src="user_photo_url"
+                  alt=""
+                  width="100"
+                  class="pb-5"
+                />
+                <img v-else :src="user_photo" alt="" width="100" class="pb-5" />
+              </div>
+              <small id="helpBlock" class="form-text text-muted mt-4 mb-4">
+                A imagem carregada será utilizada como sua foto de perfil ao
+                logar em sua conta.
+              </small>
+            </div>
+          </div>
+
+          <b-form-group v-if="user_cpfCnpj.length > 13" class="my-2">
+            <label for="nome_fantasia">Nome Fantasia:</label>
+            <b-form-input name="nome" v-model="user_name"> </b-form-input>
+          </b-form-group>
+
+          <b-form-group v-if="user_cpfCnpj.length < 14" class="my-2">
+            <label for="sobrenome">Sobrenome:</label>
+            <b-form-input name="sobrenome" v-model="user_last_name">
+            </b-form-input>
+          </b-form-group>
+
+          <b-form-group class="my-2">
+            <label v-if="user_cpfCnpj.length < 14" for="cpf">CPF</label>
+            <label v-else for="cpf">CNPJ</label>
+            <b-form-input name="cpf" v-model="user_cpfCnpj" />
+          </b-form-group>
+
+          <b-form-group class="my-2">
+            <label for="cep">CEP</label>
+            <b-form-input name="cep" v-model="user_cep" />
+          </b-form-group>
+
+          <b-form-group class="my-2">
+            <label for="endereco">Endereço</label>
+            <b-form-input name="endereco" v-model="user_address" />
+          </b-form-group>
+
+          <b-form-group class="my-2">
+            <label for="numero">Número</label>
+            <b-form-input name="numero" v-model="user_number" />
+          </b-form-group>
+
+          <b-form-group class="my-2">
+            <label for="cidade">Cidade</label>
+            <b-form-input name="cidade" v-model="user_city" />
+          </b-form-group>
+
+          <b-form-group class="my-2">
+            <label for="estado">Estado</label>
+            <b-form-input name="estado" v-model="user_state" />
+          </b-form-group>
+        </div>
+
+        <div v-else>
           <h3>Configurações da empresa</h3>
           <b-button v-if="!mudarLogo" variant="primary" @click="changeLogo()">
             Mudar logo
           </b-button>
-          <div v-if="mudarLogo">
 
+          <div v-if="mudarLogo">
             <b-form-file
               id="file"
               v-model="companiesData.logo"
@@ -132,8 +239,8 @@
                 />
               </div>
               <small id="helpBlock" class="form-text text-muted mt-4 mb-4">
-                A imagem carregada será utilizada como sua foto de perfil ao logar
-                em sua conta.
+                A imagem carregada será utilizada como sua foto de perfil ao
+                logar em sua conta.
               </small>
             </div>
           </div>
@@ -145,6 +252,7 @@
             >
             </b-form-input>
           </b-form-group>
+
           <b-form-group class="my-2">
             <label for="site">Site</label>
             <b-form-input name="site" v-model="companiesData.site">
@@ -156,46 +264,55 @@
             <b-form-input name="site" v-model="companiesData.email">
             </b-form-input>
           </b-form-group>
+
           <b-form-group v-if="companiesData.cpfCnpj.length > 14" class="my-2">
             <label for="cpfCnpj">CNPJ</label>
             <b-form-input name="cpfCnpj" v-model="companiesData.cpfCnpj">
             </b-form-input>
           </b-form-group>
+
           <b-form-group v-else class="my-2">
             <label for="cpfCnpj">CPF</label>
             <b-form-input name="cpfCnpj" v-model="companiesData.cpfCnpj">
             </b-form-input>
           </b-form-group>
+
           <b-form-group class="my-2">
             <label for="cep">CEP</label>
             <b-form-input name="cep" v-model="companiesData.cep">
             </b-form-input>
           </b-form-group>
+
           <b-form-group class="my-2">
             <label for="cidade">Cidade</label>
             <b-form-input name="cidade" v-model="companiesData.city">
             </b-form-input>
           </b-form-group>
+
           <b-form-group class="my-2">
             <label for="estado">Estado</label>
             <b-form-input name="estado" v-model="companiesData.state">
             </b-form-input>
           </b-form-group>
+
           <b-form-group class="my-2">
             <label for="endereco">Endereço</label>
             <b-form-input name="endereco" v-model="companiesData.address">
             </b-form-input>
           </b-form-group>
+
           <b-form-group class="my-2">
             <label for="numero">Número</label>
             <b-form-input name="numero" v-model="companiesData.number">
             </b-form-input>
           </b-form-group>
+
           <b-form-group class="my-2">
             <label for="bairro">Bairro</label>
             <b-form-input name="bairro" v-model="companiesData.district">
             </b-form-input>
           </b-form-group>
+
           <b-form-group class="my-2">
             <label for="telefone">Telefone</label>
             <b-form-input name="telefone" v-model="companiesData.phone">
@@ -204,7 +321,11 @@
         </div>
         <b-button variant="primary" @click="attAccount">Salvar</b-button>
       </div>
-      <div class="m-3 d-flex justify-content-between" @click="editOS = !editOS">
+      <div
+        v-if="$auth.user.role === 'administrator'"
+        class="m-3 d-flex justify-content-between"
+        @click="editOS = !editOS"
+      >
         <h6 class="my-3 font-weight-bold">Ordem de serviço</h6>
         <img
           v-if="editOS"
@@ -279,10 +400,38 @@ export default {
       user_name: this.$auth.user.name,
       user_last_name: this.$auth.user.last_name,
       user_email: this.$auth.user.email,
+      user_cpfCnpj: this.$auth.user.cpfCnpj,
+      user_role: this.$auth.user.role,
+      user_photo: this.$auth.user.photo,
+      user_photo_url: this.$auth.user.photo_url,
+      user_cep: this.$auth.user.cep,
+      user_address: this.$auth.user.address,
+      user_city: this.$auth.user.city,
+      user_state: this.$auth.user.state,
+      user_number: this.$auth.user.number,
+      user_complement: this.$auth.user.complement,
+      user_rg: this.$auth.user.rg,
+      user_district: this.$auth.user.district,
+      user_social_reason: this.$auth.user_social_reason,
+      user_state_registration: this.$auth.user_state_registration,
       userFormData: {
         name: '',
+        company_id: null,
         last_name: '',
         email: '',
+        cpfCnpj: '',
+        photo: null,
+        photo_url: null,
+        cep: '',
+        address: '',
+        city: '',
+        state: '',
+        number: '',
+        complement: '',
+        rg: '',
+        district: '',
+        social_reason: '',
+        user_state_registration: '',
       },
       companieFormData: {
         email: '',
@@ -312,9 +461,14 @@ export default {
   },
 
   methods: {
-    changeLogo(){
-      this.companiesData.logo = null;
-      this.companiesData.logo_url = null;
+    changeLogo() {
+      if (this.user_role !== 'administrator') {
+        this.user_photo = null;
+        this.user_photo_url = null;
+      } else {
+        this.companiesData.logo = null;
+        this.companiesData.logo_url = null;
+      }
       this.mudarLogo = !this.mudarLogo;
     },
     excluiFoto() {
@@ -331,49 +485,88 @@ export default {
     createImage(file) {
       this.reader = new FileReader();
       this.vm = this;
-      this.reader.onload = (e) => {
-        this.vm.companiesData.logo = e.target.result;
-      };
-      this.reader.readAsDataURL(file);
+      if (this.$auth.user.role === 'administrator') {
+        this.reader.onload = (e) => {
+          this.vm.companiesData.logo = e.target.result;
+        };
+        this.reader.readAsDataURL(file);
+      } else {
+        this.reader.onload = (e) => {
+          this.vm.user_photo = e.target.result;
+        };
+        this.reader.readAsDataURL(file);
+      }
     },
     async attAccount() {
-      /* this.userFormData.name = this.user_name;
-      this.userFormData.last_name = this.user_last_name;
-      this.userFormData.email = this.user_email; */
-      /*       this.companieFormData.site = this.companiesData.site;
-       */
-      this.companieFormData.fantasy_name = this.companiesData.fantasy_name;
-      this.companieFormData.email = this.companiesData.email;
-      this.companieFormData.logo = this.companiesData.logo;
-      this.companieFormData.site = this.companiesData.site;
-      this.companieFormData.cpfCnpj = this.companiesData.cpfCnpj;
-      this.companieFormData.cep = this.companiesData.cep;
-      this.companieFormData.city = this.companiesData.city;
-      this.companieFormData.state = this.companiesData.state;
-      this.companieFormData.district = this.companiesData.district;
-      this.companieFormData.number = this.companiesData.number;
-      this.companieFormData.complement = this.companiesData.complement;
-      this.companieFormData.address = this.companiesData.address;
-      this.companieFormData.phone = this.companiesData.phone;
-      /* await this.$axios.put(
-        'users/' + this.$auth.user.id,
-        this.userFormData,
-      ); */
+      if (this.$auth.user.role === 'administrator') {
+        this.companieFormData.fantasy_name = this.companiesData.fantasy_name;
+        this.companieFormData.email = this.companiesData.email;
+        this.companieFormData.logo = this.companiesData.logo;
+        this.companieFormData.site = this.companiesData.site;
+        this.companieFormData.cpfCnpj = this.companiesData.cpfCnpj;
+        this.companieFormData.cep = this.companiesData.cep;
+        this.companieFormData.city = this.companiesData.city;
+        this.companieFormData.state = this.companiesData.state;
+        this.companieFormData.district = this.companiesData.district;
+        this.companieFormData.number = this.companiesData.number;
+        this.companieFormData.complement = this.companiesData.complement;
+        this.companieFormData.address = this.companiesData.address;
+        this.companieFormData.phone = this.companiesData.phone;
+      } else {
+        this.userFormData.name = this.user_name;
+        if (this.user_last_name === null) {
+          this.userFormData.last_name = '-';
+        } else {
+          this.userFormData.last_name = this.user_last_name;
+        }
+        this.userFormData.email = this.user_email;
+        this.userFormData.cpfCnpj = this.user_cpfCnpj;
+        this.userFormData.role = this.user_role;
+        this.userFormData.photo = this.user_photo;
+        this.userFormData.photo_url = this.user_photo_url;
+        this.userFormData.cep = this.user_cep;
+        this.userFormData.address = this.user_address;
+        this.userFormData.city = this.user_city;
+        this.userFormData.state = this.user_state;
+        this.userFormData.company_id = this.$auth.user.company_id;
+        this.userFormData.number = this.user_number;
+        this.userFormData.complement = this.user_complement;
+        this.userFormData.rg = this.user_rg;
+        this.userFormData.district = this.user_district;
+        this.userFormData.social_reason = this.user_social_reason;
+        this.userFormData.state_registration = this.user_state_registration;
+      }
 
       this.formSend = true;
-      await this.$axios
-        .put('companies/' + this.companiesData.id, this.companieFormData)
-        .then((_res) => {
-          this.toast('success', 'Sucesso', 'Empresa editada com sucesso!');
-        })
-        .catch((_err) =>
-          this.toast('warning', 'Warning', 'Erro ao editar empresa!'),
-        )
-        .finally(() => {
-          this.formSend = false;
-          this.$bvModal.hide('modal-1');
-          this.$nuxt.refresh();
-        });
+      if (this.$auth.user.role !== 'administrator') {
+        await this.$axios
+          .put('users/' + this.$auth.user.id, this.userFormData)
+          .then((_res) => {
+            this.toast('success', 'Sucesso', 'Usuário editado com sucesso!');
+          })
+          .catch((_err) =>
+            this.toast('warning', 'Warning', 'Erro ao editar usuário!'),
+          )
+          .finally(() => {
+            this.formSend = false;
+            this.$bvModal.hide('modal-1');
+            this.$nuxt.refresh();
+          });
+      } else {
+        await this.$axios
+          .put('companies/' + this.companiesData.id, this.companieFormData)
+          .then((_res) => {
+            this.toast('success', 'Sucesso', 'Empresa editada com sucesso!');
+          })
+          .catch((_err) =>
+            this.toast('warning', 'Warning', 'Erro ao editar empresa!'),
+          )
+          .finally(() => {
+            this.formSend = false;
+            this.$bvModal.hide('modal-1');
+            this.$nuxt.refresh();
+          });
+      }
     },
   },
 };

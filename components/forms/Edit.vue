@@ -170,7 +170,6 @@
           <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>
-
       </div>
     </div>
   </b-modal>
