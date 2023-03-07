@@ -6,23 +6,14 @@
       <div class="d-flex justify-content-center">
         <b-tabs pills class="mx-auto position-relative" align="center">
           <b-tab id="em-atraso" title="Agendadas" class="mt-4">
-            <ListingAgendadas
-              :visits-data="visitsData"
-              :customers-data="customersData"
-            />
+            <ListingAgendadas :visits-data="visitsData" />
           </b-tab>
           <b-tab id="hoje" title="Em atendimento" active class="mt-4">
-            <Listing
-              :visits-data="visitsData"
-              :customers-data="customersData"
-            />
+            <Listing :visits-data="visitsData" />
           </b-tab>
 
           <b-tab id="futuras" title="Finalizadas" class="mt-4">
-            <ListingFinalizadas
-              :visits-data="visitsData"
-              :customers-data="customersData"
-            />
+            <ListingFinalizadas :visits-data="visitsData" />
           </b-tab>
         </b-tabs>
       </div>

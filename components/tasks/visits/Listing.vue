@@ -91,7 +91,7 @@ export default {
   mixins: [Vue2Filters.mixin],
   props: {
     visitsData: {
-      type: Array,
+      type: Array | Object,
       default: null,
     },
     watching: {
@@ -126,7 +126,7 @@ export default {
   computed: {
     filteredList() {
       /* eslint-disable */
-      return this.visitsData.filter((t) => {
+      return this.visitsData.data.filter((t) => {
         if (t.task != null && t.status == 'in_progress') {
           return t;
         }

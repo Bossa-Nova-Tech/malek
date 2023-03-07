@@ -47,7 +47,6 @@ export default {
         hour_visit: null,
         user_id: null,
       },
-
       colaborators: [],
       labels: {
         labelSelected: 'Horário selecionado',
@@ -61,7 +60,7 @@ export default {
       const user = await this.$axios.get('users');
       const userData = user.data;
       console.log(userData);
-      this.colaborators = userData;
+      this.colaborators = userData.data;
       console.log('aaaaaa' + this.colaborators);
     },
   },

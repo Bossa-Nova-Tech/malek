@@ -2,7 +2,6 @@
   <b-modal
     :id="`excluir-${id}`"
     ref="excluir"
-    title="BootstrapVue"
     hide-header
     footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
   >
@@ -29,12 +28,6 @@ export default {
       default: null,
     },
   },
-  /* mounted() {
-    console.log('chamou o delete', this.excluir.id);
-    const idRef = 'modal-' + this.excluir.id;
-    console.log(idRef);
-    return { idRef };
-  }, */
   methods: {
     async remove() {
       const ordem = await this.$parent.ordem_selecionada;

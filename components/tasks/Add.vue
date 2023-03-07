@@ -18,18 +18,6 @@
           Selecione uma opção.
         </b-form-invalid-feedback>
       </b-form-group>
-      <!-- b-form-group class="mb-4">
-        <label for="services">Serviço <span class="requerido">*</span></label>
-        <b-form-select
-          v-model="formData.services"
-          name="services"
-          :options="optionsServices"
-          :class="{ 'is-invalid': $v.formData.services.$error }"
-        />
-        <b-form-invalid-feedback>
-          Selecione uma opção.
-        </b-form-invalid-feedback>
-      </b-form-group> -->
       <b-form-group>
         <label for="customer">Cliente <span class="requerido">*</span></label>
         <b-form-select v-model="customer_selected" name="customer"
@@ -68,28 +56,6 @@
         </div>
         <b-form-group class="mb-4">
           <label for="end_date">Data prevista de conclusão <span class="requerido">*</span></label>
-          <!-- <b-input-group>
-            <b-form-input
-              v-model="formData.end_date"
-              placeholder="00/00/2022"
-            ></b-form-input>
-            <b-input-group-append>
-              <b-form-datepicker
-                type="date"
-                v-model="formData.end_date"
-                button-only
-                right
-                locale="br"
-                :date-format-options="{
-                  day: 'numeric',
-                  month: 'numeric',
-                  year: 'numeric',
-                }"
-                aria-controls="end
-                -date"
-              ></b-form-datepicker>
-            </b-input-group-append>
-          </b-input-group> -->
           <b-form-datepicker v-model="formData.end_date" name="end_date" :date-format-options="{
             year: 'numeric',
             month: 'numeric',
@@ -100,6 +66,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
       </div>
+
       <div class="d-flex align-items-center mb-3">
         <label for="file" class="text-center mb-0">Enviar Foto </label>
         <img id="info-foto" src="~/assets/img/icones/info.svg" alt="informações" class="ml-3" />
@@ -107,7 +74,9 @@
           <span>Foto opcional</span>
         </b-tooltip>
       </div>
+
       <input @change="foto_selecionada" type="file" ref="arquivo" accept="image/*" class="d-none" />
+
       <ul class="list-unstyled">
         <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
           <h6>Título da foto:</h6>

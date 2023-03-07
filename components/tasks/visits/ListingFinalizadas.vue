@@ -23,7 +23,6 @@
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
             <Viewing :visita-item="visita" :task="tasksData" :center="center" />
-
           </div>
         </div>
         <div class="d-flex align-items-center" @click="showVer(visita)">
@@ -90,7 +89,7 @@ export default {
   mixins: [Vue2Filters.mixin],
   props: {
     visitsData: {
-      type: Array,
+      type: Array | Object,
       default: null,
     },
     watching: {
@@ -121,7 +120,7 @@ export default {
   computed: {
     filteredList() {
       /* eslint-disable */
-      return this.visitsData.filter((t) => {
+      return this.visitsData.data.filter((t) => {
         if (t.task != null && t.status == 'finished') {
           return t;
         }

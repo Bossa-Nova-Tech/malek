@@ -91,7 +91,7 @@ export default {
   mixins: [Vue2Filters.mixin],
   props: {
     visitsData: {
-      type: Array,
+      type: Array | Object,
       default: null,
     },
     watching: {
@@ -105,10 +105,7 @@ export default {
       id: null,
       stop: false,
       intervalList: [],
-      tasksData: {
-        status: 'start',
-      },
-
+      tasksData: [],
       coordenadas: [],
       center: [1, 2],
       latitude: null,
@@ -126,7 +123,7 @@ export default {
   computed: {
     filteredList() {
       /* eslint-disable */
-      return this.visitsData.filter((t) => {
+      return this.visitsData.data.filter((t) => {
         if (t.task != null && t.status == 'scheduled') {
           return t;
         }
@@ -143,7 +140,14 @@ export default {
       this.visita_selecionada = visita;
       const tasks = await this.$axios.get('tasks/' + visita.task_id);
       this.tasksData = tasks.data;
-      const x = $axios.put('tasks/' + this.visitsData.task.id, this.tasksData.status);
+      console.log(this.tasksData);
+      this.tasksData = {
+        status: 'start',
+      };
+      const x = $axios.put(
+        'tasks/' + this.visitsData.task.id,
+        this.tasksData.status,
+      );
       console.log(x);
       const coordenadas = await this.$axios.get(
         'customers/get-coordinates/' + this.tasksData.customer_id,
