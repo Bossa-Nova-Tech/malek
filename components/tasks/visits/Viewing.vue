@@ -4,20 +4,20 @@
     <div class="view-modal mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4">
-          Visita da OS <span> {{ visitaItem.task_id }}</span>
+          Visita da OS <span> {{ visitaItem.task.id }}</span>
         </h1>
 
         <img src="~/assets/img/icones/X-icon.svg" class="mt-3" alt="icone para fechar" role="button"
           @click="salvarFoto" />
       </div>
       <h3>Tipo de serviço</h3>
-      <p>{{ task.services }}</p>
+      <p>{{ visitaItem.task.services }}</p>
       <h3 class="mt-4">Cliente</h3>
-      <p>{{ task.name_customer }}</p>
+      <p>{{ visitaItem.task.name_customer }}</p>
       <h3 class="mt-4">Data da Visita:</h3>
       <p>{{ visitaItem.date_visit }}</p>
       <h3 class="mt-4">Duração média da tarefa</h3>
-      <p>{{ task.estimated_time }}</p>
+      <p>{{ visitaItem.task.estimated_time }}</p>
       <h3 class="mt-4">Horário da Visita:</h3>
       <p>{{ visitaItem.hour_visit }}</p>
       <h3 class="mt-4">Colaborador</h3>
@@ -49,58 +49,6 @@
       <BorderButton class="mb-4 selecionar" @click.native="addFoto">
         Selecionar foto
       </BorderButton>
-      <!-- <b-form-file
-        placeholder="Escolha uma foto ..."
-        drop-placeholder="Solte uma foto aqui ..."
-        @change="onFileChange"
-      ></b-form-file>
-      <b-form-input
-        v-model="newTitle_photo"
-        class="my-3"
-        type="text"
-        placeholder="Ex: Vazamento de ar em tubulação...."
-      />
-      <b-button variant="primary" @click="save()">Adicionar</b-button>
-      <ul class="py-3">
-        <li
-          v-for="(photoItem, index) in listPhotos"
-          :key="photoItem.index"
-          @remove="listPhotos.splice(index, 1)"
-        >
-          <p>{{ photoItem.title_photo }}</p>
-          <img
-            src="~/assets/img/icones/delete-icon.svg"
-            role="button"
-            class="trash"
-            @click="excluiFoto"
-          />
-          <img class="foto" :src="photoItem.photo" />
-        </li>
-      </ul>
-            <BorderButton class="my-4">
-        <input
-          id="file"
-          type="file"
-          accept=".png, .jpg"
-          class="d-flex"
-          @change="onFileChange"
-        />
-        aaaa
-      </BorderButton>
-      <div class="campo-foto d-flex align-self center justify-content-center">
-        <div
-          v-if="formData.photo"
-          class="d-flex flex-column justify-content-center align-items-center"
-        >
-          <b-img
-            src="~/assets/img/icones/delete-icon.svg"
-            role="button"
-            class="ml-5 pl-5 pb-2"
-            @click="excluiFoto"
-          />
-          <img :src="formData.photo" alt="" width="100" />
-       </div>
-      </div> -->
 
       <h3 class="mt-4">Localização do Cliente</h3>
       <client-only>
@@ -150,10 +98,6 @@ export default {
       type: Object,
       default: null,
     },
-    task: {
-      type: Array | Object,
-      default: null,
-    },
     center: {
       type: Array,
       default: null,
@@ -189,10 +133,6 @@ export default {
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      tasksData: [],
-      /* urlImage: null,
-      newTitle_photo: '', */
-      /* listPhotos: [], */
       visits: [],
     };
   },
@@ -236,7 +176,7 @@ export default {
       this.$v.comment.$touch();
       if (!this.$v.comment.$invalid) {
         await this.$axios.post(
-          'tasks/comment/' + this.visitaItem.task_id,
+          'tasks/comment/' + this.visitaItem.task.id,
           this.$data.comment,
         );
         this.listComment = true;

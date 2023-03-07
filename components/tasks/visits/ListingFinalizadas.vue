@@ -13,7 +13,7 @@
               >{{ zfill(hour) }}:{{ zfill(min) }}:{{ zfill(sec) }}</a
             > -->
             <h2 class="primary-80 pb-1">
-              Ordem de Serviço {{ visita.task_id }}
+              Ordem de Serviço {{ visita.task.id }}
             </h2>
             <p class="gray-40">
               Quem irá atender: <strong>{{ visita.user.name }}</strong>
@@ -22,7 +22,7 @@
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
-            <Viewing :visita-item="visita" :task="tasksData" :center="center" />
+            <Viewing :visita-item="visita" :center="center" />
           </div>
         </div>
         <div class="d-flex align-items-center" @click="showVer(visita)">
@@ -103,7 +103,6 @@ export default {
       id: null,
       stop: false,
       intervalList: [],
-      tasksData: [],
       coordenadas: [],
       center: [1, 2],
       latitude: null,
@@ -135,10 +134,9 @@ export default {
         this.$bvModal.show(`view-visit-${this.id}`);
       });
       this.visita_selecionada = visita;
-      const tasks = await this.$axios.get('tasks/' + visita.task_id);
-      this.tasksData = tasks.data;
+      
       const coordenadas = await this.$axios.get(
-        'customers/get-coordinates/' + this.tasksData.customer_id,
+        'customers/get-coordinates/' + visita.task.customer_id,
       );
       this.coordenadas = coordenadas.data;
       this.latitude = this.coordenadas.latitude;

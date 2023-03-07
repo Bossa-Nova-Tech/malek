@@ -8,7 +8,7 @@
           <b-tab id="em-atraso" title="Agendadas" class="mt-4">
             <ListingAgendadas :visits-data="visitsData" />
           </b-tab>
-          <b-tab id="hoje" title="Em atendimento" active class="mt-4">
+          <b-tab id="hoje" title="Andamento" active class="mt-4">
             <Listing :visits-data="visitsData" />
           </b-tab>
 
