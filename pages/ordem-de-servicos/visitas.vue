@@ -28,9 +28,6 @@ import Listing from '~/components/tasks/visits/Listing.vue';
 import ListingAgendadas from '~/components/tasks/visits/ListingAgendadas.vue';
 import ListingFinalizadas from '~/components/tasks/visits/ListingFinalizadas.vue';
 
-/* import ListingFuture from '~/components/tasks/visits/ListingFuture.vue';
-import ListingPast from '~/components/tasks/visits/ListingPast.vue'; */
-
 export default {
   components: {
     Listing,

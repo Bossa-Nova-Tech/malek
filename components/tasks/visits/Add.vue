@@ -20,7 +20,7 @@
       <b-form-select v-model="visits.user_id" name="user">
         <b-form-select-option :value="null" desabled>Selecione</b-form-select-option>
         <b-form-select-option v-for="useer in colaborators" :key="useer.id" :value="useer.id">
-          {{ useer.name }} {{ useer.id }}
+          {{ useer.name }}
         </b-form-select-option>
       </b-form-select>
     </b-form-group>

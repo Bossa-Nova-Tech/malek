@@ -165,6 +165,9 @@
         class="checkbox mb-4 d-flex align-items-center"
         >Este formulário é obrigatório</b-form-checkbox
       >
+      <pre>
+        {{ this.formData }}
+      </pre>
       <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click.once="edit">
           <b-spinner v-if="formSend" small type="grow" />
@@ -325,6 +328,7 @@ export default {
           this.formData.fields[this.j].is_required = false;
         }
         this.formData.fields[this.j].options = this.formsFields[this.j].options;
+       
         for (
           this.i;
           this.i < this.formsFields[this.j].options.length;
