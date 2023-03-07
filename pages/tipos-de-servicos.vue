@@ -3,14 +3,22 @@
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
-      <div v-if="!$screen.lg" class="div-botao d-flex justify-content-center align-items-center">
-        <b-img rel="preload" src="~/assets/img/icones/criar-4.svg" role="button" class="botao-criar" @click="criar" />
+      <div
+        v-if="!$screen.md"
+        class="div-botao d-flex justify-content-center align-items-center"
+      >
+        <b-img
+          src="~/assets/img/icones/criar-4.svg"
+          role="button"
+          class="botao-criar"
+          @click="$bvModal.show('criar')"
+        />
       </div>
       <div>
         <Listing :watching="telaName" :services-data="servicesData" />
         <Add />
         <div class="footer">
-          <button @click="criar">Criar Serviço</button>
+          <button @click="$bvModal.show('criar')">Criar Serviço</button>
         </div>
       </div>
     </main>
@@ -48,9 +56,7 @@ export default {
     };
   },
   methods: {
-    criar() {
-      this.$bvModal.show('criar');
-    },
+    
   },
 };
 </script>

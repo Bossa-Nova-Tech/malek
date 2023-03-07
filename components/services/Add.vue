@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="criar" ref="criar" size="lg" hide-header hide-footer>
+  <b-modal id="criar" size="lg" hide-header hide-footer>
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Criar Serviço</h1>

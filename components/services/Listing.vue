@@ -4,11 +4,13 @@
       <h1 class="p-4">Serviços cadastrados</h1>
     </div>
     <ul>
-      <li v-for="(servicoLista, index) in servicesData" :key="index" class="card-servico p-4">
+      <li
+        v-for="(servicoLista, index) in servicesData"
+        :key="index"
+        class="card-servico p-4"
+      >
         <div class="d-flex align-items-center">
-          <p v-if="$screen.lg" class="gray-40">
-            Serviço
-          </p>
+          <p v-if="$screen.lg" class="gray-40">Serviço</p>
           <div class="ajuste">
             <h2 v-if="$screen.lg" class="primary-80">
               {{ servicoLista.name }}
@@ -20,29 +22,40 @@
         </div>
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
-            <img src="~/assets/img/icones/edit-icon.svg" alt="icone para editar" role="button" class="mr-3" width="22"
-              height="24" @click="showEditar(servicoLista)" />
+            <img
+              src="~/assets/img/icones/edit-icon.svg"
+              alt="icone para editar"
+              role="button"
+              class="mr-3"
+              width="22"
+              height="24"
+              @click="showEditar(servicoLista)"
+            />
 
-            <img src="~/assets/img/icones/delete-icon.svg" alt="icone para deletar" role="button" width="22" height="24"
-              @click="showExcluir(servicoLista)" />
+            <img
+              src="~/assets/img/icones/delete-icon.svg"
+              alt="icone para deletar"
+              role="button"
+              width="22"
+              height="24"
+              @click="showExcluir(servicoLista)"
+            />
           </div>
         </div>
         <Edit :servico-selecionado="servicoLista" :watching="id" />
       </li>
       <Delete :id="id" />
     </ul>
-    <Add />
   </section>
 </template>
 
 <script>
-import Add from '~/components/services/Add.vue';
 import Edit from './Edit.vue';
 import Delete from '~/components/services/Delete.vue';
 
 export default {
   name: 'Listing',
-  components: { Delete, Edit, Add },
+  components: { Delete, Edit },
   props: {
     servicesData: {
       type: Array,
