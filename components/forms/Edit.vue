@@ -121,7 +121,7 @@
             </div>
           </b-form-group>
 
-          <b-button
+          <!--   <b-button
             class="shadow-none my-3 add_ask d-flex align-items-center"
             @click="adicionarOpcaoDeResposta(index, i)"
           >
@@ -138,11 +138,11 @@
               />
             </svg>
             <h3 class="p-0 m-0 ml-2">Adicionar opção</h3>
-          </b-button>
+          </b-button> -->
         </div>
       </b-card>
 
-      <b-button
+      <!--  <b-button
         class="shadow-none mb-4 add_ask d-flex align-items-center"
         @click="adicionarPergunta"
       >
@@ -159,15 +159,13 @@
           />
         </svg>
         <h3 class="p-0 m-0 ml-2">Adicionar Perguntas</h3>
-      </b-button>
+      </b-button> -->
       <b-form-checkbox
         v-model="formData.is_required"
         class="checkbox mb-4 d-flex align-items-center"
         >Este formulário é obrigatório</b-form-checkbox
       >
-      <pre>
-        {{ this.formData }}
-      </pre>
+
       <div class="w-100 mb-4 col-12 px-0">
         <button :disable="formSend" @click.once="edit">
           <b-spinner v-if="formSend" small type="grow" />
@@ -328,7 +326,7 @@ export default {
           this.formData.fields[this.j].is_required = false;
         }
         this.formData.fields[this.j].options = this.formsFields[this.j].options;
-       
+
         for (
           this.i;
           this.i < this.formsFields[this.j].options.length;
