@@ -184,7 +184,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-@media screen and(min-width: 756px) {
+@media (min-width: 756px) {
   .nav-link {
     display: flex;
     width: min(11rem);
