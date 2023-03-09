@@ -5,18 +5,15 @@
     </div>
     <ul>
       <li
-        v-for="(servicoLista, index) in servicesData"
+        v-for="(service, index) in services"
         :key="index"
         class="card-servico p-4"
       >
         <div class="d-flex align-items-center">
           <p v-if="$screen.lg" class="gray-40">Serviço</p>
-          <div class="ajuste">
-            <h2 v-if="$screen.lg" class="primary-80">
-              {{ servicoLista.name }}
-            </h2>
-            <h2 v-if="!$screen.lg" class="primary-80">
-              {{ servicoLista.name }}
+          <div>
+            <h2 class="primary-80 pl-3">
+              {{ service.name }}
             </h2>
           </div>
         </div>
@@ -29,7 +26,7 @@
               class="mr-3"
               width="22"
               height="24"
-              @click="showEditar(servicoLista)"
+              @click="openModalUpdate(service)"
             />
 
             <img
@@ -38,13 +35,17 @@
               role="button"
               width="22"
               height="24"
-              @click="showExcluir(servicoLista)"
+              @click="openModalDelete(service)"
             />
           </div>
         </div>
-        <Edit :servico-selecionado="servicoLista" :watching="id" />
       </li>
-      <Delete :id="id" />
+      <Edit
+        :servico-selecionado="selectedService"
+        :watching="selectedService.id"
+        v-on:updateService="updateServices"
+      />
+      <Delete :id="selectedService.id"/>
     </ul>
   </section>
 </template>
@@ -55,9 +56,9 @@ import Delete from '~/components/services/Delete.vue';
 
 export default {
   name: 'Listing',
-  components: { Delete, Edit },
+  components: {Delete, Edit},
   props: {
-    servicesData: {
+    services: {
       type: Array,
       default: null,
     },
@@ -66,33 +67,32 @@ export default {
       default: null,
     },
   },
+  emits: ['updateServices'],
 
   data() {
     return {
-      editar: false,
-      tamanho: null,
-      id: null,
+      selectedService: {}
     };
   },
 
   methods: {
-    showExcluir(servicoLista) {
-      this.id = servicoLista.id;
+    openModalDelete(service) {
+      this.selectedService = service
       this.$nextTick(function () {
-        this.$bvModal.show(`excluir-${this.id}`);
+        this.$bvModal.show(`excluir-${this.selectedService.id}`);
       });
-      this.servicoSelecionado = servicoLista;
     },
-    showEditar(servicoLista) {
-      this.editar = true;
-      if (this.editar === true) {
-        this.id = servicoLista.id;
-        this.$nextTick(function () {
-          this.$bvModal.show(`update-service-${servicoLista.id}`);
-        });
-        this.servicoSelecionado = servicoLista;
-      }
+    openModalUpdate(service) {
+      this.selectedService = service
+      this.$nextTick(function () {
+        this.$bvModal.show('update-service');
+      });
     },
+
+    updateServices() {
+      console.log('call update services')
+      this.$emit('updateServices', '')
+    }
   },
 };
 </script>

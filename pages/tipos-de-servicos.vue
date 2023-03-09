@@ -1,8 +1,8 @@
 <template>
   <div>
-    <PainelHeader :tela="telaName" />
+    <PainelHeader :tela="title"/>
     <main class="container p-0">
-      <PainelAside v-if="$screen.lg" />
+      <PainelAside v-if="$screen.lg"/>
       <div
         v-if="!$screen.md"
         class="div-botao d-flex justify-content-center align-items-center"
@@ -11,14 +11,14 @@
           src="~/assets/img/icones/criar-4.svg"
           role="button"
           class="botao-criar"
-          @click="$bvModal.show('criar')"
+          @click.prevent="$bvModal.show('criar')"
         />
       </div>
       <div>
-        <Listing :watching="telaName" :services-data="servicesData" />
-        <Add />
-        <div class="footer">
-          <button @click="$bvModal.show('criar')">Criar Serviço</button>
+        <Listing :services="services" v-on:updateServices="search" />
+        <Add/>
+        <div v-show="$screen.md" class="footer">
+          <button @click.prevent="$bvModal.show('criar')">Criar Serviço</button>
         </div>
       </div>
     </main>
@@ -38,15 +38,11 @@ export default {
     PainelHeader,
     PainelAside,
   },
-  async asyncData({ $axios }) {
-    const services = await $axios.get('services');
-    const servicesData = services.data;
-    return { servicesData };
-  },
+
   data: () => {
     return {
-      telaName: 'Tipos de Serviços',
-      servicesData: [],
+      title: 'Tipos de Serviços',
+      services: [],
     };
   },
 
@@ -55,8 +51,29 @@ export default {
       title: `Tipos de Serviços | ${process.env.title}`,
     };
   },
+  beforeMount() {
+    this.fetchServices()
+  },
   methods: {
-    
+    async fetchServices() {
+      await this.$axios
+        .get('services')
+        .then((response) => {
+          this.services = response.data.data
+        })
+        .catch((error) => {
+          console.error(error)
+          this.toast(
+            'error',
+            'Whoops...',
+            'Ocorreu um erro ao buscar informações.'
+          )
+        });
+    },
+
+    search() {
+      console.log('search')
+    }
   },
 };
 </script>

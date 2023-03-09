@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    :id="'update-service-' + servicoSelecionado.id"
-    :ref="'update-service-' + servicoSelecionado.id"
+    :id="'update-service'"
+    :ref="'update-service'"
     size="lg"
     hide-header
     hide-footer
@@ -15,7 +15,7 @@
           class="mb-5 mt-3"
           alt="icone para fechar"
           role="button"
-          @click="$bvModal.hide('update-service-' + servicoSelecionado.id)"
+          @click="handleModal()"
         />
       </div>
       <b-form-group class="mb-4">
@@ -28,9 +28,40 @@
         </b-form-input>
       </b-form-group>
 
+      <b-form-group class="mb-4">
+        <label for="Descrição">Descrição</label>
+        <b-form-input
+          v-model="formData.description"
+          name="Descrição"
+          placeholder="Esse serviço é utilizado para instalação de novos ar condicionado"
+        />
+      </b-form-group>
+
+      <b-form-group class="mb-4">
+        <div class="row">
+          <div class="col-6">
+            <label for="name">Valor estimado em R$</label>
+            <b-form-input
+              v-model="formData.estimated_value"
+              name="Valor estimado"
+              v-mask="'R$##.##'"
+              placeholder="Valor estimado para o serviço"
+            />
+          </div>
+          <div class="col-6">
+            <label for="name">Tempo de garantia em dias</label>
+            <b-form-input
+              v-model="formData.guarantee"
+              name="Valor estimado"
+              placeholder="Valor estimado para o serviço"
+            />
+          </div>
+        </div>
+      </b-form-group>
+
       <div class="mb-4">
         <label for="time_of_execution"
-          >Duração média da tarefa <span class="requerido">*</span></label
+        >Duração média da tarefa <span class="requerido">*</span></label
         >
         <b-input-group>
           <b-form-input
@@ -61,23 +92,24 @@
       <b-form-checkbox
         v-model="formData.need_signature"
         class="checkbox mb-4 d-flex align-items-center"
-        >É necessário coletar assinatura durante visita.</b-form-checkbox
+      >É necessário coletar assinatura durante visita.
+      </b-form-checkbox
       >
 
       <b-form-checkbox
         v-model="formData.send_to_email"
         class="checkbox mb-4 d-flex align-items-center"
-        >Enviar automaticamente por e-mail
+      >Enviar automaticamente por e-mail
       </b-form-checkbox>
       <b-form-checkbox
         v-model="formData.additional_form"
         class="checkbox mb-4 d-flex align-items-center"
-        >Formulário para personalização de Ordem de Serviços
+      >Formulário para personalização de Ordem de Serviços
       </b-form-checkbox>
 
       <div class="w-100 mb-4 col-12 px-0">
-        <button :disable="formSend" @click.once="edit">
-          <b-spinner v-if="formSend" small type="grow" />
+        <button :disabled="formSend" @click.once="edit">
+          <b-spinner v-if="formSend" small type="grow"/>
           Salvar
         </button>
       </div>
@@ -86,13 +118,15 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators';
-import { validationMixin } from 'vuelidate';
-import { mask } from 'vue-the-mask';
+import {required} from 'vuelidate/lib/validators';
+import {validationMixin} from 'vuelidate';
+import {mask} from 'vue-the-mask';
+
 export default {
   name: 'Edit',
-  directives: { mask },
+  directives: {mask},
   mixins: [validationMixin],
+  emits: ['updateService'],
   props: {
     servicoSelecionado: {
       type: Object,
@@ -124,8 +158,8 @@ export default {
 
   validations: {
     formData: {
-      time_of_execution: { required },
-      name: { required },
+      time_of_execution: {required},
+      name: {required},
     },
   },
 
@@ -159,39 +193,41 @@ export default {
         this.formData.additional_form = true;
       }
     },
-    async edit(_response) {
-      const servico = await this.$parent.servicoSelecionado;
-      console.log(servico);
+    async edit() {
       this.$v.formData.$touch();
+      this.formSend = true;
+      this.$emit('updateService', 'here')
+
       if (!this.$v.formData.$invalid) {
-        this.formSend = true;
-        console.log(this.formData);
-        this.$v.$reset();
-        try {
-          this.formSend = false;
-          this.$v.$reset();
-          console.log('executou o clic');
-
-          await this.$axios
-            .put(`services/${servico.id}`, this.$data.formData)
-            .then((_res) => {
-              console.log('sucesso');
-              this.$root.$emit(
-                'bv::hide::modal',
-                `update-service-${this.servicoSelecionado.id}`,
-              );
-
-              // this.$refs.criar.hide();
-
-              this.toast('success', 'Sucesso', 'Serviço editado com sucesso!');
-              this.$nuxt.refresh();
-            })
-            .catch((_err) => {});
-        } catch (error) {
-          console.log(error, 'sadasda');
-        }
+        await this.$axios
+          .put(`services/${this.servicoSelecionado.id}`, this.formData)
+          .then(() => {
+            this.$emit('updateService', '')
+            this.toast(
+              'success',
+              'Sucesso',
+              'Serviço editado com sucesso!'
+            );
+          })
+          .catch((err) => {
+            this.toast(
+              'error',
+              'Sucesso',
+              'Serviço editado com sucesso!'
+            );
+            console.error(err)
+          })
+          .finally(() => {
+            this.$bvModal.hide('update-service')
+            this.formSend = false;
+          });
       }
     },
+
+    handleModal() {
+      this.$bvModal.hide('update-service')
+      this.formData = {}
+    }
   },
 };
 </script>
