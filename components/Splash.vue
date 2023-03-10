@@ -1,51 +1,43 @@
 <template>
-  <div :class="{ loader: true, fadeout: !isLoading }">
-    <img
-      id="splash"
-      src="~/assets/img/android-chrome-512x512.png"
-      alt=""
-      width="400"
-    />
+  <div :class="{ fadeout: !loading }">
+    <img src="~/assets/img/V1.webp" />
   </div>
 </template>
+
 <script>
 export default {
-  name: 'Splash',
-  props: {
-    isLoading: Boolean,
+  data: () => ({
+    loading: true,
+  }),
+  mounted() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
   },
 };
 </script>
+
 <style lang="scss" scoped>
-#splash {
-  display: flex;
-  object-position: center;
-  object-fit: contain;
-  margin-inline: auto;
-}
-
-.loader {
+div {
+  display: grid;
+  height: 100vh;
+  width: 100%;
+  place-items: center;
   background-color: #ffffff;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  display: block;
-  overflow: hidden;
-  padding-top: 23vh;
-  position: fixed;
+  position: absolute;
+  z-index: 99;
+  img {
+    max-width: 300px;
+    width: 100%;
+  }
 }
-
 .fadeout {
-  animation: fadeout 001 forwards;
+  animation: fadeout 1s forwards;
 }
 
 @keyframes fadeout {
-  from {
-    opacity: 100%;
-  }
   to {
-    opacity: 0%;
+    opacity: 0;
     visibility: hidden;
   }
 }
