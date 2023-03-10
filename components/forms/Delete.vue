@@ -28,29 +28,19 @@ export default {
   methods: {
     async remove() {
       const forms = await this.$parent.formsSelecionado;
-      console.log(forms);
       try {
-        await this.$axios
-          .delete('forms/' + forms.id)
-          .then((_res) => {
-            if (_res.data.result === 'success') {
-              console.log(forms.id + ' excluido');
-              this.toast('success', 'Sucesso', 'Formulário excluído!');
-              this.$nuxt.refresh();
-              this.$nextTick(function () {
-                this.$bvModal.hide(`excluir-${this.id}`);
-              });
-            } else {
-              this.toast(
-                'danger',
-                'Erro',
-                'Problemas ao excluir. Entre em contato com o suporte',
-              );
-            }
-          })
-          .catch((_err) => {});
+        await this.$axios.delete('forms/' + forms.id).then((_res) => {
+          console.log(forms.id + ' excluido');
+          this.toast('success', 'Sucesso', 'Formulário excluído!');
+          this.$refs.excluir.hide();
+          this.$nuxt.refresh();
+        });
       } catch (error) {
-        console.log(error);
+        this.toast(
+          'danger',
+          'Erro',
+          'Problemas ao excluir. Entre em contato com o suporte'
+        );
       }
     },
   },

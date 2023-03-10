@@ -398,10 +398,9 @@ export default {
 
               // this.$refs.criar.hide();
 
-              this.toast('success', 'Sucesso', 'Serviço editado com sucesso!');
+              this.toast('success', 'Sucesso', 'Formulário editado com sucesso!');
               this.$nuxt.refresh();
             })
-            .catch((_err) => {});
         } catch (error) {
           console.log(error, 'sadasda');
         }

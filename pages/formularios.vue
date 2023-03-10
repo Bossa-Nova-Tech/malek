@@ -17,7 +17,7 @@
         />
       </div>
       <div>
-        <Listing :watching="telaName" :forms-data="formsData" />
+        <Listing :watching="telaName" :forms-data="formsData.data" />
         <Add />
         <div class="footer">
           <button @click="criar">Criar Formulário</button>

@@ -3,7 +3,7 @@
     <h1 class="p-4">Formulários cadastrados</h1>
     <ul>
       <li
-        v-for="(formsLista, index) in formsData.data"
+        v-for="(formsLista, index) in formsData"
         :key="index"
         class="card-forms p-4 d-flex align-items-center justify-content-between"
       >
