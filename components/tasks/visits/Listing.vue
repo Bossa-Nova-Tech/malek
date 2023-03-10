@@ -141,7 +141,7 @@ export default {
       });
       this.visita_selecionada = visita;
       const coordenadas = await this.$axios.get(
-        'customers/get-coordinates/' + visita.task.customer_id,
+        'customers/get-coordinates/' + visita.task.customer_id
       );
       this.coordenadas = coordenadas.data;
       this.latitude = this.coordenadas.latitude;

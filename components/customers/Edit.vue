@@ -1,45 +1,89 @@
 <template>
-  <b-modal :id="'update-client-' + clienteDaLista.id" :ref="'update-client-' + clienteDaLista.id" size="lg" hide-footer
-    hide-header @shown="modalShown">
+  <b-modal
+    :id="'update-client-' + clienteDaLista.id"
+    :ref="'update-client-' + clienteDaLista.id"
+    size="lg"
+    hide-footer
+    hide-header
+    @shown="modalShown"
+  >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Editar Cliente</h1>
-        <img src="~/assets/img/icones/X-icon.svg" class="mb-5 mt-3" role="button" alt="icone de fechar"
-          @click="$bvModal.hide('update-client-' + clienteDaLista.id)" />
+        <img
+          src="~/assets/img/icones/X-icon.svg"
+          class="mb-5 mt-3"
+          role="button"
+          alt="icone de fechar"
+          @click="$bvModal.hide('update-client-' + clienteDaLista.id)"
+        />
       </div>
       <b-form-group>
         <label for="active">Status do cliente:</label>
-        <b-form-radio-group v-model="formData.active" name="active" :options="active" class="mb-3" value-field="value"
-          text-field="text" disabled-field="notEnabled"></b-form-radio-group>
+        <b-form-radio-group
+          v-model="formData.active"
+          name="active"
+          :options="active"
+          class="mb-3"
+          value-field="value"
+          text-field="text"
+          disabled-field="notEnabled"
+        ></b-form-radio-group>
         <label for="name">Nome <span class="requerido">*</span></label>
-        <b-form-input v-model="formData.name" name="name" type="text" placeholder="João" :class="{
-          'is-invalid': $v.formData.name.$error,
-        }" />
+        <b-form-input
+          v-model="formData.name"
+          name="name"
+          type="text"
+          placeholder="João"
+          :class="{
+            'is-invalid': $v.formData.name.$error,
+          }"
+        />
         <b-form-invalid-feedback>
           Preencha o campo acima
         </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group class="mb-4">
-        <label for="pessoa">Pessoa física ou jurídica?<span class="requerido">*</span></label>
-        <b-form-radio-group v-model="formData.type" :options="types" plain size="sm" class="mb-2">
+        <label for="pessoa"
+          >Pessoa física ou jurídica?<span class="requerido">*</span></label
+        >
+        <b-form-radio-group
+          v-model="formData.type"
+          :options="types"
+          plain
+          size="sm"
+          class="mb-2"
+        >
         </b-form-radio-group>
-        <b-form-input v-if="formData.type == 'pj'" v-model="formData.cnpj" v-mask="['##.###.###/####-##']" value="cnpj"
-          placeholder="00.000.000/000-00" :class="{ 'is-invalid': $v.formData.cnpj.$error }" />
+        <b-form-input
+          v-if="formData.type == 'pj'"
+          v-model="formData.cnpj"
+          v-mask="['##.###.###/####-##']"
+          value="cnpj"
+          placeholder="00.000.000/000-00"
+          :class="{ 'is-invalid': $v.formData.cnpj.$error }"
+        />
         <b-form-invalid-feedback v-if="formData.type == 'pj'">
           {{
-              !$v.formData.cnpj.minLength
-                ? 'Insira um CNPJ válido'
-                : 'Preencha o campo acima'
+            !$v.formData.cnpj.minLength
+              ? 'Insira um CNPJ válido'
+              : 'Preencha o campo acima'
           }}
         </b-form-invalid-feedback>
-        <b-form-input v-if="formData.type == 'f'" v-model="formData.cpf" v-mask="['###.###.###-##']" value="cpf"
-          placeholder="000.000.000-00" :class="{ 'is-invalid': $v.formData.cpf.$error }" />
+        <b-form-input
+          v-if="formData.type == 'f'"
+          v-model="formData.cpf"
+          v-mask="['###.###.###-##']"
+          value="cpf"
+          placeholder="000.000.000-00"
+          :class="{ 'is-invalid': $v.formData.cpf.$error }"
+        />
         <b-form-invalid-feedback v-if="formData.type == 'f'">
           {{
-              !$v.formData.cpf.minLength
-                ? 'Insira um CPF válido'
-                : 'Preencha o campo acima'
+            !$v.formData.cpf.minLength
+              ? 'Insira um CPF válido'
+              : 'Preencha o campo acima'
           }}
         </b-form-invalid-feedback>
       </b-form-group>
@@ -48,13 +92,17 @@
         <b-col cols="12">
           <b-form-group v-if="formData.type == 'f'" class="mb-4">
             <label for="rg">RG <span class="requerido">*</span></label>
-            <b-form-input v-model="formData.rg" name="rg" placeholder="00.000.000"
-              :class="{ 'is-invalid': $v.formData.rg.$error }" />
+            <b-form-input
+              v-model="formData.rg"
+              name="rg"
+              placeholder="00.000.000"
+              :class="{ 'is-invalid': $v.formData.rg.$error }"
+            />
             <b-form-invalid-feedback>
               {{
-                  !$v.formData.rg.minLength
-                    ? 'Insira um RG válido'
-                    : 'Preencha o campo acima'
+                !$v.formData.rg.minLength
+                  ? 'Insira um RG válido'
+                  : 'Preencha o campo acima'
               }}
             </b-form-invalid-feedback>
           </b-form-group>
@@ -64,11 +112,18 @@
       <b-row>
         <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
-            <label for="corporate_name">Razão Social <span class="requerido">*</span></label>
-            <b-form-input v-model="formData.corporate_name" name="corporate_name" type="text" placeholder="Empresa X"
+            <label for="corporate_name"
+              >Razão Social <span class="requerido">*</span></label
+            >
+            <b-form-input
+              v-model="formData.corporate_name"
+              name="corporate_name"
+              type="text"
+              placeholder="Empresa X"
               :class="{
                 'is-invalid': $v.formData.corporate_name.$error,
-              }" />
+              }"
+            />
             <b-form-invalid-feedback>
               Preencha o campo acima
             </b-form-invalid-feedback>
@@ -76,14 +131,21 @@
         </b-col>
         <b-col md="6" sm="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
-            <label for="state_registration">Inscrição Estadual <span class="requerido">*</span></label>
-            <b-form-input v-model="formData.state_registration" v-mask="['###.###.###']" name="state_registration"
-              placeholder="000.000.000" :class="{ 'is-invalid': $v.formData.state_registration.$error }" />
+            <label for="state_registration"
+              >Inscrição Estadual <span class="requerido">*</span></label
+            >
+            <b-form-input
+              v-model="formData.state_registration"
+              v-mask="['###.###.###']"
+              name="state_registration"
+              placeholder="000.000.000"
+              :class="{ 'is-invalid': $v.formData.state_registration.$error }"
+            />
             <b-form-invalid-feedback>
               {{
-                  !$v.formData.state_registration.minLength
-                    ? 'Insira uma IE válida'
-                    : 'Preencha o campo acima'
+                !$v.formData.state_registration.minLength
+                  ? 'Insira uma IE válida'
+                  : 'Preencha o campo acima'
               }}
             </b-form-invalid-feedback>
           </b-form-group>
@@ -93,54 +155,97 @@
       <div class="grid">
         <b-form-group class="mb-4">
           <label for="phone">Telefone <span class="requerido">*</span></label>
-          <b-form-input v-model="formData.phone" v-mask="['(##) ####-####', '(##) #####-####']" name="phone"
-            placeholder="(00) 0 0000-0000" :class="{
+          <b-form-input
+            v-model="formData.phone"
+            v-mask="['(##) ####-####', '(##) #####-####']"
+            name="phone"
+            placeholder="(00) 0 0000-0000"
+            :class="{
               'is-invalid': $v.formData.phone.$error,
-            }" />
+            }"
+          />
           <b-form-invalid-feedback>
             {{
-                !$v.formData.phone.minLength
-                  ? 'Insira um telefone válido'
-                  : 'Preencha o campo acima'
+              !$v.formData.phone.minLength
+                ? 'Insira um telefone válido'
+                : 'Preencha o campo acima'
             }}
           </b-form-invalid-feedback>
         </b-form-group>
 
         <b-form-group class="mb-4">
           <label for="email">E-mail <span class="requerido">*</span></label>
-          <b-form-input v-model="formData.email" name="email" type="email" placeholder="email@gmail.com" :class="{
-            'is-invalid': $v.formData.email.$error,
-          }" />
+          <b-form-input
+            v-model="formData.email"
+            name="email"
+            type="email"
+            placeholder="email@gmail.com"
+            :class="{
+              'is-invalid': $v.formData.email.$error,
+            }"
+          />
           <b-form-invalid-feedback>
             {{
-                !$v.formData.email.email
-                  ? 'Insira um e-mail válido'
-                  : 'Preencha o campo acima'
+              !$v.formData.email.email
+                ? 'Insira um e-mail válido'
+                : 'Preencha o campo acima'
             }}
           </b-form-invalid-feedback>
         </b-form-group>
       </div>
 
       <BorderButton class="my-4">
-        <input id="file" type="file" accept=".png, .jpg" class="d-flex" @change="onFileChange" />
-        <label v-if="formData.type == 'f'" for="file" class="text-center">Enviar Foto</label>
+        <input
+          id="file"
+          type="file"
+          accept=".png, .jpg"
+          class="d-flex"
+          @change="onFileChange"
+        />
+        <label v-if="formData.type == 'f'" for="file" class="text-center"
+          >Enviar Foto</label
+        >
         <label v-else for="file" class="text-center">Enviar Logotipo</label>
       </BorderButton>
       <div class="campo-foto d-flex align-self center justify-content-center">
-        <img v-if="clienteDaLista.photo_url" :src="clienteDaLista.photo_url" alt="foto" width="100" />
-        <b-img v-if="clienteDaLista.photo_url" src="~/assets/img/icones/delete-icon.svg" role="button"
-          class="ml-5 pl-5 pb-2" @click="excluiFoto" />
-        <div v-if="formData.photo" class="d-flex flex-column justify-content-center align-items-center">
-          <b-img src="~/assets/img/icones/delete-icon.svg" role="button" class="ml-5 pl-5 pb-2" @click="excluiFoto" />
+        <img
+          v-if="clienteDaLista.photo_url"
+          :src="clienteDaLista.photo_url"
+          alt="foto"
+          width="100"
+        />
+        <b-img
+          v-if="clienteDaLista.photo_url"
+          src="~/assets/img/icones/delete-icon.svg"
+          role="button"
+          class="ml-5 pl-5 pb-2"
+          @click="excluiFoto"
+        />
+        <div
+          v-if="formData.photo"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <b-img
+            src="~/assets/img/icones/delete-icon.svg"
+            role="button"
+            class="ml-5 pl-5 pb-2"
+            @click="excluiFoto"
+          />
           <img :src="formData.photo" alt="foto" width="100" />
         </div>
       </div>
 
       <b-form-group class="mb-4">
         <label for="cep">CEP</label>
-        <b-form-input v-model="formData.cep" v-mask="['#####-###']" name="cep" placeholder="000-00000" :class="{
-          'is-invalid': $v.formData.cep.$error,
-        }" />
+        <b-form-input
+          v-model="formData.cep"
+          v-mask="['#####-###']"
+          name="cep"
+          placeholder="000-00000"
+          :class="{
+            'is-invalid': $v.formData.cep.$error,
+          }"
+        />
         <b-form-invalid-feedback>
           Preencha o campo acima
         </b-form-invalid-feedback>
@@ -150,7 +255,12 @@
         <b-col cols="6">
           <b-form-group class="mb-4">
             <label for="address">Endereço</label>
-            <b-form-input v-model="formData.address" name="address" type="text" placeholder="Rua" />
+            <b-form-input
+              v-model="formData.address"
+              name="address"
+              type="text"
+              placeholder="Rua"
+            />
             <b-form-invalid-feedback>
               Preencha o campo acima
             </b-form-invalid-feedback>
@@ -160,7 +270,12 @@
         <b-col cols="6">
           <b-form-group class="mb-4">
             <label for="district">Bairro</label>
-            <b-form-input v-model="formData.district" name="district" type="text" placeholder="Bairro" />
+            <b-form-input
+              v-model="formData.district"
+              name="district"
+              type="text"
+              placeholder="Bairro"
+            />
             <b-form-invalid-feedback>
               Preencha o campo acima
             </b-form-invalid-feedback>
@@ -172,7 +287,12 @@
         <b-col cols="6">
           <b-form-group class="mb-4">
             <label for="city">Cidade</label>
-            <b-form-input v-model="formData.city" name="city" type="text" placeholder="Cidade" />
+            <b-form-input
+              v-model="formData.city"
+              name="city"
+              type="text"
+              placeholder="Cidade"
+            />
             <b-form-invalid-feedback>
               Preencha o campo acima
             </b-form-invalid-feedback>
@@ -182,7 +302,12 @@
         <b-col cols="6">
           <b-form-group class="mb-4">
             <label for="state">Estado</label>
-            <b-form-input v-model="formData.state" name="state" type="text" placeholder="Estado" />
+            <b-form-input
+              v-model="formData.state"
+              name="state"
+              type="text"
+              placeholder="Estado"
+            />
           </b-form-group>
         </b-col>
       </b-row>
@@ -191,22 +316,38 @@
         <b-col cols="6">
           <b-form-group class="mb-4">
             <label for="number">Número</label>
-            <b-form-input v-model="formData.number" name="number" type="number" placeholder="000" />
+            <b-form-input
+              v-model="formData.number"
+              name="number"
+              type="number"
+              placeholder="000"
+            />
           </b-form-group>
         </b-col>
 
         <b-col cols="6">
           <b-form-group class="mb-4">
             <label for="complement">Complemento</label>
-            <b-form-input v-model="formData.complement" name="complement" type="text" placeholder="Complemento" />
+            <b-form-input
+              v-model="formData.complement"
+              name="complement"
+              type="text"
+              placeholder="Complemento"
+            />
           </b-form-group>
         </b-col>
       </b-row>
 
       <b-row>
         <b-col cols="12">
-          <l-map ref="myMap" name="mapa" style="height: 300px; border-radius: 8px" :zoom="zoom" :center="center"
-            class="mb-4">
+          <l-map
+            ref="myMap"
+            name="mapa"
+            style="height: 300px; border-radius: 8px"
+            :zoom="zoom"
+            :center="center"
+            class="mb-4"
+          >
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-marker :lat-lng="center"></l-marker>
             <l-control :position="'topright'" class="custom-control-watermark">
@@ -441,7 +582,7 @@ export default {
               this.toast('success', 'Sucesso', 'Item editado com sucesso!');
               this.$nuxt.refresh();
             })
-            .catch((_err) => { });
+            .catch((_err) => {});
         } catch (error) {
           console.log(error, 'sadasda');
         }
@@ -449,9 +590,9 @@ export default {
     },
     excluiFoto() {
       if (this.clienteDaLista) {
-        this.clienteDaLista.photo_url = null
-        this.clienteDaLista.photo_relative = null
-        this.formData.photo = null
+        this.clienteDaLista.photo_url = null;
+        this.clienteDaLista.photo_relative = null;
+        this.formData.photo = null;
       } else {
         this.formData.photo = null;
       }

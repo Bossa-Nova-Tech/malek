@@ -1,6 +1,6 @@
 import Vue from 'vue';
 export default function (
-  { $axios, $nameTeste, $showName, redirect },
+  { $axios, $nameTeste, $showName, redirect, $router },
   context,
   $bvToast,
 ) {
@@ -21,12 +21,20 @@ export default function (
     if (code === 401) {
       console.log('ERRO 401');
       const instance = new Vue({});
-      instance.$bvToast.toast('Sua sessão expirou. Entre novamente!', {
-        title: `Erro`,
-        variant: 'danger',
-        solid: true,
-      });
-      redirect('/login');
+      if (error.request.responseURL.includes('login')) {
+        instance.$bvToast.toast('Email ou senha inválidos! Tente novamente!', {
+          title: `Erro`,
+          variant: 'danger',
+          solid: true,
+        });
+      } else {
+        instance.$bvToast.toast('Sua sessão expirou! Entre novamente!', {
+          title: `Erro`,
+          variant: 'danger',
+          solid: true,
+        });
+        redirect('/login');
+      }
     }
 
     if (code === 422) {

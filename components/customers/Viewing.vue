@@ -1,14 +1,26 @@
 <template>
-  <b-modal :id="'view-client-' + clienteDaLista.id" :ref="'view-client-' + clienteDaLista.id" size="lg" centered
-    no-close-on-backdrop hide-footer hide-header @shown="modalShown">
+  <b-modal
+    :id="'view-client-' + clienteDaLista.id"
+    :ref="'view-client-' + clienteDaLista.id"
+    size="lg"
+    centered
+    no-close-on-backdrop
+    hide-footer
+    hide-header
+    @shown="modalShown"
+  >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Visualizar Cliente</h1>
-        <img src="~/assets/img/icones/X-icon.svg" alt="icone de fechar" class="mb-5 mt-3" role="button"
-          @click="$bvModal.hide('view-client-' + clienteDaLista.id)" />
+        <img
+          src="~/assets/img/icones/X-icon.svg"
+          alt="icone de fechar"
+          class="mb-5 mt-3"
+          role="button"
+          @click="$bvModal.hide('view-client-' + clienteDaLista.id)"
+        />
       </div>
       <div class="d-flex align-items-center justify-content-center">
-
         <b-img class="photo-cliente" :src="formData.photo" />
       </div>
       <b-form-group>
@@ -24,7 +36,12 @@
       <b-form-group class="mb-4">
         <label v-if="formData.type == 'pj'">CNPJ</label>
         <label v-else>CPF</label>
-        <b-form-input v-if="formData.type == 'pj'" :value="formData.cnpj" disabled class="bg-white" />
+        <b-form-input
+          v-if="formData.type == 'pj'"
+          :value="formData.cnpj"
+          disabled
+          class="bg-white"
+        />
         <b-form-input v-else :value="formData.cpf" disabled class="bg-white" />
       </b-form-group>
 
@@ -41,13 +58,21 @@
         <b-col lg="6" md="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
             <label>Razão Social</label>
-            <b-form-input :value="formData.corporate_name" disabled class="bg-white" />
+            <b-form-input
+              :value="formData.corporate_name"
+              disabled
+              class="bg-white"
+            />
           </b-form-group>
         </b-col>
         <b-col lg="6" md="12">
           <b-form-group v-if="formData.type == 'pj'" class="mb-4">
             <label>Inscrição Estadual</label>
-            <b-form-input :value="formData.state_registration" disabled class="bg-white" />
+            <b-form-input
+              :value="formData.state_registration"
+              disabled
+              class="bg-white"
+            />
           </b-form-group>
         </b-col>
       </b-row>
@@ -80,7 +105,11 @@
         <b-col lg="6" md="12">
           <b-form-group class="mb-4">
             <label>Bairro</label>
-            <b-form-input :value="formData.district" disabled class="bg-white" />
+            <b-form-input
+              :value="formData.district"
+              disabled
+              class="bg-white"
+            />
           </b-form-group>
         </b-col>
       </b-row>
@@ -112,13 +141,23 @@
         <b-col cols="6">
           <b-form-group class="mb-4">
             <label>Complemento</label>
-            <b-form-input :value="formData.complement" disabled class="bg-white" />
+            <b-form-input
+              :value="formData.complement"
+              disabled
+              class="bg-white"
+            />
           </b-form-group>
         </b-col>
       </b-row>
       <client-only>
-        <l-map ref="myMap" name="mapa" style="height: 300px; border-radius: 8px" :zoom="zoom" :center="center"
-          class="mb-4">
+        <l-map
+          ref="myMap"
+          name="mapa"
+          style="height: 300px; border-radius: 8px"
+          :zoom="zoom"
+          :center="center"
+          class="mb-4"
+        >
           <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
           <l-marker :draggable="true" :lat-lng="center"></l-marker>
           <l-control :position="'topright'" class="custom-control-watermark">
@@ -241,7 +280,6 @@ export default {
       this.formData.state_registration = this.clienteDaLista.state_registration;
       this.formData.corporate_name = this.clienteDaLista.corporate_name;
       this.formData.photo = this.clienteDaLista.photo_url;
-
     },
     modalShown() {
       setTimeout(() => {
@@ -264,7 +302,6 @@ h1 {
   border-radius: 100%;
   object-position: center;
   object-fit: cover;
-
 }
 
 label {

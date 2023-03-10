@@ -1,8 +1,8 @@
 <template>
   <div>
-    <PainelHeader :tela="title"/>
+    <PainelHeader :tela="title" />
     <main class="container p-0">
-      <PainelAside v-if="$screen.lg"/>
+      <PainelAside v-if="$screen.lg" />
       <div
         v-if="!$screen.md"
         class="div-botao d-flex justify-content-center align-items-center"
@@ -15,8 +15,8 @@
         />
       </div>
       <div>
-        <Listing :services="services" v-on:updateServices="search" />
-        <Add/>
+        <Listing :services="services" @updateServices="search" />
+        <Add />
         <div v-show="$screen.md" class="footer">
           <button @click.prevent="$bvModal.show('criar')">Criar Serviço</button>
         </div>
@@ -52,28 +52,28 @@ export default {
     };
   },
   beforeMount() {
-    this.fetchServices()
+    this.fetchServices();
   },
   methods: {
     async fetchServices() {
       await this.$axios
         .get('services')
         .then((response) => {
-          this.services = response.data.data
+          this.services = response.data.data;
         })
         .catch((error) => {
-          console.error(error)
+          console.error(error);
           this.toast(
             'error',
             'Whoops...',
-            'Ocorreu um erro ao buscar informações.'
-          )
+            'Ocorreu um erro ao buscar informações.',
+          );
         });
     },
 
     search() {
-      console.log('search')
-    }
+      console.log('search');
+    },
   },
 };
 </script>

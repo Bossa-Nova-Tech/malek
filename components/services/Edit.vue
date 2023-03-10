@@ -43,8 +43,8 @@
             <label for="name">Valor estimado em R$</label>
             <b-form-input
               v-model="formData.estimated_value"
-              name="Valor estimado"
               v-mask="'R$##.##'"
+              name="Valor estimado"
               placeholder="Valor estimado para o serviço"
             />
           </div>
@@ -61,7 +61,7 @@
 
       <div class="mb-4">
         <label for="time_of_execution"
-        >Duração média da tarefa <span class="requerido">*</span></label
+          >Duração média da tarefa <span class="requerido">*</span></label
         >
         <b-input-group>
           <b-form-input
@@ -92,24 +92,23 @@
       <b-form-checkbox
         v-model="formData.need_signature"
         class="checkbox mb-4 d-flex align-items-center"
-      >É necessário coletar assinatura durante visita.
-      </b-form-checkbox
-      >
+        >É necessário coletar assinatura durante visita.
+      </b-form-checkbox>
 
       <b-form-checkbox
         v-model="formData.send_to_email"
         class="checkbox mb-4 d-flex align-items-center"
-      >Enviar automaticamente por e-mail
+        >Enviar automaticamente por e-mail
       </b-form-checkbox>
       <b-form-checkbox
         v-model="formData.additional_form"
         class="checkbox mb-4 d-flex align-items-center"
-      >Formulário para personalização de Ordem de Serviços
+        >Formulário para personalização de Ordem de Serviços
       </b-form-checkbox>
 
       <div class="w-100 mb-4 col-12 px-0">
         <button :disabled="formSend" @click.once="edit">
-          <b-spinner v-if="formSend" small type="grow"/>
+          <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>
       </div>
@@ -118,15 +117,14 @@
 </template>
 
 <script>
-import {required} from 'vuelidate/lib/validators';
-import {validationMixin} from 'vuelidate';
-import {mask} from 'vue-the-mask';
+import { required } from 'vuelidate/lib/validators';
+import { validationMixin } from 'vuelidate';
+import { mask } from 'vue-the-mask';
 
 export default {
   name: 'Edit',
-  directives: {mask},
+  directives: { mask },
   mixins: [validationMixin],
-  emits: ['updateService'],
   props: {
     servicoSelecionado: {
       type: Object,
@@ -137,6 +135,7 @@ export default {
       default: null,
     },
   },
+  emits: ['updateService'],
   data() {
     return {
       formSend: false,
@@ -158,8 +157,8 @@ export default {
 
   validations: {
     formData: {
-      time_of_execution: {required},
-      name: {required},
+      time_of_execution: { required },
+      name: { required },
     },
   },
 
@@ -196,38 +195,30 @@ export default {
     async edit() {
       this.$v.formData.$touch();
       this.formSend = true;
-      this.$emit('updateService', 'here')
+      this.$emit('updateService', 'here');
 
       if (!this.$v.formData.$invalid) {
         await this.$axios
           .put(`services/${this.servicoSelecionado.id}`, this.formData)
           .then(() => {
-            this.$emit('updateService', '')
-            this.toast(
-              'success',
-              'Sucesso',
-              'Serviço editado com sucesso!'
-            );
+            this.$emit('updateService', '');
+            this.toast('success', 'Sucesso', 'Serviço editado com sucesso!');
           })
           .catch((err) => {
-            this.toast(
-              'error',
-              'Sucesso',
-              'Serviço editado com sucesso!'
-            );
-            console.error(err)
+            this.toast('error', 'Sucesso', 'Serviço editado com sucesso!');
+            console.error(err);
           })
           .finally(() => {
-            this.$bvModal.hide('update-service')
+            this.$bvModal.hide('update-service');
             this.formSend = false;
           });
       }
     },
 
     handleModal() {
-      this.$bvModal.hide('update-service')
-      this.formData = {}
-    }
+      this.$bvModal.hide('update-service');
+      this.formData = {};
+    },
   },
 };
 </script>

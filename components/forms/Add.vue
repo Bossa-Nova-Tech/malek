@@ -72,7 +72,10 @@
         </b-form-group>
         <b-form-group class="mb-4">
           <label for="required">A resposta é obrigatória?</label>
-          <b-form-radio-group v-model="fields.is_required" :options="isRequired" />
+          <b-form-radio-group
+            v-model="fields.is_required"
+            :options="isRequired"
+          />
           <b-form-invalid-feedback>
             Preencha o campo acima
           </b-form-invalid-feedback>
@@ -339,7 +342,7 @@ export default {
             );
             this.formData = {
               name: null,
-              is_required:false,
+              is_required: false,
               event_show: null,
               fields: [
                 {

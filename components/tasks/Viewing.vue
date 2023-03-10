@@ -24,15 +24,7 @@
       </div>
       <b-button
         size="sm"
-        class="
-          imprimir
-          d-flex
-          justify-content-center
-          align-items-center
-          my-4
-          text-center
-          font-weight-bolder
-        "
+        class="imprimir d-flex justify-content-center align-items-center my-4 text-center font-weight-bolder"
         @click="imprimirOS"
       >
         Imprimir OS<b-img src="~/assets/img/icones/resume-icon.svg" />
@@ -66,10 +58,7 @@
       <b-button variant="primary" @click="modalVisitas"
         >Agendar Visita</b-button
       >
-      <Add
-        :users-name="usersName"
-        :ordem_item="ordem_item"
-      />
+      <Add :users-name="usersName" :ordem_item="ordem_item" />
     </div>
   </b-modal>
 </template>
@@ -137,8 +126,7 @@ export default {
     },
     async imprimirOS() {
       await this.$axios.get(`order-service/pdf/${this.ordem_item.id}`);
-      const link =
-        'https://malek.lunarcode.com.br/api/v1/order-service/pdf/';
+      const link = 'https://malek.lunarcode.com.br/api/v1/order-service/pdf/';
       console.log(link);
       window.open(`${link}${this.ordem_item.id}`);
     },

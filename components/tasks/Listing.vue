@@ -6,10 +6,10 @@
       </b-col>
       <b-col cols="1" class="text-center">
         <img
+          v-b-modal.filtro
           role="button"
           src="~/assets/img/icones/sliders.svg"
           alt="Icon filters"
-          v-b-modal.filtro
         />
       </b-col>
     </div>
@@ -147,7 +147,7 @@
           :ordem_item="itemOrdem"
           :watching="id"
           :clientes="id"
-          :customersData="customersData"
+          :customers-data="customersData"
         />
         <Viewing :id="id" :ordem_item="itemOrdem" :center="center" />
       </li>

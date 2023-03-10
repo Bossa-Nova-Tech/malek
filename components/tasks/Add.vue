@@ -1,15 +1,37 @@
 <template>
-  <b-modal id="criar" ref="criar" size="lg" hide-header hide-footer @shown="modalShown">
+  <b-modal
+    id="criar"
+    ref="criar"
+    size="lg"
+    hide-header
+    hide-footer
+    @shown="modalShown"
+  >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Criar Ordem de Serviço</h1>
-        <img src="~/assets/img/icones/X-icon.svg" class="mb-5 mt-3" role="button" @click="$bvModal.hide('criar')" />
+        <img
+          src="~/assets/img/icones/X-icon.svg"
+          class="mb-5 mt-3"
+          role="button"
+          @click="$bvModal.hide('criar')"
+        />
       </div>
       <b-form-group class="mb-4">
         <label for="service">Serviço <span class="requerido">*</span></label>
-        <b-form-select v-model="service_selected" name="service" :class="{ 'is-invalid': $v.service_selected.$error }">
-          <b-form-select-option :value="null" desabled>Selecione</b-form-select-option>
-          <b-form-select-option v-for="service in services" :key="service.id" :value="service.id">
+        <b-form-select
+          v-model="service_selected"
+          name="service"
+          :class="{ 'is-invalid': $v.service_selected.$error }"
+        >
+          <b-form-select-option :value="null" desabled
+            >Selecione</b-form-select-option
+          >
+          <b-form-select-option
+            v-for="service in services"
+            :key="service.id"
+            :value="service.id"
+          >
             {{ service.name }}
           </b-form-select-option>
         </b-form-select>
@@ -20,10 +42,19 @@
       </b-form-group>
       <b-form-group>
         <label for="customer">Cliente <span class="requerido">*</span></label>
-        <b-form-select v-model="customer_selected" name="customer"
-          :class="{ 'is-invalid': $v.customer_selected.$error }">
-          <b-form-select-option :value="null" desabled>Selecione</b-form-select-option>
-          <b-form-select-option v-for="customer in customersData" :key="customer.id" :value="customer.id">
+        <b-form-select
+          v-model="customer_selected"
+          name="customer"
+          :class="{ 'is-invalid': $v.customer_selected.$error }"
+        >
+          <b-form-select-option :value="null" desabled
+            >Selecione</b-form-select-option
+          >
+          <b-form-select-option
+            v-for="customer in customersData"
+            :key="customer.id"
+            :value="customer.id"
+          >
             {{ customer.name }}
           </b-form-select-option>
         </b-form-select>
@@ -34,20 +65,39 @@
       </b-form-group>
       <div class="d-flex pt-2 pb-2 align-items-center">
         <h5 class="p-0">Cadastrar cliente</h5>
-        <b-img v-b-modal.criar-cliente src="~/assets/img/icones/criar-4.svg" role="button" class="pl-2" />
+        <b-img
+          v-b-modal.criar-cliente
+          src="~/assets/img/icones/criar-4.svg"
+          role="button"
+          class="pl-2"
+        />
       </div>
       <AddOrdem />
       <div class="grid">
         <div class="mb-4">
-          <label for="estimated_time">Tempo estimado para a execução da tarefa
-            <span class="requerido">*</span></label>
+          <label for="estimated_time"
+            >Tempo estimado para a execução da tarefa
+            <span class="requerido">*</span></label
+          >
           <b-input-group>
-            <b-form-input id="estimated_time" v-model="formData.estimated_time" v-mask="['##:##:##']"
-              placeholder="00h:00m00s"></b-form-input>
+            <b-form-input
+              id="estimated_time"
+              v-model="formData.estimated_time"
+              v-mask="['##:##:##']"
+              placeholder="00h:00m00s"
+            ></b-form-input>
             <b-input-group-append>
-              <b-form-timepicker v-model="formData.estimated_time" button-only right show-seconds locale="br"
-                label-close-button="fechar" label-no-time-selected="selecione o tempo" aria-controls="estimated_time"
-                :class="{ 'is-invalid': $v.formData.estimated_time.$error }"></b-form-timepicker>
+              <b-form-timepicker
+                v-model="formData.estimated_time"
+                button-only
+                right
+                show-seconds
+                locale="br"
+                label-close-button="fechar"
+                label-no-time-selected="selecione o tempo"
+                aria-controls="estimated_time"
+                :class="{ 'is-invalid': $v.formData.estimated_time.$error }"
+              ></b-form-timepicker>
             </b-input-group-append>
           </b-input-group>
           <b-form-invalid-feedback>
@@ -55,12 +105,21 @@
           </b-form-invalid-feedback>
         </div>
         <b-form-group class="mb-4">
-          <label for="end_date">Data prevista de conclusão <span class="requerido">*</span></label>
-          <b-form-datepicker v-model="formData.end_date" name="end_date" :date-format-options="{
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-          }" locale="br" placeholder="00/00/2022" :class="{ 'is-invalid': $v.formData.end_date.$error }" />
+          <label for="end_date"
+            >Data prevista de conclusão <span class="requerido">*</span></label
+          >
+          <b-form-datepicker
+            v-model="formData.end_date"
+            name="end_date"
+            :date-format-options="{
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+            }"
+            locale="br"
+            placeholder="00/00/2022"
+            :class="{ 'is-invalid': $v.formData.end_date.$error }"
+          />
           <b-form-invalid-feedback>
             Selecione uma opção.
           </b-form-invalid-feedback>
@@ -69,25 +128,54 @@
 
       <div class="d-flex align-items-center mb-3">
         <label for="file" class="text-center mb-0">Enviar Foto </label>
-        <img id="info-foto" src="~/assets/img/icones/info.svg" alt="informações" class="ml-3" />
+        <img
+          id="info-foto"
+          src="~/assets/img/icones/info.svg"
+          alt="informações"
+          class="ml-3"
+        />
         <b-tooltip target="info-foto" placement="right" variant="primary">
           <span>Foto opcional</span>
         </b-tooltip>
       </div>
 
-      <input @change="foto_selecionada" type="file" ref="arquivo" accept="image/*" class="d-none" />
+      <input
+        ref="arquivo"
+        type="file"
+        accept="image/*"
+        class="d-none"
+        @change="foto_selecionada"
+      />
 
       <ul class="list-unstyled">
         <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
           <h6>Título da foto:</h6>
-          <b-form-input v-model="foto.title" placeholder="Título da foto:" class="my-3" />
+          <b-form-input
+            v-model="foto.title"
+            placeholder="Título da foto:"
+            class="my-3"
+          />
           <div class="d-flex align-items-start justify-content-between">
-            <b-img :src="foto.image" width="80" height="80" class="mb-2 rounded"></b-img>
-            <b-img @click="fotos.splice(index, 1)" size="sm" src="~/assets/img/icones/delete-icon.svg" variant="link"
-              class="p-0" />
+            <b-img
+              :src="foto.image"
+              width="80"
+              height="80"
+              class="mb-2 rounded"
+            ></b-img>
+            <b-img
+              size="sm"
+              src="~/assets/img/icones/delete-icon.svg"
+              variant="link"
+              class="p-0"
+              @click="fotos.splice(index, 1)"
+            />
           </div>
           <h6>Descrição da foto:</h6>
-          <b-form-input v-model="foto.note" placeholder="Digite a descrição:" class="my-3" />
+          <b-form-input
+            v-model="foto.note"
+            placeholder="Digite a descrição:"
+            class="my-3"
+          />
         </li>
       </ul>
       <BorderButton class="mb-4" @click.native="addFoto">
@@ -95,14 +183,24 @@
       </BorderButton>
       <b-form-group class="mb-4">
         <label for="note">Descrição da Ordem de Serviço</label>
-        <b-form-input v-model="formData.note" name="note" placeholder="Esta tarefa consiste em...">
+        <b-form-input
+          v-model="formData.note"
+          name="note"
+          placeholder="Esta tarefa consiste em..."
+        >
         </b-form-input>
       </b-form-group>
 
       <section v-if="lat !== null" id="mapa">
         <label for="mapa">Localização do Cliente</label>
-        <l-map ref="myMap" name="mapa" style="height: 300px; border-radius: 8px" :zoom="zoom" :center="center"
-          class="mb-4">
+        <l-map
+          ref="myMap"
+          name="mapa"
+          style="height: 300px; border-radius: 8px"
+          :zoom="zoom"
+          :center="center"
+          class="mb-4"
+        >
           <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
           <l-marker :lat-lng="center" :draggable="true"></l-marker>
           <l-control :position="'topright'" class="custom-control-watermark">
@@ -217,7 +315,7 @@ export default {
         `customers/${this.customer_selected}`,
       );
       if (this.customersData.id === this.customer_selected) {
-        alert(this.customersData.name)
+        alert(this.customersData.name);
       }
       this.formData.name_customer = data.name;
       this.formData.customer_id = this.customer_selected;
@@ -270,7 +368,7 @@ export default {
             };
             /* this.$router.go(0); */
           });
-          this.$nuxt.refresh().catch((_err) => { });
+          this.$nuxt.refresh().catch((_err) => {});
         } catch (error) {
           console.log(error);
         }

@@ -1,18 +1,39 @@
 <template>
-  <b-modal :id="'update-task-' + ordem_item.id" :ref="'update-task-' + ordem_item.id" size="lg" hide-header hide-footer
-    class="form-modal">
+  <b-modal
+    :id="'update-task-' + ordem_item.id"
+    :ref="'update-task-' + ordem_item.id"
+    size="lg"
+    hide-header
+    hide-footer
+    class="form-modal"
+  >
     <div class="mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Editar Ordem de Serviço</h1>
 
-        <img src="~/assets/img/icones/X-icon.svg" class="mb-5 mt-3" role="button" alt="icone para fechar"
-          @click="$bvModal.hide(`update-task-${ordem_item.id}`)" />
+        <img
+          src="~/assets/img/icones/X-icon.svg"
+          class="mb-5 mt-3"
+          role="button"
+          alt="icone para fechar"
+          @click="$bvModal.hide(`update-task-${ordem_item.id}`)"
+        />
       </div>
       <b-form-group class="mb-4">
         <label for="service">Serviço <span class="requerido">*</span></label>
-        <b-form-select v-model="service_selected" name="service" :class="{ 'is-invalid': $v.service_selected.$error }">
-          <b-form-select-option :value="null" desabled>Selecione</b-form-select-option>
-          <b-form-select-option v-for="service in services" :key="service.id" :value="service.id">
+        <b-form-select
+          v-model="service_selected"
+          name="service"
+          :class="{ 'is-invalid': $v.service_selected.$error }"
+        >
+          <b-form-select-option :value="null" desabled
+            >Selecione</b-form-select-option
+          >
+          <b-form-select-option
+            v-for="service in services"
+            :key="service.id"
+            :value="service.id"
+          >
             {{ service.name }}
           </b-form-select-option>
         </b-form-select>
@@ -35,10 +56,19 @@
       </b-form-group> -->
       <b-form-group>
         <label for="customer">Cliente <span class="requerido">*</span></label>
-        <b-form-select v-model="customer_selected" name="customer"
-          :class="{ 'is-invalid': $v.customer_selected.$error }">
-          <b-form-select-option :value="null" desabled>Selecione</b-form-select-option>
-          <b-form-select-option v-for="customer in customersData" :key="customer.id" :value="customer.id">
+        <b-form-select
+          v-model="customer_selected"
+          name="customer"
+          :class="{ 'is-invalid': $v.customer_selected.$error }"
+        >
+          <b-form-select-option :value="null" desabled
+            >Selecione</b-form-select-option
+          >
+          <b-form-select-option
+            v-for="customer in customersData"
+            :key="customer.id"
+            :value="customer.id"
+          >
             {{ customer.name }}
           </b-form-select-option>
         </b-form-select>
@@ -49,14 +79,28 @@
       </b-form-group>
       <div class="grid">
         <div class="mb-4">
-          <label for="estimated_time">Duração média da tarefa <span class="requerido">*</span></label>
+          <label for="estimated_time"
+            >Duração média da tarefa <span class="requerido">*</span></label
+          >
           <b-input-group>
-            <b-form-input id="estimated_time" v-model="formData.estimated_time" v-mask="['##:##:##']"
-              placeholder="00h:00m00s"></b-form-input>
+            <b-form-input
+              id="estimated_time"
+              v-model="formData.estimated_time"
+              v-mask="['##:##:##']"
+              placeholder="00h:00m00s"
+            ></b-form-input>
             <b-input-group-append>
-              <b-form-timepicker v-model="formData.estimated_time" button-only right show-seconds locale="br"
-                label-close-button="fechar" label-no-time-selected="selecione o tempo" aria-controls="estimated_time"
-                :class="{ 'is-invalid': $v.formData.estimated_time.$error }"></b-form-timepicker>
+              <b-form-timepicker
+                v-model="formData.estimated_time"
+                button-only
+                right
+                show-seconds
+                locale="br"
+                label-close-button="fechar"
+                label-no-time-selected="selecione o tempo"
+                aria-controls="estimated_time"
+                :class="{ 'is-invalid': $v.formData.estimated_time.$error }"
+              ></b-form-timepicker>
             </b-input-group-append>
           </b-input-group>
           <b-form-invalid-feedback>
@@ -64,7 +108,9 @@
           </b-form-invalid-feedback>
         </div>
         <b-form-group class="mb-4">
-          <label for="end_date">Data prevista de conclusão <span class="requerido">*</span></label>
+          <label for="end_date"
+            >Data prevista de conclusão <span class="requerido">*</span></label
+          >
           <!-- <b-input-group>
             <b-form-input
               v-model="formData.end_date"
@@ -87,37 +133,68 @@
               ></b-form-datepicker>
             </b-input-group-append>
           </b-input-group> -->
-          <b-form-datepicker v-model="formData.end_date" name="end_date" :date-format-options="{
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-          }" locale="br" placeholder="00/00/2022" :class="{ 'is-invalid': $v.formData.end_date.$error }" />
+          <b-form-datepicker
+            v-model="formData.end_date"
+            name="end_date"
+            :date-format-options="{
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+            }"
+            locale="br"
+            placeholder="00/00/2022"
+            :class="{ 'is-invalid': $v.formData.end_date.$error }"
+          />
           <b-form-invalid-feedback>
             Selecione uma opção.
           </b-form-invalid-feedback>
         </b-form-group>
       </div>
       <BorderButton class="my-4">
-        <b-form-file id="file" v-model="formData.photos" accept=".png, .jpg" class="d-flex" plain
-          @change="onFileChange" />
+        <b-form-file
+          id="file"
+          v-model="formData.photos"
+          accept=".png, .jpg"
+          class="d-flex"
+          plain
+          @change="onFileChange"
+        />
         <label for="file" class="text-center">Enviar Foto</label>
       </BorderButton>
       <div class="campo-foto d-flex align-self center justify-content-center">
-        <div v-if="formData.photos" class="d-flex flex-column justify-content-center align-items-center">
-          <b-img src="~/assets/img/icones/delete-icon.svg" role="button" class="ml-5 pl-5 pb-2" @click="excluiFoto" />
+        <div
+          v-if="formData.photos"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <b-img
+            src="~/assets/img/icones/delete-icon.svg"
+            role="button"
+            class="ml-5 pl-5 pb-2"
+            @click="excluiFoto"
+          />
 
           <img :src="formData.photos" alt="foto" width="100" />
         </div>
       </div>
       <b-form-group class="mb-4">
         <label for="note">Descrição da Ordem de Serviço</label>
-        <b-form-input v-model="formData.note" name="note" placeholder="Esta tarefa consiste em...">
+        <b-form-input
+          v-model="formData.note"
+          name="note"
+          placeholder="Esta tarefa consiste em..."
+        >
         </b-form-input>
       </b-form-group>
       <section v-if="lat !== null" id="mapa">
         <label for="mapa">Localização do Cliente</label>
-        <l-map ref="myMap" name="mapa" style="height: 300px; border-radius: 8px" :zoom="zoom" :center="center"
-          class="mb-4">
+        <l-map
+          ref="myMap"
+          name="mapa"
+          style="height: 300px; border-radius: 8px"
+          :zoom="zoom"
+          :center="center"
+          class="mb-4"
+        >
           <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
           <l-marker :lat-lng="center" :draggable="true"></l-marker>
           <l-control :position="'topright'" class="custom-control-watermark">
@@ -164,7 +241,7 @@ export default {
     customersData: {
       type: Object | Array,
       default: null,
-    }
+    },
   },
 
   data() {
@@ -282,7 +359,7 @@ export default {
               this.toast('success', 'Sucesso', 'Item editado com sucesso!');
               this.$nuxt.refresh();
             })
-            .catch((_err) => { });
+            .catch((_err) => {});
         } catch (error) {
           console.log(error, 'sadasda');
         }

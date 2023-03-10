@@ -30,7 +30,7 @@ export default {
     const customersData = customers.data;
     const { data } = await $axios.get('users');
     const users = data;
-    console.log(users.data + 'xxx')
+    console.log(users.data + 'xxx');
     return { customersData, users };
   },
 

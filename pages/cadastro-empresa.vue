@@ -3,8 +3,12 @@
     <main class="row justify-content-center align-items-center min-vh-100">
       <b-form class="col col-lg-6">
         <div class="d-flex w-100">
-          <b-img class="mt-5 px-3" src="~/assets/img/icones/seta-voltar-laranja.svg" role="button" @click="$router.push('/')" />
-  
+          <b-img
+            class="mt-5 px-3"
+            src="~/assets/img/icones/seta-voltar-laranja.svg"
+            role="button"
+            @click="$router.push('/')"
+          />
         </div>
         <h1 class="mt-5 pb-3">Cadastrar empresa</h1>
         <h2 class="pb-5">Minhas informações</h2>
@@ -544,8 +548,8 @@ import { mask } from 'vue-the-mask';
 import Terms from '~/components/companies/Terms.vue';
 
 export default {
-  components: { Terms },
   name: 'RegisterCompany',
+  components: { Terms },
 
   directives: { mask },
   mixins: [validationMixin],
@@ -714,7 +718,7 @@ export default {
             this.toast('success', 'Sucesso', 'Empresa cadastrada com sucesso!');
           })
           .catch((_err) =>
-            this.toast('warning', 'Warning', 'Erro ao cadastrar empresa!')
+            this.toast('warning', 'Warning', 'Erro ao cadastrar empresa!'),
           )
           .finally(() => {
             this.formSend = false;
@@ -733,8 +737,8 @@ export default {
               (this.formData.city = response.data.localidade),
               (this.formData.state = response.data.uf),
               (this.formData.cep = response.data.cep),
-              (this.formData.district = response.data.bairro)
-            )
+              (this.formData.district = response.data.bairro),
+            ),
           )
           .catch((error) => console.log(error));
       }

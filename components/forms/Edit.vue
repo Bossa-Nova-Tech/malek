@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    :id="'update-forms-' + this.formsSelecionado.id"
-    :ref="'update-forms-' + this.formsSelecionado.id"
+    :id="'update-forms-' + formsSelecionado.id"
+    :ref="'update-forms-' + formsSelecionado.id"
     size="lg"
     hide-header
     hide-footer

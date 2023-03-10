@@ -90,8 +90,8 @@
           >Sobrenome <span class="requerido">*</span></label
         >
         <b-form-input
-          name="last_name"
           v-model="formData.last_name"
+          name="last_name"
           placeholder="Silva"
           :class="{
             'is-invalid': $v.formData.name.$error,
@@ -444,16 +444,16 @@ export default {
         status: 'active',
         last_name: '',
         role: '',
-        name:'',
+        name: '',
         password_confirmation: '',
         cpfCnpj: '',
         type: 'f',
-        company_id:null,
+        company_id: null,
         rg: '',
         social_reason: '',
         state_registration: '',
         district: null,
-        phone:'',
+        phone: '',
         email: '',
         photo: null,
         password: '',
@@ -462,7 +462,7 @@ export default {
         city: '',
         state: '',
         number: '',
-        complement:'',
+        complement: '',
         note: '',
       },
       options: [

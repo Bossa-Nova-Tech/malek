@@ -6,10 +6,10 @@
       </b-col>
       <b-col cols="3" class="text-center">
         <img
+          v-b-modal.filtro-2
           role="button"
           src="~/assets/img/icones/sliders.svg"
           alt="Icone filtro"
-          v-b-modal.filtro-2
         />
       </b-col>
     </div>
@@ -53,8 +53,7 @@
         </b-col>
       </b-row>
     </b-modal>
-    <b-container class="mx-auto my-2">
-    </b-container>
+    <b-container class="mx-auto my-2"> </b-container>
     <ul>
       <li
         v-for="(itemOrdem, index) in filteredList"
@@ -135,7 +134,7 @@
           :ordem_item="itemOrdem"
           :watching="id"
           :clientes="id"
-          :customersData="customersData"
+          :customers-data="customersData"
         />
         <Viewing :id="id" :ordem_item="itemOrdem" :center="center" />
       </li>

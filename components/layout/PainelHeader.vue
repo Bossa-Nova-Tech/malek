@@ -23,7 +23,7 @@
           <div>
             <div class="d-flex align-items-center mb-3">
               <h1 class="mb-0">Olá {{ $auth.user.name }}</h1>
-              <config :companiesData="companiesData" />
+              <config :companies-data="companiesData" />
             </div>
             <!-- <h1>Olá {{ $auth.user.name }},</h1>
             <config /> -->
@@ -49,6 +49,12 @@
 
 <script>
 export default {
+  props: {
+    tela: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
       companiesData: [],
@@ -73,12 +79,6 @@ export default {
       name: null,
       password: null,
     };
-  },
-  props: {
-    tela: {
-      type: String,
-      default: null,
-    },
   },
   async mounted() {
     const companie = await this.$axios.get(

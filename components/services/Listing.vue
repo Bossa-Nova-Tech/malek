@@ -43,9 +43,9 @@
       <Edit
         :servico-selecionado="selectedService"
         :watching="selectedService.id"
-        v-on:updateService="updateServices"
+        @updateService="updateServices"
       />
-      <Delete :id="selectedService.id"/>
+      <Delete :id="selectedService.id" />
     </ul>
   </section>
 </template>
@@ -56,7 +56,7 @@ import Delete from '~/components/services/Delete.vue';
 
 export default {
   name: 'Listing',
-  components: {Delete, Edit},
+  components: { Delete, Edit },
   props: {
     services: {
       type: Array,
@@ -71,28 +71,28 @@ export default {
 
   data() {
     return {
-      selectedService: {}
+      selectedService: {},
     };
   },
 
   methods: {
     openModalDelete(service) {
-      this.selectedService = service
+      this.selectedService = service;
       this.$nextTick(function () {
         this.$bvModal.show(`excluir-${this.selectedService.id}`);
       });
     },
     openModalUpdate(service) {
-      this.selectedService = service
+      this.selectedService = service;
       this.$nextTick(function () {
         this.$bvModal.show('update-service');
       });
     },
 
     updateServices() {
-      console.log('call update services')
-      this.$emit('updateServices', '')
-    }
+      console.log('call update services');
+      this.$emit('updateServices', '');
+    },
   },
 };
 </script>

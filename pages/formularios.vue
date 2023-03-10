@@ -3,12 +3,21 @@
     <PainelHeader :tela="telaName" />
     <main class="container p-0">
       <PainelAside v-if="$screen.lg" />
-      <div v-if="!$screen.lg" class="div-botao d-flex justify-content-center align-items-center">
-        <b-img rel="preload" alt="icone de criação de formulário" src="~/assets/img/icones/criar-4.svg" role="button"
-          class="botao-criar" @click="criar" />
+      <div
+        v-if="!$screen.lg"
+        class="div-botao d-flex justify-content-center align-items-center"
+      >
+        <b-img
+          rel="preload"
+          alt="icone de criação de formulário"
+          src="~/assets/img/icones/criar-4.svg"
+          role="button"
+          class="botao-criar"
+          @click="criar"
+        />
       </div>
       <div>
-        <Listing :watching="telaName" :formsData="formsData" />
+        <Listing :watching="telaName" :forms-data="formsData" />
         <Add />
         <div class="footer">
           <button @click="criar">Criar Formulário</button>
@@ -36,9 +45,7 @@ export default {
       const forms = await $axios.get('forms');
       const formsData = forms.data;
       return { formsData };
-    } catch (error) {
-
-    }
+    } catch (error) {}
   },
   data: () => {
     return {

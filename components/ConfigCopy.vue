@@ -238,45 +238,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      file: null,
-      editAccount: false,
-      editOS: false,
-      files: null,
-      reader: null,
-      vm: null,
-      formData: {
-        name: this.$auth.user.name,
-        last_name: this.$auth.user.last_name,
-        photo: this.$auth.user.photo,
-        photo_url: this.$auth.user.photo_url,
-        social_reason: this.$auth.user.social_reason,
-        email: this.$auth.user.email,
-        phone: this.$auth.user.phone,
-        city: this.$auth.user.city,
-        number: this.$auth.user.number,
-        state: this.$auth.user.state,
-        address: this.$auth.user.address,
-        phone: this.$auth.user.phone,
-        district: this.$auth.user.district,
-        state_registration: this.state_registration,
-        note: this.$auth.user.note,
-        cpf: this.$auth.user.cpf,
-        cnpj: this.$auth.user.cnpj,
-        role: this.$auth.user.role,
-        cep: this.$auth.user.cep,
-        complement: this.$auth.user.complement,
-        rg: this.$auth.user.rg,
-        company_id: this.$auth.user.company_id,
-        status: this.$auth.user.status,
-      },
-      taskData: {
-        id: null,
-        distancy: null,
-      },
-    };
-  },
   props: {
     address: {
       type: String,
@@ -292,7 +253,7 @@ export default {
     },
     fantasy_name: {
       type: String,
-      default: null
+      default: null,
     },
     photo_url: {
       type: String,
@@ -354,6 +315,45 @@ export default {
       type: String,
       default: null,
     },
+  },
+  data() {
+    return {
+      file: null,
+      editAccount: false,
+      editOS: false,
+      files: null,
+      reader: null,
+      vm: null,
+      formData: {
+        name: this.$auth.user.name,
+        last_name: this.$auth.user.last_name,
+        photo: this.$auth.user.photo,
+        photo_url: this.$auth.user.photo_url,
+        social_reason: this.$auth.user.social_reason,
+        email: this.$auth.user.email,
+        phone: this.$auth.user.phone,
+        city: this.$auth.user.city,
+        number: this.$auth.user.number,
+        state: this.$auth.user.state,
+        address: this.$auth.user.address,
+        phone: this.$auth.user.phone,
+        district: this.$auth.user.district,
+        state_registration: this.state_registration,
+        note: this.$auth.user.note,
+        cpf: this.$auth.user.cpf,
+        cnpj: this.$auth.user.cnpj,
+        role: this.$auth.user.role,
+        cep: this.$auth.user.cep,
+        complement: this.$auth.user.complement,
+        rg: this.$auth.user.rg,
+        company_id: this.$auth.user.company_id,
+        status: this.$auth.user.status,
+      },
+      taskData: {
+        id: null,
+        distancy: null,
+      },
+    };
   },
 
   methods: {

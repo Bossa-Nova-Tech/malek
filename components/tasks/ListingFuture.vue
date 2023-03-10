@@ -6,10 +6,10 @@
       </b-col>
       <b-col cols="1" class="text-center">
         <img
+          v-b-modal.filtro-3
           role="button"
           src="~/assets/img/icones/sliders.svg"
           alt="Icone filtro"
-          v-b-modal.filtro-3
         />
       </b-col>
     </div>
@@ -53,8 +53,7 @@
         </b-col>
       </b-row>
     </b-modal>
-    <b-container class="my-2">
-    </b-container>
+    <b-container class="my-2"> </b-container>
     <ul>
       <li
         v-for="(itemOrdem, index) in filteredList"
@@ -127,7 +126,12 @@
           >
         </div>
         <span class="gray-40">{{ itemOrdem.estimated_time }} </span>
-        <Edit :ordem_item="itemOrdem" :watching="id" :clientes="id" :customersData="customersData" />
+        <Edit
+          :ordem_item="itemOrdem"
+          :watching="id"
+          :clientes="id"
+          :customers-data="customersData"
+        />
         <Viewing :id="id" :ordem_item="itemOrdem" :center="center" />
       </li>
       <Delete :id="id" />
@@ -169,7 +173,7 @@ export default {
     customersData: {
       type: Object | Array,
       default: null,
-    }
+    },
   },
 
   data() {

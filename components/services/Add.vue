@@ -35,8 +35,8 @@
             <label for="name">Valor estimado em R$</label>
             <b-form-input
               v-model="formData.estimated_value"
-              name="Valor estimado"
               v-mask="'R$##.##'"
+              name="Valor estimado"
               placeholder="Valor estimado para o serviço"
             />
           </div>
@@ -53,7 +53,7 @@
 
       <div class="mb-4">
         <label for="time_of_execution"
-        >Duração média da tarefa <span class="requerido">*</span></label
+          >Duração média da tarefa <span class="requerido">*</span></label
         >
         <b-input-group>
           <b-form-input
@@ -104,7 +104,7 @@
 
       <div class="w-100 mb-4 col-12 px-0">
         <button :disabled="formSend" @click.once="register">
-          <b-spinner v-if="formSend" small type="grow"/>
+          <b-spinner v-if="formSend" small type="grow" />
           Salvar
         </button>
       </div>
@@ -114,14 +114,15 @@
 
 <script>
 import Vue2Filters from 'vue2-filters';
-import {required} from 'vuelidate/lib/validators';
-import {validationMixin} from 'vuelidate';
-import {mask} from 'vue-the-mask';
+import { required } from 'vuelidate/lib/validators';
+import { validationMixin } from 'vuelidate';
+import { mask } from 'vue-the-mask';
 
 export default {
   name: 'Add',
-  directives: {mask},
+  directives: { mask },
   mixins: [validationMixin, Vue2Filters.mixin],
+  emits: ['serviceCreated'],
 
   data() {
     return {
@@ -141,28 +142,23 @@ export default {
 
   validations: {
     formData: {
-      time_of_execution: {required},
-      name: {required},
+      time_of_execution: { required },
+      name: { required },
     },
   },
-  emits: ['serviceCreated'],
   methods: {
     async register() {
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
-        console.log(this.formData)
+        console.log(this.formData);
         await this.$axios
           .post('services', this.$data.formData)
           .then((response) => {
-            this.toast(
-              'success',
-              'Sucesso',
-              'Serviço cadastrado com sucesso!',
-            );
-            this.$emit('serviceCreated', response.data.data)
+            this.toast('success', 'Sucesso', 'Serviço cadastrado com sucesso!');
+            this.$emit('serviceCreated', response.data.data);
           })
           .catch((error) => {
-            console.error(error)
+            console.error(error);
             this.toast(
               'error',
               'Whoops...',
@@ -170,7 +166,7 @@ export default {
             );
           })
           .finally(() => {
-            this.$bvModal.hide('criar')
+            this.$bvModal.hide('criar');
 
             this.formData = {
               estimated_value: 0.0,
@@ -181,11 +177,10 @@ export default {
               need_signature: false,
               send_to_email: false,
               additional_form: false,
-            }
-          })
+            };
+          });
       }
-    }
-    ,
+    },
   },
 };
 </script>

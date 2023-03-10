@@ -1,14 +1,27 @@
 <template>
-  <b-modal :id="'view-visit-' + visitaItem.id" :ref="'view-visit'" size="lg" centered no-close-on-backdrop hide-header
-    hide-footer @shown="modalShown">
+  <b-modal
+    :id="'view-visit-' + visitaItem.id"
+    :ref="'view-visit'"
+    size="lg"
+    centered
+    no-close-on-backdrop
+    hide-header
+    hide-footer
+    @shown="modalShown"
+  >
     <div class="view-modal mx-4">
       <div class="d-flex justify-content-between">
         <h1 class="mt-4">
           Visita da OS <span> {{ visitaItem.task.id }}</span>
         </h1>
 
-        <img src="~/assets/img/icones/X-icon.svg" class="mt-3" alt="icone para fechar" role="button"
-          @click="salvarFoto" />
+        <img
+          src="~/assets/img/icones/X-icon.svg"
+          class="mt-3"
+          alt="icone para fechar"
+          role="button"
+          @click="salvarFoto"
+        />
       </div>
       <h3>Tipo de serviço</h3>
       <p>{{ visitaItem.task.services }}</p>
@@ -32,18 +45,42 @@
           <span>Foto opcional</span>
         </b-tooltip>
       </div>
-      <input @change="foto_selecionada" type="file" ref="arquivo" accept="image/*" class="d-none" />
+      <input
+        ref="arquivo"
+        type="file"
+        accept="image/*"
+        class="d-none"
+        @change="foto_selecionada"
+      />
       <ul class="list-unstyled">
         <li v-for="(foto, index) in fotos" :key="index" class="mb-2">
           <h6>Título da foto:</h6>
-          <b-form-input v-model="foto.title" placeholder="Título da foto:" class="my-3" />
+          <b-form-input
+            v-model="foto.title"
+            placeholder="Título da foto:"
+            class="my-3"
+          />
           <div class="d-flex align-items-start justify-content-between">
-            <b-img :src="foto.image" width="80" height="80" class="mb-2 rounded"></b-img>
-            <b-img @click="fotos.splice(index, 1)" size="sm" src="~/assets/img/icones/delete-icon.svg" variant="link"
-              class="p-0" />
+            <b-img
+              :src="foto.image"
+              width="80"
+              height="80"
+              class="mb-2 rounded"
+            ></b-img>
+            <b-img
+              size="sm"
+              src="~/assets/img/icones/delete-icon.svg"
+              variant="link"
+              class="p-0"
+              @click="fotos.splice(index, 1)"
+            />
           </div>
           <h6>Descrição da foto:</h6>
-          <b-form-input v-model="foto.note" placeholder="Digite a descrição:" class="my-3" />
+          <b-form-input
+            v-model="foto.note"
+            placeholder="Digite a descrição:"
+            class="my-3"
+          />
         </li>
       </ul>
       <BorderButton class="mb-4 selecionar" @click.native="addFoto">
@@ -52,8 +89,14 @@
 
       <h3 class="mt-4">Localização do Cliente</h3>
       <client-only>
-        <l-map ref="myMap" name="mapa" style="height: 300px; border-radius: 8px" :zoom="zoom" :center="center"
-          class="mb-4">
+        <l-map
+          ref="myMap"
+          name="mapa"
+          style="height: 300px; border-radius: 8px"
+          :zoom="zoom"
+          :center="center"
+          class="mb-4"
+        >
           <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
           <l-marker :lat-lng="center"></l-marker>
           <l-control :position="'topright'" class="custom-control-watermark">
@@ -64,10 +107,16 @@
       </client-only>
       <h3 class="mt-4">Comentário:</h3>
       <b-form-group>
-        <b-form-textarea id="user-comment" v-model="comment.text" placeholder="Digite o comentário..." rows="3"
-          max-rows="6" :class="{
+        <b-form-textarea
+          id="user-comment"
+          v-model="comment.text"
+          placeholder="Digite o comentário..."
+          rows="3"
+          max-rows="6"
+          :class="{
             'is-invalid': $v.comment.text.$error,
-          }"></b-form-textarea>
+          }"
+        ></b-form-textarea>
         <b-form-invalid-feedback>
           Para salvar, preencha o comentário.
         </b-form-invalid-feedback>
@@ -144,7 +193,6 @@ export default {
     },
   },
   methods: {
-
     addFoto() {
       $(this.$refs.arquivo).trigger('click');
     },
@@ -197,11 +245,15 @@ export default {
             .put('tasks/visit/' + this.visitaItem.id, this.$data.visits)
             .then((_res) => {
               this.$root.$emit('bv::hide::modal', 'visitas');
-              this.toast('success', 'Sucesso', 'Visita atualizada com sucesso!');
+              this.toast(
+                'success',
+                'Sucesso',
+                'Visita atualizada com sucesso!',
+              );
               /* this.$router.go( 0); */
             });
           this.$bvModal.hide('view-visit-' + this.visitaItem.id);
-          this.$nuxt.refresh().catch((_err) => { });
+          this.$nuxt.refresh().catch((_err) => {});
         } catch (error) {
           console.log(error);
         }

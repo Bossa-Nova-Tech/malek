@@ -44,14 +44,13 @@
       >
         <b-img
           v-if="
-            companiesData.logo !== null &&
-            this.$auth.user.role === 'administrator'
+            companiesData.logo !== null && $auth.user.role === 'administrator'
           "
           :src="companiesData.logo_url"
           class="w-100"
         ></b-img>
         <b-img
-          v-if="user_photo !== null && this.$auth.user.role !== 'administrator'"
+          v-if="user_photo !== null && $auth.user.role !== 'administrator'"
           :src="user_photo_url"
           class="w-100"
         ></b-img>
@@ -81,7 +80,7 @@
         />
       </div>
       <div v-if="editAccount" class="mx-3 my-3">
-        <div v-if="this.$auth.user.role !== 'administrator'">
+        <div v-if="$auth.user.role !== 'administrator'">
           <b-button v-if="!mudarLogo" variant="primary" @click="changeLogo()">
             Mudar foto de perfil
           </b-button>
@@ -139,44 +138,44 @@
 
           <b-form-group v-if="user_cpfCnpj.length > 13" class="my-2">
             <label for="nome_fantasia">Nome Fantasia:</label>
-            <b-form-input name="nome" v-model="user_name"> </b-form-input>
+            <b-form-input v-model="user_name" name="nome"> </b-form-input>
           </b-form-group>
 
           <b-form-group v-if="user_cpfCnpj.length < 14" class="my-2">
             <label for="sobrenome">Sobrenome:</label>
-            <b-form-input name="sobrenome" v-model="user_last_name">
+            <b-form-input v-model="user_last_name" name="sobrenome">
             </b-form-input>
           </b-form-group>
 
           <b-form-group class="my-2">
             <label v-if="user_cpfCnpj.length < 14" for="cpf">CPF</label>
             <label v-else for="cpf">CNPJ</label>
-            <b-form-input name="cpf" v-model="user_cpfCnpj" />
+            <b-form-input v-model="user_cpfCnpj" name="cpf" />
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="cep">CEP</label>
-            <b-form-input name="cep" v-model="user_cep" />
+            <b-form-input v-model="user_cep" name="cep" />
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="endereco">Endereço</label>
-            <b-form-input name="endereco" v-model="user_address" />
+            <b-form-input v-model="user_address" name="endereco" />
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="numero">Número</label>
-            <b-form-input name="numero" v-model="user_number" />
+            <b-form-input v-model="user_number" name="numero" />
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="cidade">Cidade</label>
-            <b-form-input name="cidade" v-model="user_city" />
+            <b-form-input v-model="user_city" name="cidade" />
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="estado">Estado</label>
-            <b-form-input name="estado" v-model="user_state" />
+            <b-form-input v-model="user_state" name="estado" />
           </b-form-group>
         </div>
 
@@ -246,83 +245,94 @@
           <b-form-group class="my-2">
             <label for="nome_fantasia">Nome Fantasia</label>
             <b-form-input
-              name="nome_fantasia"
               v-model="companiesData.fantasy_name"
+              name="nome_fantasia"
             >
             </b-form-input>
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="site">Site</label>
-            <b-form-input name="site" v-model="companiesData.site">
+            <b-form-input v-model="companiesData.site" name="site">
             </b-form-input>
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="site">Email</label>
-            <b-form-input name="site" v-model="companiesData.email">
+            <b-form-input v-model="companiesData.email" name="site">
             </b-form-input>
           </b-form-group>
 
           <b-form-group v-if="companiesData.cpfCnpj.length > 14" class="my-2">
             <label for="cpfCnpj">CNPJ</label>
-            <b-form-input name="cpfCnpj" v-model="companiesData.cpfCnpj">
+            <b-form-input v-model="companiesData.cpfCnpj" name="cpfCnpj">
             </b-form-input>
           </b-form-group>
 
           <b-form-group v-else class="my-2">
             <label for="cpfCnpj">CPF</label>
-            <b-form-input name="cpfCnpj" v-model="companiesData.cpfCnpj">
+            <b-form-input v-model="companiesData.cpfCnpj" name="cpfCnpj">
             </b-form-input>
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="cep">CEP</label>
-            <b-form-input name="cep" v-model="companiesData.cep">
+            <b-form-input v-model="companiesData.cep" name="cep">
             </b-form-input>
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="cidade">Cidade</label>
-            <b-form-input name="cidade" v-model="companiesData.city">
+            <b-form-input v-model="companiesData.city" name="cidade">
             </b-form-input>
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="estado">Estado</label>
-            <b-form-input name="estado" v-model="companiesData.state">
+            <b-form-input v-model="companiesData.state" name="estado">
             </b-form-input>
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="endereco">Endereço</label>
-            <b-form-input name="endereco" v-model="companiesData.address">
+            <b-form-input v-model="companiesData.address" name="endereco">
             </b-form-input>
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="numero">Número</label>
-            <b-form-input name="numero" v-model="companiesData.number">
+            <b-form-input v-model="companiesData.number" name="numero">
             </b-form-input>
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="bairro">Bairro</label>
-            <b-form-input name="bairro" v-model="companiesData.district">
+            <b-form-input v-model="companiesData.district" name="bairro">
             </b-form-input>
           </b-form-group>
 
           <b-form-group class="my-2">
             <label for="telefone">Telefone</label>
-            <b-form-input name="telefone" v-model="companiesData.phone">
+            <b-form-input v-model="companiesData.phone" name="telefone">
             </b-form-input>
           </b-form-group>
-          <b-button variant="secundary" @click="$bvModal.show('logout-modal')" class="my-3"
+          <b-button
+            variant="secundary"
+            class="my-3"
+            @click="$bvModal.show('logout-modal')"
             >Sair da conta</b-button
           >
-          <b-modal ref="logout-modal" id="logout-modal" hide-header hide-footer centered>
+          <b-modal
+            id="logout-modal"
+            ref="logout-modal"
+            hide-header
+            hide-footer
+            centered
+          >
             <template>
-              <h3 class="w-100 mx-auto">Tem certeza que gostaria de sair da conta?</h3>
+              <h3 class="w-100 mx-auto">
+                Tem certeza que gostaria de sair da conta?
+              </h3>
               <b-row>
                 <b-col>
                   <b-button variant="primary" @click="logoutConfirmation">
@@ -410,6 +420,12 @@
 
 <script>
 export default {
+  props: {
+    companiesData: {
+      type: Array | Object,
+      default: '',
+    },
+  },
   data() {
     return {
       mudarLogo: false,
@@ -474,12 +490,6 @@ export default {
         distancy: '',
       },
     };
-  },
-  props: {
-    companiesData: {
-      type: Array | Object,
-      default: '',
-    },
   },
 
   methods: {
@@ -571,7 +581,7 @@ export default {
             this.toast('success', 'Sucesso', 'Usuário editado com sucesso!');
           })
           .catch((_err) =>
-            this.toast('warning', 'Warning', 'Erro ao editar usuário!')
+            this.toast('warning', 'Warning', 'Erro ao editar usuário!'),
           )
           .finally(() => {
             this.formSend = false;
@@ -585,7 +595,7 @@ export default {
             this.toast('success', 'Sucesso', 'Empresa editada com sucesso!');
           })
           .catch((_err) =>
-            this.toast('warning', 'Warning', 'Erro ao editar empresa!')
+            this.toast('warning', 'Warning', 'Erro ao editar empresa!'),
           )
           .finally(() => {
             this.formSend = false;
