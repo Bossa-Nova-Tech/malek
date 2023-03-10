@@ -249,6 +249,9 @@
               name="address"
               type="text"
               placeholder="Rua"
+              :class="{
+                'is-invalid': $v.formData.address.$error,
+              }"
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -264,6 +267,9 @@
               name="district"
               type="text"
               placeholder="Bairro"
+              :class="{
+                'is-invalid': $v.formData.district.$error,
+              }"
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -281,6 +287,9 @@
               name="city"
               type="text"
               placeholder="Cidade"
+              :class="{
+                'is-invalid': $v.formData.city.$error,
+              }"
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -296,7 +305,13 @@
               name="state"
               type="text"
               placeholder="Estado"
+              :class="{
+                'is-invalid': $v.formData.state.$error,
+              }"
             />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -421,6 +436,7 @@ export default {
         minLength: minLength(18),
       },
       state_registration: {
+        required,
         minLength: minLength(11),
       },
       cpf: {
@@ -446,6 +462,18 @@ export default {
       cep: {
         required,
         minLength: minLength(9),
+      },
+      address: {
+        required,
+      },
+      state: {
+        required,
+      },
+      city: {
+        required,
+      },
+      district: {
+        required,
       },
       number: {
         required,
@@ -479,7 +507,7 @@ export default {
               this.toast(
                 'success',
                 'Sucesso',
-                'Cliente adicionado com sucesso!',
+                'Cliente adicionado com sucesso!'
               );
               this.formData = {
                 name: null,
@@ -544,8 +572,8 @@ export default {
                 (this.formData.city = response.data.localidade),
                 (this.formData.state = response.data.uf),
                 (this.formData.cep = response.data.cep),
-                (this.formData.district = response.data.bairro),
-              ),
+                (this.formData.district = response.data.bairro)
+              )
             /* district: response.data.bairro,
                 city: response.data.localidade,
                 state: response.data.uf,
