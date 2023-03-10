@@ -5,7 +5,7 @@
         <div class="bg-separado"></div>
         <div class="titulo container">
           <img
-            v-if="$auth.user.photo_url"
+            v-if="$auth.user.photo_url && $auth.user.role !== 'administrator'"
             :src="$auth.user.photo_url"
             width="140"
             alt="foto"

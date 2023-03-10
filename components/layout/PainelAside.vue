@@ -2,7 +2,7 @@
   <aside>
     <div v-if="!$screen.lg" class="header-mobile text-center">
       <img
-        v-if="$auth.user.role === 'administrator'"
+        v-if="$auth.user.role === 'administrator' && companiesData.logo_url"
         alt="foto"
         :src="companiesData.logo_url"
         width="140"
@@ -10,7 +10,7 @@
         class="my-5 profile rounded-circle"
       />
       <img
-        v-else
+        v-if="$auth.user.role !== 'administrator' && $auth.user.photo_url"
         alt="foto"
         :src="$auth.user.photo_url"
         width="140"
@@ -266,7 +266,7 @@ export default {
   },
   async mounted() {
     const companie = await this.$axios.get(
-      'companies/' + this.$auth.user.company_id,
+      'companies/' + this.$auth.user.company_id
     );
     this.companiesData = companie.data;
     this.companiesData = this.companiesData.data;
