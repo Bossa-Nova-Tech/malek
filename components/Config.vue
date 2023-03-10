@@ -33,7 +33,6 @@
     <b-modal id="modal-1" hide-footer hide-header centered>
       <div class="d-flex justify-content-between mb-3">
         <h1>Configurações</h1>
-
         <img
           src="~/assets/img/icones/X-icon.svg"
           role="button"
@@ -318,6 +317,29 @@
             <b-form-input name="telefone" v-model="companiesData.phone">
             </b-form-input>
           </b-form-group>
+          <b-button variant="secundary" @click="$bvModal.show('logout-modal')" class="my-3"
+            >Sair da conta</b-button
+          >
+          <b-modal ref="logout-modal" id="logout-modal" hide-header hide-footer centered>
+            <template>
+              <h3 class="w-100 mx-auto">Tem certeza que gostaria de sair da conta?</h3>
+              <b-row>
+                <b-col>
+                  <b-button variant="primary" @click="logoutConfirmation">
+                    Sim
+                  </b-button>
+                </b-col>
+                <b-col>
+                  <b-button
+                    variant="secundary"
+                    @click="$bvModal.hide('logout-modal')"
+                  >
+                    Não
+                  </b-button>
+                </b-col>
+              </b-row>
+            </template>
+          </b-modal>
         </div>
         <b-button variant="primary" @click="attAccount">Salvar</b-button>
       </div>
@@ -461,6 +483,10 @@ export default {
   },
 
   methods: {
+    logoutConfirmation() {
+      this.$auth.logout();
+      this.$router.push('/');
+    },
     changeLogo() {
       if (this.user_role !== 'administrator') {
         this.user_photo = null;
@@ -545,7 +571,7 @@ export default {
             this.toast('success', 'Sucesso', 'Usuário editado com sucesso!');
           })
           .catch((_err) =>
-            this.toast('warning', 'Warning', 'Erro ao editar usuário!'),
+            this.toast('warning', 'Warning', 'Erro ao editar usuário!')
           )
           .finally(() => {
             this.formSend = false;
@@ -559,7 +585,7 @@ export default {
             this.toast('success', 'Sucesso', 'Empresa editada com sucesso!');
           })
           .catch((_err) =>
-            this.toast('warning', 'Warning', 'Erro ao editar empresa!'),
+            this.toast('warning', 'Warning', 'Erro ao editar empresa!')
           )
           .finally(() => {
             this.formSend = false;
