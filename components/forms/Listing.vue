@@ -18,6 +18,10 @@
         <div class="d-flex flex-column align-items-end">
           <div class="d-flex mb-2">
             <img
+              v-if="
+                $auth.user.role === 'administrator' ||
+                $auth.user.role === 'manager'
+              "
               src="~/assets/img/icones/edit-icon.svg"
               role="button"
               class="mr-3"
@@ -28,6 +32,10 @@
             />
 
             <img
+              v-if="
+                $auth.user.role === 'administrator' ||
+                $auth.user.role === 'manager'
+              "
               src="~/assets/img/icones/delete-icon.svg"
               role="button"
               width="22"
