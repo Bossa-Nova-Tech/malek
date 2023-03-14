@@ -63,15 +63,19 @@
           name="recurrent"
           v-model="formData.is_recurrent"
           :options="options_contract"
+          :class="{ 'is-invalid': $v.formData.is_recurrent.$error }"
         />
+        <b-form-invalid-feedback> Selecione uma opção </b-form-invalid-feedback>
       </b-form-group>
       <b-form-group class="mb-4">
         <label for="situation">Situação da negociação</label>
         <b-form-select
           v-model="formData.situation"
           :options="options_situation_of_negociation"
+          :class="{ 'is-invalid': $v.formData.situation.$error }"
         >
         </b-form-select>
+        <b-form-invalid-feedback> Selecione uma opção </b-form-invalid-feedback>
       </b-form-group>
       <b-form-group class="mb-4">
         <label for="introduction">Introdução</label>
@@ -146,7 +150,14 @@
             </b-form-select-option>
           </b-form-select>
         </b-form-group>
+        <b-form-group>
+          <label for="price">Preço</label>
+          <b-form-input name="price" v-model="service.price" />
+        </b-form-group>
       </b-card>
+      <b-button variant="primary" @click="adicionarServico"
+        >Adicionar Serviço</b-button
+      >
       <div class="d-flex pt-2 pb-2 align-items-center">
         <h5 class="p-0">Cadastrar serviço</h5>
         <b-img
@@ -191,7 +202,11 @@
         <label for="service"
           >Responsável pelo orçamento: <span class="requerido">*</span></label
         >
-        <b-form-select v-model="user_selected" name="service">
+        <b-form-select
+          v-model="formData.user_selected"
+          name="service"
+          :class="{ 'is-invalid': $v.formData.user_selected.$error }"
+        >
           <b-form-select-option :value="null">Selecione</b-form-select-option>
           <b-form-select-option
             v-for="(user, index) in users"
@@ -199,169 +214,12 @@
             :value="user.id"
           >
             {{ user.name }}
+            <b-form-invalid-feedback>
+              Selecione o responsável pelo orçamento.
+            </b-form-invalid-feedback>
           </b-form-select-option>
         </b-form-select>
       </b-form-group>
-
-      <!--       <b-row>
-        <b-col cols="6">
-          <b-form-group class="mb-4">
-            <label for="budget_name"
-              >Nome do orçamento <span class="requerido">*</span></label
-            >
-            <b-form-input
-              v-model="formData.budget_name"
-              name="budget_name"
-              placeholder="Manutenção e limpeza mensal"
-              :class="{
-                'is-invalid': $v.formData.budget_name.$error,
-              }"
-            />
-            <b-form-invalid-feedback>
-              Preencha o campo acima.
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
-
-        <b-col cols="6">
-          <b-form-group class="mb-4">
-            <label for="details">Detalhes</label>
-            <b-form-input
-              v-model="formData.details"
-              name="details"
-              placeholder="descrição"
-            />
-          </b-form-group>
-        </b-col>
-      </b-row>
-      <div>
-        <h2>Serviços inclusos</h2>
-        <b-form-checkbox-group
-          v-model="formData.services"
-          :options="servicesOptions"
-          stacked
-        ></b-form-checkbox-group>
-        <p>Total R$ XXXX 03h30</p>
-      </div>
-      <div>
-        <h2 class="mt-4">Cabeçalho</h2>
-        <BorderButton class="my-4">
-          <input
-            id="file"
-            type="file"
-            accept=".png, .jpg"
-            plain
-            class="d-flex"
-            @change="onFileChange"
-          />
-          <label for="file" class="text-center">Enviar Foto</label>
-        </BorderButton>
-      </div>
-      <div class="my-4">
-        <h2>Minhas informações</h2>
-        <b-form-checkbox v-model="formData.import"
-          >Importar meus dados de cadastro</b-form-checkbox
-        >
-      </div>
-      <b-form-group class="mb-4">
-        <label for="name">Nome <span class="requerido">*</span></label>
-        <b-form-input
-          v-model="formData.name"
-          name="name"
-          placeholder="Nome Exemplo"
-          :class="{
-            'is-invalid': $v.formData.name.$error,
-          }"
-        />
-        <b-form-invalid-feedback>
-          Preencha o campo acima
-        </b-form-invalid-feedback>
-      </b-form-group>
-      <b-form-group class="mb-4">
-        <label for="cpf">CPF <span class="requerido">*</span></label>
-        <b-form-input
-          v-model="formData.cpf"
-          v-mask="['###.###.###-##']"
-          name="cpf"
-          placeholder="111.111.111-00"
-          :class="{
-            'is-invalid': $v.formData.cpf.$error,
-          }"
-        />
-      </b-form-group>
-      <b-form-invalid-feedback>
-        {{
-          !$v.formData.cpf.minLength
-            ? 'Insira um CPF válido'
-            : 'Preencha o campo acima'
-        }}
-      </b-form-invalid-feedback>
-
-      <b-form-group class="mb-4">
-        <label for="email">E-mail</label>
-        <b-form-input
-          v-model="formData.email"
-          name="email"
-          placeholder="email@email.com"
-          :class="{
-            'is-invalid': $v.formData.email.$error,
-          }"
-        />
-        <b-form-invalid-feedback>
-          {{
-            !$v.formData.email.email
-              ? 'Insira um e-mail válido'
-              : 'Preencha o campo acima'
-          }}
-        </b-form-invalid-feedback>
-      </b-form-group>
-      <b-row class="mb-4">
-        <b-col cols="4">
-          <b-form-group>
-            <label for="ddd">Telefone <span class="requerido">*</span></label>
-            <b-form-input
-              v-model="formData.ddd"
-              v-mask="['(##)']"
-              name="ddd"
-              placeholder="(00)"
-              :class="{
-                'is-invalid': $v.formData.ddd.$error,
-              }"
-            />
-            <b-form-invalid-feedback>
-              {{
-                !$v.formData.ddd.minLength
-                  ? 'Insira um ddd válido'
-                  : 'Preencha o campo acima'
-              }}
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
-
-        <b-col cols="8">
-          <b-form-group>
-            <label for="phone">&nbsp;</label>
-            <b-form-input
-              id="phone"
-              v-model="formData.phone"
-              v-mask="['#####-####']"
-              name="phone"
-              placeholder="0 0000-0000"
-              :class="{
-                'is-invalid': $v.formData.phone.$error,
-              }"
-            />
-            <b-form-invalid-feedback>
-              {{
-                !$v.formData.phone.minLength
-                  ? 'Insira um telefone válido'
-                  : 'Preencha o campo acima'
-              }}
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
-      </b-row> -->
-
       <button class="mt-4 mb-2" :disabled="formSend" @click="saveProposal">
         <b-spinner v-if="formSend" small type="grow" />
         Salvar
@@ -385,7 +243,6 @@ export default {
   data: () => {
     return {
       users: [],
-
       customers: [],
       services: [],
       file: null,
@@ -394,8 +251,8 @@ export default {
       vm: null,
       formSend: false,
       service_selected: null,
-      user_selected: null,
       formData: {
+        user_selected: null,
         is_recurrent: '',
         name_customer: null,
         budget_id: '',
@@ -413,7 +270,12 @@ export default {
         photo: null,
         details: null,
         import: null,
-        services: [],
+        services: [
+          {
+            name: '',
+            price: '',
+          },
+        ],
         cpf: null,
         name: null,
         proposal_expire_at: null,
@@ -503,12 +365,18 @@ export default {
       budget_id: {
         required,
       },
+      situation: {
+        required,
+      },
       budget_name: {
         required,
       },
       cpf: {
         required,
         minLength: minLength(11),
+      },
+      user_selected: {
+        required,
       },
       is_recurrent: {
         required,
@@ -530,12 +398,7 @@ export default {
     adicionarServico(index) {
       this.formData.services.push({
         name: null,
-        is_required: null,
-        options: [
-          {
-            name: null,
-          },
-        ],
+        price: null,
       });
     },
     async saveProposal(_response) {
