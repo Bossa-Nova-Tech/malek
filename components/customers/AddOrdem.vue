@@ -12,9 +12,9 @@
       <div class="d-flex justify-content-between">
         <h1 class="mt-4 mb-5">Criar Cliente</h1>
         <img
+          rel="preload"
           src="~/assets/img/icones/X-icon.svg"
           role="button"
-          alt="icone para fechar"
           class="mb-5 mt-3"
           @click="$bvModal.hide('criar-cliente')"
         />
@@ -58,7 +58,7 @@
           v-model="formData.cnpj"
           v-mask="['##.###.###/####-##']"
           name="cnpj"
-          placeholder="00.000.000/000-00"
+          placeholder="00.000.000/0000-00"
           :class="{ 'is-invalid': $v.formData.cnpj.$error }"
         />
         <b-form-invalid-feedback v-if="formData.type == 'pj'">
@@ -139,11 +139,7 @@
               :class="{ 'is-invalid': $v.formData.state_registration.$error }"
             />
             <b-form-invalid-feedback>
-              {{
-                !$v.formData.state_registration.minLength
-                  ? 'Insira uma IE válida'
-                  : 'Preencha o campo acima'
-              }}
+              {{ 'Insira uma IE válida' }}
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
@@ -216,12 +212,11 @@
           <b-img
             src="~/assets/img/icones/delete-icon.svg"
             role="button"
-            alt="icone de deletar"
             class="ml-5 pl-5 pb-2"
             @click="excluiFoto"
           />
 
-          <img :src="formData.photo" alt="" width="100" />
+          <img rel="preload" :src="formData.photo" alt="foto" width="100" />
         </div>
       </div>
 
@@ -254,6 +249,9 @@
               name="address"
               type="text"
               placeholder="Rua"
+              :class="{
+                'is-invalid': $v.formData.address.$error,
+              }"
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -269,6 +267,9 @@
               name="district"
               type="text"
               placeholder="Bairro"
+              :class="{
+                'is-invalid': $v.formData.district.$error,
+              }"
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -286,6 +287,9 @@
               name="city"
               type="text"
               placeholder="Cidade"
+              :class="{
+                'is-invalid': $v.formData.city.$error,
+              }"
             />
             <b-form-invalid-feedback>
               Preencha o campo acima
@@ -301,11 +305,16 @@
               name="state"
               type="text"
               placeholder="Estado"
+              :class="{
+                'is-invalid': $v.formData.state.$error,
+              }"
             />
+            <b-form-invalid-feedback>
+              Preencha o campo acima
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
-
       <b-row>
         <b-col cols="6">
           <b-form-group class="mb-4">
@@ -366,7 +375,7 @@ import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
 
 export default {
-  name: 'AddOrdem',
+  name: 'AddClient',
   directives: { mask },
   mixins: [validationMixin],
 
@@ -378,7 +387,6 @@ export default {
       vm: null,
       formSend: false,
       formData: {
-        status: 'active',
         type: 'f',
         name: null,
         cnpj: null,
@@ -457,6 +465,18 @@ export default {
         required,
         minLength: minLength(9),
       },
+      address: {
+        required,
+      },
+      state: {
+        required,
+      },
+      city: {
+        required,
+      },
+      district: {
+        required,
+      },
       number: {
         required,
       },
@@ -492,8 +512,8 @@ export default {
                 'Cliente adicionado com sucesso!',
               );
               this.formData = {
-                status: 'active',
                 name: null,
+                email: null,
                 type: null,
                 cnpj: null,
                 cpf: null,
@@ -501,7 +521,6 @@ export default {
                 state_registration: null,
                 rg: null,
                 phone: null,
-                email: null,
                 photo: null,
                 cep: null,
                 address: null,
@@ -527,6 +546,10 @@ export default {
         };
       }
     },
+    excluiFoto() {
+      this.formData.photo = null;
+    },
+
     onFileChange(e) {
       this.files = e.target.files || e.dataTransfer.files;
       if (!this.files.length) return;
@@ -535,14 +558,10 @@ export default {
     createImage(file) {
       this.reader = new FileReader();
       this.vm = this;
-
       this.reader.onload = (e) => {
         this.vm.formData.photo = e.target.result;
       };
       this.reader.readAsDataURL(file);
-    },
-    onFileSelected(event) {
-      this.selectedFile = event.target.files[0];
     },
     searchCep() {
       // eslint-disable-next-line eqeqeq
@@ -575,22 +594,28 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
 .requerido {
   color: var(--red-50);
 }
+
 .grid-1 {
   margin-right: 15px;
 }
+
 .grid-2 {
   margin-left: 15px;
 }
+
 @media screen and (max-width: 992px) {
   .grid-1 {
     margin: 0;
   }
+
   .grid-2 {
     margin: 0;
   }
+
   .grid {
     grid-template-columns: 1fr;
   }

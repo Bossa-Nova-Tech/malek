@@ -61,7 +61,7 @@
           v-model="formData.cnpj"
           v-mask="['##.###.###/####-##']"
           value="cnpj"
-          placeholder="00.000.000/000-00"
+          placeholder="00.000.000/0000-00"
           :class="{ 'is-invalid': $v.formData.cnpj.$error }"
         />
         <b-form-invalid-feedback v-if="formData.type == 'pj'">
