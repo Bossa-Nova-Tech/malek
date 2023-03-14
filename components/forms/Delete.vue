@@ -39,7 +39,7 @@ export default {
         this.toast(
           'danger',
           'Erro',
-          'Problemas ao excluir. Entre em contato com o suporte'
+          'Problemas ao excluir. Entre em contato com o suporte',
         );
       }
     },

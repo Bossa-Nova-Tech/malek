@@ -153,9 +153,7 @@ export default {
             localStorage.email = this.formData.email;
             localStorage.password = this.formData.password;
           }
-        } catch {
-          return;
-        }
+        } catch {}
       }
     },
   },

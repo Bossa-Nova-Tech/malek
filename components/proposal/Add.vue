@@ -54,14 +54,14 @@
             >Contrato de recorrencia?<span class="requerido">*</span></label
           >
           <b-img
-            src="~/assets/img/icones/info.svg"
             v-b-tooltip.hover.top="'Referente a casos de recorrência mensal.'"
+            src="~/assets/img/icones/info.svg"
           />
         </div>
         <b-radio-group
           id="recurrent"
-          name="recurrent"
           v-model="formData.is_recurrent"
+          name="recurrent"
           :options="options_contract"
           :class="{ 'is-invalid': $v.formData.is_recurrent.$error }"
         />
@@ -81,8 +81,8 @@
         <label for="introduction">Introdução</label>
         <b-form-textarea
           id="introduction"
-          name="introduction"
           v-model="formData.introduction"
+          name="introduction"
           placeholder="Campo para um breve descritivo da empresa e dos produtos e serviços que o usuário está vendendo."
           rows="3"
         />
@@ -152,7 +152,7 @@
         </b-form-group>
         <b-form-group>
           <label for="price">Preço</label>
-          <b-form-input name="price" v-model="service.price" />
+          <b-form-input v-model="service.price" name="price" />
         </b-form-group>
       </b-card>
       <b-button variant="primary" @click="adicionarServico"
@@ -172,8 +172,8 @@
         <label for="caracteristicas-produto">Características do produto</label>
         <b-form-textarea
           id="caracteristicas-produto"
-          name="caracteristicas-produto"
           v-model="formData.products_features"
+          name="caracteristicas-produto"
           placeholder="O produto/serviço x ..."
           rows="3"
         />
@@ -182,8 +182,8 @@
         <label for="observacoes-pagamento">Observações de pagamento</label>
         <b-form-textarea
           id="observacoes-pagamento"
-          name="observacoes-pagamento"
           v-model="formData.payment_notes"
+          name="observacoes-pagamento"
           placeholder="Descrição do pagamento"
           rows="3"
         />
@@ -192,8 +192,8 @@
         <label for="observacoes-pagamento">Informações complementares</label>
         <b-form-textarea
           id="observacoes-pagamento"
-          name="observacoes-pagamento"
           v-model="formData.additional_details"
+          name="observacoes-pagamento"
           placeholder="Informações relevantes para o cliente"
           rows="3"
         />
@@ -229,10 +229,10 @@
 </template>
 
 <script>
-import AddService from '~/components/services/Add.vue';
 import { required, email, minLength } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
+import AddService from '~/components/services/Add.vue';
 
 export default {
   name: 'Add',

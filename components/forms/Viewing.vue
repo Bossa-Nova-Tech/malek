@@ -161,16 +161,16 @@
           <h3 class="p-0 m-0 ml-2">Adicionar Perguntas</h3>
         </b-button> -->
       <b-form-checkbox
-        disable
         v-model="formData.is_required"
+        disable
         class="checkbox mb-4 d-flex align-items-center"
         >Este formulário é obrigatório</b-form-checkbox
       >
     </div>
   </b-modal>
 </template>
-  
-  <script>
+
+<script>
 import { required } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
 import { mask } from 'vue-the-mask';
@@ -355,7 +355,7 @@ export default {
     },
     handleDelete(i, index) {
       this.formData.fields[index].options.splice(
-        this.formData.fields[index].options[i]
+        this.formData.fields[index].options[i],
       );
     } /* .options.filter(
             (options) => options.id !== id,
@@ -388,7 +388,7 @@ export default {
               console.log('sucesso');
               this.$root.$emit(
                 'bv::hide::modal',
-                `update-service-${this.formsSelecionado.id}`
+                `update-service-${this.formsSelecionado.id}`,
               );
 
               // this.$refs.criar.hide();
@@ -396,7 +396,7 @@ export default {
               this.toast(
                 'success',
                 'Sucesso',
-                'Formulário editado com sucesso!'
+                'Formulário editado com sucesso!',
               );
               this.$nuxt.refresh();
             });
@@ -408,8 +408,8 @@ export default {
   },
 };
 </script>
-  
-  <style lang="scss" scoped>
+
+<style lang="scss" scoped>
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -462,4 +462,3 @@ label {
   }
 }
 </style>
-  

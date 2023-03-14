@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import Splash from '~/components/Splash.vue';
 import { required, email } from 'vuelidate/lib/validators';
 import { validationMixin } from 'vuelidate';
+import Splash from '~/components/Splash.vue';
 
 export default {
   name: 'Login',
@@ -156,9 +156,7 @@ export default {
             localStorage.email = this.formData.email;
             localStorage.password = this.formData.password;
           }
-        } catch {
-          return;
-        }
+        } catch {}
       }
     },
   },

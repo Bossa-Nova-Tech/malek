@@ -266,7 +266,7 @@ export default {
   },
   async mounted() {
     const companie = await this.$axios.get(
-      'companies/' + this.$auth.user.company_id
+      'companies/' + this.$auth.user.company_id,
     );
     this.companiesData = companie.data;
     this.companiesData = this.companiesData.data;
