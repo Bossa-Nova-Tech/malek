@@ -140,8 +140,6 @@ export default {
             data: { email, password },
           });
 
-          this.formSend = false;
-
           if (this.$auth.$state.loggedIn) {
             if (!this.$screen.lg) {
               window.$nuxt.$router.push('/painel-adm-atual');
@@ -153,7 +151,9 @@ export default {
             localStorage.email = this.formData.email;
             localStorage.password = this.formData.password;
           }
-        } catch {}
+        } finally {
+          return (this.formSend = false);
+        }
       }
     },
   },
