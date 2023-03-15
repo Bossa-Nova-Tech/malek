@@ -19,7 +19,11 @@
  -->
         </div>
         <Listing :budget-data="budgetsData" />
-
+        <b-modal id="em-breve" hide-footer centered>
+          <b-card class="animation-modal d-flex mx-auto">
+            <h1 class="text-center">Em breve teremos a tela de orçamentos!</h1>
+          </b-card>
+        </b-modal>
         <Add />
       </section>
     </main>
@@ -49,6 +53,9 @@ export default {
       budgetsData: [],
     };
   },
+  mounted() {
+    this.$bvModal.show('em-breve');
+  },
 };
 </script>
 
@@ -67,6 +74,25 @@ main {
 
   button {
     width: 50%;
+  }
+}
+.animation-modal h1 {
+  transform-origin: center;
+  animation: scaleAndColor 3s infinite ease-in-out;
+}
+
+@keyframes scaleAndColor {
+  0% {
+    transform: scale(1);
+    color: #ff5a00;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #ffae42;
+  }
+  100% {
+    transform: scale(1);
+    color: #ff8c00;
   }
 }
 

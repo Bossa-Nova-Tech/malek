@@ -280,10 +280,10 @@ export default {
         end_date: null,
         note: null,
         photo: [],
-        name_customer: null,
+        name_customer: null,  
         customer_id: null,
         template: null,
-        service_id: null,
+        service_id: this.service_selected,
         services: this.service_selected,
       },
     };
@@ -344,6 +344,7 @@ export default {
       }, 100);
     },
     async register(_response) {
+      this.formData.service_id = this.service_selected;
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
         this.formSend = true;

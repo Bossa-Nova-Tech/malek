@@ -31,11 +31,11 @@
       <b-row class="mx-0 p-2 border rounded mb-3">
         <span class="h5 ml-3 mb-3">Filtre sua busca:</span>
         <b-col cols="10">
-          <b-form-checkbox-group
+          <b-form-radio-group
             v-model="selected"
             :options="options"
             :unchecked-value="null"
-          ></b-form-checkbox-group>
+          ></b-form-radio-group>
         </b-col>
         <b-col cols="2">
           <b-img
@@ -106,7 +106,7 @@ export default {
   components: { Delete, Edit, Viewing },
   props: {
     users: {
-      type: Array,
+      type: Array | Object,
       default: null,
     },
   },
@@ -142,8 +142,11 @@ export default {
         if (this.selected === null) {
           return user;
         }
-
-        return user.type === this.selected;
+        if (this.selected === 'pj') {
+          return user.cpfCnpj.length === 18;
+        } else {
+          return user.cpfCnpj.length === 14;
+        }
       });
 
       return users;

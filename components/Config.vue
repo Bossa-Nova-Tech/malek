@@ -316,41 +316,41 @@
             <b-form-input v-model="companiesData.phone" name="telefone">
             </b-form-input>
           </b-form-group>
-          <b-button
-            variant="secundary"
-            class="my-3"
-            @click="$bvModal.show('logout-modal')"
-            >Sair da conta</b-button
-          >
-          <b-modal
-            id="logout-modal"
-            ref="logout-modal"
-            hide-header
-            hide-footer
-            centered
-          >
-            <template>
-              <h3 class="w-100 mx-auto">
-                Tem certeza que gostaria de sair da conta?
-              </h3>
-              <b-row>
-                <b-col>
-                  <b-button variant="primary" @click="logoutConfirmation">
-                    Sim
-                  </b-button>
-                </b-col>
-                <b-col>
-                  <b-button
-                    variant="secundary"
-                    @click="$bvModal.hide('logout-modal')"
-                  >
-                    Não
-                  </b-button>
-                </b-col>
-              </b-row>
-            </template>
-          </b-modal>
         </div>
+        <b-button
+          variant="secundary"
+          class="my-3"
+          @click="$bvModal.show('logout-modal')"
+          >Sair da conta</b-button
+        >
+        <b-modal
+          id="logout-modal"
+          ref="logout-modal"
+          hide-header
+          hide-footer
+          centered
+        >
+          <template>
+            <h3 class="w-100 mx-auto">
+              Tem certeza que gostaria de sair da conta?
+            </h3>
+            <b-row>
+              <b-col>
+                <b-button variant="primary" @click="logoutConfirmation">
+                  Sim
+                </b-button>
+              </b-col>
+              <b-col>
+                <b-button
+                  variant="secundary"
+                  @click="$bvModal.hide('logout-modal')"
+                >
+                  Não
+                </b-button>
+              </b-col>
+            </b-row>
+          </template>
+        </b-modal>
         <b-button variant="primary" @click="attAccount">Salvar</b-button>
       </div>
       <div
@@ -428,6 +428,7 @@ export default {
   },
   data() {
     return {
+      logo: false,
       mudarLogo: false,
       file: null,
       files: null,
@@ -477,6 +478,7 @@ export default {
         fantasy_name: '',
         cpfCnpj: '',
         logo: null,
+        logo_url: null,
         phone: '',
         ddd: '',
         cep: '',
@@ -532,14 +534,17 @@ export default {
         };
         this.reader.readAsDataURL(file);
       }
+      this.logo = true;
     },
     async attAccount() {
       if (this.$auth.user.role === 'administrator') {
         this.companieFormData.fantasy_name = this.companiesData.fantasy_name;
         this.companieFormData.email = this.companiesData.email;
-        this.companieFormData.logo = this.companiesData.logo;
         this.companieFormData.site = this.companiesData.site;
         this.companieFormData.cpfCnpj = this.companiesData.cpfCnpj;
+        if ((this.logo === true)) {
+          this.companieFormData.logo = this.companiesData.logo;
+        }
         this.companieFormData.cep = this.companiesData.cep;
         this.companieFormData.city = this.companiesData.city;
         this.companieFormData.state = this.companiesData.state;
@@ -559,7 +564,9 @@ export default {
         this.userFormData.cpfCnpj = this.user_cpfCnpj;
         this.userFormData.role = this.user_role;
         this.userFormData.photo = this.user_photo;
-        this.userFormData.photo_url = this.user_photo_url;
+        if ((this.logo === true)) {
+          this.userFormData.photo = this.user_photo;
+        }
         this.userFormData.cep = this.user_cep;
         this.userFormData.address = this.user_address;
         this.userFormData.city = this.user_city;
@@ -581,7 +588,7 @@ export default {
             this.toast('success', 'Sucesso', 'Usuário editado com sucesso!');
           })
           .catch((_err) =>
-            this.toast('warning', 'Warning', 'Erro ao editar usuário!'),
+            this.toast('warning', 'Warning', 'Erro ao editar usuário!')
           )
           .finally(() => {
             this.formSend = false;
@@ -590,12 +597,12 @@ export default {
           });
       } else {
         await this.$axios
-          .put('companies/' + this.companiesData.id, this.companieFormData)
+          .put('companies/' + this.$auth.user.company_id, this.companieFormData)
           .then((_res) => {
             this.toast('success', 'Sucesso', 'Empresa editada com sucesso!');
           })
           .catch((_err) =>
-            this.toast('warning', 'Warning', 'Erro ao editar empresa!'),
+            this.toast('warning', 'Warning', 'Erro ao editar empresa!')
           )
           .finally(() => {
             this.formSend = false;
