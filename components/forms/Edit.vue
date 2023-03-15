@@ -360,7 +360,7 @@ export default {
     },
     handleDelete(i, index) {
       this.formData.fields[index].options.splice(
-        this.formData.fields[index].options[i],
+        this.formData.fields[index].options[i]
       );
     } /* .options.filter(
           (options) => options.id !== id,
@@ -393,7 +393,7 @@ export default {
               console.log('sucesso');
               this.$root.$emit(
                 'bv::hide::modal',
-                `update-service-${this.formsSelecionado.id}`,
+                `update-service-${this.formsSelecionado.id}`
               );
 
               // this.$refs.criar.hide();
@@ -401,9 +401,10 @@ export default {
               this.toast(
                 'success',
                 'Sucesso',
-                'Formulário editado com sucesso!',
+                'Formulário editado com sucesso!'
               );
               this.$nuxt.refresh();
+              this.$bvModal.hide('update-forms-' + this.formsSelecionado.id);
             });
         } catch (error) {
           console.log(error, 'sadasda');

@@ -31,27 +31,19 @@ export default {
         if (user.id !== this.$auth.user.id) {
           await this.$axios
 
-            .delete('users/' + user.id, { company_id: $auth.user.company_id })
+            .delete(
+              'users/' + user.id + '?company_id=' + this.$auth.user.company_id
+            )
             .then((_res) => {
-              if (_res.data.result === 'success') {
-                console.log(user.id + ' excluido');
-                this.toast('success', 'Sucesso', 'Usuário excluído!');
-                this.$refs.excluir.hide();
-                this.$nuxt.refresh();
-              } else {
-                this.toast(
-                  'danger',
-                  'Erro',
-                  'Problemas ao excluir. Entre em contato com o suporte',
-                );
-              }
+              this.toast('success', 'Sucesso', 'Usuário excluído!');
+              this.$refs.excluir.hide();
+              this.$nuxt.refresh();
             })
             .catch((_err) => {});
         } else {
           alert('Você não pode excluir o usuário principal do aplicativo.');
         }
       } catch (error) {
-        console.log(error);
       }
     },
   },

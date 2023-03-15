@@ -258,8 +258,8 @@
           </b-form-group>
 
           <b-form-group class="my-2">
-            <label for="site">Email</label>
-            <b-form-input v-model="companiesData.email" name="site">
+            <label for="email">Email</label>
+            <b-form-input v-model="companiesData.email" name="email">
             </b-form-input>
           </b-form-group>
 

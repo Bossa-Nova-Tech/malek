@@ -504,6 +504,7 @@ export default {
     },
     async edit(_response) {
       const user = await this.$parent.userList;
+      this.formData.company_id = this.$auth.user.company_id;
       console.log(user);
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
@@ -521,7 +522,7 @@ export default {
               console.log('sucesso');
               this.$root.$emit(
                 'bv::hide::modal',
-                `update-user-${this.userList.id}`,
+                `update-user-${this.userList.id}`
               );
 
               // this.$refs.criar.hide();

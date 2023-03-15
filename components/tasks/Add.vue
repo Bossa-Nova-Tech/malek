@@ -300,7 +300,7 @@ export default {
     async watching2() {
       const { data } = await this.$axios.get('services');
       const service = data;
-      this.services = service;
+      this.services = service.data;
     },
     async service_selected() {
       const { data } = await this.$axios.get(
@@ -308,7 +308,7 @@ export default {
       );
       this.formData.services = data.name;
       this.formData.service_id = data.id;
-      this.formData.estimated_time = data.time_of_execution;
+      this.formData.estimated_time = data.data.time_of_execution;
     },
     async customer_selected() {
       const { data } = await this.$axios.get(
