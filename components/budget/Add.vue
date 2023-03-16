@@ -406,13 +406,11 @@ export default {
 
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
-        console.log(this.formData);
 
         try {
           this.formSend = false;
           this.$v.$reset();
 
-          console.log('executou o clic');
           this.$refs.proposalModal.hide();
 
           await this.$axios
@@ -423,7 +421,6 @@ export default {
             })
             .catch((_err) => {});
         } catch (error) {
-          console.log(error);
         }
       }
     },

@@ -150,7 +150,6 @@ export default {
     async register() {
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
-        console.log(this.formData);
         await this.$axios
           .post('services', this.$data.formData)
           .then((response) => {

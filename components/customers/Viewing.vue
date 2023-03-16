@@ -254,7 +254,6 @@ export default {
         this.center = [this.lat, this.long];
         this.circle.center = this.center;
       } else {
-        console.log('deu erro');
       }
     },
     setDataFormWithClient() {

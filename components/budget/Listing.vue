@@ -43,7 +43,6 @@ export default {
   async asyncData({ $axios }) {
     const budgets = await $axios.get('budgets');
     const budgetsData = budgets.data;
-    console.log('budgets :: ', budgets.data);
     return { budgetsData };
   },
   data: () => {
@@ -56,7 +55,6 @@ export default {
       this.id = budget.id;
       // this.$root.$emit('bv::show::modal', 'excluir', this.id);
       this.$bvModal.show(this.id);
-      console.log(budget.id + ' chamado');
     },
   },
 };

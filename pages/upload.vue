@@ -435,11 +435,6 @@ export default {
     };
   },
 
-  mounted() {
-    console.log('teste no cadastro::', this.$nameTeste);
-    console.log('teste no função::', this.$showName('Pedro Santos'));
-  },
-
   methods: {
     handlePictureCardPreview(file) {
       this.formData.logo = file.url;
@@ -449,7 +444,6 @@ export default {
       this.formData.logo = URL.createObjectURL(file.raw);
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
@@ -488,7 +482,6 @@ export default {
         // SIMULATION OF A DATA FETCHING REQUEST
 
         this.formSend = true;
-        console.log(this.formData);
 
         try {
           this.$v.$reset();
@@ -501,7 +494,6 @@ export default {
             })
             .catch((_err) => {});
         } catch (error) {
-          console.log(error);
         }
       }
     },

@@ -495,12 +495,10 @@ export default {
 
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
-        console.log(this.formData);
 
         try {
           this.formSend = false;
           this.$v.formData.$reset();
-          console.log('executou o clic');
           this.$refs.costumerModal.hide();
 
           await this.$axios

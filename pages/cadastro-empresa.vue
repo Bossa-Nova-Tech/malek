@@ -679,11 +679,6 @@ export default {
       title: `Cadastro |  ${process.env.title}`,
     };
   },
-
-  mounted() {
-    console.log('teste no cadastro::', this.$nameTeste);
-  },
-
   methods: {
     excluiFoto() {
       this.formData.logo = null;
@@ -708,7 +703,6 @@ export default {
         // SIMULATION OF A DATA FETCHING REQUEST
 
         this.formSend = true;
-        console.log(this.formData);
         if (this.formData.fantasy_name === null && this.formData.type === 'f') {
           this.formData.fantasy_name === '-';
         }

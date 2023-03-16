@@ -348,7 +348,6 @@ export default {
           },
         ],
       });
-      console.log(index);
     },
     adicionarOpcaoDeResposta(index, i) {
       /* this.formData.fields[index].options[i].push({ name: null }); */
@@ -356,7 +355,6 @@ export default {
     },
     deletAsk(fields) {
       this.formData.fields.splice(this.formData.fields.indexOf(fields), 1);
-      console.log(this.formData.fields.indexOf(fields));
     },
     handleDelete(i, index) {
       this.formData.fields[index].options.splice(
@@ -371,26 +369,21 @@ export default {
       ].options.filter((options) => options.id !== id); */
 
     deletAnswer(options, fields) {
-      console.log(this.formData.fields.indexOf(options));
 
       this.formData.fields.splice(this.formData.fields.indexOf(options), 1);
-      console.log('teste' + this.formData.fields.indexOf(options));
     },
     async edit(_response) {
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
-        console.log(this.formData);
         this.$v.$reset();
         try {
           this.formSend = false;
           this.$v.$reset();
-          console.log('executou o clic');
 
           await this.$axios
             .put(`forms/${this.formsSelecionado.id}`, this.$data.formData)
             .then((_res) => {
-              console.log('sucesso');
               this.$root.$emit(
                 'bv::hide::modal',
                 `update-service-${this.formsSelecionado.id}`
@@ -407,7 +400,6 @@ export default {
               this.$bvModal.hide('update-forms-' + this.formsSelecionado.id);
             });
         } catch (error) {
-          console.log(error, 'sadasda');
         }
       }
     },

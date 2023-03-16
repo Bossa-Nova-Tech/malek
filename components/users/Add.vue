@@ -569,7 +569,6 @@ export default {
 
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
-        console.log(this.formData);
         this.$v.formData.$reset();
         this.formData.company_id = this.$auth.user.company_id;
         await this.$axios

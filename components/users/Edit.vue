@@ -505,21 +505,17 @@ export default {
     async edit(_response) {
       const user = await this.$parent.userList;
       this.formData.company_id = this.$auth.user.company_id;
-      console.log(user);
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
-        console.log(this.formData);
         this.$v.$reset();
         try {
           this.formSend = false;
           this.$v.$reset();
-          console.log('executou o clic');
 
           await this.$axios
             .put(`users/${user.id}`, this.$data.formData)
             .then((_res) => {
-              console.log('sucesso');
               this.$root.$emit(
                 'bv::hide::modal',
                 `update-user-${this.userList.id}`
@@ -532,7 +528,6 @@ export default {
             })
             .catch((_err) => {});
         } catch (error) {
-          console.log(error, 'sadasda');
         }
       }
     },

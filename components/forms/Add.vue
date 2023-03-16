@@ -291,7 +291,6 @@ export default {
           },
         ],
       });
-      console.log(index);
     },
     adicionarOpcaoDeResposta(index, i) {
       /* this.formData.fields[index].options[i].push({ name: null }); */
@@ -299,11 +298,10 @@ export default {
     },
     deletAsk(fields) {
       this.formData.fields.splice(this.formData.fields.indexOf(fields), 1);
-      console.log(this.formData.fields.indexOf(fields));
     },
     handleDelete(i, index) {
       this.formData.fields[index].options.splice(
-        this.formData.fields[index].options[i],
+        this.formData.fields[index].options[i]
       );
     } /* .options.filter(
           (options) => options.id !== id,
@@ -313,11 +311,8 @@ export default {
         index
       ].options.filter((options) => options.id !== id); */
 
-    deletAnswer(options, ask) {
-      console.log(this.formData.fields.indexOf(options));
-
+    deletAnswer(options) {
       this.formData.fields.splice(this.formData.fields.indexOf(options), 1);
-      console.log('teste' + this.formData.fields.indexOf(options));
     },
     /* ask.options.splice(index, 1); */
     /* this.ask.options.splice(index, 1); */
@@ -327,18 +322,15 @@ export default {
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
-        console.log(this.formData);
         try {
           this.formSend = false;
           this.$v.formData.$reset();
-          console.log('executou o clic');
-
           await this.$axios.post('forms', this.$data.formData).then((_res) => {
             this.$refs.criar.hide();
             this.toast(
               'success',
               'Sucesso',
-              'Formulário cadastrado com sucesso!',
+              'Formulário cadastrado com sucesso!'
             );
             this.formData = {
               name: null,
@@ -356,9 +348,7 @@ export default {
             /* this.$router.go(0); */
           });
           this.$nuxt.refresh().catch((_err) => {});
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
       }
     },
   },

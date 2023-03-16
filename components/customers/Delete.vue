@@ -26,13 +26,11 @@ export default {
   methods: {
     async remove() {
       const cliente = await this.$parent.clienteDaLista;
-      console.log(cliente);
       try {
         await this.$axios
           .delete('customers/' + cliente.id)
           .then((_res) => {
             if (_res.data.result === 'success') {
-              console.log(cliente.id + ' excluido');
               this.toast('success', 'Sucesso', 'Cliente excluído!');
               this.$refs.excluir.hide();
               this.$nuxt.refresh();

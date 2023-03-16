@@ -34,7 +34,7 @@ export default {
           .then((_res) => {
             if (_res.data.result === 'success') {
               console.log(proposal.id + ' excluido');
-              this.toast('success', 'Sucesso', 'Item excluído!');
+              this.toast('success', 'Sucesso', 'Proposta excluída!');
               this.$root.$emit('bv::hide::modal', 'excluir');
               this.$nuxt.refresh();
             } else {

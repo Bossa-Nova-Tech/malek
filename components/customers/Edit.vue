@@ -523,7 +523,6 @@ export default {
         this.center = [this.lat, this.long];
         this.circle.center = this.center;
       } else {
-        console.log('deu erro');
       }
     },
     modalShown() {
@@ -557,21 +556,17 @@ export default {
     },
     async edit(_response) {
       const cliente = await this.$parent.clienteDaLista;
-      console.log(cliente);
       this.$v.formData.$touch();
       if (!this.$v.formData.$invalid) {
         this.formSend = true;
-        console.log(this.formData);
         this.$v.$reset();
         try {
           this.formSend = false;
           this.$v.$reset();
-          console.log('executou o clic');
 
           await this.$axios
             .put(`customers/${cliente.id}`, this.$data.formData)
             .then((_res) => {
-              console.log('sucesso');
               this.$root.$emit(
                 'bv::hide::modal',
                 `update-client-${this.clienteDaLista.id}`,
@@ -584,7 +579,6 @@ export default {
             })
             .catch((_err) => {});
         } catch (error) {
-          console.log(error, 'sadasda');
         }
       }
     },

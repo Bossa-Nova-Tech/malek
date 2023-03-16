@@ -356,7 +356,7 @@ export default {
           console.log('executou o clic');
           await this.$axios.post('tasks', this.$data.formData).then((_res) => {
             this.$refs.criar.hide();
-            this.toast('success', 'Sucesso', 'Item adicionado com sucesso!');
+            this.toast('success', 'Sucesso', 'Ordem de Serviço criada com sucesso!');
             this.formData = {
               status: null,
               need_signature: false,

@@ -26,7 +26,6 @@ export default {
   methods: {
     async remove() {
       const user = await this.$parent.userList;
-      console.log(user);
       try {
         if (user.id !== this.$auth.user.id) {
           await this.$axios
@@ -35,7 +34,7 @@ export default {
               'users/' + user.id + '?company_id=' + this.$auth.user.company_id
             )
             .then((_res) => {
-              this.toast('success', 'Sucesso', 'Usuário excluído!');
+              this.toast('success', 'Sucesso', 'Usuário excluído com sucesso!');
               this.$refs.excluir.hide();
               this.$nuxt.refresh();
             })

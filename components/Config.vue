@@ -372,6 +372,8 @@
           class="mx-1"
         />
       </div>
+      {{ this.userFormData.photo }}
+      {{ this.logo }}
       <div v-if="editOS" class="mx-4">
         <b-row class="mb-3 align-items-center">
           <b-col cols="8">
@@ -542,7 +544,7 @@ export default {
         this.companieFormData.email = this.companiesData.email;
         this.companieFormData.site = this.companiesData.site;
         this.companieFormData.cpfCnpj = this.companiesData.cpfCnpj;
-        if ((this.logo === true)) {
+        if (this.logo === true) {
           this.companieFormData.logo = this.companiesData.logo;
         }
         this.companieFormData.cep = this.companiesData.cep;
@@ -563,8 +565,7 @@ export default {
         this.userFormData.email = this.user_email;
         this.userFormData.cpfCnpj = this.user_cpfCnpj;
         this.userFormData.role = this.user_role;
-        this.userFormData.photo = this.user_photo;
-        if ((this.logo === true)) {
+        if (this.logo === true) {
           this.userFormData.photo = this.user_photo;
         }
         this.userFormData.cep = this.user_cep;

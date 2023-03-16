@@ -417,7 +417,6 @@ export default {
         this.formData.cpf = '-';
         this.formData.rg = '-';
       }
-      console.log(this.formData);
 
       await this.$axios.put('users/' + this.$auth.user.id, this.$data.formData);
     },

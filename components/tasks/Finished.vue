@@ -45,7 +45,7 @@ export default {
           .post('tasks/finish/' + ordem.id)
           .then((_res) => {
             this.$refs.f.hide();
-            this.toast('success', 'Sucesso', 'Tarefa Concluída!');
+            this.toast('success', 'Sucesso', 'Ordem de Serviço concluída com sucesso!');
             this.$nuxt.refresh();
           })
           .catch((_err) => {});

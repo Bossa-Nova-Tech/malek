@@ -18,9 +18,7 @@ export default {
   name: 'Delete',
   props: ['budget'],
   mounted() {
-    console.log('chamou o delete', this.budget.id);
     const idRef = 'modal-' + this.budget.id;
-    console.log(idRef);
     return { idRef };
   },
   methods: {
@@ -34,7 +32,6 @@ export default {
           .delete('budgets/' + budget.id)
           .then((_res) => {
             if (_res.data.result === 'success') {
-              console.log(budget.id + ' excluido');
               this.toast('success', 'Sucesso', 'Item excluído!');
               this.$root.$emit('bv::hide::modal', 'excluir');
               this.$nuxt.refresh();
@@ -48,7 +45,6 @@ export default {
           })
           .catch((_err) => {});
       } catch (error) {
-        console.log(error);
       }
     },
   },

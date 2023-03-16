@@ -356,12 +356,11 @@ export default {
                 `update-task-${this.ordem_item.id}`,
               );
 
-              this.toast('success', 'Sucesso', 'Item editado com sucesso!');
+              this.toast('success', 'Sucesso', 'Ordem de Serviço editada com sucesso!');
               this.$nuxt.refresh();
             })
             .catch((_err) => {});
         } catch (error) {
-          console.log(error, 'sadasda');
         }
       }
     },

@@ -108,9 +108,7 @@ export default {
     };
   },
   mounted() {
-    console.log('chamou o delete', this.budget.id);
     const idRef = 'modal-' + this.budget.id;
-    console.log(idRef);
     return { idRef };
   },
 };
