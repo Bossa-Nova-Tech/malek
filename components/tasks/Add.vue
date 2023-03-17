@@ -280,7 +280,7 @@ export default {
         end_date: null,
         note: null,
         photo: [],
-        name_customer: null,  
+        name_customer: null,
         customer_id: null,
         template: null,
         service_id: this.service_selected,
@@ -356,7 +356,11 @@ export default {
           console.log('executou o clic');
           await this.$axios.post('tasks', this.$data.formData).then((_res) => {
             this.$refs.criar.hide();
-            this.toast('success', 'Sucesso', 'Ordem de Serviço criada com sucesso!');
+            this.toast(
+              'success',
+              'Sucesso',
+              'Ordem de Serviço criada com sucesso!',
+            );
             this.formData = {
               status: null,
               need_signature: false,

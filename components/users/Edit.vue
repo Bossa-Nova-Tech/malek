@@ -518,7 +518,7 @@ export default {
             .then((_res) => {
               this.$root.$emit(
                 'bv::hide::modal',
-                `update-user-${this.userList.id}`
+                `update-user-${this.userList.id}`,
               );
 
               // this.$refs.criar.hide();
@@ -527,8 +527,7 @@ export default {
               this.$nuxt.refresh();
             })
             .catch((_err) => {});
-        } catch (error) {
-        }
+        } catch (error) {}
       }
     },
     excluiFoto() {

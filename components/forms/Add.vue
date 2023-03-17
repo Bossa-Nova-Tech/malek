@@ -301,7 +301,7 @@ export default {
     },
     handleDelete(i, index) {
       this.formData.fields[index].options.splice(
-        this.formData.fields[index].options[i]
+        this.formData.fields[index].options[i],
       );
     } /* .options.filter(
           (options) => options.id !== id,
@@ -330,7 +330,7 @@ export default {
             this.toast(
               'success',
               'Sucesso',
-              'Formulário cadastrado com sucesso!'
+              'Formulário cadastrado com sucesso!',
             );
             this.formData = {
               name: null,

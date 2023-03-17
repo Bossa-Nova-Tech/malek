@@ -356,12 +356,15 @@ export default {
                 `update-task-${this.ordem_item.id}`,
               );
 
-              this.toast('success', 'Sucesso', 'Ordem de Serviço editada com sucesso!');
+              this.toast(
+                'success',
+                'Sucesso',
+                'Ordem de Serviço editada com sucesso!',
+              );
               this.$nuxt.refresh();
             })
             .catch((_err) => {});
-        } catch (error) {
-        }
+        } catch (error) {}
       }
     },
     excluiFoto() {

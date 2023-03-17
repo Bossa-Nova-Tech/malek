@@ -391,8 +391,7 @@ export default {
               );
               this.$nuxt.refresh();
             });
-        } catch (error) {
-        }
+        } catch (error) {}
       }
     },
   },

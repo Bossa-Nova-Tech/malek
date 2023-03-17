@@ -52,7 +52,7 @@
             >Lembrar senha</b-form-checkbox
           >
           <a
-            href="https://wa.me/554788510302?text=Ol%C3%A1,%20tudo%20bem?%20Eu%20esqueci%20minha%20senha,%20poderia%20verificar%20por%20gentileza?"
+            href="https://wa.me/5547991294216?text=Ol%C3%A1,%20tudo%20bem?%20Eu%20esqueci%20minha%20senha,%20poderia%20verificar%20por%20gentileza?"
             ><u>Esqueci minha senha</u></a
           >
         </div>

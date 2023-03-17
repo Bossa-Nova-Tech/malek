@@ -443,8 +443,7 @@ export default {
     handleAvatarSuccess(res, file) {
       this.formData.logo = URL.createObjectURL(file.raw);
     },
-    handleRemove(file, fileList) {
-    },
+    handleRemove(file, fileList) {},
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
       const isPNG = file.type === 'image/png';
@@ -493,8 +492,7 @@ export default {
               this.formSend = false;
             })
             .catch((_err) => {});
-        } catch (error) {
-        }
+        } catch (error) {}
       }
     },
   },

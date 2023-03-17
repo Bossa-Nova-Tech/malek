@@ -38,7 +38,11 @@ export default {
           .then((_res) => {
             if (_res.data.result === 'success') {
               console.log(ordem.id + ' excluido');
-              this.toast('success', 'Sucesso', 'Ordem de serviço excluída com sucesso!');
+              this.toast(
+                'success',
+                'Sucesso',
+                'Ordem de serviço excluída com sucesso!',
+              );
               this.$nuxt.refresh();
               this.$nextTick(function () {
                 this.$bvModal.hide(`excluir-${this.id}`);

@@ -532,8 +532,7 @@ export default {
               this.$nuxt.refresh();
             })
             .catch((_err) => {});
-        } catch (error) {
-        }
+        } catch (error) {}
       }
     },
     excluiFoto() {

@@ -418,7 +418,11 @@ export default {
           await this.$axios
             .post('business-proposal', this.$data.formData)
             .then((_res) => {
-              this.toast('success', 'Sucesso', 'Proposta adicionada com sucesso!');
+              this.toast(
+                'success',
+                'Sucesso',
+                'Proposta adicionada com sucesso!',
+              );
               this.$nuxt.refresh();
             })
             .catch((_err) => {});

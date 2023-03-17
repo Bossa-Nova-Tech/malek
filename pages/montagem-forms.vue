@@ -7,14 +7,14 @@
 <script>
 import MontagemForms from '~/components/forms/MontagemForms.vue';
 export default {
-  //Dados estáticos, quando tivermos os forms em serviços e em OS termos que passar esse .get para o componente <MontagemForms/> e o componente para a tela de OS e Visitas.
+  components: {
+    MontagemForms,
+  },
+  // Dados estáticos, quando tivermos os forms em serviços e em OS termos que passar esse .get para o componente <MontagemForms/> e o componente para a tela de OS e Visitas.
   async asyncData({ $axios }) {
     const forms = await $axios.get('forms/59');
     const formsData = forms.data;
     return { formsData };
-  },
-  components: {
-    MontagemForms,
   },
 };
 </script>

@@ -358,7 +358,7 @@ export default {
     },
     handleDelete(i, index) {
       this.formData.fields[index].options.splice(
-        this.formData.fields[index].options[i]
+        this.formData.fields[index].options[i],
       );
     } /* .options.filter(
           (options) => options.id !== id,
@@ -369,7 +369,6 @@ export default {
       ].options.filter((options) => options.id !== id); */
 
     deletAnswer(options, fields) {
-
       this.formData.fields.splice(this.formData.fields.indexOf(options), 1);
     },
     async edit(_response) {
@@ -386,7 +385,7 @@ export default {
             .then((_res) => {
               this.$root.$emit(
                 'bv::hide::modal',
-                `update-service-${this.formsSelecionado.id}`
+                `update-service-${this.formsSelecionado.id}`,
               );
 
               // this.$refs.criar.hide();
@@ -394,13 +393,12 @@ export default {
               this.toast(
                 'success',
                 'Sucesso',
-                'Formulário editado com sucesso!'
+                'Formulário editado com sucesso!',
               );
               this.$nuxt.refresh();
               this.$bvModal.hide('update-forms-' + this.formsSelecionado.id);
             });
-        } catch (error) {
-        }
+        } catch (error) {}
       }
     },
   },

@@ -372,8 +372,8 @@
           class="mx-1"
         />
       </div>
-      {{ this.userFormData.photo }}
-      {{ this.logo }}
+      {{ userFormData.photo }}
+      {{ logo }}
       <div v-if="editOS" class="mx-4">
         <b-row class="mb-3 align-items-center">
           <b-col cols="8">
@@ -589,7 +589,7 @@ export default {
             this.toast('success', 'Sucesso', 'Usuário editado com sucesso!');
           })
           .catch((_err) =>
-            this.toast('warning', 'Warning', 'Erro ao editar usuário!')
+            this.toast('warning', 'Warning', 'Erro ao editar usuário!'),
           )
           .finally(() => {
             this.formSend = false;
@@ -603,7 +603,7 @@ export default {
             this.toast('success', 'Sucesso', 'Empresa editada com sucesso!');
           })
           .catch((_err) =>
-            this.toast('warning', 'Warning', 'Erro ao editar empresa!')
+            this.toast('warning', 'Warning', 'Erro ao editar empresa!'),
           )
           .finally(() => {
             this.formSend = false;

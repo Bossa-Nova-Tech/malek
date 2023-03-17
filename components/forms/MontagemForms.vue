@@ -1,19 +1,24 @@
 <template>
   <b-modal id="montagem" ref="montagem" size="lg" hide-header hide-footer>
-    <h1 class="text-center">Formulário: {{ this.form.data.name }}</h1>
+    <h1 class="text-center">Formulário: {{ form.data.name }}</h1>
     <b-form-group v-for="field in form.data.fields" :key="field.id">
       <label for="x">{{ field.name }}</label>
       <b-form-input
-        name="x"
-        id="x"
         v-if="field.type === 'Texto curto'"
+        id="x"
+        name="x"
       ></b-form-input>
-      <b-form-checkbox-group name="x" id="x" v-if="field.type === 'Checkbox'">
+      <b-form-checkbox-group v-if="field.type === 'Checkbox'" id="x" name="x">
         <b-form-checkbox v-for="option in field.options" :key="option.id">
           {{ option.name }}</b-form-checkbox
         >
       </b-form-checkbox-group>
-      <b-form-select name="x" id="x" v-if="field.type === 'Selecionar'">
+      <b-form-select v-if="field.type === 'Selecionar'" id="x" name="x">
+        <template #first>
+          <b-form-select-option :value="null" disabled
+            >Selecione</b-form-select-option
+          >
+        </template>
         <b-form-select-option
           v-for="option in field.options"
           :key="option.id"
@@ -22,9 +27,9 @@
         >
       </b-form-select>
       <b-form-radio-group
-        name="x"
-        id="x"
         v-if="field.type === 'Alternativas(radio)'"
+        id="x"
+        name="x"
       >
         <b-form-radio v-for="option in field.options" :key="option.id">
           {{ option.name }}
@@ -67,5 +72,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

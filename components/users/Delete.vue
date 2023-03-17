@@ -31,7 +31,7 @@ export default {
           await this.$axios
 
             .delete(
-              'users/' + user.id + '?company_id=' + this.$auth.user.company_id
+              'users/' + user.id + '?company_id=' + this.$auth.user.company_id,
             )
             .then((_res) => {
               this.toast('success', 'Sucesso', 'Usuário excluído com sucesso!');
@@ -42,8 +42,7 @@ export default {
         } else {
           alert('Você não pode excluir o usuário principal do aplicativo.');
         }
-      } catch (error) {
-      }
+      } catch (error) {}
     },
   },
 };
