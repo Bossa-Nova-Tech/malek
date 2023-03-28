@@ -45,7 +45,12 @@
         :watching="selectedService.id"
         @updateService="updateServices"
       />
-      <Delete :id="selectedService.id" />
+      <Delete
+        :id="selectedService.id"
+        :watching="selectedService.id"
+        :servicoSelecionado="selectedService"
+        @deleteService="deleteServices"
+      />
     </ul>
   </section>
 </template>
@@ -68,6 +73,7 @@ export default {
     },
   },
   emits: ['updateServices'],
+  emits: ['deleteServices'],
 
   data() {
     return {
@@ -79,7 +85,7 @@ export default {
     openModalDelete(service) {
       this.selectedService = service;
       this.$nextTick(function () {
-        this.$bvModal.show(`excluir-${this.selectedService.id}`);
+        this.$bvModal.show('delete-service');
       });
     },
     openModalUpdate(service) {
@@ -92,6 +98,9 @@ export default {
     updateServices() {
       console.log('call update services');
       this.$emit('updateServices', '');
+    },
+    deleteServices() {
+      this.$emit('deleteServices', '');
     },
   },
 };

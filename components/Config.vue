@@ -372,8 +372,7 @@
           class="mx-1"
         />
       </div>
-      {{ userFormData.photo }}
-      {{ logo }}
+      
       <div v-if="editOS" class="mx-4">
         <b-row class="mb-3 align-items-center">
           <b-col cols="8">
