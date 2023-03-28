@@ -13,7 +13,7 @@
         />
       </b-col>
     </div>
-    <b-modal id="filtro-3">
+    <b-modal id="filtro-3" hide-footer centered>
       <b-row class="mx-auto border p-2 py-4 rounded">
         <b-col cols="12">
           <span class="h5">Filtre sua busca:</span>
@@ -167,7 +167,7 @@ export default {
   mixins: [Vue2Filters.mixin],
   props: {
     tasksData: {
-      type: Array,
+      type: Array | Object,
       default: null,
     },
     customersData: {
@@ -188,6 +188,16 @@ export default {
       long: null,
       id: null,
       photo_perfil: { photo: require('~/assets/img/icones/icone-perfil.svg') },
+      options: [
+        {
+          text: 'Criada',
+          value: 'created',
+        },
+        {
+          text: 'Em andamento',
+          value: 'start',
+        },
+      ],
     };
   },
 
@@ -216,7 +226,7 @@ export default {
     async showVer(itemOrdem) {
       this.id = itemOrdem.id;
       const mapa = await this.$axios.get(
-        `customers/get-coordinates/${itemOrdem.customer_id}`,
+        `customers/get-coordinates/${itemOrdem.customer_id}`
       );
       this.coordinates = mapa.data;
       this.lat = this.coordinates.latitude;
@@ -238,10 +248,6 @@ export default {
       this.editar = true;
       if (this.editar === true) {
         this.id = itemOrdem.id;
-        // this.$router.push(`/ordem-de-servicos/?ordem=${itemOrdem.id}`);
-        /* this.$nextTick(function () {
-          this.$bvModal.show(`criar-${this.editar}-${this.id}`);
-        }); */
         this.ordem_selecionada = itemOrdem;
         this.$nextTick(function () {
           this.$bvModal.show(`update-task-${itemOrdem.id}`);

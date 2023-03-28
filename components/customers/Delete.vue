@@ -31,7 +31,7 @@ export default {
           .delete('customers/' + cliente.id)
           .then((_res) => {
             if (_res.data.result === 'success') {
-              this.toast('success', 'Sucesso', 'Cliente excluído!');
+              this.toast('success', 'Sucesso!', 'Cliente excluído conforme solicitado!');
               this.$refs.excluir.hide();
               this.$nuxt.refresh();
             } else {

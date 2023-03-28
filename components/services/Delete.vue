@@ -1,8 +1,7 @@
 <template>
   <b-modal
-    :id="`excluir-${id}`"
-    ref="excluir"
-    title="BootstrapVue"
+    :id="'delete-service'"
+    :ref="'delete-service'"
     hide-header
     footer-class="border-0 d-flex flex-column align-items-center justify-content-center"
   >
@@ -12,7 +11,7 @@
     </p>
     <template #modal-footer>
       <b-button variant="danger" @click.once="remove()">Sim</b-button>
-      <b-button @click.once="$bvModal.hide(`excluir-${id}`)">Não</b-button>
+      <b-button @click.once="$bvModal.hide('delete-service')">Não</b-button>
     </template>
   </b-modal>
 </template>
@@ -20,48 +19,34 @@
 export default {
   name: 'Delete',
   props: {
-    id: {
-      type: Number,
+    services: {
+      type: Array | Object,
       default: null,
     },
-    watching: {
-      type: Number,
-      default: null,
+    servicoSelecionado: {
+      type: Object,
+      default: {},
     },
   },
-  /* mounted() {
-    console.log('chamou o delete', this.excluir.id);
-    const idRef = 'modal-' + this.excluir.id;
-    console.log(idRef);
-    return { idRef };
-  }, */
+
+  emits: ['deleteService'],
+
   methods: {
     async remove() {
-      const servico = await this.$parent.servicoSelecionado;
-      console.log(servico);
-      try {
-        await this.$axios
-          .delete('services/' + servico.id)
-          .then((_res) => {
-            if (_res.data.result === 'success') {
-              console.log(servico.id + ' excluido');
-              this.toast('success', 'Sucesso', 'Serviço excluído com sucesso!');
-              this.$nuxt.refresh();
-              this.$nextTick(function () {
-                this.$bvModal.hide(`excluir-${this.id}`);
-              });
-            } else {
-              this.toast(
-                'danger',
-                'Erro',
-                'Problemas ao excluir. Entre em contato com o suporte',
-              );
-            }
-          })
-          .catch((_err) => {});
-      } catch (error) {
-        console.log(error);
-      }
+      await this.$axios
+        .delete(`services/${this.servicoSelecionado.id}`)
+        .then(() => {
+          this.$emit('deleteService', '');
+          this.toast('success', 'Sucesso', 'Serviço deletado com sucesso!');
+        })
+        .catch((err) => {
+          this.toast('error', 'Erro', 'Erro ao deletar o serviço!');
+          console.error(err);
+        })
+        .finally(() => {
+          this.$bvModal.hide('delete-service');
+          this.formSend = false;
+        });
     },
   },
 };

@@ -531,13 +531,14 @@ export default {
       }
     },
     excluiFoto() {
-      if (this.userList.photo_url) {
+      if (this.userList.photo_url !== null) {
         this.userList.photo_url = null;
       } else {
         this.formData.photo = null;
       }
     },
     onFileChange(e) {
+      this.userList.photo_url = null;
       this.files = e.target.files || e.dataTransfer.files;
       if (!this.files.length) return;
       this.createImage(this.files[0]);

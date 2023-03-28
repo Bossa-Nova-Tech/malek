@@ -205,7 +205,7 @@ export default {
             this.toast('success', 'Sucesso', 'Serviço editado com sucesso!');
           })
           .catch((err) => {
-            this.toast('error', 'Sucesso', 'Serviço editado com sucesso!');
+            this.toast('danger', 'Erro!', 'Serviço editado com sucesso!');
             console.error(err);
           })
           .finally(() => {

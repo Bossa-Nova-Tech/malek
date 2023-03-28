@@ -15,7 +15,7 @@
         />
       </div>
       <div>
-        <Listing :services="services" @updateServices="search" />
+        <Listing :services="services" @updateServices="search" @deleteServices="search" />
         <Add />
         <div v-show="$screen.md" class="footer">
           <button @click.prevent="$bvModal.show('criar')">Criar Serviço</button>

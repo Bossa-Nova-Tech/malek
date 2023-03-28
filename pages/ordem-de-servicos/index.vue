@@ -82,11 +82,11 @@ export default {
   layout: 'auth',
   async asyncData({ $axios }) {
     const tasks = await $axios.get('tasks?status=today');
-    const tasksData = tasks.data;
+    const tasksData = tasks.data.data;
     const tasksOverdue = await $axios.get('tasks?status=overdue');
-    const tasksDataOverdue = tasksOverdue.data;
+    const tasksDataOverdue = tasksOverdue.data.data;
     const tasksFuture = await $axios.get('tasks?status=future');
-    const tasksDataFuture = tasksFuture.data;
+    const tasksDataFuture = tasksFuture.data.data;
     const customers = await $axios.get('customers');
     const customersData = customers.data;
     return { tasksData, tasksDataOverdue, tasksDataFuture, customersData };

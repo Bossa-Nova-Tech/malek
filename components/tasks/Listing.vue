@@ -13,7 +13,7 @@
         />
       </b-col>
     </div>
-    <b-modal id="filtro">
+    <b-modal id="filtro" hide-footer centered>
       <b-row class="mx-auto border p-2 py-4 rounded">
         <b-col cols="12">
           <span class="h5">Filtre sua busca:</span>
@@ -182,16 +182,16 @@ export default {
   mixins: [Vue2Filters.mixin],
   props: {
     tasksData: {
-      type: Array,
-      default: null,
+      type: Array | Object,
+      default: '',
     },
     watching: {
       type: String,
-      default: null,
+      default: '',
     },
     customersData: {
       type: Object | Array,
-      default: null,
+      default: '',
     },
   },
 
